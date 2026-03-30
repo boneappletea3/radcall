@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Differential Dx — RadCall Pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #0b0f14;
+  --warm-white: #111620;
+  --slate: #e2e8f0;
+  --slate-mid: #94a3b8;
+  --slate-light: #cbd5e1;
+  --muted: #64748b;
+  --border: #1e2737;
+  --border-strong: #2a3444;
+  --teal: #14b8a6;
+  --teal-light: rgba(20,184,166,0.1);
+  --teal-mid: #2dd4bf;
+  --amber: #f59e0b;
+  --amber-light: rgba(245,158,11,0.1);
+  --red: #ef4444;
+  --red-light: rgba(239,68,68,0.08);
+  --green: #22c55e;
+  --green-light: rgba(34,197,94,0.1);
+  --purple: #a855f7;
+  --purple-light: rgba(168,85,247,0.1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  background: var(--cream);
+  color: var(--slate);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ── TOP NAV ── */
+.topnav {
+  background: var(--warm-white);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+.logo-icon {
+  width: 32px; height: 32px; background: var(--teal); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: white; letter-spacing: 0.02em;
+}
+.logo-text { font-weight: 600; font-size: 15px; color: var(--slate); }
+.logo-sub { font-size: 11px; color: var(--muted); font-weight: 400; }
+.nav-links { display: flex; gap: 4px; flex-shrink: 0; }
+.nav-link {
+  padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500;
+  color: var(--muted); text-decoration: none; transition: background 0.15s, color 0.15s;
+}
+.nav-link:hover { background: var(--teal-light); color: var(--teal); }
+.nav-link.active { background: var(--teal-light); color: var(--teal); }
+.nav-spacer { flex: 1; }
+
+/* ── LAYOUT ── */
+.layout {
+  display: flex;
+  padding-top: 56px;
+  height: 100vh;
+}
+
+/* ── INPUT PANEL ── */
+.input-panel {
+  width: 420px;
+  flex-shrink: 0;
+  background: var(--warm-white);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  height: calc(100vh - 56px);
+  padding: 24px 20px 40px;
+}
+.input-panel::-webkit-scrollbar { width: 4px; }
+.input-panel::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+
+.panel-title {
+  font-size: 16px; font-weight: 600; color: var(--slate);
+  margin-bottom: 4px;
+}
+.panel-sub {
+  font-size: 12px; color: var(--muted); margin-bottom: 20px;
+}
+
+.field-row { display: flex; gap: 10px; margin-bottom: 14px; }
+.field { flex: 1; }
+.field label {
+  display: block; font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--muted); margin-bottom: 5px;
+}
+.field select, .field textarea, .field input[type="text"] {
+  width: 100%; padding: 9px 11px; background: var(--cream);
+  border: 1.5px solid var(--border-strong); border-radius: 8px;
+  color: var(--slate); font-family: inherit; font-size: 13px;
+  outline: none; transition: border-color 0.2s; resize: vertical;
+}
+.field select { cursor: pointer; }
+.field select:focus, .field textarea:focus { border-color: var(--teal); }
+.field textarea { min-height: 140px; line-height: 1.6; }
+
+/* ── IMAGE UPLOAD ── */
+.upload-zone {
+  border: 2px dashed var(--border-strong);
+  border-radius: 10px;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 16px;
+  position: relative;
+}
+.upload-zone:hover, .upload-zone.dragover {
+  border-color: var(--teal);
+  background: var(--teal-light);
+}
+.upload-icon { font-size: 28px; margin-bottom: 8px; }
+.upload-text { font-size: 13px; color: var(--muted); }
+.upload-text strong { color: var(--slate-light); }
+.upload-input { display: none; }
+.upload-preview {
+  display: none;
+  position: relative;
+  margin-bottom: 16px;
+}
+.upload-preview img {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.upload-remove {
+  position: absolute; top: 6px; right: 6px;
+  width: 24px; height: 24px; border-radius: 6px;
+  background: rgba(239,68,68,0.9); border: none;
+  color: white; font-size: 14px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── SUBMIT ── */
+.submit-btn {
+  width: 100%; padding: 12px; border: none; border-radius: 10px;
+  background: var(--teal); color: white; font-family: inherit;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: background 0.15s; display: flex;
+  align-items: center; justify-content: center; gap: 8px;
+}
+.submit-btn:hover { background: #0d9488; }
+.submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.spinner {
+  width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white; border-radius: 50%;
+  animation: spin 0.7s linear infinite; display: none;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.submit-btn.loading .spinner { display: block; }
+
+/* ── HISTORY ── */
+.history-section { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 14px; }
+.history-toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; font-size: 12px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--muted); margin-bottom: 8px;
+}
+.history-toggle .chevron { transition: transform 0.2s; font-size: 10px; }
+.history-toggle.open .chevron { transform: rotate(180deg); }
+.history-list { display: none; }
+.history-list.open { display: block; }
+.history-item {
+  padding: 8px 10px; border-radius: 7px; cursor: pointer;
+  font-size: 12px; color: var(--slate-mid); margin-bottom: 4px;
+  transition: background 0.12s; display: flex; gap: 8px; align-items: center;
+}
+.history-item:hover { background: var(--cream); color: var(--slate); }
+.history-item .hi-tags { display: flex; gap: 4px; flex-shrink: 0; }
+.history-item .hi-tag {
+  background: var(--teal-light); color: var(--teal); font-size: 10px;
+  padding: 1px 6px; border-radius: 4px; font-weight: 500;
+}
+.history-item .hi-text { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ── RESULTS PANEL ── */
+.results-panel {
+  flex: 1;
+  overflow-y: auto;
+  height: calc(100vh - 56px);
+  padding: 28px 28px 60px;
+}
+.results-panel::-webkit-scrollbar { width: 6px; }
+.results-panel::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+
+/* Empty state */
+.empty-state {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; height: 100%; text-align: center;
+  color: var(--muted); padding: 40px;
+}
+.empty-icon { font-size: 56px; margin-bottom: 16px; opacity: 0.6; }
+.empty-state h3 { font-size: 18px; color: var(--slate); margin-bottom: 8px; }
+.empty-state p { max-width: 380px; line-height: 1.7; font-size: 14px; }
+
+/* Loading skeleton */
+.skeleton-card {
+  background: var(--warm-white); border: 1px solid var(--border);
+  border-radius: 10px; height: 110px; margin-bottom: 12px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+@keyframes skeleton-pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+
+/* Summary card */
+.summary-card {
+  background: var(--teal-light); border: 1px solid rgba(20,184,166,0.2);
+  border-radius: 10px; padding: 16px 20px; margin-bottom: 20px;
+}
+.summary-title {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--teal); margin-bottom: 8px;
+}
+.summary-text { font-size: 14px; color: var(--slate); line-height: 1.6; }
+.summary-note {
+  margin-top: 10px; font-size: 13px; color: var(--slate-mid);
+  line-height: 1.6; font-style: italic;
+}
+
+/* Differential card */
+.diff-card {
+  background: var(--warm-white); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px 20px; margin-bottom: 12px;
+  display: flex; gap: 16px; transition: border-color 0.15s;
+}
+.diff-card:hover { border-color: var(--teal); }
+.diff-rank {
+  font-size: 28px; font-weight: 700; color: var(--teal);
+  line-height: 1; min-width: 32px; text-align: center;
+  padding-top: 2px;
+}
+.diff-body { flex: 1; min-width: 0; }
+.diff-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+.diff-name { font-size: 16px; font-weight: 600; color: var(--slate); }
+.diff-confidence {
+  font-size: 11px; font-weight: 600; padding: 2px 8px;
+  border-radius: 6px; text-transform: uppercase; letter-spacing: 0.04em;
+}
+.conf-high { background: var(--teal-light); color: var(--teal); }
+.conf-moderate { background: var(--amber-light); color: var(--amber); }
+.conf-low { background: rgba(100,116,139,0.1); color: var(--muted); }
+.diff-explanation { font-size: 13px; color: var(--slate-mid); line-height: 1.6; margin-bottom: 10px; }
+.diff-findings { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+.diff-finding {
+  font-size: 11px; padding: 2px 8px; border-radius: 5px;
+  background: var(--purple-light); color: var(--purple); font-weight: 500;
+}
+.diff-imaging-features {
+  margin-bottom: 10px; padding: 10px 12px;
+  background: rgba(20,184,166,0.05); border-left: 2px solid var(--teal);
+  border-radius: 0 6px 6px 0;
+}
+.diff-imaging-features-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em;
+  color: var(--teal); margin-bottom: 6px;
+}
+.diff-imaging-features ul {
+  margin: 0; padding: 0 0 0 14px; display: flex; flex-direction: column; gap: 3px;
+}
+.diff-imaging-features li { font-size: 12px; color: var(--slate-light); line-height: 1.5; }
+.diff-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.diff-link {
+  font-size: 12px; color: var(--teal); text-decoration: none;
+  font-weight: 500; display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(20,184,166,0.3);
+  transition: background 0.15s;
+}
+.diff-link:hover { background: var(--teal-light); text-decoration: none; }
+.diff-link.pubmed { color: var(--amber); border-color: rgba(245,158,11,0.3); }
+.diff-link.pubmed:hover { background: var(--amber-light); }
+.diff-link.openev { color: var(--purple); border-color: rgba(168,85,247,0.3); }
+.diff-link.openev:hover { background: var(--purple-light); }
+
+/* Refine section */
+.refine-section {
+  margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border);
+}
+.refine-label {
+  font-size: 12px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--muted); margin-bottom: 8px;
+}
+.refine-row { display: flex; gap: 10px; }
+.refine-input {
+  flex: 1; padding: 9px 11px; background: var(--cream);
+  border: 1.5px solid var(--border-strong); border-radius: 8px;
+  color: var(--slate); font-family: inherit; font-size: 13px; outline: none;
+}
+.refine-input:focus { border-color: var(--teal); }
+.refine-btn {
+  padding: 9px 20px; border: 1px solid var(--teal); border-radius: 8px;
+  background: transparent; color: var(--teal); font-family: inherit;
+  font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+}
+.refine-btn:hover { background: var(--teal-light); }
+
+/* Error */
+.error-card {
+  background: var(--red-light); border: 1px solid rgba(239,68,68,0.2);
+  border-radius: 10px; padding: 16px 20px; color: var(--red); font-size: 14px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .layout { flex-direction: column; }
+  .input-panel { width: 100%; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--border); }
+  .results-panel { height: auto; flex: 1; }
+}
+@media (max-width: 600px) {
+  .field-row { flex-direction: column; gap: 0; }
+  .logo-sub { display: none; }
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-auth.js"></script>
+</head>
+<body>
+
+<nav class="topnav">
+  <a class="logo" href="rad-call-reference(3).html">
+    <div class="logo-icon">RC</div>
+    <div>
+      <div class="logo-text">RadCall</div>
+      <div class="logo-sub">Pro</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="differential.html" class="nav-link active">Differential Dx</a>
+    <a href="case-log.html" class="nav-link">Case Log</a>
+    <a href="workflow.html" class="nav-link">Workflow Tools</a>
+  </div>
+  <div class="nav-spacer"></div>
+</nav>
+
+<div class="layout">
+  <!-- INPUT PANEL -->
+  <div class="input-panel">
+    <div class="panel-title">Differential Diagnosis</div>
+    <div class="panel-sub">Describe findings or upload an image for AI-powered differentials</div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Body Region</label>
+        <select id="bodyRegion">
+          <option value="">Any region</option>
+          <option value="Head/Neck">Head / Neck</option>
+          <option value="Chest">Chest</option>
+          <option value="Abdomen/Pelvis">Abdomen / Pelvis</option>
+          <option value="Spine">Spine</option>
+          <option value="Musculoskeletal">Musculoskeletal</option>
+          <option value="Vascular">Vascular</option>
+          <option value="Breast">Breast</option>
+          <option value="Cardiac">Cardiac</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Modality</label>
+        <select id="modality">
+          <option value="">Any modality</option>
+          <option value="CT">CT</option>
+          <option value="MRI">MRI</option>
+          <option value="Ultrasound">Ultrasound</option>
+          <option value="X-Ray">X-Ray</option>
+          <option value="Fluoroscopy">Fluoroscopy</option>
+          <option value="Angiography">Angiography</option>
+          <option value="Nuclear Medicine">Nuclear Medicine</option>
+          <option value="PET/CT">PET/CT</option>
+          <option value="Mammography">Mammography</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Imaging Findings</label>
+      <textarea id="findings" placeholder="Describe findings... e.g., 'CT abdomen with contrast: 3cm hypodense liver lesion in segment VI with arterial enhancement and portal venous washout. Background liver is nodular suggesting cirrhosis.'"></textarea>
+    </div>
+
+    <div class="upload-preview" id="uploadPreview">
+      <img id="previewImg" src="" alt="Uploaded image">
+      <button class="upload-remove" onclick="removeImage()" title="Remove image">&times;</button>
+    </div>
+
+    <div class="upload-zone" id="uploadZone">
+      <div class="upload-icon">📷</div>
+      <div class="upload-text"><strong>Upload image</strong>, drag &amp; drop, or paste</div>
+      <div class="upload-text" style="font-size:11px;margin-top:4px;">PNG, JPG, WebP up to 10MB &nbsp;·&nbsp; ⌘V / Ctrl+V to paste screenshot</div>
+      <input type="file" class="upload-input" id="fileInput" accept="image/png,image/jpeg,image/webp">
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="generateDifferential()">
+      <span class="spinner"></span>
+      <span id="submitText">Generate Differential Diagnosis</span>
+    </button>
+
+    <div class="history-section" id="historySection">
+      <div class="history-toggle" id="historyToggle" onclick="toggleHistory()">
+        Recent Queries <span class="chevron">&#9660;</span>
+      </div>
+      <div class="history-list" id="historyList"></div>
+    </div>
+  </div>
+
+  <!-- RESULTS PANEL -->
+  <div class="results-panel" id="resultsPanel">
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">🩺</div>
+      <h3>Radiology Differential Generator</h3>
+      <p>Describe your imaging findings or upload a screenshot to generate a ranked differential diagnosis with Radiopaedia references.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_FN_URL = 'https://ovinsgofjbgzdrklwjok.supabase.co/functions/v1/differential';
+
+let imageBase64 = null;
+let imageMimeType = null;
+let lastFindings = '';
+
+// ── Auth Gate ──
+async function initApp() {
+  if (window.RadCallAuth && !RadCallAuth._notConfigured && RadCallAuth.supabase) {
+    try {
+      await RadCallAuth.requireAuth();
+    } catch (e) {
+      console.warn('Auth not available');
+    }
+  }
+  loadHistory();
+}
+
+// ── Image Upload ──
+const uploadZone = document.getElementById('uploadZone');
+const fileInput = document.getElementById('fileInput');
+
+uploadZone.addEventListener('click', () => fileInput.click());
+uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+uploadZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  uploadZone.classList.remove('dragover');
+  if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', (e) => { if (e.target.files.length) handleFile(e.target.files[0]); });
+
+// Paste screenshot from clipboard (anywhere on the page)
+document.addEventListener('paste', (e) => {
+  const items = e.clipboardData?.items;
+  if (!items) return;
+  for (const item of items) {
+    if (item.type.startsWith('image/')) {
+      e.preventDefault();
+      handleFile(item.getAsFile());
+      break;
+    }
+  }
+});
+
+function handleFile(file) {
+  if (file.size > 10 * 1024 * 1024) { alert('Image must be under 10MB'); return; }
+  if (!['image/png','image/jpeg','image/webp'].includes(file.type)) { alert('Unsupported format'); return; }
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      // Resize if too large
+      const MAX = 2000;
+      let w = img.width, h = img.height;
+      if (w > MAX || h > MAX) {
+        if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+        else { w = Math.round(w * MAX / h); h = MAX; }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      const dataUrl = canvas.toDataURL(file.type, 0.85);
+      imageBase64 = dataUrl.split(',')[1];
+      imageMimeType = file.type;
+      document.getElementById('previewImg').src = dataUrl;
+      document.getElementById('uploadPreview').style.display = 'block';
+      uploadZone.style.display = 'none';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeImage() {
+  imageBase64 = null;
+  imageMimeType = null;
+  document.getElementById('uploadPreview').style.display = 'none';
+  uploadZone.style.display = 'block';
+  fileInput.value = '';
+}
+
+// ── Generate ──
+async function generateDifferential(extraFindings) {
+  const findings = (document.getElementById('findings').value.trim() + (extraFindings ? '\n\nAdditional: ' + extraFindings : '')).trim();
+  const bodyRegion = document.getElementById('bodyRegion').value;
+  const modality = document.getElementById('modality').value;
+
+  if (!findings && !imageBase64) {
+    alert('Please describe findings or upload an image.');
+    return;
+  }
+
+  lastFindings = findings;
+  const btn = document.getElementById('submitBtn');
+  const panel = document.getElementById('resultsPanel');
+
+  // Loading state
+  btn.disabled = true;
+  btn.classList.add('loading');
+  document.getElementById('submitText').textContent = 'Analyzing...';
+  panel.innerHTML = `
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card" style="animation-delay:0.2s"></div>
+    <div class="skeleton-card" style="animation-delay:0.4s"></div>
+    <div class="skeleton-card" style="animation-delay:0.6s"></div>
+  `;
+
+  try {
+    // Get auth token
+    let headers = { 'Content-Type': 'application/json' };
+    if (window.RadCallAuth && RadCallAuth.supabase) {
+      const { data: { session } } = await RadCallAuth.supabase.auth.getSession();
+      if (session) headers['Authorization'] = 'Bearer ' + session.access_token;
+    }
+
+    const body = { findings, bodyRegion, modality };
+    if (imageBase64) { body.imageBase64 = imageBase64; body.imageMimeType = imageMimeType; }
+
+    const res = await fetch(SUPABASE_FN_URL, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || err.message || `Request failed: ${res.status}`);
+    }
+
+    const data = await res.json();
+    renderResults(data);
+    saveHistory({ findings, bodyRegion, modality, timestamp: Date.now() });
+
+  } catch (err) {
+    panel.innerHTML = `<div class="error-card">Error: ${esc(err.message)}</div>`;
+  } finally {
+    btn.disabled = false;
+    btn.classList.remove('loading');
+    document.getElementById('submitText').textContent = 'Generate Differential Diagnosis';
+  }
+}
+
+// ── Render Results ──
+function renderResults(data) {
+  const panel = document.getElementById('resultsPanel');
+
+  if (data.raw) {
+    // Fallback: raw text if JSON parsing failed
+    panel.innerHTML = `<div class="summary-card"><div class="summary-title">Response</div><div class="summary-text" style="white-space:pre-wrap">${esc(data.raw)}</div></div>`;
+    return;
+  }
+
+  let html = '';
+
+  // Summary
+  if (data.summary) {
+    html += `<div class="summary-card">
+      <div class="summary-title">Clinical Summary</div>
+      <div class="summary-text">${esc(data.summary)}</div>
+      ${data.additionalConsiderations ? `<div class="summary-note">${esc(data.additionalConsiderations)}</div>` : ''}
+    </div>`;
+  }
+
+  // Differential cards
+  if (data.differentials && data.differentials.length) {
+    html += data.differentials.map(d => `
+      <div class="diff-card">
+        <div class="diff-rank">${d.rank || ''}</div>
+        <div class="diff-body">
+          <div class="diff-header">
+            <span class="diff-name">${esc(d.diagnosis)}</span>
+            <span class="diff-confidence conf-${d.confidence || 'low'}">${esc(d.confidence || '')}</span>
+          </div>
+          <div class="diff-explanation">${esc(d.explanation || '')}</div>
+          ${d.imagingFeatures && d.imagingFeatures.length ? `
+            <div class="diff-imaging-features">
+              <div class="diff-imaging-features-label">Key Imaging Features</div>
+              <ul>${d.imagingFeatures.map(f => `<li>${esc(f)}</li>`).join('')}</ul>
+            </div>` : ''}
+          ${d.keyFindings && d.keyFindings.length ? `<div class="diff-findings">${d.keyFindings.map(f => `<span class="diff-finding">${esc(f)}</span>`).join('')}</div>` : ''}
+          <div class="diff-links">
+            ${d.radiopaediaUrl ? `<a class="diff-link" href="${esc(d.radiopaediaUrl)}" target="_blank" rel="noopener">Radiopaedia &rarr;</a>` : ''}
+            ${d.pubmedUrl ? `<a class="diff-link pubmed" href="${esc(d.pubmedUrl)}" target="_blank" rel="noopener">PubMed &rarr;</a>` : ''}
+            ${d.openEvidenceUrl ? `<a class="diff-link openev" href="${esc(d.openEvidenceUrl)}" target="_blank" rel="noopener">OpenEvidence &rarr;</a>` : ''}
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Refine section
+  html += `<div class="refine-section">
+    <div class="refine-label">Refine Differential</div>
+    <div class="refine-row">
+      <input type="text" class="refine-input" id="refineInput" placeholder="Add more findings to narrow the differential...">
+      <button class="refine-btn" onclick="refine()">Refine</button>
+    </div>
+  </div>`;
+
+  panel.innerHTML = html;
+
+  // Enter key on refine input
+  document.getElementById('refineInput')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') refine();
+  });
+}
+
+function refine() {
+  const extra = document.getElementById('refineInput')?.value.trim();
+  if (!extra) return;
+  document.getElementById('findings').value = lastFindings + '\n' + extra;
+  generateDifferential();
+}
+
+function esc(s) {
+  return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+// ── History ──
+function saveHistory(entry) {
+  const hist = JSON.parse(localStorage.getItem('radcall_diff_history') || '[]');
+  hist.unshift(entry);
+  if (hist.length > 10) hist.length = 10;
+  localStorage.setItem('radcall_diff_history', JSON.stringify(hist));
+  loadHistory();
+}
+
+function loadHistory() {
+  const hist = JSON.parse(localStorage.getItem('radcall_diff_history') || '[]');
+  const el = document.getElementById('historyList');
+  const section = document.getElementById('historySection');
+  if (!hist.length) { section.style.display = 'none'; return; }
+  section.style.display = 'block';
+  el.innerHTML = hist.map((h, i) => `
+    <div class="history-item" onclick="loadFromHistory(${i})">
+      <div class="hi-tags">
+        ${h.modality ? `<span class="hi-tag">${esc(h.modality)}</span>` : ''}
+        ${h.bodyRegion ? `<span class="hi-tag">${esc(h.bodyRegion)}</span>` : ''}
+      </div>
+      <div class="hi-text">${esc(h.findings.substring(0, 80))}${h.findings.length > 80 ? '...' : ''}</div>
+    </div>
+  `).join('');
+}
+
+function loadFromHistory(idx) {
+  const hist = JSON.parse(localStorage.getItem('radcall_diff_history') || '[]');
+  const h = hist[idx];
+  if (!h) return;
+  document.getElementById('findings').value = h.findings;
+  document.getElementById('bodyRegion').value = h.bodyRegion || '';
+  document.getElementById('modality').value = h.modality || '';
+  generateDifferential();
+}
+
+function toggleHistory() {
+  const toggle = document.getElementById('historyToggle');
+  const list = document.getElementById('historyList');
+  toggle.classList.toggle('open');
+  list.classList.toggle('open');
+}
+
+// ── Init ──
+initApp();
+</script>
+</body>
+</html>

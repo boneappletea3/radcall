@@ -1,0 +1,13 @@
+# Sensitive / credentials
+supabase-auth.js
+supabase-migration.sql
+supabase/
+
+# Local dev
+server.py
+.DS_Store
+*.py
+
+# Legacy / working files
+legacy-cases.json
+acgme-data.js

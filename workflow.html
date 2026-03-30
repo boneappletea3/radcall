@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workflow Tools — RadCall Pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #0b0f14;
+  --warm-white: #111620;
+  --slate: #e2e8f0;
+  --slate-mid: #94a3b8;
+  --slate-light: #cbd5e1;
+  --muted: #64748b;
+  --border: #1e2737;
+  --border-strong: #2a3444;
+  --teal: #14b8a6;
+  --teal-light: rgba(20,184,166,0.1);
+  --teal-mid: #2dd4bf;
+  --amber: #f59e0b;
+  --amber-light: rgba(245,158,11,0.1);
+  --red: #ef4444;
+  --red-light: rgba(239,68,68,0.08);
+  --green: #22c55e;
+  --green-light: rgba(34,197,94,0.1);
+  --purple: #a855f7;
+  --purple-light: rgba(168,85,247,0.1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  background: var(--cream);
+  color: var(--slate);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ── TOP NAV ── */
+.topnav {
+  background: var(--warm-white);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+.logo-icon {
+  width: 32px; height: 32px; background: var(--teal); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: white; letter-spacing: 0.02em;
+}
+.logo-text { font-weight: 600; font-size: 15px; color: var(--slate); }
+.logo-sub { font-size: 11px; color: var(--muted); font-weight: 400; }
+.nav-links { display: flex; gap: 4px; flex-shrink: 0; }
+.nav-link {
+  padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500;
+  color: var(--muted); text-decoration: none; transition: background 0.15s, color 0.15s;
+}
+.nav-link:hover { background: var(--teal-light); color: var(--teal); }
+.nav-link.active { background: var(--teal-light); color: var(--teal); }
+.nav-spacer { flex: 1; }
+
+/* ── LAYOUT ── */
+.layout {
+  display: flex;
+  padding-top: 56px;
+  height: 100vh;
+}
+
+/* ── INPUT PANEL ── */
+.input-panel {
+  width: 400px;
+  flex-shrink: 0;
+  background: var(--warm-white);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  height: calc(100vh - 56px);
+  padding: 24px 20px 40px;
+}
+.input-panel::-webkit-scrollbar { width: 4px; }
+.input-panel::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+
+.panel-title {
+  font-size: 16px; font-weight: 600; color: var(--slate);
+  margin-bottom: 4px;
+}
+.panel-sub {
+  font-size: 12px; color: var(--muted); margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.field { margin-bottom: 14px; }
+.field label {
+  display: block; font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--muted); margin-bottom: 5px;
+}
+.field select, .field textarea, .field input[type="text"] {
+  width: 100%; padding: 9px 11px; background: var(--cream);
+  border: 1.5px solid var(--border-strong); border-radius: 8px;
+  color: var(--slate); font-family: inherit; font-size: 13px;
+  outline: none; transition: border-color 0.2s; resize: vertical;
+}
+.field select { cursor: pointer; }
+.field select:focus, .field textarea:focus, .field input[type="text"]:focus { border-color: var(--teal); }
+.field textarea { min-height: 130px; line-height: 1.6; }
+
+/* ── CHECKBOX GRID ── */
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--slate-mid);
+  user-select: none;
+}
+.checkbox-item:hover {
+  border-color: var(--teal);
+  color: var(--slate);
+}
+.checkbox-item input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 4px;
+  background: var(--cream);
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+.checkbox-item input[type="checkbox"]:checked {
+  background: var(--teal);
+  border-color: var(--teal);
+}
+.checkbox-item input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 1px; left: 3px;
+  width: 5px; height: 8px;
+  border: 2px solid white;
+  border-top: none; border-left: none;
+  transform: rotate(45deg);
+}
+.checkbox-item.checked {
+  border-color: rgba(20,184,166,0.4);
+  background: var(--teal-light);
+  color: var(--slate);
+}
+
+/* ── SUBMIT ── */
+.submit-btn {
+  width: 100%; padding: 12px; border: none; border-radius: 10px;
+  background: var(--teal); color: white; font-family: inherit;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: background 0.15s; display: flex;
+  align-items: center; justify-content: center; gap: 8px;
+  margin-top: 4px;
+}
+.submit-btn:hover { background: #0d9488; }
+.submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.spinner {
+  width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white; border-radius: 50%;
+  animation: spin 0.7s linear infinite; display: none;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.submit-btn.loading .spinner { display: block; }
+
+/* ── RESULTS PANEL ── */
+.results-panel {
+  flex: 1;
+  overflow-y: auto;
+  height: calc(100vh - 56px);
+  padding: 28px 28px 60px;
+}
+.results-panel::-webkit-scrollbar { width: 6px; }
+.results-panel::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+
+/* Empty state */
+.empty-state {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; height: 100%; text-align: center;
+  color: var(--muted); padding: 40px;
+}
+.empty-icon { font-size: 56px; margin-bottom: 16px; opacity: 0.6; }
+.empty-state h3 { font-size: 18px; color: var(--slate); margin-bottom: 8px; }
+.empty-state p { max-width: 380px; line-height: 1.7; font-size: 14px; }
+
+/* Loading skeleton */
+.skeleton-card {
+  background: var(--warm-white); border: 1px solid var(--border);
+  border-radius: 10px; height: 110px; margin-bottom: 12px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+@keyframes skeleton-pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+
+/* Summary card */
+.summary-card {
+  background: var(--teal-light); border: 1px solid rgba(20,184,166,0.2);
+  border-radius: 10px; padding: 16px 20px; margin-bottom: 20px;
+}
+.summary-title {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--teal); margin-bottom: 8px;
+}
+.summary-text { font-size: 14px; color: var(--slate); line-height: 1.6; }
+
+/* Key Mappings Table */
+.mappings-section { margin-bottom: 20px; }
+.mappings-label {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px;
+}
+.mappings-table {
+  width: 100%; border-collapse: collapse;
+  background: var(--warm-white); border-radius: 10px;
+  overflow: hidden; border: 1px solid var(--border);
+}
+.mappings-table thead tr {
+  background: rgba(20,184,166,0.08);
+}
+.mappings-table th {
+  padding: 10px 14px; text-align: left;
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--teal);
+  border-bottom: 1px solid var(--border);
+}
+.mappings-table td {
+  padding: 9px 14px; font-size: 13px;
+  border-bottom: 1px solid var(--border);
+  color: var(--slate-mid);
+}
+.mappings-table tbody tr:last-child td { border-bottom: none; }
+.mappings-table tbody tr:nth-child(even) { background: rgba(255,255,255,0.015); }
+.mappings-table td:first-child {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px; color: var(--teal-mid);
+  font-weight: 500; white-space: nowrap;
+}
+
+/* Script block */
+.script-section { margin-bottom: 20px; }
+.script-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px;
+}
+.script-label {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--muted);
+}
+.script-btn-row { display: flex; gap: 8px; }
+.btn-copy {
+  padding: 6px 14px; border: 1.5px solid var(--teal); border-radius: 7px;
+  background: transparent; color: var(--teal); font-family: inherit;
+  font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+}
+.btn-copy:hover { background: var(--teal-light); }
+.btn-download {
+  padding: 6px 14px; border: 1.5px solid var(--teal); border-radius: 7px;
+  background: var(--teal); color: white; font-family: inherit;
+  font-size: 12px; font-weight: 600; cursor: pointer; transition: background 0.15s;
+}
+.btn-download:hover { background: #0d9488; }
+.script-block {
+  background: #070b10;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+  white-space: pre;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: #e2e8f0;
+  line-height: 1.65;
+  max-height: 500px;
+  overflow-y: auto;
+}
+.script-block::-webkit-scrollbar { width: 4px; height: 4px; }
+.script-block::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+
+/* Save to library button */
+.btn-save-library {
+  width: 100%; padding: 10px; border: 1.5px solid var(--purple); border-radius: 8px;
+  background: transparent; color: var(--purple); font-family: inherit;
+  font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+  margin-bottom: 32px;
+}
+.btn-save-library:hover { background: var(--purple-light); }
+
+/* Library section */
+.library-section {
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+.library-toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; font-size: 12px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--muted); margin-bottom: 10px;
+}
+.library-toggle .chevron { transition: transform 0.2s; font-size: 10px; }
+.library-toggle.open .chevron { transform: rotate(180deg); }
+.library-list { display: none; }
+.library-list.open { display: flex; flex-direction: column; gap: 8px; }
+.library-item {
+  background: var(--warm-white); border: 1px solid var(--border);
+  border-radius: 9px; padding: 12px 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.library-item-info { flex: 1; min-width: 0; }
+.library-item-name {
+  font-size: 13px; font-weight: 600; color: var(--slate);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+.library-item-date { font-size: 11px; color: var(--muted); }
+.library-item-btns { display: flex; gap: 6px; flex-shrink: 0; }
+.lib-btn {
+  padding: 4px 10px; border-radius: 6px; font-family: inherit;
+  font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+}
+.lib-btn-load {
+  border: 1.5px solid var(--teal); background: transparent; color: var(--teal);
+}
+.lib-btn-load:hover { background: var(--teal-light); }
+.lib-btn-delete {
+  border: 1.5px solid rgba(239,68,68,0.4); background: transparent; color: var(--red);
+}
+.lib-btn-delete:hover { background: var(--red-light); }
+
+/* Error card */
+.error-card {
+  background: var(--red-light); border: 1px solid rgba(239,68,68,0.2);
+  border-radius: 10px; padding: 16px 20px; color: var(--red); font-size: 14px;
+}
+
+/* ── TOOL TABS ── */
+.tool-tabs {
+  display: flex; gap: 4px; margin-bottom: 20px;
+  background: var(--cream); border-radius: 10px; padding: 4px;
+  border: 1px solid var(--border);
+}
+.tool-tab {
+  flex: 1; padding: 8px 10px; border: none; border-radius: 7px;
+  font-family: inherit; font-size: 12px; font-weight: 600;
+  cursor: pointer; transition: all 0.15s; color: var(--muted);
+  background: transparent;
+}
+.tool-tab:hover { color: var(--slate); background: rgba(255,255,255,0.04); }
+.tool-tab.active { background: var(--teal); color: white; }
+
+/* ── POWERSCRIBE TEMPLATE BLOCK ── */
+.template-block {
+  background: #070b10; border: 1px solid var(--border-strong);
+  border-radius: 8px; padding: 16px; white-space: pre-wrap;
+  font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+  color: #e2e8f0; line-height: 1.7; max-height: 600px;
+  overflow-y: auto;
+}
+.template-block::-webkit-scrollbar { width: 4px; }
+.template-block::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+.trigger-pill {
+  display: inline-block; background: var(--teal-light); color: var(--teal);
+  border: 1px solid rgba(20,184,166,0.3); border-radius: 6px;
+  font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600;
+  padding: 3px 10px; margin-left: 8px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .layout { flex-direction: column; }
+  .input-panel { width: 100%; height: auto; max-height: 55vh; border-right: none; border-bottom: 1px solid var(--border); }
+  .results-panel { height: auto; flex: 1; }
+}
+@media (max-width: 600px) {
+  .logo-sub { display: none; }
+  .checkbox-grid { grid-template-columns: 1fr; }
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-auth.js"></script>
+<script src="acgme-data.js"></script>
+</head>
+<body>
+
+<nav class="topnav">
+  <a class="logo" href="rad-call-reference(3).html">
+    <div class="logo-icon">RC</div>
+    <div>
+      <div class="logo-text">RadCall</div>
+      <div class="logo-sub">Pro</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="differential.html" class="nav-link">Differential Dx</a>
+    <a href="case-log.html" class="nav-link">Case Log</a>
+    <a href="workflow.html" class="nav-link active">Workflow Tools</a>
+  </div>
+  <div class="nav-spacer"></div>
+</nav>
+
+<div class="layout">
+
+  <!-- INPUT PANEL -->
+  <div class="input-panel">
+
+    <div class="tool-tabs">
+      <button class="tool-tab active" id="tab-ahk" onclick="switchTab('ahk')">AHK Script</button>
+      <button class="tool-tab" id="tab-ps" onclick="switchTab('ps')">PowerScribe</button>
+    </div>
+
+    <!-- ── AHK FORM ── -->
+    <div id="ahkForm">
+      <div class="panel-title">AHK Script Generator</div>
+      <div class="panel-sub">Describe your desired macros — get a ready-to-use AutoHotkey v2 script</div>
+
+      <div class="field">
+        <label>Script Name</label>
+        <input type="text" id="scriptName" placeholder="e.g. Radiology Macropad Setup">
+      </div>
+
+      <div class="field">
+        <label>Device Type</label>
+        <select id="deviceType">
+          <option value="Generic USB Numpad Macropad">Generic USB Numpad Macropad</option>
+          <option value="Stream Deck (Elgato)">Stream Deck (Elgato)</option>
+          <option value="Logitech G-series Keys">Logitech G-series Keys</option>
+          <option value="X-Keys Pad">X-Keys Pad</option>
+          <option value="Programmable Mouse (extra buttons)">Programmable Mouse (extra buttons)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Target Software</label>
+        <div class="checkbox-grid" id="targetGrid">
+          <label class="checkbox-item checked">
+            <input type="checkbox" value="PowerScribe" checked onchange="syncCheckboxItem(this)">
+            PowerScribe
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" value="Sectra IDS7" onchange="syncCheckboxItem(this)">
+            Sectra IDS7
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" value="Philips IntelliSpace" onchange="syncCheckboxItem(this)">
+            Philips IntelliSpace
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" value="Visage 7" onchange="syncCheckboxItem(this)">
+            Visage 7
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Macro Description</label>
+        <textarea id="description" rows="6" placeholder="Describe what you want each button/key to do. e.g.:&#10;- Button 1: Sign the PowerScribe report&#10;- Button 2: Lung window preset in PACS&#10;- Button 3: Pan tool&#10;- Button 4: Insert normal chest CT phrase&#10;- Button 5: Scroll to next series"></textarea>
+      </div>
+
+      <button class="submit-btn" id="generateBtn" onclick="generateScript()">
+        <span class="spinner"></span>
+        <span id="generateText">Generate AHK Script</span>
+      </button>
+    </div>
+
+    <!-- ── POWERSCRIBE FORM ── -->
+    <div id="psForm" style="display:none">
+      <div class="panel-title">PowerScribe Template Generator</div>
+      <div class="panel-sub">Generate structured report templates and autotext entries for PowerScribe</div>
+
+      <div class="field">
+        <label>Template Name / Trigger Word</label>
+        <input type="text" id="psName" placeholder="e.g. nchest, abdct-normal, ctpe">
+      </div>
+
+      <div class="field">
+        <label>Template Type</label>
+        <select id="psType">
+          <option value="Normal Study">Normal Study (complete normal report)</option>
+          <option value="Structured Report">Structured Report (with findings fields)</option>
+          <option value="Autotext Snippet">Autotext Snippet (short expandable phrase)</option>
+          <option value="Critical Finding">Critical Finding Template</option>
+          <option value="Addendum">Addendum Template</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Modality</label>
+        <select id="psModality">
+          <option value="CT">CT</option>
+          <option value="MRI">MRI</option>
+          <option value="Ultrasound">Ultrasound</option>
+          <option value="X-Ray">X-Ray / Radiograph</option>
+          <option value="Fluoroscopy">Fluoroscopy</option>
+          <option value="PET-CT">PET-CT</option>
+          <option value="Nuclear Medicine">Nuclear Medicine</option>
+          <option value="Mammography">Mammography</option>
+          <option value="Angiography">Angiography / Interventional</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Body Region</label>
+        <select id="psRegion">
+          <option value="Chest">Chest</option>
+          <option value="Abdomen and Pelvis">Abdomen and Pelvis</option>
+          <option value="Abdomen">Abdomen</option>
+          <option value="Pelvis">Pelvis</option>
+          <option value="Head and Neck">Head and Neck</option>
+          <option value="Brain">Brain</option>
+          <option value="Spine - Cervical">Spine — Cervical</option>
+          <option value="Spine - Thoracic">Spine — Thoracic</option>
+          <option value="Spine - Lumbar">Spine — Lumbar</option>
+          <option value="Chest, Abdomen and Pelvis">Chest, Abdomen and Pelvis</option>
+          <option value="Musculoskeletal">Musculoskeletal</option>
+          <option value="Vascular">Vascular</option>
+          <option value="Breast">Breast</option>
+          <option value="Cardiac">Cardiac</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Contrast</label>
+        <select id="psContrast">
+          <option value="without contrast">Without contrast</option>
+          <option value="with contrast">With contrast</option>
+          <option value="with and without contrast">With and without contrast</option>
+          <option value="">Not applicable</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Style</label>
+        <select id="psStyle">
+          <option value="Standard">Standard (section headers + prose)</option>
+          <option value="Concise">Concise (brief, essentials only)</option>
+          <option value="Detailed">Detailed (organ-by-organ systematic)</option>
+          <option value="RADS Structured">RADS Structured (LI-RADS / BI-RADS / PI-RADS etc.)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Additional Context <span style="color:var(--muted);font-weight:400;text-transform:none">(optional)</span></label>
+        <textarea id="psContext" rows="4" placeholder="e.g. Include PE protocol technique, add hepatic protocol phases, mention CTA runoff approach, specific phrasing preferences..."></textarea>
+      </div>
+
+      <button class="submit-btn" id="psGenerateBtn" onclick="generatePSTemplate()">
+        <span class="spinner" id="psSpinner"></span>
+        <span id="psGenerateText">Generate Template</span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- RESULTS PANEL -->
+  <div class="results-panel" id="resultsPanel">
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">⌨️</div>
+      <h3>AHK Script Generator</h3>
+      <p>Select your device type and target software, then describe what you want each button to do. Claude will generate a ready-to-use AutoHotkey v2 script.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const SUPABASE_FN_URL = 'https://ovinsgofjbgzdrklwjok.supabase.co/functions/v1/workflow';
+
+let currentScript = '';
+let currentScriptName = '';
+
+// ── Auth Gate ──
+async function initApp() {
+  if (window.RadCallAuth && !RadCallAuth._notConfigured && RadCallAuth.supabase) {
+    try {
+      await RadCallAuth.requireAuth();
+    } catch (e) {
+      console.warn('Auth not available');
+    }
+  }
+  loadLibrary();
+}
+
+// ── Checkbox sync ──
+function syncCheckboxItem(input) {
+  const label = input.closest('.checkbox-item');
+  if (input.checked) {
+    label.classList.add('checked');
+  } else {
+    label.classList.remove('checked');
+  }
+}
+
+// ── Generate ──
+async function generateScript() {
+  const scriptName = document.getElementById('scriptName').value.trim();
+  const deviceType = document.getElementById('deviceType').value;
+  const description = document.getElementById('description').value.trim();
+
+  const targetCheckboxes = document.querySelectorAll('#targetGrid input[type="checkbox"]:checked');
+  const targets = Array.from(targetCheckboxes).map(cb => cb.value);
+
+  if (!description) {
+    alert('Please describe the macros you want.');
+    return;
+  }
+
+  const btn = document.getElementById('generateBtn');
+  const panel = document.getElementById('resultsPanel');
+
+  btn.disabled = true;
+  btn.classList.add('loading');
+  document.getElementById('generateText').textContent = 'Generating...';
+
+  panel.innerHTML = `
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card" style="animation-delay:0.2s"></div>
+    <div class="skeleton-card" style="animation-delay:0.4s"></div>
+  `;
+
+  try {
+    let headers = { 'Content-Type': 'application/json' };
+    if (window.RadCallAuth && RadCallAuth.supabase) {
+      const { data: { session } } = await RadCallAuth.supabase.auth.getSession();
+      if (session) headers['Authorization'] = 'Bearer ' + session.access_token;
+    }
+
+    const body = { scriptName, deviceType, targets, description };
+
+    const res = await fetch(SUPABASE_FN_URL, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || err.message || `Request failed: ${res.status}`);
+    }
+
+    const data = await res.json();
+    currentScriptName = scriptName || 'radiology-macros';
+    renderResult(data);
+
+  } catch (err) {
+    panel.innerHTML = `<div class="error-card">Error: ${esc(err.message)}</div>`;
+  } finally {
+    btn.disabled = false;
+    btn.classList.remove('loading');
+    document.getElementById('generateText').textContent = 'Generate AHK Script';
+  }
+}
+
+// ── Render Result ──
+function renderResult(data) {
+  const panel = document.getElementById('resultsPanel');
+
+  if (data.raw) {
+    panel.innerHTML = `
+      <div class="summary-card">
+        <div class="summary-title">Response</div>
+        <div class="summary-text" style="white-space:pre-wrap;font-family:'IBM Plex Mono',monospace;font-size:12px">${esc(data.raw)}</div>
+      </div>`;
+    return;
+  }
+
+  currentScript = data.script || '';
+
+  let html = '';
+
+  // Summary card
+  if (data.summary) {
+    html += `<div class="summary-card">
+      <div class="summary-title">Script Summary</div>
+      <div class="summary-text">${esc(data.summary)}</div>
+    </div>`;
+  }
+
+  // Key mappings table
+  if (data.keyMappings && data.keyMappings.length) {
+    html += `<div class="mappings-section">
+      <div class="mappings-label">Key Mappings</div>
+      <table class="mappings-table">
+        <thead>
+          <tr>
+            <th>Key / Button</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${data.keyMappings.map(m => `
+            <tr>
+              <td>${esc(m.key || '')}</td>
+              <td>${esc(m.action || '')}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>`;
+  }
+
+  // Script block
+  if (data.script) {
+    html += `<div class="script-section">
+      <div class="script-header">
+        <div class="script-label">AutoHotkey v2 Script</div>
+        <div class="script-btn-row">
+          <button class="btn-copy" id="copyBtn" onclick="copyScript()">Copy Script</button>
+          <button class="btn-download" onclick="downloadScript()">Download .ahk</button>
+        </div>
+      </div>
+      <div class="script-block" id="scriptBlock">${esc(data.script)}</div>
+    </div>
+    <button class="btn-save-library" onclick="saveToLibrary()">Save to Library</button>`;
+  }
+
+  // Library section
+  html += buildLibraryHTML();
+
+  panel.innerHTML = html;
+
+  // Re-init library toggle after render
+  const lt = panel.querySelector('.library-toggle');
+  if (lt) lt.addEventListener('click', toggleLibrary);
+}
+
+// ── Copy / Download ──
+function copyScript() {
+  if (!currentScript) return;
+  navigator.clipboard.writeText(currentScript).then(() => {
+    const btn = document.getElementById('copyBtn');
+    if (btn) {
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = 'Copy Script'; }, 1800);
+    }
+  }).catch(() => {
+    // Fallback for older browsers
+    const ta = document.createElement('textarea');
+    ta.value = currentScript;
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    const btn = document.getElementById('copyBtn');
+    if (btn) {
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = 'Copy Script'; }, 1800);
+    }
+  });
+}
+
+function downloadScript() {
+  if (!currentScript) return;
+  const filename = (currentScriptName || 'radiology-macros')
+    .replace(/[^a-z0-9_\-\s]/gi, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .toLowerCase() + '.ahk';
+  const blob = new Blob([currentScript], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// ── Library ──
+function saveToLibrary() {
+  if (!currentScript) return;
+  const lib = JSON.parse(localStorage.getItem('ahk_library') || '[]');
+  const entry = {
+    name: currentScriptName || 'Untitled Script',
+    script: currentScript,
+    summary: '',
+    keyMappings: [],
+    savedAt: new Date().toISOString()
+  };
+  lib.unshift(entry);
+  if (lib.length > 20) lib.length = 20;
+  localStorage.setItem('ahk_library', JSON.stringify(lib));
+
+  // Update the btn to show feedback
+  const btn = document.querySelector('.btn-save-library');
+  if (btn) {
+    btn.textContent = 'Saved to Library!';
+    btn.style.borderColor = 'var(--teal)';
+    btn.style.color = 'var(--teal)';
+    setTimeout(() => {
+      btn.textContent = 'Save to Library';
+      btn.style.borderColor = '';
+      btn.style.color = '';
+    }, 2000);
+  }
+
+  // Re-render library section in panel
+  const libSection = document.querySelector('.library-section');
+  if (libSection) {
+    libSection.outerHTML = buildLibraryHTML();
+    const lt = document.querySelector('.library-toggle');
+    if (lt) lt.addEventListener('click', toggleLibrary);
+  }
+
+  loadLibrary();
+}
+
+function buildLibraryHTML() {
+  const lib = JSON.parse(localStorage.getItem('ahk_library') || '[]');
+  if (!lib.length) return '';
+
+  const items = lib.map((entry, i) => {
+    const date = new Date(entry.savedAt).toLocaleDateString('en-US', {
+      month: 'short', day: 'numeric', year: 'numeric'
+    });
+    return `<div class="library-item">
+      <div class="library-item-info">
+        <div class="library-item-name">${esc(entry.name || 'Untitled Script')}</div>
+        <div class="library-item-date">Saved ${date}</div>
+      </div>
+      <div class="library-item-btns">
+        <button class="lib-btn lib-btn-load" onclick="loadSaved(${i})">Load</button>
+        <button class="lib-btn lib-btn-delete" onclick="deleteSaved(${i})">Delete</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  return `<div class="library-section">
+    <div class="library-toggle" id="libraryToggle">
+      Saved Scripts (${lib.length}) <span class="chevron">&#9660;</span>
+    </div>
+    <div class="library-list" id="libraryList">
+      ${items}
+    </div>
+  </div>`;
+}
+
+function loadLibrary() {
+  // Called on init; if results panel has a library section, refresh it
+  const libSection = document.querySelector('.library-section');
+  if (libSection) {
+    const wasOpen = libSection.querySelector('.library-list.open') !== null;
+    libSection.outerHTML = buildLibraryHTML();
+    const lt = document.querySelector('.library-toggle');
+    if (lt) lt.addEventListener('click', toggleLibrary);
+    if (wasOpen) {
+      const list = document.getElementById('libraryList');
+      const toggle = document.getElementById('libraryToggle');
+      if (list) list.classList.add('open');
+      if (toggle) toggle.classList.add('open');
+    }
+  }
+}
+
+function loadSaved(index) {
+  const lib = JSON.parse(localStorage.getItem('ahk_library') || '[]');
+  const entry = lib[index];
+  if (!entry) return;
+  currentScript = entry.script || '';
+  currentScriptName = entry.name || 'Untitled Script';
+
+  // Render minimal result view with just the script
+  renderResult({
+    summary: entry.summary || null,
+    keyMappings: entry.keyMappings || [],
+    script: entry.script
+  });
+}
+
+function deleteSaved(index) {
+  const lib = JSON.parse(localStorage.getItem('ahk_library') || '[]');
+  lib.splice(index, 1);
+  localStorage.setItem('ahk_library', JSON.stringify(lib));
+  loadLibrary();
+
+  // If library section exists in panel, re-render it
+  const libSection = document.querySelector('.library-section');
+  if (libSection) {
+    libSection.outerHTML = buildLibraryHTML();
+    const lt = document.querySelector('.library-toggle');
+    if (lt) lt.addEventListener('click', toggleLibrary);
+  }
+}
+
+function toggleLibrary() {
+  const toggle = document.getElementById('libraryToggle');
+  const list = document.getElementById('libraryList');
+  if (!toggle || !list) return;
+  toggle.classList.toggle('open');
+  list.classList.toggle('open');
+}
+
+// ── Tab Switcher ──
+function switchTab(tab) {
+  document.getElementById('ahkForm').style.display = tab === 'ahk' ? '' : 'none';
+  document.getElementById('psForm').style.display  = tab === 'ps'  ? '' : 'none';
+  document.getElementById('tab-ahk').classList.toggle('active', tab === 'ahk');
+  document.getElementById('tab-ps').classList.toggle('active',  tab === 'ps');
+  document.getElementById('resultsPanel').innerHTML = `<div class="empty-state" id="emptyState">
+    <div class="empty-icon">${tab === 'ps' ? '📋' : '⌨️'}</div>
+    <h3>${tab === 'ps' ? 'PowerScribe Template Generator' : 'AHK Script Generator'}</h3>
+    <p>${tab === 'ps'
+      ? 'Select modality, body region, and template style — Claude will generate a complete PowerScribe report template ready to paste or import.'
+      : 'Select your device type and target software, then describe what you want each button to do.'}</p>
+  </div>`;
+}
+
+// ── PowerScribe Generate ──
+let currentTemplate = '';
+let currentPsName = '';
+
+async function generatePSTemplate() {
+  const psName    = document.getElementById('psName').value.trim();
+  const psType    = document.getElementById('psType').value;
+  const modality  = document.getElementById('psModality').value;
+  const region    = document.getElementById('psRegion').value;
+  const contrast  = document.getElementById('psContrast').value;
+  const style     = document.getElementById('psStyle').value;
+  const context   = document.getElementById('psContext').value.trim();
+
+  const btn    = document.getElementById('psGenerateBtn');
+  const panel  = document.getElementById('resultsPanel');
+
+  btn.disabled = true;
+  btn.classList.add('loading');
+  document.getElementById('psGenerateText').textContent = 'Generating...';
+
+  panel.innerHTML = `
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card" style="animation-delay:0.2s"></div>
+    <div class="skeleton-card" style="animation-delay:0.4s"></div>
+  `;
+
+  try {
+    let headers = { 'Content-Type': 'application/json' };
+    if (window.RadCallAuth && RadCallAuth.supabase) {
+      const { data: { session } } = await RadCallAuth.supabase.auth.getSession();
+      if (session) headers['Authorization'] = 'Bearer ' + session.access_token;
+    }
+
+    const res = await fetch(SUPABASE_FN_URL, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ type: 'powerscribe', psName, psType, modality, region, contrast, style, context })
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || err.message || `Request failed: ${res.status}`);
+    }
+
+    const data = await res.json();
+    currentPsName = psName || `${modality.toLowerCase()}-${region.toLowerCase().replace(/\s+/g,'-')}`;
+    renderPSResult(data);
+
+  } catch (err) {
+    panel.innerHTML = `<div class="error-card">Error: ${esc(err.message)}</div>`;
+  } finally {
+    btn.disabled = false;
+    btn.classList.remove('loading');
+    document.getElementById('psGenerateText').textContent = 'Generate Template';
+  }
+}
+
+// ── Render PowerScribe Result ──
+function renderPSResult(data) {
+  const panel = document.getElementById('resultsPanel');
+  currentTemplate = data.template || data.raw || '';
+
+  let html = '';
+
+  if (data.summary) {
+    const triggerHtml = data.triggerWord
+      ? `<span class="trigger-pill">${esc(data.triggerWord)}</span>` : '';
+    html += `<div class="summary-card">
+      <div class="summary-title">Template Summary ${triggerHtml}</div>
+      <div class="summary-text">${esc(data.summary)}</div>
+    </div>`;
+  }
+
+  if (currentTemplate) {
+    html += `<div class="script-section">
+      <div class="script-header">
+        <div class="script-label">PowerScribe Template</div>
+        <div class="script-btn-row">
+          <button class="btn-copy" id="psCopyBtn" onclick="copyTemplate()">Copy</button>
+          <button class="btn-download" onclick="downloadTemplate()">Download .txt</button>
+        </div>
+      </div>
+      <div class="template-block" id="templateBlock">${esc(currentTemplate)}</div>
+    </div>
+    <button class="btn-save-library" style="border-color:var(--amber);color:var(--amber)" onclick="savePSToLibrary()">Save to Library</button>`;
+  }
+
+  html += buildPSLibraryHTML();
+  panel.innerHTML = html;
+
+  const lt = panel.querySelector('.library-toggle');
+  if (lt) lt.addEventListener('click', togglePSLibrary);
+}
+
+function copyTemplate() {
+  if (!currentTemplate) return;
+  navigator.clipboard.writeText(currentTemplate).then(() => {
+    const btn = document.getElementById('psCopyBtn');
+    if (btn) { btn.textContent = 'Copied!'; setTimeout(() => { btn.textContent = 'Copy'; }, 1800); }
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = currentTemplate; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    const btn = document.getElementById('psCopyBtn');
+    if (btn) { btn.textContent = 'Copied!'; setTimeout(() => { btn.textContent = 'Copy'; }, 1800); }
+  });
+}
+
+function downloadTemplate() {
+  if (!currentTemplate) return;
+  const filename = (currentPsName || 'powerscribe-template')
+    .replace(/[^a-z0-9_\-\s]/gi, '').trim().replace(/\s+/g, '-').toLowerCase() + '.txt';
+  const blob = new Blob([currentTemplate], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function savePSToLibrary() {
+  if (!currentTemplate) return;
+  const lib = JSON.parse(localStorage.getItem('ps_library') || '[]');
+  lib.unshift({ name: currentPsName || 'Untitled Template', template: currentTemplate, savedAt: new Date().toISOString() });
+  if (lib.length > 20) lib.length = 20;
+  localStorage.setItem('ps_library', JSON.stringify(lib));
+  const btn = document.querySelector('.btn-save-library');
+  if (btn) {
+    btn.textContent = 'Saved!';
+    setTimeout(() => { btn.textContent = 'Save to Library'; }, 2000);
+  }
+  const libSection = document.querySelector('.library-section');
+  if (libSection) {
+    libSection.outerHTML = buildPSLibraryHTML();
+    const lt = document.querySelector('.library-toggle');
+    if (lt) lt.addEventListener('click', togglePSLibrary);
+  }
+}
+
+function buildPSLibraryHTML() {
+  const lib = JSON.parse(localStorage.getItem('ps_library') || '[]');
+  if (!lib.length) return '';
+  const items = lib.map((entry, i) => {
+    const date = new Date(entry.savedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return `<div class="library-item">
+      <div class="library-item-info">
+        <div class="library-item-name">${esc(entry.name)}</div>
+        <div class="library-item-date">Saved ${date}</div>
+      </div>
+      <div class="library-item-btns">
+        <button class="lib-btn lib-btn-load" onclick="loadPSSaved(${i})">Load</button>
+        <button class="lib-btn lib-btn-delete" onclick="deletePSSaved(${i})">Delete</button>
+      </div>
+    </div>`;
+  }).join('');
+  return `<div class="library-section">
+    <div class="library-toggle" id="libraryToggle">Saved Templates (${lib.length}) <span class="chevron">&#9660;</span></div>
+    <div class="library-list" id="libraryList">${items}</div>
+  </div>`;
+}
+
+function loadPSSaved(i) {
+  const lib = JSON.parse(localStorage.getItem('ps_library') || '[]');
+  const entry = lib[i]; if (!entry) return;
+  currentTemplate = entry.template; currentPsName = entry.name;
+  renderPSResult({ template: entry.template, summary: null });
+}
+
+function deletePSSaved(i) {
+  const lib = JSON.parse(localStorage.getItem('ps_library') || '[]');
+  lib.splice(i, 1); localStorage.setItem('ps_library', JSON.stringify(lib));
+  const libSection = document.querySelector('.library-section');
+  if (libSection) {
+    libSection.outerHTML = buildPSLibraryHTML();
+    const lt = document.querySelector('.library-toggle');
+    if (lt) lt.addEventListener('click', togglePSLibrary);
+  }
+}
+
+function togglePSLibrary() {
+  const toggle = document.getElementById('libraryToggle');
+  const list = document.getElementById('libraryList');
+  if (!toggle || !list) return;
+  toggle.classList.toggle('open'); list.classList.toggle('open');
+}
+
+// ── XSS escape ──
+function esc(s) {
+  return String(s || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// ── Init ──
+initApp();
+</script>
+</body>
+</html>
