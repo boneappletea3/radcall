@@ -369,18 +369,50 @@
     font-size: 14px; color: var(--text2); max-width: 500px;
     margin: 0 auto 26px; line-height: 1.65;
   }
-  .home-pills {
-    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+  /* ── TIER CARDS ── */
+  .home-tiers {
+    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+    margin-top: 4px;
   }
-  .home-pill {
-    font-size: 11px; font-family: var(--mono);
-    padding: 4px 11px; border-radius: 20px;
-    background: var(--bg4); border: 1px solid var(--border2);
-    color: var(--text2);
+  .tier-card {
+    flex: 1; min-width: 220px; max-width: 300px;
+    background: var(--bg4); border-radius: 10px;
+    padding: 16px 18px; text-align: left;
   }
-  .home-pill.teal { background: var(--teal-bg); border-color: rgba(20,184,166,0.35); color: var(--teal); }
-  .home-pill.blue { background: var(--accent-bg); border-color: rgba(59,130,246,0.35); color: var(--accent2); }
-  .home-pill.purple { background: var(--purple-bg); border-color: rgba(168,85,247,0.35); color: var(--purple); }
+  .tier-card.free { border: 1px solid rgba(20,184,166,0.30); }
+  .tier-card.pro  { border: 1px solid rgba(99,102,241,0.45);
+    background: linear-gradient(145deg, var(--bg4), rgba(99,102,241,0.06)); }
+  .tier-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 10px; font-family: var(--mono); font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 20px; margin-bottom: 12px;
+  }
+  .tier-badge.free { background: var(--teal-bg); color: var(--teal); border: 1px solid rgba(20,184,166,0.35); }
+  .tier-badge.pro  { background: var(--purple-bg); color: var(--purple); border: 1px solid rgba(168,85,247,0.35); }
+  .tier-badge svg  { flex-shrink: 0; }
+  .tier-items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .tier-item {
+    display: flex; align-items: flex-start; gap: 7px;
+    font-size: 12px; color: var(--text2); line-height: 1.4;
+  }
+  .tier-item .ti-icon { flex-shrink: 0; margin-top: 1px; }
+  .ti-check { color: var(--teal); }
+  .ti-star  { color: var(--purple); }
+  .tier-item .ti-soon {
+    font-size: 9px; font-family: var(--mono);
+    background: var(--amber-bg); color: var(--amber);
+    border: 1px solid rgba(245,158,11,0.3);
+    padding: 1px 5px; border-radius: 3px; margin-left: 4px;
+    vertical-align: middle; white-space: nowrap;
+  }
+  .tier-item .ti-beta {
+    font-size: 9px; font-family: var(--mono);
+    background: var(--accent-bg); color: var(--accent2);
+    border: 1px solid rgba(59,130,246,0.3);
+    padding: 1px 5px; border-radius: 3px; margin-left: 4px;
+    vertical-align: middle; white-space: nowrap;
+  }
   .home-section-lbl {
     font-size: 10px; font-weight: 600; letter-spacing: 0.09em;
     color: var(--text3); text-transform: uppercase; margin-bottom: 12px;
@@ -1041,12 +1073,38 @@
       </div>
       <div class="home-hero-tagline">Read more efficiently. Add more value.</div>
       <div class="home-hero-sub">TL;DR rapid references at your fingertips.</div>
-      <div class="home-pills">
-        <span class="home-pill">12 modules</span>
-        <span class="home-pill">200+ topics</span>
-        <span class="home-pill teal">Free · No login required</span>
-        <span class="home-pill blue">Search patterns by modality</span>
-        <span class="home-pill purple">AI differential Dx</span>
+      <div class="home-tiers">
+
+        <!-- FREE -->
+        <div class="tier-card free">
+          <div class="tier-badge free">
+            <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"/><path d="M12 6v6l4 2-1 1.73-4.5-2.6A1 1 0 0 1 10 12V6h2z"/></svg>
+            Free
+          </div>
+          <ul class="tier-items">
+            <li class="tier-item"><svg class="ti-icon ti-check" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>All RadCall topics</li>
+            <li class="tier-item"><svg class="ti-icon ti-check" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Limited search patterns</li>
+            <li class="tier-item"><svg class="ti-icon ti-check" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Basic fluoroscopy guides</li>
+          </ul>
+        </div>
+
+        <!-- PRO -->
+        <div class="tier-card pro">
+          <div class="tier-badge pro">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+            Pro
+          </div>
+          <ul class="tier-items">
+            <li class="tier-item"><svg class="ti-icon ti-star" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>All RadCall topics</li>
+            <li class="tier-item"><svg class="ti-icon ti-star" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>All search patterns</li>
+            <li class="tier-item"><svg class="ti-icon ti-star" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>All fluoroscopy guides</li>
+            <li class="tier-item"><svg class="ti-icon ti-star" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Procedure log</li>
+            <li class="tier-item"><svg class="ti-icon ti-star" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>AI differential generator<span class="ti-beta">beta</span></li>
+            <li class="tier-item"><svg class="ti-icon ti-star" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Procedure guides<span class="ti-soon">soon</span></li>
+            <li class="tier-item"><svg class="ti-icon ti-star" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Workflow tools — AHK scripts &amp; Powerscribe templates<span class="ti-soon">soon</span></li>
+          </ul>
+        </div>
+
       </div>
     </div>
 
