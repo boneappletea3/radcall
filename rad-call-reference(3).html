@@ -903,9 +903,14 @@
     <div class="nav-item nav-has-sub" id="nav-msk" onclick="navSelect('msk')"><span class="nav-dot" style="background:var(--purple)"></span>MSK<span class="nav-arrow">›</span></div>
     <div class="nav-sub-tree" id="navtree-msk"></div>
 
-    <div class="nav-item" onclick="showSection('us')"><span class="nav-dot" style="background:var(--green)"></span>Ultrasound</div>
-    <div class="nav-item" onclick="showSection('peds')"><span class="nav-dot" style="background:var(--red)"></span>Pediatrics</div>
-    <div class="nav-item" onclick="showSection('nucs')"><span class="nav-dot" style="background:var(--amber)"></span>Nuclear Medicine</div>
+    <div class="nav-item nav-has-sub" id="nav-us" onclick="navSelect('us')"><span class="nav-dot" style="background:var(--green)"></span>Ultrasound<span class="nav-arrow">›</span></div>
+    <div class="nav-sub-tree" id="navtree-us"></div>
+
+    <div class="nav-item nav-has-sub" id="nav-peds" onclick="navSelect('peds')"><span class="nav-dot" style="background:var(--red)"></span>Pediatrics<span class="nav-arrow">›</span></div>
+    <div class="nav-sub-tree" id="navtree-peds"></div>
+
+    <div class="nav-item nav-has-sub" id="nav-nucs" onclick="navSelect('nucs')"><span class="nav-dot" style="background:var(--amber)"></span>Nuclear Medicine<span class="nav-arrow">›</span></div>
+    <div class="nav-sub-tree" id="navtree-nucs"></div>
     <div class="nav-item" onclick="showSection('ir')"><span class="nav-dot" style="background:var(--teal)"></span>Interventional Rad.</div>
   </div>
 
@@ -5937,6 +5942,72 @@ const NAV_TREE = {
     { label: 'Pediatrics', first: 'm-salter', topics: [
       { label: 'Salter-Harris', id: 'm-salter' },
       { label: 'SCFE', id: 'm-scfe' },
+    ]},
+  ],
+  us: [
+    { label: 'GYN / OB', first: 'u-adnexal-cyst', topics: [
+      { label: 'Adnexal cyst follow-up', id: 'u-adnexal-cyst' },
+      { label: 'Female repro normals', id: 'u-female-repro' },
+      { label: 'OB / First trimester / PUL', id: 'u-ob' },
+      { label: 'RPOC', id: 'u-rpoc' },
+    ]},
+    { label: 'Abdomen', first: 'u-appendix-us', topics: [
+      { label: 'Appendix', id: 'u-appendix-us' },
+      { label: 'Liver / RUQ normals', id: 'u-liver' },
+      { label: 'Liver transplant', id: 'u-transplant' },
+      { label: 'TIPS evaluation', id: 'u-tips' },
+    ]},
+    { label: 'Vascular / DVT', first: 'u-carotid', topics: [
+      { label: 'Carotid stenosis grading', id: 'u-carotid' },
+      { label: 'Lower extremity DVT', id: 'u-dvt' },
+    ]},
+    { label: 'GU / Retroperitoneal', first: 'u-hydro-us', topics: [
+      { label: 'SFU hydronephrosis grading', id: 'u-hydro-us' },
+      { label: 'Retroperitoneal normals', id: 'u-retro2' },
+      { label: 'Renal transplant', id: 'u-retro' },
+    ]},
+    { label: 'Other', first: 'u-torsion-us', topics: [
+      { label: 'Testicular torsion', id: 'u-torsion-us' },
+    ]},
+  ],
+  peds: [
+    { label: 'Neonatal', first: 'p-chest', topics: [
+      { label: 'Neonatal chest patterns', id: 'p-chest' },
+      { label: 'Lines & tubes', id: 'p-lines' },
+      { label: 'IVH grading', id: 'p-ivh' },
+    ]},
+    { label: 'Abdomen', first: 'p-pyloric-stenosis', topics: [
+      { label: 'Pyloric stenosis', id: 'p-pyloric-stenosis' },
+      { label: 'Intussusception', id: 'p-intussusception' },
+      { label: 'Malrotation', id: 'p-malrot' },
+    ]},
+    { label: 'MSK / Hip', first: 'p-ddh', topics: [
+      { label: 'DDH', id: 'p-ddh' },
+      { label: 'SCFE', id: 'p-scfe' },
+      { label: 'Hydronephrosis (SFU)', id: 'p-hydro' },
+    ]},
+    { label: 'Other', first: 'p-nat', topics: [
+      { label: 'Non-accidental trauma', id: 'p-nat' },
+      { label: 'Craniocervical measurements', id: 'p-craniocervical' },
+      { label: 'Resources', id: 'p-resources' },
+    ]},
+  ],
+  nucs: [
+    { label: 'Pulmonary / Cardiac', first: 'nm-vq', topics: [
+      { label: 'V/Q scan — PE', id: 'nm-vq' },
+    ]},
+    { label: 'Abdomen / GI', first: 'nm-hida', topics: [
+      { label: 'HIDA scan', id: 'nm-hida' },
+      { label: 'GI bleed scan', id: 'nm-gibleed' },
+      { label: 'Meckel\'s scan', id: 'nm-meckel' },
+    ]},
+    { label: 'Neuro / Infection', first: 'nm-braindeath', topics: [
+      { label: 'Brain death study', id: 'nm-braindeath' },
+      { label: 'WBC & gallium scans', id: 'nm-wbc' },
+    ]},
+    { label: 'GU / Bone', first: 'nm-renal', topics: [
+      { label: 'Renal scan (MAG3)', id: 'nm-renal' },
+      { label: 'Bone scan', id: 'nm-bone' },
     ]},
   ],
 };
