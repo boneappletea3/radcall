@@ -624,6 +624,25 @@
   .sp-ref-link:hover { background: rgba(59,130,246,0.2); }
   .sp-ref-link::before { content: "↗"; font-size: 10px; opacity: 0.75; }
 
+/* ── Search Patterns — modality accordion + search bar ──────────────────── */
+  .sp-search-wrap { position: relative; padding: 4px 0 10px; }
+  .sp-search-icon { position: absolute; left: 9px; top: 50%; transform: translateY(-20%); color: var(--text3); font-size: 12px; pointer-events: none; }
+  .sp-search-input { width: 100%; box-sizing: border-box; padding: 6px 10px 6px 28px; background: var(--card); border: 1px solid var(--border); border-radius: 6px; color: var(--text1); font-size: 12px; outline: none; }
+  .sp-search-input:focus { border-color: var(--teal); }
+  .sp-search-input::placeholder { color: var(--text3); }
+  .sp-mod-grp { border-bottom: 1px solid var(--border); }
+  .sp-mod-grp.all-hidden { display: none; }
+  .sp-mod-hdr { display: flex; justify-content: space-between; align-items: center; padding: 7px 2px; cursor: pointer; font-size: 12px; font-weight: 600; color: var(--text1); user-select: none; gap: 6px; }
+  .sp-mod-hdr:hover { color: var(--teal); }
+  .sp-mod-arrow { font-size: 13px; color: var(--text3); transition: transform 0.15s; flex-shrink: 0; }
+  .sp-mod-hdr.open .sp-mod-arrow { transform: rotate(90deg); }
+  .sp-mod-body { display: none; padding: 0 0 6px 6px; }
+  .sp-mod-body.open { display: block; }
+  .sp-anat-lbl { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; color: var(--text3); text-transform: uppercase; padding: 6px 0 2px; }
+  .sp-toc-lnk { display: block; padding: 3px 0 3px 4px; font-size: 12px; color: var(--text2); text-decoration: none; cursor: pointer; border-left: 2px solid transparent; transition: color 0.1s, border-color 0.1s; }
+  .sp-toc-lnk:hover { color: var(--teal); border-left-color: var(--teal); }
+  .sp-toc-lnk.sp-hidden { display: none; }
+
 /* ── OpenEvidence ─────────────────────────────────────────────────────────── */
 .header-oe-btn {
   display: flex; align-items: center; gap: 5px;
@@ -4431,71 +4450,126 @@
     </div>
     <div class="toc">
       <div class="toc-title">Studies</div>
-      <div class="toc-cat-lbl">Chest Imaging</div>
-      <div class="toc-list">
-        <a class="toc-link" href="#sp-cxr">CXR (PA)</a>
-        <a class="toc-link" href="#sp-cxrlat">CXR Lateral</a>
-        <a class="toc-link" href="#sp-cxricu">Portable/ICU CXR</a>
-        <a class="toc-link" href="#sp-ctchest">CT Chest</a>
-        <a class="toc-link" href="#sp-ctpa">CT-PA (PE)</a>
-        <a class="toc-link" href="#sp-mrichest">MRI Chest</a>
+      <div class="sp-search-wrap">
+        <span class="sp-search-icon">⌕</span>
+        <input class="sp-search-input" id="sp-search" type="text" placeholder="Search studies…" oninput="spSearch(this.value)" autocomplete="off">
       </div>
-      <div class="toc-cat-lbl">Body Imaging</div>
-      <div class="toc-list">
-        <a class="toc-link" href="#sp-axr">Abdominal X-ray</a>
-        <a class="toc-link" href="#sp-floeso">Fluoroscopic Esophagram</a>
-        <a class="toc-link" href="#sp-flugi">Fluoroscopic Upper GI</a>
-        <a class="toc-link" href="#sp-ctcap">CT CAP</a>
-        <a class="toc-link" href="#sp-ctap">CT Abdomen/Pelvis</a>
-        <a class="toc-link" href="#sp-mriab">MRI Abdomen</a>
-        <a class="toc-link" href="#sp-mripel">MRI Pelvis</a>
-        <a class="toc-link" href="#sp-mripro">MRI Prostate</a>
-        <a class="toc-link" href="#sp-us">US Abdomen</a>
-        <a class="toc-link" href="#sp-fast">FAST Exam</a>
-        <a class="toc-link" href="#sp-uspelvis">US Pelvis</a>
-        <a class="toc-link" href="#sp-mammo">Mammography</a>
+
+      <!-- X-Ray -->
+      <div class="sp-mod-grp" id="spmod-xr">
+        <div class="sp-mod-hdr" onclick="spToggleMod('spmod-xr')">
+          <span><span class="topic-tag tag-blue" style="margin-right:5px;font-size:9px">XR</span>X-Ray</span>
+          <span class="sp-mod-arrow">›</span>
+        </div>
+        <div class="sp-mod-body">
+          <div class="sp-anat-lbl">Chest</div>
+          <a class="sp-toc-lnk" href="#sp-cxr" data-sp="cxr pa chest x-ray">CXR (PA)</a>
+          <a class="sp-toc-lnk" href="#sp-cxrlat" data-sp="cxr lateral chest">CXR Lateral</a>
+          <a class="sp-toc-lnk" href="#sp-cxricu" data-sp="portable icu cxr chest">Portable / ICU CXR</a>
+          <a class="sp-toc-lnk" href="#sp-mammo" data-sp="mammography breast xr">Mammography</a>
+          <div class="sp-anat-lbl">Body</div>
+          <a class="sp-toc-lnk" href="#sp-axr" data-sp="abdominal x-ray axr">Abdominal X-ray</a>
+          <div class="sp-anat-lbl">Spine / Neuro</div>
+          <a class="sp-toc-lnk" href="#sp-skullxr" data-sp="skull x-ray xr">Skull X-ray</a>
+          <a class="sp-toc-lnk" href="#sp-cxrspine" data-sp="cervical spine c-spine x-ray xr">Cervical Spine X-ray</a>
+          <a class="sp-toc-lnk" href="#sp-txrspine" data-sp="thoracic spine t-spine x-ray xr">Thoracic Spine X-ray</a>
+          <a class="sp-toc-lnk" href="#sp-lspine" data-sp="lumbar spine l-spine x-ray xr">Lumbar Spine X-ray</a>
+          <div class="sp-anat-lbl">MSK</div>
+          <a class="sp-toc-lnk" href="#sp-mskgen" data-sp="msk x-ray general approach">MSK X-ray — General</a>
+          <a class="sp-toc-lnk" href="#sp-shoulder" data-sp="shoulder x-ray xr">Shoulder X-ray</a>
+          <a class="sp-toc-lnk" href="#sp-elbow" data-sp="elbow x-ray xr">Elbow X-ray</a>
+          <a class="sp-toc-lnk" href="#sp-wrist" data-sp="wrist hand x-ray xr">Wrist / Hand X-ray</a>
+          <a class="sp-toc-lnk" href="#sp-hip" data-sp="hip pelvis x-ray xr">Hip / Pelvis X-ray</a>
+          <a class="sp-toc-lnk" href="#sp-knee" data-sp="knee x-ray xr">Knee X-ray</a>
+          <a class="sp-toc-lnk" href="#sp-ankle" data-sp="ankle x-ray xr">Ankle X-ray</a>
+          <a class="sp-toc-lnk" href="#sp-foot" data-sp="foot x-ray xr">Foot X-ray</a>
+        </div>
       </div>
-      <div class="toc-cat-lbl">Neuroimaging</div>
-      <div class="toc-list">
-        <a class="toc-link" href="#sp-skullxr">Skull X-ray</a>
-        <a class="toc-link" href="#sp-cxrspine">C-Spine X-ray</a>
-        <a class="toc-link" href="#sp-txrspine">T-Spine X-ray</a>
-        <a class="toc-link" href="#sp-lspine">L-Spine X-ray</a>
-        <a class="toc-link" href="#sp-cthead">CT Head</a>
-        <a class="toc-link" href="#sp-cttemp">CT Temporal Bones</a>
-        <a class="toc-link" href="#sp-ctneck">CT Soft Tissue Neck</a>
-        <a class="toc-link" href="#sp-ctcsp">CT Cervical Spine</a>
-        <a class="toc-link" href="#sp-cttsp">CT Thoracic Spine</a>
-        <a class="toc-link" href="#sp-ctlsp">CT Lumbar Spine</a>
-        <a class="toc-link" href="#sp-ctahn">CTA Head &amp; Neck</a>
-        <a class="toc-link" href="#sp-mribrain">MRI Brain</a>
-        <a class="toc-link" href="#sp-mriseiz">MRI Brain (Seizure)</a>
-        <a class="toc-link" href="#sp-mriorb">MRI Orbits</a>
-        <a class="toc-link" href="#sp-mriac">MRI IAC</a>
-        <a class="toc-link" href="#sp-mripit">MRI Sella/Pituitary</a>
-        <a class="toc-link" href="#sp-mrineuro-neck">MRI Neck</a>
-        <a class="toc-link" href="#sp-mricsp">MRI Cervical Spine</a>
-        <a class="toc-link" href="#sp-mritsp">MRI Thoracic Spine</a>
-        <a class="toc-link" href="#sp-mrilsp">MRI Lumbar Spine</a>
-        <a class="toc-link" href="#sp-mritotsp">MRI Total Spine</a>
+
+      <!-- CT -->
+      <div class="sp-mod-grp" id="spmod-ct">
+        <div class="sp-mod-hdr" onclick="spToggleMod('spmod-ct')">
+          <span><span class="topic-tag tag-teal" style="margin-right:5px;font-size:9px">CT</span>CT</span>
+          <span class="sp-mod-arrow">›</span>
+        </div>
+        <div class="sp-mod-body">
+          <div class="sp-anat-lbl">Chest</div>
+          <a class="sp-toc-lnk" href="#sp-ctchest" data-sp="ct chest">CT Chest</a>
+          <a class="sp-toc-lnk" href="#sp-ctpa" data-sp="ct pulmonary angiography ctpa pe">CT-PA (PE)</a>
+          <div class="sp-anat-lbl">Body</div>
+          <a class="sp-toc-lnk" href="#sp-ctcap" data-sp="ct chest abdomen pelvis cap">CT CAP</a>
+          <a class="sp-toc-lnk" href="#sp-ctap" data-sp="ct abdomen pelvis">CT Abdomen / Pelvis</a>
+          <div class="sp-anat-lbl">Spine / Neuro</div>
+          <a class="sp-toc-lnk" href="#sp-cthead" data-sp="ct head brain">CT Head</a>
+          <a class="sp-toc-lnk" href="#sp-cttemp" data-sp="ct temporal bones">CT Temporal Bones</a>
+          <a class="sp-toc-lnk" href="#sp-ctneck" data-sp="ct soft tissue neck">CT Soft Tissue Neck</a>
+          <a class="sp-toc-lnk" href="#sp-ctcsp" data-sp="ct cervical spine c-spine">CT Cervical Spine</a>
+          <a class="sp-toc-lnk" href="#sp-cttsp" data-sp="ct thoracic spine t-spine">CT Thoracic Spine</a>
+          <a class="sp-toc-lnk" href="#sp-ctlsp" data-sp="ct lumbar spine l-spine">CT Lumbar Spine</a>
+          <a class="sp-toc-lnk" href="#sp-ctahn" data-sp="cta head neck angiography">CTA Head &amp; Neck</a>
+        </div>
       </div>
-      <div class="toc-cat-lbl">MSK Imaging</div>
-      <div class="toc-list">
-        <a class="toc-link" href="#sp-mskgen">MSK X-ray (General)</a>
-        <a class="toc-link" href="#sp-shoulder">Shoulder X-ray</a>
-        <a class="toc-link" href="#sp-elbow">Elbow X-ray</a>
-        <a class="toc-link" href="#sp-wrist">Wrist/Hand X-ray</a>
-        <a class="toc-link" href="#sp-hip">Hip/Pelvis X-ray</a>
-        <a class="toc-link" href="#sp-knee">Knee X-ray</a>
-        <a class="toc-link" href="#sp-ankle">Ankle X-ray</a>
-        <a class="toc-link" href="#sp-foot">Foot X-ray</a>
-        <a class="toc-link" href="#sp-mrishould">MRI Shoulder</a>
-        <a class="toc-link" href="#sp-mrielbow">MRI Elbow</a>
-        <a class="toc-link" href="#sp-mriwrist">MRI Wrist</a>
-        <a class="toc-link" href="#sp-mrihip">MRI Hip &amp; Pelvis</a>
-        <a class="toc-link" href="#sp-mriknee">MRI Knee</a>
-        <a class="toc-link" href="#sp-mrianklems">MRI Ankle</a>
-        <a class="toc-link" href="#sp-mriinfect">MSK MRI — Infection</a>
+
+      <!-- MRI -->
+      <div class="sp-mod-grp" id="spmod-mri">
+        <div class="sp-mod-hdr" onclick="spToggleMod('spmod-mri')">
+          <span><span class="topic-tag tag-purple" style="margin-right:5px;font-size:9px">MRI</span>MRI</span>
+          <span class="sp-mod-arrow">›</span>
+        </div>
+        <div class="sp-mod-body">
+          <div class="sp-anat-lbl">Chest</div>
+          <a class="sp-toc-lnk" href="#sp-mrichest" data-sp="mri chest">MRI Chest</a>
+          <div class="sp-anat-lbl">Body</div>
+          <a class="sp-toc-lnk" href="#sp-mriab" data-sp="mri abdomen">MRI Abdomen</a>
+          <a class="sp-toc-lnk" href="#sp-mripel" data-sp="mri pelvis">MRI Pelvis</a>
+          <a class="sp-toc-lnk" href="#sp-mripro" data-sp="mri prostate mpmri pi-rads">MRI Prostate</a>
+          <div class="sp-anat-lbl">Spine / Neuro</div>
+          <a class="sp-toc-lnk" href="#sp-mribrain" data-sp="mri brain">MRI Brain</a>
+          <a class="sp-toc-lnk" href="#sp-mriseiz" data-sp="mri brain seizure epilepsy">MRI Brain — Seizure</a>
+          <a class="sp-toc-lnk" href="#sp-mriorb" data-sp="mri orbits">MRI Orbits</a>
+          <a class="sp-toc-lnk" href="#sp-mriac" data-sp="mri iac internal auditory canal posterior fossa">MRI IAC / Posterior Fossa</a>
+          <a class="sp-toc-lnk" href="#sp-mripit" data-sp="mri sella pituitary">MRI Sella / Pituitary</a>
+          <a class="sp-toc-lnk" href="#sp-mrineuro-neck" data-sp="mri soft tissue neck">MRI Soft Tissue Neck</a>
+          <a class="sp-toc-lnk" href="#sp-mricsp" data-sp="mri cervical spine c-spine">MRI Cervical Spine</a>
+          <a class="sp-toc-lnk" href="#sp-mritsp" data-sp="mri thoracic spine t-spine">MRI Thoracic Spine</a>
+          <a class="sp-toc-lnk" href="#sp-mrilsp" data-sp="mri lumbar spine l-spine">MRI Lumbar Spine</a>
+          <a class="sp-toc-lnk" href="#sp-mritotsp" data-sp="mri total spine whole spine">MRI Total Spine</a>
+          <div class="sp-anat-lbl">MSK</div>
+          <a class="sp-toc-lnk" href="#sp-mrishould" data-sp="mri shoulder msk">MRI Shoulder</a>
+          <a class="sp-toc-lnk" href="#sp-mrielbow" data-sp="mri elbow msk">MRI Elbow</a>
+          <a class="sp-toc-lnk" href="#sp-mriwrist" data-sp="mri wrist msk">MRI Wrist</a>
+          <a class="sp-toc-lnk" href="#sp-mrihip" data-sp="mri hip pelvis msk">MRI Hip &amp; Pelvis</a>
+          <a class="sp-toc-lnk" href="#sp-mriknee" data-sp="mri knee msk">MRI Knee</a>
+          <a class="sp-toc-lnk" href="#sp-mrianklems" data-sp="mri ankle hindfoot msk">MRI Ankle &amp; Hindfoot</a>
+          <a class="sp-toc-lnk" href="#sp-mriinfect" data-sp="msk mri infection osteomyelitis">MSK MRI — Infection</a>
+        </div>
+      </div>
+
+      <!-- Ultrasound -->
+      <div class="sp-mod-grp" id="spmod-us">
+        <div class="sp-mod-hdr" onclick="spToggleMod('spmod-us')">
+          <span><span class="topic-tag tag-green" style="margin-right:5px;font-size:9px">US</span>Ultrasound</span>
+          <span class="sp-mod-arrow">›</span>
+        </div>
+        <div class="sp-mod-body">
+          <div class="sp-anat-lbl">Body / OB</div>
+          <a class="sp-toc-lnk" href="#sp-us" data-sp="ultrasound abdomen us">US Abdomen</a>
+          <a class="sp-toc-lnk" href="#sp-fast" data-sp="fast exam trauma sonography focused assessment">FAST Exam</a>
+          <a class="sp-toc-lnk" href="#sp-uspelvis" data-sp="ultrasound pelvis ob us">US Pelvis</a>
+        </div>
+      </div>
+
+      <!-- Fluoroscopy -->
+      <div class="sp-mod-grp" id="spmod-fluoro">
+        <div class="sp-mod-hdr" onclick="spToggleMod('spmod-fluoro')">
+          <span><span class="topic-tag tag-amber" style="margin-right:5px;font-size:9px">Fluoro</span>Fluoroscopy</span>
+          <span class="sp-mod-arrow">›</span>
+        </div>
+        <div class="sp-mod-body">
+          <div class="sp-anat-lbl">Body</div>
+          <a class="sp-toc-lnk" href="#sp-floeso" data-sp="fluoroscopic esophagram swallow study">Esophagram</a>
+          <a class="sp-toc-lnk" href="#sp-flugi" data-sp="fluoroscopic upper gi series">Upper GI Series</a>
+        </div>
       </div>
     </div>
     <div class="topic-h" id="sp-cxr">Chest X-Ray (PA) <span class="topic-tag tag-blue">XR</span></div>
@@ -6231,8 +6305,39 @@ function closeLightbox() {
 }
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
 
+// ── Search Patterns — modality accordion + search ────────────────────────
+function spToggleMod(id) {
+  const grp = document.getElementById(id);
+  if (!grp) return;
+  const body = grp.querySelector('.sp-mod-body');
+  const hdr  = grp.querySelector('.sp-mod-hdr');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  hdr.classList.toggle('open', !isOpen);
+}
+
+function spSearch(val) {
+  const q = val.toLowerCase().trim();
+  document.querySelectorAll('.sp-mod-grp').forEach(grp => {
+    let anyVisible = false;
+    grp.querySelectorAll('.sp-toc-lnk').forEach(link => {
+      const text = ((link.dataset.sp || '') + ' ' + link.textContent).toLowerCase();
+      const match = !q || text.includes(q);
+      link.classList.toggle('sp-hidden', !match);
+      if (match) anyVisible = true;
+    });
+    grp.classList.toggle('all-hidden', !anyVisible);
+    if (q) {
+      const body = grp.querySelector('.sp-mod-body');
+      const hdr  = grp.querySelector('.sp-mod-hdr');
+      if (anyVisible) { body.classList.add('open'); hdr.classList.add('open'); }
+      else            { body.classList.remove('open'); hdr.classList.remove('open'); }
+    }
+  });
+}
+
 // OpenEvidence header button — search typed query → active topic → homepage
-document.getElementById('header-oe-btn').addEventListener('click', function(e) {
+document.getElementById('header-oe-btn') && document.getElementById('header-oe-btn').addEventListener('click', function(e) {
   // 1. Use whatever is typed in the search bar
   let q = document.getElementById('search-input').value.trim();
   // 2. Fall back to the last-viewed/navigated topic (set by navigateToTopic & scroll observer)
