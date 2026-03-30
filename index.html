@@ -1793,6 +1793,10 @@ function toggleNavGrp(grpId, section, firstTopic) {
 }
 
 function navSelect(sectionId) {
+  const tree    = document.getElementById('navtree-' + sectionId);
+  const navItem = document.getElementById('nav-' + sectionId);
+  const isOpen  = tree && tree.classList.contains('open');
+
   // Close all other sub-trees
   document.querySelectorAll('.nav-sub-tree').forEach(t => {
     if (t.id !== 'navtree-' + sectionId) { t.classList.remove('open'); }
@@ -1801,20 +1805,24 @@ function navSelect(sectionId) {
     if (item.id !== 'nav-' + sectionId) { item.classList.remove('open', 'active'); }
   });
 
-  const tree = document.getElementById('navtree-' + sectionId);
-  const navItem = document.getElementById('nav-' + sectionId);
+  if (isOpen) {
+    // Toggle off — collapse and return to home
+    tree.classList.remove('open');
+    if (navItem) navItem.classList.remove('open', 'active');
+    showSection('home');
+    return;
+  }
 
   // Build and open tree
   if (tree) {
     if (tree.innerHTML.trim() === '') buildNavTree(sectionId);
     tree.classList.add('open');
-    // Auto-expand all groups so topics are always visible
     tree.querySelectorAll('.nav-sub-topics').forEach(t => t.classList.add('open'));
     tree.querySelectorAll('.nav-sub-grp-hdr').forEach(h => h.classList.add('open'));
   }
   if (navItem) navItem.classList.add('open', 'active');
 
-  showSection(sectionId);  // async — load fires and initAccordions follows
+  showSection(sectionId);
 }
 
 function highlightNavTopic(topicId) {
