@@ -916,8 +916,11 @@
 
   <div class="nav-section">
     <div class="nav-group-label">Quick Reference</div>
-    <div class="nav-item" onclick="showSection('contrast')"><span class="nav-dot"></span>Contrast &amp; Drugs</div>
-    <div class="nav-item" onclick="showSection('incidentaloma')"><span class="nav-dot"></span>Incidentaloma</div>
+    <div class="nav-item nav-has-sub" id="nav-contrast" onclick="navSelect('contrast')"><span class="nav-dot"></span>Contrast &amp; Drugs<span class="nav-arrow">›</span></div>
+    <div class="nav-sub-tree" id="navtree-contrast"></div>
+
+    <div class="nav-item nav-has-sub" id="nav-incidentaloma" onclick="navSelect('incidentaloma')"><span class="nav-dot"></span>Incidentaloma<span class="nav-arrow">›</span></div>
+    <div class="nav-sub-tree" id="navtree-incidentaloma"></div>
     <div class="nav-item" onclick="showSection('mrisafety')"><span class="nav-dot"></span>MRI Safety</div>
     <div class="nav-item" onclick="showSection('anatomy')"><span class="nav-dot"></span>Anatomy Resources</div>
     <div class="nav-item" onclick="showSection('searchpatterns')" style="color:var(--teal)"><span class="nav-dot" style="background:var(--teal)"></span>Search Patterns</div>
@@ -5990,6 +5993,36 @@ const NAV_TREE = {
       { label: 'Non-accidental trauma', id: 'p-nat' },
       { label: 'Craniocervical measurements', id: 'p-craniocervical' },
       { label: 'Resources', id: 'p-resources' },
+    ]},
+  ],
+  contrast: [
+    { label: 'Iodinated Contrast', first: 'cr-reactions', topics: [
+      { label: 'Contrast reactions', id: 'cr-reactions' },
+      { label: 'Premedication', id: 'cr-premed' },
+      { label: 'Renal function', id: 'cr-renal' },
+      { label: 'Extravasation', id: 'cr-extrav' },
+    ]},
+    { label: 'Gadolinium', first: 'cr-gad', topics: [
+      { label: 'Gadolinium & NSF', id: 'cr-gad' },
+    ]},
+  ],
+  incidentaloma: [
+    { label: 'Abdomen', first: 'inc-adrenal', topics: [
+      { label: 'Adrenal mass', id: 'inc-adrenal' },
+      { label: 'Gallbladder & biliary', id: 'inc-gb' },
+      { label: 'Liver lesions', id: 'inc-liver' },
+      { label: 'Pancreatic cysts', id: 'inc-pancreatic' },
+      { label: 'Renal mass', id: 'inc-renal' },
+      { label: 'Splenic lesions', id: 'inc-splenic' },
+      { label: 'Abdominal vasculature', id: 'inc-vasculature' },
+    ]},
+    { label: 'Pelvis / GYN', first: 'inc-adnexal', topics: [
+      { label: 'Adnexal mass', id: 'inc-adnexal' },
+    ]},
+    { label: 'Chest / Head & Neck', first: 'inc-chest-med', topics: [
+      { label: 'Chest & mediastinum', id: 'inc-chest-med' },
+      { label: 'Pituitary', id: 'inc-pituitary' },
+      { label: 'Thyroid nodules', id: 'inc-thyroid' },
     ]},
   ],
   nucs: [
