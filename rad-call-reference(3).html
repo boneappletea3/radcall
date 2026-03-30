@@ -938,7 +938,8 @@
     <div class="nav-sub-tree" id="navtree-incidentaloma"></div>
     <div class="nav-item" onclick="showSection('mrisafety')"><span class="nav-dot"></span>MRI Safety</div>
     <div class="nav-item" onclick="showSection('anatomy')"><span class="nav-dot"></span>Anatomy Resources</div>
-    <div class="nav-item" onclick="showSection('searchpatterns')" style="color:var(--teal)"><span class="nav-dot" style="background:var(--teal)"></span>Search Patterns</div>
+    <div class="nav-item nav-has-sub" id="nav-searchpatterns" onclick="navSelect('searchpatterns')" style="color:var(--teal)"><span class="nav-dot" style="background:var(--teal)"></span>Search Patterns<span class="nav-arrow">›</span></div>
+    <div class="nav-sub-tree" id="navtree-searchpatterns"></div>
   </div>
 
   <div class="nav-section">
@@ -6044,6 +6045,72 @@ const NAV_TREE = {
       { label: 'Chest & mediastinum', id: 'inc-chest-med' },
       { label: 'Pituitary', id: 'inc-pituitary' },
       { label: 'Thyroid nodules', id: 'inc-thyroid' },
+    ]},
+  ],
+  searchpatterns: [
+    { label: 'X-Ray', first: 'sp-cxr', topics: [
+      { label: 'CXR (PA)', id: 'sp-cxr' },
+      { label: 'CXR Lateral', id: 'sp-cxrlat' },
+      { label: 'Portable / ICU CXR', id: 'sp-cxricu' },
+      { label: 'Mammography', id: 'sp-mammo' },
+      { label: 'Abdominal X-ray', id: 'sp-axr' },
+      { label: 'Skull X-ray', id: 'sp-skullxr' },
+      { label: 'Cervical Spine X-ray', id: 'sp-cxrspine' },
+      { label: 'Thoracic Spine X-ray', id: 'sp-txrspine' },
+      { label: 'Lumbar Spine X-ray', id: 'sp-lspine' },
+      { label: 'MSK X-ray — General', id: 'sp-mskgen' },
+      { label: 'Shoulder X-ray', id: 'sp-shoulder' },
+      { label: 'Elbow X-ray', id: 'sp-elbow' },
+      { label: 'Wrist / Hand X-ray', id: 'sp-wrist' },
+      { label: 'Hip / Pelvis X-ray', id: 'sp-hip' },
+      { label: 'Knee X-ray', id: 'sp-knee' },
+      { label: 'Ankle X-ray', id: 'sp-ankle' },
+      { label: 'Foot X-ray', id: 'sp-foot' },
+    ]},
+    { label: 'CT', first: 'sp-ctchest', topics: [
+      { label: 'CT Chest', id: 'sp-ctchest' },
+      { label: 'CT-PA (PE)', id: 'sp-ctpa' },
+      { label: 'CT CAP', id: 'sp-ctcap' },
+      { label: 'CT Abdomen / Pelvis', id: 'sp-ctap' },
+      { label: 'CT Head', id: 'sp-cthead' },
+      { label: 'CT Temporal Bones', id: 'sp-cttemp' },
+      { label: 'CT Soft Tissue Neck', id: 'sp-ctneck' },
+      { label: 'CT Cervical Spine', id: 'sp-ctcsp' },
+      { label: 'CT Thoracic Spine', id: 'sp-cttsp' },
+      { label: 'CT Lumbar Spine', id: 'sp-ctlsp' },
+      { label: 'CTA Head & Neck', id: 'sp-ctahn' },
+    ]},
+    { label: 'MRI', first: 'sp-mrichest', topics: [
+      { label: 'MRI Chest', id: 'sp-mrichest' },
+      { label: 'MRI Abdomen', id: 'sp-mriab' },
+      { label: 'MRI Pelvis', id: 'sp-mripel' },
+      { label: 'MRI Prostate', id: 'sp-mripro' },
+      { label: 'MRI Brain', id: 'sp-mribrain' },
+      { label: 'MRI Brain — Seizure', id: 'sp-mriseiz' },
+      { label: 'MRI Orbits', id: 'sp-mriorb' },
+      { label: 'MRI IAC / Posterior Fossa', id: 'sp-mriac' },
+      { label: 'MRI Sella / Pituitary', id: 'sp-mripit' },
+      { label: 'MRI Soft Tissue Neck', id: 'sp-mrineuro-neck' },
+      { label: 'MRI Cervical Spine', id: 'sp-mricsp' },
+      { label: 'MRI Thoracic Spine', id: 'sp-mritsp' },
+      { label: 'MRI Lumbar Spine', id: 'sp-mrilsp' },
+      { label: 'MRI Total Spine', id: 'sp-mritotsp' },
+      { label: 'MRI Shoulder', id: 'sp-mrishould' },
+      { label: 'MRI Elbow', id: 'sp-mrielbow' },
+      { label: 'MRI Wrist', id: 'sp-mriwrist' },
+      { label: 'MRI Hip & Pelvis', id: 'sp-mrihip' },
+      { label: 'MRI Knee', id: 'sp-mriknee' },
+      { label: 'MRI Ankle & Hindfoot', id: 'sp-mrianklems' },
+      { label: 'MSK MRI — Infection', id: 'sp-mriinfect' },
+    ]},
+    { label: 'Ultrasound', first: 'sp-us', topics: [
+      { label: 'US Abdomen', id: 'sp-us' },
+      { label: 'FAST Exam', id: 'sp-fast' },
+      { label: 'US Pelvis', id: 'sp-uspelvis' },
+    ]},
+    { label: 'Fluoroscopy', first: 'sp-floeso', topics: [
+      { label: 'Esophagram', id: 'sp-floeso' },
+      { label: 'Upper GI Series', id: 'sp-flugi' },
     ]},
   ],
   nucs: [
