@@ -1033,7 +1033,12 @@
     <div class="nav-item nav-has-sub" id="nav-nucs" onclick="navSelect('nucs')"><span class="nav-dot" style="background:var(--amber)"></span>Nuclear Medicine<span class="nav-arrow">›</span></div>
     <div class="nav-sub-tree" id="navtree-nucs"></div>
     <div class="nav-item" onclick="showSection('ir')"><span class="nav-dot" style="background:var(--teal)"></span>Interventional Rad.</div>
-    <div class="nav-item" onclick="showSection('fluoro')"><span class="nav-dot" style="background:var(--teal)"></span>Fluoroscopy Guide</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-group-label">Guides</div>
+    <div class="nav-item nav-has-sub" id="nav-fluoro" onclick="navSelect('fluoro')"><span class="nav-dot" style="background:var(--teal)"></span>Fluoroscopy Guide<span class="nav-arrow">›</span></div>
+    <div class="nav-sub-tree" id="navtree-fluoro"></div>
   </div>
 
   <div class="nav-section">
@@ -1466,6 +1471,18 @@ function collapseAll(sectionEl) {
   sectionEl.querySelectorAll('.topic-toggle').forEach(h => h.classList.remove('expanded'));
 }
 
+// ── ADULT / PEDS TAB SWITCHER (used by sections/fluoro.html) ──
+// Must live here because innerHTML injection does not execute <script> tags
+function apSwitch(btn) {
+  var group = btn.closest('.ap-tabs').dataset.group;
+  var tab = btn.classList.contains('peds') ? 'peds' : 'adult';
+  btn.closest('.ap-tabs').querySelectorAll('.ap-tab').forEach(function(t) { t.classList.remove('active'); });
+  btn.classList.add('active');
+  document.querySelectorAll('.ap-content[data-group="' + group + '"]').forEach(function(c) {
+    c.classList.toggle('active', c.dataset.tab === tab);
+  });
+}
+
 // ── SEARCH ──
 const searchIndex = [
   // NEURO
@@ -1890,6 +1907,28 @@ const NAV_TREE = {
     { label: 'GU / Bone', first: 'nm-renal', topics: [
       { label: 'Renal scan (MAG3)', id: 'nm-renal' },
       { label: 'Bone scan', id: 'nm-bone' },
+    ]},
+  ],
+  fluoro: [
+    { label: 'GI Fluoroscopy', first: 'fl-esoph', topics: [
+      { label: 'Esophagram / Barium Swallow', id: 'fl-esoph' },
+      { label: 'Modified Barium Swallow (MBS)', id: 'fl-mbs' },
+      { label: 'Upper GI Series (UGI)', id: 'fl-ugi' },
+      { label: 'Small Bowel Follow-Through', id: 'fl-sbft' },
+      { label: 'Barium Enema', id: 'fl-be' },
+    ]},
+    { label: 'GU Fluoroscopy', first: 'fl-vcug', topics: [
+      { label: 'VCUG', id: 'fl-vcug' },
+      { label: 'Retrograde Urethrogram (RUG)', id: 'fl-rug' },
+      { label: 'Hysterosalpingogram (HSG)', id: 'fl-hsg' },
+      { label: 'Fistulogram / Sinogram', id: 'fl-fistula' },
+    ]},
+    { label: 'Biliary', first: 'fl-tcholangio', topics: [
+      { label: 'T-Tube Cholangiogram', id: 'fl-tcholangio' },
+    ]},
+    { label: 'MSK / Neuro', first: 'fl-arthro', topics: [
+      { label: 'Joint Arthrogram', id: 'fl-arthro' },
+      { label: 'Lumbar Myelogram / LP', id: 'fl-myelo' },
     ]},
   ],
 };

@@ -1556,15 +1556,3 @@
   </div>
   <div class="dictation-box">Lumbar myelogram was performed under fluoroscopic guidance with intrathecal administration of nonionic contrast at the L3-4 interspace. The thecal sac and nerve root sleeves fill normally at all levels. No evidence of nerve root compression, extradural defect, or intradural filling defect is identified. The thecal sac caliber is normal throughout. The contrast column flows freely without obstruction.</div>
 </div>
-
-<script>
-function apSwitch(btn) {
-  var group = btn.closest('.ap-tabs').dataset.group;
-  var tab = btn.classList.contains('peds') ? 'peds' : 'adult';
-  btn.closest('.ap-tabs').querySelectorAll('.ap-tab').forEach(function(t) { t.classList.remove('active'); });
-  btn.classList.add('active');
-  document.querySelectorAll('.ap-content[data-group="' + group + '"]').forEach(function(c) {
-    c.classList.toggle('active', c.dataset.tab === tab);
-  });
-}
-</script>
