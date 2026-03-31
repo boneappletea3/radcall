@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IR Procedure Averages — RadCall</title>
+<title>Case Dashboard — RadCall</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -68,17 +68,13 @@ body {
 }
 .nav-link:hover { background: var(--teal-light); color: var(--teal); }
 .nav-link.active { background: var(--teal-light); color: var(--teal); }
-.nav-search {
-  margin-left: auto; position: relative;
+.nav-back-btn {
+  margin-left: auto; display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 500;
+  color: var(--muted); text-decoration: none; border: 1px solid var(--border-strong);
+  transition: all 0.15s; flex-shrink: 0;
 }
-.nav-search input {
-  background: var(--cream); border: 1.5px solid var(--border-strong); border-radius: 18px;
-  padding: 6px 14px 6px 34px; font-family: inherit; font-size: 13px;
-  color: var(--slate); outline: none; width: 240px; transition: all 0.2s;
-}
-.nav-search input:focus { border-color: var(--teal); background: #181f2e; width: 300px; }
-.nav-search input::placeholder { color: var(--muted); }
-.nav-search svg { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+.nav-back-btn:hover { color: var(--teal); border-color: var(--teal); background: var(--teal-light); }
 
 /* LAYOUT */
 .layout { display: flex; padding-top: 56px; height: 100vh; }
@@ -241,28 +237,31 @@ body {
 <body>
 
 <nav class="topnav">
-  <a class="logo" href="rad-call-reference(3).html">
-    <div class="logo-icon">IR</div>
-    <div>
-      <div class="logo-text">IR Case Reference</div>
-      <div class="logo-sub">Fellowship Log</div>
-    </div>
+  <a class="logo" href="index.html">
+    <div class="logo-icon">CL</div>
+    <div><div class="logo-text">Case Log</div></div>
   </a>
   <div class="nav-links">
     <a href="case-log.html" class="nav-link">Case Log</a>
-    <a href="procedure-averages.html" class="nav-link active">Procedure Averages</a>
-    <a href="differential.html" class="nav-link">Differential Dx</a>
-    <a href="workflow.html" class="nav-link">Workflow Tools</a>
+    <a href="procedure-averages.html" class="nav-link active">Case Dashboard</a>
   </div>
-  <div class="nav-search">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
-    <input type="text" id="procSearch" placeholder="Search procedures…" autocomplete="off">
-  </div>
+  <a href="index.html" class="nav-back-btn" title="Back to RadCall">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    RadCall
+  </a>
 </nav>
 
 <div class="layout">
   <aside class="sidebar" id="catSidebar"></aside>
-  <div class="proc-list-panel" id="procList"></div>
+  <div class="proc-list-panel" id="procList">
+    <div style="padding:8px 10px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--white);z-index:5">
+      <div style="position:relative">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--muted)"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="procSearch" placeholder="Search…" autocomplete="off" style="width:100%;background:var(--cream);border:1.5px solid var(--border-strong);border-radius:12px;padding:5px 10px 5px 28px;font-family:inherit;font-size:12px;color:var(--slate);outline:none">
+      </div>
+    </div>
+    <div id="procListInner"></div>
+  </div>
   <div class="detail-panel" id="detailPanel">
     <div class="empty">
       <h3>Select a procedure</h3>
@@ -280,13 +279,22 @@ const CATS = Object.keys(DATA).sort((a,b) => {
   return nb - na;
 });
 
-let activeCat = CATS[0];
+let activeCat = '__overview__';
 let activeProc = null;
 let searchQ = '';
 
 // ── SIDEBAR ──
 function buildCatSidebar() {
+  const overviewActive = activeCat === '__overview__' ? 'active' : '';
+  const totalCases = CATS.reduce((s,c)=>s+DATA[c].reduce((ss,p)=>ss+p.count,0),0);
   document.getElementById('catSidebar').innerHTML =
+    `<button class="sb-item ${overviewActive}" data-cat="__overview__" style="border-bottom:1px solid var(--border);margin-bottom:4px">
+      <span class="sb-name" style="display:flex;align-items:center;gap:6px">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Overview
+      </span>
+      <span class="sb-count">${totalCases}</span>
+    </button>` +
     '<div class="sb-heading">Categories</div>' +
     CATS.map(cat => {
       const n = DATA[cat].reduce((s,p)=>s+p.count,0);
@@ -307,13 +315,21 @@ document.getElementById('catSidebar').addEventListener('click', e => {
   document.getElementById('procSearch').value = '';
   buildCatSidebar();
   buildProcList();
-  renderDetail();
+  if (activeCat === '__overview__') {
+    renderOverview();
+  } else {
+    renderDetail();
+  }
 });
 
 // ── PROC LIST ──
 function buildProcList() {
   const procs = getFilteredProcs();
-  const el = document.getElementById('procList');
+  const el = document.getElementById('procListInner');
+  if (!activeCat || activeCat === '__overview__') {
+    el.innerHTML = '';
+    return;
+  }
   if (!procs.length) {
     el.innerHTML = '<div class="no-match">No procedures match your search.</div>';
     return;
@@ -336,7 +352,7 @@ function getFilteredProcs() {
   return procs.filter(p => p.proc.toLowerCase().includes(q));
 }
 
-document.getElementById('procList').addEventListener('click', e => {
+document.getElementById('procListInner').addEventListener('click', e => {
   const btn = e.target.closest('.pl-item');
   if (!btn) return;
   activeProc = btn.dataset.proc;
@@ -347,6 +363,7 @@ document.getElementById('procList').addEventListener('click', e => {
 // ── DETAIL ──
 function renderDetail() {
   const el = document.getElementById('detailPanel');
+  if (activeCat === '__overview__') { renderOverview(); return; }
   if (!activeProc) {
     const procs = DATA[activeCat] || [];
     el.innerHTML = `<div class="empty">
@@ -360,7 +377,7 @@ function renderDetail() {
   if (!d) { el.innerHTML = '<div class="empty"><h3>Not found</h3></div>'; return; }
 
   const hasMeds = d.fent_avg || d.versed_avg || d.dilaudid_avg;
-  const hasTypes = d.ga_pct || d.mac_pct || d.local_pct;
+  const hasTypes = d.ga_pct || d.mac_pct || d.local_pct || d.mod_sed_pct;
 
   // Anesthesia card
   let anesHtml = '';
@@ -368,9 +385,10 @@ function renderDetail() {
     let typeRow = '';
     if (hasTypes) {
       const types = [];
-      if (d.ga_pct) types.push(`<div class="anes-box"><div class="anes-pct">${d.ga_pct}%</div><div class="anes-label">GA</div></div>`);
+      if (d.ga_pct) types.push(`<div class="anes-box"><div class="anes-pct">${d.ga_pct}%</div><div class="anes-label">General</div></div>`);
       if (d.mac_pct) types.push(`<div class="anes-box"><div class="anes-pct">${d.mac_pct}%</div><div class="anes-label">MAC</div></div>`);
       if (d.local_pct) types.push(`<div class="anes-box"><div class="anes-pct">${d.local_pct}%</div><div class="anes-label">Local</div></div>`);
+      if (d.mod_sed_pct) types.push(`<div class="anes-box"><div class="anes-pct">${d.mod_sed_pct}%</div><div class="anes-label">Mod Sed</div></div>`);
       if (types.length) typeRow = `<div class="anes-type-row">${types.join('')}</div>`;
     }
     let medRows = '';
@@ -455,6 +473,266 @@ function renderDetail() {
   `;
 }
 
+// ── OVERVIEW ──
+let _donutChart = null;
+
+function classifyAnesthesia(raw) {
+  const s = String(raw || '').toLowerCase().trim();
+  if (!s) return 'mac';
+  if (/\bgeta\b|\bgeneral\b|\bga\b|\bet\b/.test(s)) return 'general';
+  const hasMod = /versed|midazolam|fentanyl|v\d+mg|f\d+mc?g/.test(s);
+  const hasGA = /geta|general|\bga\b/.test(s);
+  const hasMAC = /\bmac\b/.test(s);
+  if (hasMod && !hasGA && !hasMAC) return 'mod_sed';
+  if (/local/.test(s) && !hasMod && !hasGA) return 'local';
+  if (/\bmac\b/.test(s) || hasMod) return 'mac';
+  return 'mac';
+}
+
+function renderOverview() {
+  const el = document.getElementById('detailPanel');
+
+  // Load cases from localStorage or fallback
+  let cases = [];
+  try {
+    const stored = localStorage.getItem('irCases');
+    if (stored) cases = JSON.parse(stored);
+  } catch(e) {}
+  // If no localStorage data, use DATA object stats
+  const useLive = cases.length > 0;
+
+  // Compute global stats from DATA
+  let totalCases = 0, totalFluoro = 0, totalContrast = 0, totalDose = 0;
+  if (useLive) {
+    totalCases = cases.length;
+    for (const c of cases) {
+      totalFluoro += parseFloat(c['Fluoro Time (min)'] || 0) || 0;
+      totalContrast += parseFloat(c['Contrast Volume (mL)'] || 0) || 0;
+      totalDose += parseFloat(c['Radiation Dose (mGy)'] || 0) || 0;
+    }
+  } else {
+    for (const cat of CATS) {
+      for (const p of DATA[cat]) {
+        totalCases += p.count;
+      }
+    }
+  }
+
+  // Category distribution
+  let catCounts = {};
+  if (useLive) {
+    for (const c of cases) {
+      const cat = c['ACGME Procedure Category'] || 'Unknown';
+      catCounts[cat] = (catCounts[cat] || 0) + 1;
+    }
+  } else {
+    for (const cat of CATS) {
+      catCounts[cat] = DATA[cat].reduce((s,p)=>s+p.count, 0);
+    }
+  }
+  const catEntries = Object.entries(catCounts).sort((a,b)=>b[1]-a[1]);
+  const top5 = catEntries.slice(0, 5);
+  const bottom5 = catEntries.filter(e=>e[1]>0).slice(-5).reverse();
+  const maxCatCount = catEntries[0]?.[1] || 1;
+
+  // Anesthesia breakdown (only if live data)
+  let anesBreak = {mac:0, general:0, local:0, mod_sed:0};
+  if (useLive) {
+    for (const c of cases) {
+      anesBreak[classifyAnesthesia(c['Anesthetic Dose'])]++;
+    }
+  }
+  const anesTot = useLive ? cases.length : 1;
+
+  // Top 5 by procedure name
+  let procCounts = {};
+  if (useLive) {
+    for (const c of cases) {
+      const p = c['Procedure'] || 'Unknown';
+      procCounts[p] = (procCounts[p] || 0) + 1;
+    }
+  } else {
+    for (const cat of CATS) {
+      for (const p of DATA[cat]) {
+        procCounts[p.proc] = (procCounts[p.proc] || 0) + p.count;
+      }
+    }
+  }
+  const topProcs = Object.entries(procCounts).sort((a,b)=>b[1]-a[1]).slice(0, 5);
+  const maxProcCount = topProcs[0]?.[1] || 1;
+
+  const fluoHrs = (totalFluoro / 60).toFixed(1);
+  const contrastL = (totalContrast / 1000).toFixed(2);
+  const doseGy = (totalDose / 1000).toFixed(2);
+
+  const CHART_COLORS = ['#14b8a6','#3b82f6','#a855f7','#f59e0b','#ef4444','#22c55e','#06b6d4','#f97316','#8b5cf6','#ec4899','#84cc16','#0ea5e9'];
+
+  el.innerHTML = `
+<div class="detail-header">
+  <div class="detail-cat">Overview</div>
+  <div class="detail-title">Case Dashboard</div>
+  <div class="detail-meta">Aggregate statistics from your case log</div>
+</div>
+
+<!-- STAT CARDS -->
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:20px 24px 0">
+  <div class="card" style="padding:16px;text-align:center">
+    <div style="font-size:28px;font-weight:700;color:var(--teal)">${totalCases}</div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.06em">Total Cases</div>
+  </div>
+  <div class="card" style="padding:16px;text-align:center">
+    <div style="font-size:28px;font-weight:700;color:var(--blue)">${fluoHrs}<span style="font-size:14px;font-weight:400">h</span></div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.06em">Fluoro Time</div>
+  </div>
+  <div class="card" style="padding:16px;text-align:center">
+    <div style="font-size:28px;font-weight:700;color:var(--purple)">${contrastL}<span style="font-size:14px;font-weight:400">L</span></div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.06em">Contrast Volume</div>
+  </div>
+  <div class="card" style="padding:16px;text-align:center">
+    <div style="font-size:28px;font-weight:700;color:var(--amber)">${doseGy}<span style="font-size:14px;font-weight:400">Gy</span></div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.06em">Radiation Dose</div>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px 24px">
+
+  <!-- DONUT CHART -->
+  <div class="card" style="display:flex;flex-direction:column;align-items:center;padding:20px">
+    <div class="card-label" style="align-self:flex-start"><div class="label-dot" style="background:var(--teal)"></div>Case Distribution by Category</div>
+    <div style="position:relative;width:220px;height:220px;margin:12px 0 8px">
+      <canvas id="overviewDonut" width="220" height="220"></canvas>
+    </div>
+    <div style="width:100%;max-height:160px;overflow-y:auto;font-size:11px">
+      ${catEntries.slice(0,12).map((e,i)=>`
+        <div style="display:flex;align-items:center;gap:6px;padding:2px 0">
+          <div style="width:8px;height:8px;border-radius:2px;flex-shrink:0;background:${CHART_COLORS[i%CHART_COLORS.length]}"></div>
+          <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--slate-light)">${esc(e[0])}</span>
+          <span style="color:var(--muted)">${e[1]}</span>
+        </div>`).join('')}
+    </div>
+  </div>
+
+  <!-- ANESTHESIA -->
+  <div class="card" style="padding:20px">
+    <div class="card-label"><div class="label-dot" style="background:#0d7377"></div>Anesthesia Breakdown</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+      <div style="background:rgba(20,184,166,0.08);border:1px solid rgba(20,184,166,0.2);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:24px;font-weight:700;color:var(--teal)">${useLive?Math.round(anesBreak.mac/anesTot*100):'—'}%</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">MAC</div>
+        ${useLive?`<div style="font-size:10px;color:var(--muted)">${anesBreak.mac} cases</div>`:''}
+      </div>
+      <div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:24px;font-weight:700;color:var(--blue)">${useLive?Math.round(anesBreak.general/anesTot*100):'—'}%</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">General</div>
+        ${useLive?`<div style="font-size:10px;color:var(--muted)">${anesBreak.general} cases</div>`:''}
+      </div>
+      <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:24px;font-weight:700;color:var(--green)">${useLive?Math.round(anesBreak.local/anesTot*100):'—'}%</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">Local</div>
+        ${useLive?`<div style="font-size:10px;color:var(--muted)">${anesBreak.local} cases</div>`:''}
+      </div>
+      <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:24px;font-weight:700;color:var(--purple)">${useLive?Math.round(anesBreak.mod_sed/anesTot*100):'—'}%</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">Mod Sedation</div>
+        ${useLive?`<div style="font-size:10px;color:var(--muted)">${anesBreak.mod_sed} cases</div>`:''}
+      </div>
+    </div>
+    ${!useLive?'<p style="font-size:11px;color:var(--muted);margin-top:12px;text-align:center">Log cases to see anesthesia breakdown</p>':''}
+  </div>
+
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;padding:0 24px 24px">
+
+  <!-- TOP 5 CATEGORIES -->
+  <div class="card" style="padding:20px">
+    <div class="card-label"><div class="label-dot" style="background:var(--teal)"></div>Top 5 Categories</div>
+    <div style="margin-top:10px">
+      ${top5.map((e,i)=>`
+        <div style="margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
+            <div style="width:18px;height:18px;border-radius:5px;background:var(--teal-light);color:var(--teal);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${i+1}</div>
+            <span style="font-size:11px;color:var(--slate-light);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(e[0])}">${esc(e[0])}</span>
+            <span style="font-size:11px;color:var(--muted)">${e[1]}</span>
+          </div>
+          <div style="height:3px;background:var(--border);border-radius:2px;margin-left:26px">
+            <div style="height:100%;background:var(--teal);border-radius:2px;width:${Math.round(e[1]/maxCatCount*100)}%"></div>
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>
+
+  <!-- BOTTOM 5 CATEGORIES -->
+  <div class="card" style="padding:20px">
+    <div class="card-label"><div class="label-dot" style="background:var(--amber)"></div>Least Common Categories</div>
+    <div style="margin-top:10px">
+      ${bottom5.map((e,i)=>`
+        <div style="margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
+            <div style="width:18px;height:18px;border-radius:5px;background:var(--amber-light);color:var(--amber);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${i+1}</div>
+            <span style="font-size:11px;color:var(--slate-light);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(e[0])}">${esc(e[0])}</span>
+            <span style="font-size:11px;color:var(--muted)">${e[1]}</span>
+          </div>
+          <div style="height:3px;background:var(--border);border-radius:2px;margin-left:26px">
+            <div style="height:100%;background:var(--amber);border-radius:2px;width:${Math.round(e[1]/maxCatCount*100)}%"></div>
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>
+
+  <!-- TOP 5 PROCEDURES BY NAME -->
+  <div class="card" style="padding:20px">
+    <div class="card-label"><div class="label-dot" style="background:var(--blue)"></div>Top 5 Procedures</div>
+    <div style="margin-top:10px">
+      ${topProcs.map((e,i)=>`
+        <div style="margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
+            <div style="width:18px;height:18px;border-radius:5px;background:var(--blue-light);color:var(--blue);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${i+1}</div>
+            <span style="font-size:11px;color:var(--slate-light);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(e[0])}">${esc(e[0])}</span>
+            <span style="font-size:11px;color:var(--muted)">${e[1]}</span>
+          </div>
+          <div style="height:3px;background:var(--border);border-radius:2px;margin-left:26px">
+            <div style="height:100%;background:var(--blue);border-radius:2px;width:${Math.round(e[1]/maxProcCount*100)}%"></div>
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>
+
+</div>
+`;
+
+  // Draw donut chart with Chart.js
+  requestAnimationFrame(() => {
+    const canvas = document.getElementById('overviewDonut');
+    if (!canvas) return;
+    if (_donutChart) { _donutChart.destroy(); _donutChart = null; }
+    if (typeof Chart === 'undefined') return;
+    const labels = catEntries.slice(0,12).map(e=>e[0]);
+    const data = catEntries.slice(0,12).map(e=>e[1]);
+    const colors = labels.map((_,i)=>CHART_COLORS[i%CHART_COLORS.length]);
+    _donutChart = new Chart(canvas, {
+      type: 'doughnut',
+      data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 2, borderColor: '#111620', hoverOffset: 6 }] },
+      options: {
+        responsive: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => {
+                const total = ctx.dataset.data.reduce((a,b)=>a+b,0);
+                const pct = Math.round(ctx.parsed/total*100);
+                return ` ${ctx.label}: ${ctx.parsed} (${pct}%)`;
+              }
+            }
+          }
+        },
+        cutout: '65%',
+      }
+    });
+  });
+}
+
 // ── SEARCH ──
 let searchTimer;
 document.getElementById('procSearch').addEventListener('input', e => {
@@ -494,7 +772,8 @@ function esc(s) {
 // ── BOOT ──
 buildCatSidebar();
 buildProcList();
-renderDetail();
+renderOverview();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </body>
 </html>

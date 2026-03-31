@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IR Case Log — RadCall</title>
+<title>Case Log — RadCall</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -137,13 +137,19 @@ body {
 #search::placeholder { color: var(--muted); }
 
 .nav-stats {
-  margin-left: auto;
   font-size: 12px;
   color: var(--muted);
   white-space: nowrap;
   flex-shrink: 0;
 }
 .nav-stats strong { color: var(--slate); font-weight: 600; }
+.nav-back-btn {
+  margin-left: auto; display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 500;
+  color: var(--muted); text-decoration: none; border: 1px solid var(--border-strong);
+  transition: all 0.15s; flex-shrink: 0;
+}
+.nav-back-btn:hover { color: var(--teal); border-color: var(--teal); background: var(--teal-light); }
 
 /* ── LAYOUT ── */
 .layout {
@@ -601,6 +607,76 @@ select.sort-select:focus { border-color: var(--teal); }
   transition: background 0.15s;
 }
 .add-case-btn:hover { background: #0d9488; }
+.export-btn {
+  padding: 6px 14px; border: 1px solid var(--border-strong); border-radius: 8px;
+  background: none; color: var(--muted); font-family: inherit;
+  font-size: 12px; font-weight: 500; cursor: pointer; margin-left: 8px;
+  transition: all 0.15s;
+}
+.export-btn:hover { color: var(--teal); border-color: var(--teal); background: var(--teal-light); }
+/* Export Modal */
+.export-modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000;
+  display: none; align-items: center; justify-content: center;
+}
+.export-modal-overlay.open { display: flex; }
+.export-modal {
+  background: var(--warm-white); border: 1px solid var(--border-strong);
+  border-radius: 14px; padding: 28px 32px; width: 420px; max-width: 95vw;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
+.export-modal h2 { font-size: 16px; font-weight: 600; color: var(--slate); margin-bottom: 20px; }
+.export-section { margin-bottom: 18px; }
+.export-section label.section-label {
+  display: block; font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px;
+}
+.export-radio-row { display: flex; gap: 16px; flex-wrap: wrap; }
+.export-radio-row label, .export-check-row label {
+  display: flex; align-items: center; gap: 7px; font-size: 13px;
+  color: var(--slate-light); cursor: pointer;
+}
+.export-radio-row input, .export-check-row input { accent-color: var(--teal); }
+.export-year-list {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;
+}
+.export-year-list label {
+  display: flex; align-items: center; gap: 5px; font-size: 12px;
+  color: var(--slate-light); cursor: pointer;
+  background: var(--cream); border: 1px solid var(--border-strong);
+  border-radius: 6px; padding: 4px 10px;
+}
+.export-year-list label:has(input:checked) { border-color: var(--teal); color: var(--teal); }
+.export-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
+.export-cancel-btn {
+  padding: 8px 18px; border: 1px solid var(--border-strong); border-radius: 8px;
+  background: none; color: var(--muted); font-family: inherit;
+  font-size: 13px; cursor: pointer;
+}
+.export-go-btn {
+  padding: 8px 20px; border: none; border-radius: 8px;
+  background: var(--teal); color: white; font-family: inherit;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.export-go-btn:hover { background: #0d9488; }
+/* Print export table */
+@media print {
+  body > *:not(#printExportWrap) { display: none !important; }
+  #printExportWrap { display: block !important; }
+}
+#printExportWrap {
+  display: none;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 10px;
+  color: #000;
+  background: #fff;
+}
+#printExportWrap h1 { font-size: 14px; margin-bottom: 8px; }
+#printExportWrap table { border-collapse: collapse; width: 100%; }
+#printExportWrap th, #printExportWrap td {
+  border: 1px solid #ccc; padding: 3px 6px; text-align: left; vertical-align: top;
+}
+#printExportWrap th { background: #f0f0f0; font-weight: 600; }
 
 /* ── CASE FORM ── */
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -686,13 +762,11 @@ select.sort-select:focus { border-color: var(--teal); }
 <nav class="topnav">
   <a class="logo" href="index.html">
     <div class="logo-icon">CL</div>
-    <div>
-      <div class="logo-text">Case Log</div>
-    </div>
+    <div><div class="logo-text">Case Log</div></div>
   </a>
   <div class="nav-links">
     <a href="case-log.html" class="nav-link active">Case Log</a>
-    <a href="procedure-averages.html" class="nav-link">Procedure Averages</a>
+    <a href="procedure-averages.html" class="nav-link">Case Dashboard</a>
   </div>
   <div class="search-container">
     <span class="search-icon">
@@ -703,6 +777,10 @@ select.sort-select:focus { border-color: var(--teal); }
   <div class="nav-stats">
     <strong id="navCount">0</strong> cases
   </div>
+  <a href="index.html" class="nav-back-btn" title="Back to RadCall">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    RadCall
+  </a>
 </nav>
 
 <div class="layout">
@@ -726,6 +804,7 @@ select.sort-select:focus { border-color: var(--teal); }
           <option value="proc-asc">Procedure A→Z</option>
           <option value="cat-asc">Category A→Z</option>
         </select>
+        <button class="export-btn" onclick="openExportModal()">&#8675; Export</button>
         <button class="add-case-btn" id="addCaseBtn" onclick="openCaseForm()">+ Log Case</button>
       </div>
     </div>
@@ -733,6 +812,40 @@ select.sort-select:focus { border-color: var(--teal); }
     <div id="dashboardView" style="display:none"></div>
   </div>
 </div>
+
+<!-- EXPORT MODAL -->
+<div class="export-modal-overlay" id="exportModalOverlay" onclick="closeExportModal(event)">
+  <div class="export-modal" onclick="event.stopPropagation()">
+    <h2>Export Case Log</h2>
+    <div class="export-section">
+      <label class="section-label">Format</label>
+      <div class="export-radio-row">
+        <label><input type="radio" name="exportFmt" value="xml" checked> XML</label>
+        <label><input type="radio" name="exportFmt" value="pdf"> PDF (Print)</label>
+      </div>
+    </div>
+    <div class="export-section">
+      <label class="section-label">Date Range</label>
+      <div class="export-radio-row">
+        <label><input type="radio" name="exportRange" value="all" id="exportRangeAll" checked> All time</label>
+        <label><input type="radio" name="exportRange" value="year" id="exportRangeYear"> By year</label>
+      </div>
+      <div class="export-year-list" id="exportYearList" style="display:none"></div>
+    </div>
+    <div class="export-section">
+      <div class="export-check-row">
+        <label><input type="checkbox" id="exportCptCheck" checked> Include CPT Codes</label>
+      </div>
+    </div>
+    <div class="export-actions">
+      <button class="export-cancel-btn" onclick="closeExportModal()">Cancel</button>
+      <button class="export-go-btn" onclick="runExport()">Export</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRINT EXPORT WRAPPER -->
+<div id="printExportWrap"></div>
 
 <!-- DRAWER OVERLAY -->
 <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
@@ -1440,6 +1553,193 @@ document.getElementById('cfAcgme').addEventListener('change', function() {
 
 /* ── Init ── */
 initApp();
+
+/* ── EXPORT ── */
+const CPT_LOOKUP = {
+  'venous access': '36560 / 36556 / 36571',
+  'tunneled': '36558',
+  'port': '36560',
+  'picc': '36572',
+  'embolization, emergency': '37244',
+  'embolization': '37241',
+  'chemoembolization': '37243',
+  'radioembolization': '37243',
+  'abscess drainage': '49406',
+  'drainage': '49407',
+  'gastrostomy': '49440',
+  'gastrojejunostomy': '49441',
+  'g-tube': '49440',
+  'gj tube': '49441',
+  'j-tube': '49441',
+  'nephrostomy exchange': '50435',
+  'nephrostomy': '50432',
+  'nephrouretero': '50432',
+  'biliary drainage': '47533',
+  'cholecystostomy': '47490',
+  'biliary stent': '47538',
+  'biliary': '47533',
+  'bone biopsy': '20220',
+  'liver biopsy': '47000',
+  'lung biopsy': '32408',
+  'renal biopsy': '50200',
+  'biopsy': '49180',
+  'venous stent': '37238',
+  'ureteral stent': '50606',
+  'stent': '37236',
+  'angioplasty': '37246',
+  'pta': '37246',
+  'thrombolysis': '37211',
+  'mechanical thrombectomy': '37187',
+  'thrombectomy': '37187',
+  'ivc filter': '37191',
+  'filter retrieval': '37193',
+  'tips': '37182',
+  'angiogram': '36245',
+  'arteriogram': '36245',
+  'vertebroplasty': '22510',
+  'kyphoplasty': '22514',
+  'microwave': '47381',
+  'cryoablation': '47383',
+  'rfa': '47380',
+  'ablation': '47380',
+  'arthrogram': '27370',
+  'myelogram': '62302',
+  'sinogram': '20501',
+  'fistulogram': '20501',
+  'catheter': '49405',
+};
+
+function getCPTCode(category, procedure) {
+  const text = ((category || '') + ' ' + (procedure || '')).toLowerCase();
+  const sorted = Object.keys(CPT_LOOKUP).sort((a, b) => b.length - a.length);
+  for (const key of sorted) {
+    if (text.includes(key)) return CPT_LOOKUP[key];
+  }
+  return '';
+}
+
+function openExportModal() {
+  // Build year list from current cases
+  const years = [...new Set(all.map(c => {
+    const d = c['Date'] || '';
+    return d.substring(0, 4);
+  }).filter(Boolean))].sort((a,b) => b - a);
+
+  const yearListEl = document.getElementById('exportYearList');
+  yearListEl.innerHTML = years.map(y =>
+    `<label><input type="checkbox" class="export-year-cb" value="${y}" checked>${y}</label>`
+  ).join('');
+
+  document.getElementById('exportRangeYear').addEventListener('change', updateYearVis);
+  document.getElementById('exportRangeAll').addEventListener('change', updateYearVis);
+  updateYearVis();
+
+  document.getElementById('exportModalOverlay').classList.add('open');
+}
+
+function updateYearVis() {
+  const byYear = document.getElementById('exportRangeYear').checked;
+  document.getElementById('exportYearList').style.display = byYear ? 'flex' : 'none';
+}
+
+function closeExportModal(e) {
+  if (e && e.target !== document.getElementById('exportModalOverlay')) return;
+  document.getElementById('exportModalOverlay').classList.remove('open');
+}
+
+function runExport() {
+  const fmt = document.querySelector('input[name="exportFmt"]:checked').value;
+  const rangeAll = document.getElementById('exportRangeAll').checked;
+  const includeCpt = document.getElementById('exportCptCheck').checked;
+
+  let cases = all.slice();
+
+  if (!rangeAll) {
+    const selectedYears = [...document.querySelectorAll('.export-year-cb:checked')].map(cb => cb.value);
+    cases = cases.filter(c => {
+      const y = (c['Date'] || '').substring(0, 4);
+      return selectedYears.includes(y);
+    });
+  }
+
+  document.getElementById('exportModalOverlay').classList.remove('open');
+
+  if (fmt === 'xml') {
+    exportXML(cases, includeCpt);
+  } else {
+    exportPDF(cases, includeCpt);
+  }
+}
+
+function xmlEscape(s) {
+  return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function exportXML(cases, includeCpt) {
+  const today = new Date().toISOString().slice(0, 10);
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<CaseLog exported="${today}" totalCases="${cases.length}">\n`;
+  for (const c of cases) {
+    const cpt = includeCpt ? getCPTCode(c['ACGME Procedure Category'], c['Procedure']) : '';
+    xml += `  <Case>\n`;
+    xml += `    <Date>${xmlEscape(c['Date'])}</Date>\n`;
+    xml += `    <Hospital>${xmlEscape(c['Hospital'])}</Hospital>\n`;
+    xml += `    <Accession>${xmlEscape(c['Accession'])}</Accession>\n`;
+    xml += `    <ProcedureType>${xmlEscape(c['Procedure Type'])}</ProcedureType>\n`;
+    xml += `    <ACGMECategory>${xmlEscape(c['ACGME Procedure Category'])}</ACGMECategory>\n`;
+    xml += `    <Procedure>${xmlEscape(c['Procedure'])}</Procedure>\n`;
+    if (includeCpt) xml += `    <CPTCode>${xmlEscape(cpt)}</CPTCode>\n`;
+    xml += `    <Attending>${xmlEscape(c['Attending'])}</Attending>\n`;
+    xml += `    <Technique>${xmlEscape(c['Technique'])}</Technique>\n`;
+    xml += `    <FluoroTime>${xmlEscape(c['Fluoro Time (min)'])}</FluoroTime>\n`;
+    xml += `    <ContrastVolume>${xmlEscape(c['Contrast Volume (mL)'])}</ContrastVolume>\n`;
+    xml += `    <RadiationDose>${xmlEscape(c['Radiation Dose (mGy)'])}</RadiationDose>\n`;
+    xml += `    <Complications>${xmlEscape(c['Complication Narrative'])}</Complications>\n`;
+    xml += `    <SIRGrade>${xmlEscape(c['SIR Grade'])}</SIRGrade>\n`;
+    xml += `    <Notes>${xmlEscape(c['Notes'])}</Notes>\n`;
+    xml += `  </Case>\n`;
+  }
+  xml += `</CaseLog>`;
+
+  const blob = new Blob([xml], { type: 'application/xml' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `case-log-${new Date().toISOString().slice(0,10)}.xml`;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function exportPDF(cases, includeCpt) {
+  const today = new Date().toISOString().slice(0, 10);
+  const cols = ['Date','Hospital','ACGME Procedure Category','Procedure','Attending','Fluoro Time (min)','Contrast Volume (mL)','Radiation Dose (mGy)','SIR Grade'];
+  if (includeCpt) cols.splice(4, 0, 'CPT Code');
+
+  let rows = cases.map(c => {
+    const row = {
+      'Date': c['Date'] || '',
+      'Hospital': c['Hospital'] || '',
+      'ACGME Procedure Category': c['ACGME Procedure Category'] || '',
+      'Procedure': c['Procedure'] || '',
+      'Attending': c['Attending'] || '',
+      'Fluoro Time (min)': c['Fluoro Time (min)'] || '',
+      'Contrast Volume (mL)': c['Contrast Volume (mL)'] || '',
+      'Radiation Dose (mGy)': c['Radiation Dose (mGy)'] || '',
+      'SIR Grade': c['SIR Grade'] || '',
+    };
+    if (includeCpt) row['CPT Code'] = getCPTCode(c['ACGME Procedure Category'], c['Procedure']);
+    return row;
+  });
+
+  const wrap = document.getElementById('printExportWrap');
+  wrap.innerHTML = `<h1>Case Log Export — ${today} (${cases.length} cases)</h1>
+    <table>
+      <thead><tr>${cols.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+      <tbody>${rows.map(r => `<tr>${cols.map(c => `<td>${r[c] || ''}</td>`).join('')}</tr>`).join('')}</tbody>
+    </table>`;
+  wrap.style.display = 'block';
+  window.print();
+  setTimeout(() => { wrap.style.display = 'none'; wrap.innerHTML = ''; }, 500);
+}
 </script>
 </body>
 </html>
