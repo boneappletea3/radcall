@@ -535,12 +535,9 @@ async function generateDifferential(extraFindings) {
   `;
 
   try {
-    // Get auth token
-    let headers = { 'Content-Type': 'application/json' };
-    if (window.RadCallAuth && RadCallAuth.supabase) {
-      const { data: { session } } = await RadCallAuth.supabase.auth.getSession();
-      if (session) headers['Authorization'] = 'Bearer ' + session.access_token;
-    }
+    // Auth header — anon key is sufficient to call the edge function
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92aW5zZ29mamJnemRya2x3am9rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4MDg1NjQsImV4cCI6MjA5MDM4NDU2NH0.FF3ICHTFXWwOscklU-w7mhPDP34B2SXXaGzC9k3PYI4';
+    let headers = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY };
 
     const body = { findings, bodyRegion, modality };
     if (imageBase64) { body.imageBase64 = imageBase64; body.imageMimeType = imageMimeType; }
