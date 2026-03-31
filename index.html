@@ -1402,7 +1402,9 @@ body.home-active main {
     <span class="kbd" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);pointer-events:none" id="search-kbd">⌘K</span>
   </div>
   <div class="header-right">
+    <div id="hdr-user-nav" style="display:none;align-items:center;gap:8px;flex-shrink:0"></div>
     <button class="header-pro-btn lp-cta-pro" id="hdr-explore-btn" onclick="showLanding('lp-features')">Explore Pro ✦</button>
+    <button class="header-pro-btn" id="hdr-signin-btn" onclick="window.RadCallAuth&&window.RadCallAuth.showAuthModal&&window.RadCallAuth.showAuthModal()" style="display:none">Sign in →</button>
     <div id="hdr-pro-btns" style="display:none;align-items:center;gap:8px;">
       <button class="header-pro-btn" onclick="window.location.href='case-log.html'">Case Log ✦</button>
       <button class="header-pro-btn" onclick="window.location.href='differential.html'" style="background:var(--purple)">Differential Dx ✦</button>
@@ -2975,16 +2977,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Auth-aware header buttons
   function _initHeaderBtns() {
+    const userNav   = document.getElementById('hdr-user-nav');
     const explorBtn = document.getElementById('hdr-explore-btn');
+    const signinBtn = document.getElementById('hdr-signin-btn');
     const probtns   = document.getElementById('hdr-pro-btns');
-    if (!explorBtn || !probtns) return;
     function _applyHeaderAuth(user) {
       if (user) {
-        explorBtn.style.display = 'none';
-        probtns.style.display = 'flex';
+        // Logged in: show email + logout, show pro nav buttons
+        if (userNav) {
+          userNav.style.display = 'flex';
+          userNav.innerHTML = `
+            <span style="font-size:12px;color:var(--text3);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${user.email}</span>
+            <button onclick="window.RadCallAuth.signOut().then(()=>location.reload())" style="padding:4px 10px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--text3);font-size:12px;font-family:var(--font);cursor:pointer;transition:all 0.15s" onmouseover="this.style.color='var(--text)';this.style.borderColor='var(--border2)'" onmouseout="this.style.color='var(--text3)'">Logout</button>
+          `;
+        }
+        if (explorBtn) explorBtn.style.display = 'none';
+        if (signinBtn) signinBtn.style.display = 'none';
+        if (probtns)   probtns.style.display = 'flex';
       } else {
-        explorBtn.style.display = '';
-        probtns.style.display = 'none';
+        // Logged out: show explore pro + sign in
+        if (userNav)   { userNav.style.display = 'none'; userNav.innerHTML = ''; }
+        if (explorBtn) explorBtn.style.display = '';
+        if (signinBtn) signinBtn.style.display = '';
+        if (probtns)   probtns.style.display = 'none';
       }
     }
     _applyHeaderAuth(window.RadCallAuth ? window.RadCallAuth.getUser() : null);
