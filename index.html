@@ -955,7 +955,96 @@
 .edit-mode-active .em-img-wrap:hover .em-img-overlay {
   display: flex; pointer-events: auto;
 }
+
+/* ── FAVORITES — star button on topic headings ── */
+.fav-star {
+  position: absolute; right: 28px; top: 50%; transform: translateY(-50%);
+  width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+  background: none; border: none; cursor: pointer; padding: 0;
+  font-size: 14px; color: var(--text3); opacity: 0;
+  transition: opacity 0.12s, color 0.12s; z-index: 10; line-height: 1;
+}
+.topic-h:hover .fav-star,
+.fav-star.active { opacity: 1; }
+.fav-star.active { color: var(--amber); }
+.fav-star:hover { color: var(--amber) !important; opacity: 1 !important; }
+.topic-toggle.has-star { padding-right: 54px; }
+
+/* ── FAVORITES — header button ── */
+.fav-header-btn {
+  position: relative; display: flex; align-items: center; gap: 5px;
+  background: none; border: 1px solid var(--border); border-radius: 6px;
+  padding: 4px 10px; color: var(--text3); font-size: 12px;
+  cursor: pointer; transition: all 0.15s; white-space: nowrap; font-family: var(--font);
+}
+.fav-header-btn:hover { border-color: var(--amber); color: var(--amber); }
+.fav-header-btn.has-favs { color: var(--amber); border-color: rgba(245,158,11,0.4); background: rgba(245,158,11,0.07); }
+.fav-count {
+  min-width: 16px; height: 16px; border-radius: 8px;
+  background: var(--amber); color: #0d1117; font-size: 10px; font-weight: 700;
+  font-family: var(--mono); display: none; align-items: center; justify-content: center; padding: 0 4px;
+}
+.fav-header-btn.has-favs .fav-count { display: flex; }
+
+/* ── FAVORITES — dropdown ── */
+#fav-dropdown {
+  display: none; position: fixed;
+  top: calc(var(--hdr-h) + 6px); right: 16px;
+  width: 300px; max-height: 420px;
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 12px; overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6); z-index: 500;
+  flex-direction: column;
+  animation: favDropIn 0.12s ease;
+}
+@keyframes favDropIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+#fav-dropdown.open { display: flex; }
+.fav-drop-header {
+  padding: 11px 14px 9px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+}
+.fav-drop-title { font-size: 12px; font-weight: 600; color: var(--text); }
+.fav-drop-clear { font-size: 11px; color: var(--text3); background: none; border: none; cursor: pointer; padding: 0; font-family: var(--font); }
+.fav-drop-clear:hover { color: var(--red); }
+.fav-drop-list { overflow-y: auto; flex: 1; }
+.fav-drop-list::-webkit-scrollbar { width: 4px; }
+.fav-drop-list::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+.fav-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 14px; cursor: pointer; border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+.fav-item:last-child { border-bottom: none; }
+.fav-item:hover { background: var(--bg3); }
+.fav-item-icon { color: var(--amber); font-size: 13px; flex-shrink: 0; }
+.fav-item-body { flex: 1; min-width: 0; }
+.fav-item-label { font-size: 12.5px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fav-item-section { font-size: 11px; color: var(--text3); margin-top: 1px; }
+.fav-item-del {
+  opacity: 0; background: none; border: none; color: var(--text3);
+  cursor: pointer; font-size: 15px; padding: 0 2px; line-height: 1;
+  flex-shrink: 0; transition: color 0.1s, opacity 0.1s; font-family: var(--font);
+}
+.fav-item:hover .fav-item-del { opacity: 1; }
+.fav-item-del:hover { color: var(--red); }
+.fav-drop-empty { padding: 28px 14px; text-align: center; }
+.fav-drop-empty-icon { font-size: 22px; margin-bottom: 8px; }
+.fav-drop-empty-text { font-size: 13px; color: var(--text2); font-weight: 500; margin-bottom: 4px; }
+.fav-drop-empty-hint { font-size: 11px; color: var(--text3); line-height: 1.5; }
+.fav-drop-login { padding: 24px 16px; text-align: center; }
+.fav-drop-login-msg { font-size: 13px; color: var(--text3); margin-bottom: 14px; line-height: 1.5; }
+.fav-drop-login-btn {
+  padding: 8px 16px; border-radius: 6px; background: var(--teal); color: #0d1117;
+  border: none; font-size: 12px; font-weight: 600; cursor: pointer; font-family: var(--font);
+  transition: opacity 0.15s;
+}
+.fav-drop-login-btn:hover { opacity: 0.88; }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-auth.js"></script>
 </head>
 <body>
 
@@ -994,11 +1083,25 @@
   </div>
   <div class="header-right">
     <button id="em-toggle" style="display:none">Edit</button>
+    <button class="fav-header-btn" id="favBtn" onclick="Favorites.toggleDropdown()" title="Saved topics">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Saved
+      <span class="fav-count" id="favCount">0</span>
+    </button>
     <span class="header-badge">lite</span>
     <button class="header-pro-btn" onclick="window.location.href='case-log.html'">Case Log ✦</button>
     <button class="header-pro-btn" onclick="window.location.href='differential.html'" style="background:var(--purple);border-color:var(--purple)">Differential Dx ✦</button>
   </div>
 </header>
+
+<!-- FAVORITES DROPDOWN -->
+<div id="fav-dropdown">
+  <div class="fav-drop-header">
+    <span class="fav-drop-title">★ Saved Topics</span>
+    <button class="fav-drop-clear" id="favClearBtn">Clear all</button>
+  </div>
+  <div class="fav-drop-list" id="favList"></div>
+</div>
 
 <div class="layout">
 
@@ -1305,6 +1408,7 @@ async function showSection(id) {
     // Lazy-load if needed, then init
     await _loadSection(id);
     initAccordions(sec);
+    Favorites.injectStars(sec, id);
   }
   document.querySelectorAll('.nav-item').forEach(n => {
     if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + id + "'")) {
@@ -1482,6 +1586,234 @@ function apSwitch(btn) {
     c.classList.toggle('active', c.dataset.tab === tab);
   });
 }
+
+// ── FAVORITES ────────────────────────────────────────────────────────────────
+const Favorites = (() => {
+  const TABLE = 'user_favorites';
+  const LS_KEY = 'rc_faves';
+  let _favs = [];
+  let _dropOpen = false;
+
+  const SECTION_NAMES = {
+    neuro: 'Neuroradiology', chest: 'Chest', body: 'Body / Abdomen',
+    msk: 'MSK', us: 'Ultrasound', peds: 'Pediatrics', nucs: 'Nuclear Med',
+    ir: 'Interventional Rad.', fluoro: 'Fluoroscopy Guide', contrast: 'Contrast & Drugs',
+    incidentaloma: 'Incidentaloma', mrisafety: 'MRI Safety', anatomy: 'Anatomy',
+    callprep: 'Call Prep', books: 'Books', searchpatterns: 'Search Patterns'
+  };
+
+  // ── Helpers ──────────────────────────────────────────────────────────────
+  function _safeStr(s) { return String(s || ''); }
+  function _isFaved(sectionId, topicId) {
+    return _favs.some(f => f.section_id === sectionId && f.topic_id === topicId);
+  }
+  function _getSupabase() {
+    return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null;
+  }
+  function _getUser() {
+    return window.RadCallAuth ? window.RadCallAuth.getUser() : null;
+  }
+  function _getLabelFromNavTree(sectionId, topicId) {
+    if (NAV_TREE[sectionId]) {
+      for (const grp of NAV_TREE[sectionId]) {
+        const t = grp.topics.find(t => t.id === topicId);
+        if (t) return t.label;
+      }
+    }
+    return topicId;
+  }
+
+  // ── Load from Supabase ───────────────────────────────────────────────────
+  async function load() {
+    // Render cached immediately
+    try { const c = localStorage.getItem(LS_KEY); if (c) { _favs = JSON.parse(c); _renderBtn(); _renderList(); } } catch(e) {}
+
+    const sb = _getSupabase(); const user = _getUser();
+    if (!sb || !user) { _renderBtn(); _renderList(); return; }
+
+    const { data, error } = await sb.from(TABLE).select('*').eq('user_id', user.id).order('created_at', { ascending: false });
+    if (!error && data) {
+      _favs = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+      _renderBtn(); _renderList(); _refreshAllStars();
+    }
+  }
+
+  // ── Toggle a favorite ────────────────────────────────────────────────────
+  async function toggle(sectionId, topicId, label) {
+    const user = _getUser();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+
+    const existing = _favs.find(f => f.section_id === sectionId && f.topic_id === topicId);
+
+    if (existing) {
+      // Remove optimistically
+      _favs = _favs.filter(f => !(f.section_id === sectionId && f.topic_id === topicId));
+      _saveLocal(); _renderBtn(); _renderList(); _setStarEl(topicId, false);
+      const sb = _getSupabase();
+      if (sb && existing.id && !String(existing.id).startsWith('tmp-')) {
+        sb.from(TABLE).delete().eq('id', existing.id).then(() => {});
+      }
+    } else {
+      // Add optimistically
+      const tmpId = 'tmp-' + Date.now();
+      const newFav = { id: tmpId, user_id: user.id, section_id: sectionId, topic_id: topicId, label, created_at: new Date().toISOString() };
+      _favs.unshift(newFav);
+      _saveLocal(); _renderBtn(); _renderList(); _setStarEl(topicId, true);
+      const sb = _getSupabase();
+      if (sb) {
+        const { data, error } = await sb.from(TABLE).insert({ user_id: user.id, section_id: sectionId, topic_id: topicId, label }).select().single();
+        if (!error && data) { _favs = _favs.map(f => f.id === tmpId ? data : f); _saveLocal(); }
+      }
+    }
+  }
+
+  // ── Remove single fav by id ──────────────────────────────────────────────
+  async function remove(favId) {
+    _favs = _favs.filter(f => f.id !== favId);
+    _saveLocal(); _renderBtn(); _renderList(); _refreshAllStars();
+    const sb = _getSupabase();
+    if (sb && !String(favId).startsWith('tmp-')) { sb.from(TABLE).delete().eq('id', favId).then(() => {}); }
+  }
+
+  // ── Clear all ────────────────────────────────────────────────────────────
+  async function clearAll() {
+    if (!confirm('Remove all saved topics?')) return;
+    const user = _getUser();
+    _favs = [];
+    _saveLocal(); _renderBtn(); _renderList(); _refreshAllStars(); closeDropdown();
+    const sb = _getSupabase();
+    if (sb && user) { sb.from(TABLE).delete().eq('user_id', user.id).then(() => {}); }
+  }
+
+  function _saveLocal() { try { localStorage.setItem(LS_KEY, JSON.stringify(_favs)); } catch(e) {} }
+
+  // ── Render header button ─────────────────────────────────────────────────
+  function _renderBtn() {
+    const btn = document.getElementById('favBtn');
+    const badge = document.getElementById('favCount');
+    if (!btn) return;
+    const n = _favs.length;
+    if (badge) badge.textContent = n;
+    btn.classList.toggle('has-favs', n > 0);
+  }
+
+  // ── Render dropdown list ─────────────────────────────────────────────────
+  function _renderList() {
+    const list = document.getElementById('favList');
+    if (!list) return;
+
+    const user = _getUser();
+    if (!user) {
+      list.innerHTML = '';
+      const login = document.createElement('div');
+      login.className = 'fav-drop-login';
+      login.innerHTML = '<p class="fav-drop-login-msg">Sign in to save topics for quick access during a shift</p>';
+      const loginBtn = document.createElement('button');
+      loginBtn.className = 'fav-drop-login-btn';
+      loginBtn.textContent = 'Sign in to RadCall Pro';
+      loginBtn.onclick = () => { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); closeDropdown(); };
+      login.appendChild(loginBtn);
+      list.appendChild(login);
+      return;
+    }
+
+    if (!_favs.length) {
+      list.innerHTML = '';
+      const empty = document.createElement('div');
+      empty.className = 'fav-drop-empty';
+      empty.innerHTML = '<div class="fav-drop-empty-icon">☆</div><div class="fav-drop-empty-text">No saved topics yet</div><div class="fav-drop-empty-hint">Hover any topic heading and click ☆ to save it here for quick access</div>';
+      list.appendChild(empty);
+      return;
+    }
+
+    list.innerHTML = '';
+    _favs.forEach(f => {
+      const item = document.createElement('div');
+      item.className = 'fav-item';
+      const icon = document.createElement('span');
+      icon.className = 'fav-item-icon'; icon.textContent = '★';
+      const body = document.createElement('div');
+      body.className = 'fav-item-body';
+      const lbl = document.createElement('div');
+      lbl.className = 'fav-item-label'; lbl.textContent = _safeStr(f.label);
+      const sec = document.createElement('div');
+      sec.className = 'fav-item-section'; sec.textContent = _safeStr(SECTION_NAMES[f.section_id] || f.section_id);
+      body.appendChild(lbl); body.appendChild(sec);
+      const del = document.createElement('button');
+      del.className = 'fav-item-del'; del.textContent = '✕'; del.title = 'Remove';
+      del.onclick = (e) => { e.stopPropagation(); remove(f.id); };
+      item.appendChild(icon); item.appendChild(body); item.appendChild(del);
+      item.onclick = () => { goToResult(_safeStr(f.section_id), _safeStr(f.topic_id)); closeDropdown(); };
+      list.appendChild(item);
+    });
+
+    // Wire up Clear All button
+    const clearBtn = document.getElementById('favClearBtn');
+    if (clearBtn) clearBtn.onclick = clearAll;
+  }
+
+  // ── Dropdown toggle ──────────────────────────────────────────────────────
+  function toggleDropdown() {
+    _dropOpen = !_dropOpen;
+    const dd = document.getElementById('fav-dropdown');
+    if (dd) dd.classList.toggle('open', _dropOpen);
+    if (_dropOpen) _renderList();
+  }
+
+  function closeDropdown() {
+    _dropOpen = false;
+    const dd = document.getElementById('fav-dropdown');
+    if (dd) dd.classList.remove('open');
+  }
+
+  // Close on outside click
+  document.addEventListener('click', e => {
+    if (_dropOpen && !e.target.closest('#fav-dropdown') && !e.target.closest('#favBtn')) {
+      closeDropdown();
+    }
+  });
+
+  // ── Star buttons on topic headings ───────────────────────────────────────
+  function injectStars(sectionEl, sectionId) {
+    sectionEl.querySelectorAll('.topic-h').forEach(h => {
+      if (h.querySelector('.fav-star')) return; // already injected
+      const topicId = h.id;
+      if (!topicId) return;
+      const label = _getLabelFromNavTree(sectionId, topicId) || h.textContent.replace(/[☆★›]/g, '').trim();
+      const faved = _isFaved(sectionId, topicId);
+      const star = document.createElement('button');
+      star.className = 'fav-star' + (faved ? ' active' : '');
+      star.id = 'fav-star-' + topicId;
+      star.dataset.section = sectionId;
+      star.title = faved ? 'Remove from saved' : 'Save for quick access';
+      star.textContent = faved ? '★' : '☆';
+      star.onclick = (e) => { e.stopPropagation(); toggle(sectionId, topicId, label); };
+      h.classList.add('has-star');
+      h.appendChild(star);
+    });
+  }
+
+  function _setStarEl(topicId, active) {
+    const el = document.getElementById('fav-star-' + topicId);
+    if (!el) return;
+    el.classList.toggle('active', active);
+    el.textContent = active ? '★' : '☆';
+    el.title = active ? 'Remove from saved' : 'Save for quick access';
+  }
+
+  function _refreshAllStars() {
+    document.querySelectorAll('[id^="fav-star-"]').forEach(el => {
+      const topicId = el.id.replace('fav-star-', '');
+      const sectionId = el.dataset.section;
+      const faved = _isFaved(sectionId, topicId);
+      el.classList.toggle('active', faved);
+      el.textContent = faved ? '★' : '☆';
+    });
+  }
+
+  return { load, toggle, remove, clearAll, toggleDropdown, closeDropdown, injectStars };
+})();
 
 // ── SEARCH ──
 const searchIndex = [
@@ -2113,6 +2445,24 @@ function clearSearch() {
 document.addEventListener('DOMContentLoaded', () => {
   const active = document.querySelector('.section.active');
   if (active) initAccordions(active);
+
+  // Favorites: load on auth ready
+  function _initFavorites() {
+    Favorites.load();
+    // Re-load and refresh when auth state changes
+    if (window.RadCallAuth && window.RadCallAuth.onAuth) {
+      window.RadCallAuth.onAuth(user => {
+        if (!user) {
+          // Logged out — clear local cache, reset UI
+          try { localStorage.removeItem('rc_faves'); } catch(e) {}
+        }
+        Favorites.load();
+      });
+    }
+  }
+  // Wait briefly for supabase-auth.js to initialize
+  if (window.RadCallAuth) { _initFavorites(); }
+  else { setTimeout(_initFavorites, 400); }
 });
 
 // ── KEYBOARD SHORTCUTS ──
