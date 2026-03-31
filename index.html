@@ -1083,25 +1083,12 @@
   </div>
   <div class="header-right">
     <button id="em-toggle" style="display:none">Edit</button>
-    <button class="fav-header-btn" id="favBtn" onclick="Favorites.toggleDropdown()" title="Saved topics">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      Saved
-      <span class="fav-count" id="favCount">0</span>
-    </button>
     <span class="header-badge">lite</span>
     <button class="header-pro-btn" onclick="window.location.href='case-log.html'">Case Log ✦</button>
     <button class="header-pro-btn" onclick="window.location.href='differential.html'" style="background:var(--purple);border-color:var(--purple)">Differential Dx ✦</button>
   </div>
 </header>
 
-<!-- FAVORITES DROPDOWN -->
-<div id="fav-dropdown">
-  <div class="fav-drop-header">
-    <span class="fav-drop-title">★ Saved Topics</span>
-    <button class="fav-drop-clear" id="favClearBtn">Clear all</button>
-  </div>
-  <div class="fav-drop-list" id="favList"></div>
-</div>
 
 <div class="layout">
 
@@ -1114,11 +1101,12 @@
 
   <!-- FAVORITES NAV — only shown when logged in; rendered by Favorites._renderSidebar() -->
   <div class="nav-section" id="nav-fav-section" style="display:none">
-    <div class="nav-group-label" style="display:flex;align-items:center;justify-content:space-between;padding-right:10px;">
-      <span>Favorites</span>
-      <span style="font-size:11px;color:var(--amber);">★</span>
+    <div class="nav-item nav-has-sub" id="nav-fav-toggle" onclick="Favorites.toggleSidebar()">
+      <span class="nav-dot" style="background:var(--amber)"></span>
+      Favorites
+      <span class="nav-arrow">›</span>
     </div>
-    <div id="nav-fav-list"></div>
+    <div class="nav-sub-tree open" id="nav-fav-list"></div>
   </div>
 
   <div class="nav-section">
@@ -1601,7 +1589,7 @@ const Favorites = (() => {
   const TABLE = 'user_favorites';
   const LS_KEY = 'rc_faves';
   let _favs = [];
-  let _dropOpen = false;
+  let _sidebarOpen = true; // start expanded
 
   const SECTION_NAMES = {
     neuro: 'Neuroradiology', chest: 'Chest', body: 'Body / Abdomen',
@@ -1635,16 +1623,16 @@ const Favorites = (() => {
   // ── Load from Supabase ───────────────────────────────────────────────────
   async function load() {
     // Render cached immediately
-    try { const c = localStorage.getItem(LS_KEY); if (c) { _favs = JSON.parse(c); _renderBtn(); _renderList(); _renderSidebar(); } } catch(e) {}
+    try { const c = localStorage.getItem(LS_KEY); if (c) { _favs = JSON.parse(c); _renderSidebar(); } } catch(e) {}
 
     const sb = _getSupabase(); const user = _getUser();
-    if (!sb || !user) { _renderBtn(); _renderList(); _renderSidebar(); return; }
+    if (!sb || !user) { _renderSidebar(); return; }
 
     const { data, error } = await sb.from(TABLE).select('*').eq('user_id', user.id).order('created_at', { ascending: false });
     if (!error && data) {
       _favs = data;
       try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
-      _renderBtn(); _renderList(); _renderSidebar(); _refreshAllStars();
+      _renderSidebar(); _refreshAllStars();
     }
   }
 
@@ -1658,7 +1646,7 @@ const Favorites = (() => {
     if (existing) {
       // Remove optimistically
       _favs = _favs.filter(f => !(f.section_id === sectionId && f.topic_id === topicId));
-      _saveLocal(); _renderBtn(); _renderList(); _renderSidebar(); _setStarEl(topicId, false);
+      _saveLocal(); _renderSidebar(); _setStarEl(topicId, false);
       const sb = _getSupabase();
       if (sb && existing.id && !String(existing.id).startsWith('tmp-')) {
         sb.from(TABLE).delete().eq('id', existing.id).then(() => {});
@@ -1668,7 +1656,7 @@ const Favorites = (() => {
       const tmpId = 'tmp-' + Date.now();
       const newFav = { id: tmpId, user_id: user.id, section_id: sectionId, topic_id: topicId, label, created_at: new Date().toISOString() };
       _favs.unshift(newFav);
-      _saveLocal(); _renderBtn(); _renderList(); _renderSidebar(); _setStarEl(topicId, true);
+      _saveLocal(); _renderSidebar(); _setStarEl(topicId, true);
       const sb = _getSupabase();
       if (sb) {
         const { data, error } = await sb.from(TABLE).insert({ user_id: user.id, section_id: sectionId, topic_id: topicId, label }).select().single();
@@ -1680,7 +1668,7 @@ const Favorites = (() => {
   // ── Remove single fav by id ──────────────────────────────────────────────
   async function remove(favId) {
     _favs = _favs.filter(f => f.id !== favId);
-    _saveLocal(); _renderBtn(); _renderList(); _renderSidebar(); _refreshAllStars();
+    _saveLocal(); _renderSidebar(); _refreshAllStars();
     const sb = _getSupabase();
     if (sb && !String(favId).startsWith('tmp-')) { sb.from(TABLE).delete().eq('id', favId).then(() => {}); }
   }
@@ -1690,98 +1678,21 @@ const Favorites = (() => {
     if (!confirm('Remove all saved topics?')) return;
     const user = _getUser();
     _favs = [];
-    _saveLocal(); _renderBtn(); _renderList(); _renderSidebar(); _refreshAllStars(); closeDropdown();
+    _saveLocal(); _renderSidebar(); _refreshAllStars();
     const sb = _getSupabase();
     if (sb && user) { sb.from(TABLE).delete().eq('user_id', user.id).then(() => {}); }
   }
 
   function _saveLocal() { try { localStorage.setItem(LS_KEY, JSON.stringify(_favs)); } catch(e) {} }
 
-  // ── Render header button ─────────────────────────────────────────────────
-  function _renderBtn() {
-    const btn = document.getElementById('favBtn');
-    const badge = document.getElementById('favCount');
-    if (!btn) return;
-    const n = _favs.length;
-    if (badge) badge.textContent = n;
-    btn.classList.toggle('has-favs', n > 0);
+  // ── Sidebar collapse toggle ──────────────────────────────────────────────
+  function toggleSidebar() {
+    _sidebarOpen = !_sidebarOpen;
+    const tree = document.getElementById('nav-fav-list');
+    const toggle = document.getElementById('nav-fav-toggle');
+    if (tree) tree.classList.toggle('open', _sidebarOpen);
+    if (toggle) toggle.classList.toggle('open', _sidebarOpen);
   }
-
-  // ── Render dropdown list ─────────────────────────────────────────────────
-  function _renderList() {
-    const list = document.getElementById('favList');
-    if (!list) return;
-
-    const user = _getUser();
-    if (!user) {
-      list.innerHTML = '';
-      const login = document.createElement('div');
-      login.className = 'fav-drop-login';
-      login.innerHTML = '<p class="fav-drop-login-msg">Sign in to save topics for quick access during a shift</p>';
-      const loginBtn = document.createElement('button');
-      loginBtn.className = 'fav-drop-login-btn';
-      loginBtn.textContent = 'Sign in to RadCall Pro';
-      loginBtn.onclick = () => { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); closeDropdown(); };
-      login.appendChild(loginBtn);
-      list.appendChild(login);
-      return;
-    }
-
-    if (!_favs.length) {
-      list.innerHTML = '';
-      const empty = document.createElement('div');
-      empty.className = 'fav-drop-empty';
-      empty.innerHTML = '<div class="fav-drop-empty-icon">☆</div><div class="fav-drop-empty-text">No saved topics yet</div><div class="fav-drop-empty-hint">Hover any topic heading and click ☆ to save it here for quick access</div>';
-      list.appendChild(empty);
-      return;
-    }
-
-    list.innerHTML = '';
-    _favs.forEach(f => {
-      const item = document.createElement('div');
-      item.className = 'fav-item';
-      const icon = document.createElement('span');
-      icon.className = 'fav-item-icon'; icon.textContent = '★';
-      const body = document.createElement('div');
-      body.className = 'fav-item-body';
-      const lbl = document.createElement('div');
-      lbl.className = 'fav-item-label'; lbl.textContent = _safeStr(f.label);
-      const sec = document.createElement('div');
-      sec.className = 'fav-item-section'; sec.textContent = _safeStr(SECTION_NAMES[f.section_id] || f.section_id);
-      body.appendChild(lbl); body.appendChild(sec);
-      const del = document.createElement('button');
-      del.className = 'fav-item-del'; del.textContent = '✕'; del.title = 'Remove';
-      del.onclick = (e) => { e.stopPropagation(); remove(f.id); };
-      item.appendChild(icon); item.appendChild(body); item.appendChild(del);
-      item.onclick = () => { goToResult(_safeStr(f.section_id), _safeStr(f.topic_id)); closeDropdown(); };
-      list.appendChild(item);
-    });
-
-    // Wire up Clear All button
-    const clearBtn = document.getElementById('favClearBtn');
-    if (clearBtn) clearBtn.onclick = clearAll;
-  }
-
-  // ── Dropdown toggle ──────────────────────────────────────────────────────
-  function toggleDropdown() {
-    _dropOpen = !_dropOpen;
-    const dd = document.getElementById('fav-dropdown');
-    if (dd) dd.classList.toggle('open', _dropOpen);
-    if (_dropOpen) _renderList();
-  }
-
-  function closeDropdown() {
-    _dropOpen = false;
-    const dd = document.getElementById('fav-dropdown');
-    if (dd) dd.classList.remove('open');
-  }
-
-  // Close on outside click
-  document.addEventListener('click', e => {
-    if (_dropOpen && !e.target.closest('#fav-dropdown') && !e.target.closest('#favBtn')) {
-      closeDropdown();
-    }
-  });
 
   // ── Star buttons on topic headings ───────────────────────────────────────
   function injectStars(sectionEl, sectionId) {
@@ -1862,7 +1773,7 @@ const Favorites = (() => {
     });
   }
 
-  return { load, toggle, remove, clearAll, toggleDropdown, closeDropdown, injectStars, renderSidebar: _renderSidebar };
+  return { load, toggle, remove, clearAll, toggleSidebar, injectStars };
 })();
 
 // ── SEARCH ──
