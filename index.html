@@ -1112,6 +1112,15 @@
     <div class="nav-item active" onclick="showSection('home')"><span class="nav-dot"></span>Overview</div>
   </div>
 
+  <!-- FAVORITES NAV — only shown when logged in; rendered by Favorites._renderSidebar() -->
+  <div class="nav-section" id="nav-fav-section" style="display:none">
+    <div class="nav-group-label" style="display:flex;align-items:center;justify-content:space-between;padding-right:10px;">
+      <span>Favorites</span>
+      <span style="font-size:11px;color:var(--amber);">★</span>
+    </div>
+    <div id="nav-fav-list"></div>
+  </div>
+
   <div class="nav-section">
     <div class="nav-group-label">Clinical Sections</div>
 
@@ -1626,16 +1635,16 @@ const Favorites = (() => {
   // ── Load from Supabase ───────────────────────────────────────────────────
   async function load() {
     // Render cached immediately
-    try { const c = localStorage.getItem(LS_KEY); if (c) { _favs = JSON.parse(c); _renderBtn(); _renderList(); } } catch(e) {}
+    try { const c = localStorage.getItem(LS_KEY); if (c) { _favs = JSON.parse(c); _renderBtn(); _renderList(); _renderSidebar(); } } catch(e) {}
 
     const sb = _getSupabase(); const user = _getUser();
-    if (!sb || !user) { _renderBtn(); _renderList(); return; }
+    if (!sb || !user) { _renderBtn(); _renderList(); _renderSidebar(); return; }
 
     const { data, error } = await sb.from(TABLE).select('*').eq('user_id', user.id).order('created_at', { ascending: false });
     if (!error && data) {
       _favs = data;
       try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
-      _renderBtn(); _renderList(); _refreshAllStars();
+      _renderBtn(); _renderList(); _renderSidebar(); _refreshAllStars();
     }
   }
 
@@ -1649,7 +1658,7 @@ const Favorites = (() => {
     if (existing) {
       // Remove optimistically
       _favs = _favs.filter(f => !(f.section_id === sectionId && f.topic_id === topicId));
-      _saveLocal(); _renderBtn(); _renderList(); _setStarEl(topicId, false);
+      _saveLocal(); _renderBtn(); _renderList(); _renderSidebar(); _setStarEl(topicId, false);
       const sb = _getSupabase();
       if (sb && existing.id && !String(existing.id).startsWith('tmp-')) {
         sb.from(TABLE).delete().eq('id', existing.id).then(() => {});
@@ -1659,7 +1668,7 @@ const Favorites = (() => {
       const tmpId = 'tmp-' + Date.now();
       const newFav = { id: tmpId, user_id: user.id, section_id: sectionId, topic_id: topicId, label, created_at: new Date().toISOString() };
       _favs.unshift(newFav);
-      _saveLocal(); _renderBtn(); _renderList(); _setStarEl(topicId, true);
+      _saveLocal(); _renderBtn(); _renderList(); _renderSidebar(); _setStarEl(topicId, true);
       const sb = _getSupabase();
       if (sb) {
         const { data, error } = await sb.from(TABLE).insert({ user_id: user.id, section_id: sectionId, topic_id: topicId, label }).select().single();
@@ -1671,7 +1680,7 @@ const Favorites = (() => {
   // ── Remove single fav by id ──────────────────────────────────────────────
   async function remove(favId) {
     _favs = _favs.filter(f => f.id !== favId);
-    _saveLocal(); _renderBtn(); _renderList(); _refreshAllStars();
+    _saveLocal(); _renderBtn(); _renderList(); _renderSidebar(); _refreshAllStars();
     const sb = _getSupabase();
     if (sb && !String(favId).startsWith('tmp-')) { sb.from(TABLE).delete().eq('id', favId).then(() => {}); }
   }
@@ -1681,7 +1690,7 @@ const Favorites = (() => {
     if (!confirm('Remove all saved topics?')) return;
     const user = _getUser();
     _favs = [];
-    _saveLocal(); _renderBtn(); _renderList(); _refreshAllStars(); closeDropdown();
+    _saveLocal(); _renderBtn(); _renderList(); _renderSidebar(); _refreshAllStars(); closeDropdown();
     const sb = _getSupabase();
     if (sb && user) { sb.from(TABLE).delete().eq('user_id', user.id).then(() => {}); }
   }
@@ -1812,7 +1821,48 @@ const Favorites = (() => {
     });
   }
 
-  return { load, toggle, remove, clearAll, toggleDropdown, closeDropdown, injectStars };
+  // ── Sidebar Favorites section ─────────────────────────────────────────────
+  function _renderSidebar() {
+    const section = document.getElementById('nav-fav-section');
+    const list = document.getElementById('nav-fav-list');
+    if (!section || !list) return;
+
+    const user = _getUser();
+    if (!user) { section.style.display = 'none'; return; }
+
+    section.style.display = 'block';
+    list.innerHTML = '';
+
+    if (!_favs.length) {
+      const empty = document.createElement('div');
+      empty.style.cssText = 'padding:4px 16px 10px;font-size:12px;color:var(--text3);font-style:italic;';
+      empty.textContent = 'No saved topics yet';
+      list.appendChild(empty);
+      return;
+    }
+
+    _favs.forEach(f => {
+      const item = document.createElement('div');
+      item.className = 'nav-topic-item';
+      item.style.cssText = 'display:flex;align-items:center;gap:6px;padding-right:8px;';
+      item.title = _safeStr(SECTION_NAMES[f.section_id] || f.section_id) + ' — ' + _safeStr(f.label);
+
+      const star = document.createElement('span');
+      star.style.cssText = 'color:var(--amber);font-size:11px;flex-shrink:0;';
+      star.textContent = '★';
+
+      const lbl = document.createElement('span');
+      lbl.style.cssText = 'flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+      lbl.textContent = _safeStr(f.label);
+
+      item.appendChild(star);
+      item.appendChild(lbl);
+      item.onclick = () => goToResult(_safeStr(f.section_id), _safeStr(f.topic_id));
+      list.appendChild(item);
+    });
+  }
+
+  return { load, toggle, remove, clearAll, toggleDropdown, closeDropdown, injectStars, renderSidebar: _renderSidebar };
 })();
 
 // ── SEARCH ──
