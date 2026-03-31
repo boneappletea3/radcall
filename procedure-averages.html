@@ -245,6 +245,7 @@ body {
     <a href="case-log.html" class="nav-link">Case Log</a>
     <a href="procedure-averages.html" class="nav-link active">Case Dashboard</a>
   </div>
+  <div id="dashUserNav" style="display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0"></div>
   <a href="index.html" class="nav-back-btn" title="Back to RadCall">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
     RadCall
@@ -492,31 +493,42 @@ function classifyAnesthesia(raw) {
 function renderOverview() {
   const el = document.getElementById('detailPanel');
 
-  // Load cases from localStorage or fallback
-  let cases = [];
-  try {
-    const stored = localStorage.getItem('irCases');
-    if (stored) cases = JSON.parse(stored);
-  } catch(e) {}
-  // If no localStorage data, use DATA object stats
+  // Use _dashCases (Supabase or fallback), or fall back to DATA aggregates
+  const cases = _dashCases;
   const useLive = cases.length > 0;
 
-  // Compute global stats from DATA
-  let totalCases = 0, totalFluoro = 0, totalContrast = 0, totalDose = 0;
+  // Date helpers
+  const now = new Date();
+  const thisYear = now.getFullYear();
+  const oneYearAgo = new Date(now); oneYearAgo.setFullYear(thisYear - 1);
+
+  // Global stats
+  let totalCases = 0, casesThisYear = 0;
+  let fluoLastYear = 0, doseLastYear = 0, caseTimeLastYear = 0, caseTimeCount = 0;
+  let totalContrast = 0;
+
   if (useLive) {
     totalCases = cases.length;
     for (const c of cases) {
-      totalFluoro += parseFloat(c['Fluoro Time (min)'] || 0) || 0;
+      const d = new Date(c['Date'] || '');
+      const isThisYear = d.getFullYear() === thisYear;
+      const isLastYear = d >= oneYearAgo;
+      if (isThisYear) casesThisYear++;
+      if (isLastYear) {
+        fluoLastYear += parseFloat(c['Fluoro Time (min)'] || 0) || 0;
+        doseLastYear += parseFloat(c['Radiation Dose (mGy)'] || 0) || 0;
+        const ct = parseFloat(c['Case Time (min)'] || 0) || 0;
+        if (ct > 0) { caseTimeLastYear += ct; caseTimeCount++; }
+      }
       totalContrast += parseFloat(c['Contrast Volume (mL)'] || 0) || 0;
-      totalDose += parseFloat(c['Radiation Dose (mGy)'] || 0) || 0;
     }
   } else {
-    for (const cat of CATS) {
-      for (const p of DATA[cat]) {
-        totalCases += p.count;
-      }
-    }
+    for (const cat of CATS) for (const p of DATA[cat]) totalCases += p.count;
   }
+
+  const fluoHrs = (fluoLastYear / 60).toFixed(1);
+  const doseGy = (doseLastYear / 1000).toFixed(2);
+  const avgCaseMin = caseTimeCount > 0 ? Math.round(caseTimeLastYear / caseTimeCount) : null;
 
   // Category distribution
   let catCounts = {};
@@ -526,44 +538,39 @@ function renderOverview() {
       catCounts[cat] = (catCounts[cat] || 0) + 1;
     }
   } else {
-    for (const cat of CATS) {
-      catCounts[cat] = DATA[cat].reduce((s,p)=>s+p.count, 0);
-    }
+    for (const cat of CATS) catCounts[cat] = DATA[cat].reduce((s,p)=>s+p.count,0);
   }
   const catEntries = Object.entries(catCounts).sort((a,b)=>b[1]-a[1]);
   const top5 = catEntries.slice(0, 5);
   const bottom5 = catEntries.filter(e=>e[1]>0).slice(-5).reverse();
   const maxCatCount = catEntries[0]?.[1] || 1;
 
-  // Anesthesia breakdown (only if live data)
+  // Anesthesia breakdown
   let anesBreak = {mac:0, general:0, local:0, mod_sed:0};
   if (useLive) {
-    for (const c of cases) {
-      anesBreak[classifyAnesthesia(c['Anesthetic Dose'])]++;
+    for (const c of cases) anesBreak[classifyAnesthesia(c['Anesthetic Dose'])]++;
+  } else {
+    // Weighted from DATA ga_pct / mac_pct / local_pct
+    let tot = 0;
+    for (const cat of CATS) for (const p of DATA[cat]) {
+      tot += p.count;
+      anesBreak.general += (p.ga_pct||0)/100 * p.count;
+      anesBreak.mac     += (p.mac_pct||0)/100 * p.count;
+      anesBreak.local   += (p.local_pct||0)/100 * p.count;
     }
+    anesBreak.mod_sed = Math.max(0, totalCases - anesBreak.general - anesBreak.mac - anesBreak.local);
   }
-  const anesTot = useLive ? cases.length : 1;
+  const anesTot = useLive ? cases.length : (totalCases || 1);
 
   // Top 5 by procedure name
   let procCounts = {};
   if (useLive) {
-    for (const c of cases) {
-      const p = c['Procedure'] || 'Unknown';
-      procCounts[p] = (procCounts[p] || 0) + 1;
-    }
+    for (const c of cases) { const p = c['Procedure']||'Unknown'; procCounts[p]=(procCounts[p]||0)+1; }
   } else {
-    for (const cat of CATS) {
-      for (const p of DATA[cat]) {
-        procCounts[p.proc] = (procCounts[p.proc] || 0) + p.count;
-      }
-    }
+    for (const cat of CATS) for (const p of DATA[cat]) procCounts[p.proc]=(procCounts[p.proc]||0)+p.count;
   }
-  const topProcs = Object.entries(procCounts).sort((a,b)=>b[1]-a[1]).slice(0, 5);
+  const topProcs = Object.entries(procCounts).sort((a,b)=>b[1]-a[1]).slice(0,5);
   const maxProcCount = topProcs[0]?.[1] || 1;
-
-  const fluoHrs = (totalFluoro / 60).toFixed(1);
-  const contrastL = (totalContrast / 1000).toFixed(2);
-  const doseGy = (totalDose / 1000).toFixed(2);
 
   const CHART_COLORS = ['#14b8a6','#3b82f6','#a855f7','#f59e0b','#ef4444','#22c55e','#06b6d4','#f97316','#8b5cf6','#ec4899','#84cc16','#0ea5e9'];
 
@@ -575,22 +582,26 @@ function renderOverview() {
 </div>
 
 <!-- STAT CARDS -->
-<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:20px 24px 0">
-  <div class="card" style="padding:16px;text-align:center">
-    <div style="font-size:28px;font-weight:700;color:var(--teal)">${totalCases}</div>
-    <div style="font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.06em">Total Cases</div>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:20px 24px 0">
+  <div class="card" style="padding:14px;text-align:center">
+    <div style="font-size:26px;font-weight:700;color:var(--teal)">${totalCases}</div>
+    <div style="font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.06em">Total Cases</div>
   </div>
-  <div class="card" style="padding:16px;text-align:center">
-    <div style="font-size:28px;font-weight:700;color:var(--blue)">${fluoHrs}<span style="font-size:14px;font-weight:400">h</span></div>
-    <div style="font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.06em">Fluoro Time</div>
+  <div class="card" style="padding:14px;text-align:center">
+    <div style="font-size:26px;font-weight:700;color:var(--blue)">${useLive ? casesThisYear : '—'}</div>
+    <div style="font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.06em">Cases ${thisYear}</div>
   </div>
-  <div class="card" style="padding:16px;text-align:center">
-    <div style="font-size:28px;font-weight:700;color:var(--purple)">${contrastL}<span style="font-size:14px;font-weight:400">L</span></div>
-    <div style="font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.06em">Contrast Volume</div>
+  <div class="card" style="padding:14px;text-align:center">
+    <div style="font-size:26px;font-weight:700;color:var(--purple)">${useLive ? fluoHrs : '—'}<span style="font-size:13px;font-weight:400">h</span></div>
+    <div style="font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.06em">Fluoro (12 mo)</div>
   </div>
-  <div class="card" style="padding:16px;text-align:center">
-    <div style="font-size:28px;font-weight:700;color:var(--amber)">${doseGy}<span style="font-size:14px;font-weight:400">Gy</span></div>
-    <div style="font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.06em">Radiation Dose</div>
+  <div class="card" style="padding:14px;text-align:center">
+    <div style="font-size:26px;font-weight:700;color:var(--amber)">${useLive ? doseGy : '—'}<span style="font-size:13px;font-weight:400">Gy</span></div>
+    <div style="font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.06em">Radiation (12 mo)</div>
+  </div>
+  <div class="card" style="padding:14px;text-align:center">
+    <div style="font-size:26px;font-weight:700;color:var(--green)">${useLive && avgCaseMin ? avgCaseMin : '—'}<span style="font-size:13px;font-weight:400">${useLive && avgCaseMin ? ' min' : ''}</span></div>
+    <div style="font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.06em">Avg Case Time</div>
   </div>
 </div>
 
@@ -710,6 +721,8 @@ function renderOverview() {
     const labels = catEntries.slice(0,12).map(e=>e[0]);
     const data = catEntries.slice(0,12).map(e=>e[1]);
     const colors = labels.map((_,i)=>CHART_COLORS[i%CHART_COLORS.length]);
+    if (typeof ChartDataLabels !== 'undefined') Chart.register(ChartDataLabels);
+    const chartTotal = data.reduce((a,b)=>a+b,0);
     _donutChart = new Chart(canvas, {
       type: 'doughnut',
       data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 2, borderColor: '#111620', hoverOffset: 6 }] },
@@ -717,6 +730,16 @@ function renderOverview() {
         responsive: false,
         plugins: {
           legend: { display: false },
+          datalabels: {
+            color: '#fff',
+            font: { weight: 'bold', size: 11 },
+            formatter: (value) => {
+              const pct = Math.round(value / chartTotal * 100);
+              return pct >= 5 ? pct + '%' : '';
+            },
+            textShadowBlur: 4,
+            textShadowColor: 'rgba(0,0,0,0.6)',
+          },
           tooltip: {
             callbacks: {
               label: ctx => {
@@ -769,11 +792,59 @@ function esc(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+// ── CASE DATA FOR DASHBOARD ──
+let _dashCases = [];
+
+function mapDbRow(row) {
+  return {
+    'Date': row.date || '',
+    'ACGME Procedure Category': row.acgme_category || '',
+    'Procedure': row.procedure_name || '',
+    'Fluoro Time (min)': row.fluoro_time_min || '',
+    'Radiation Dose (mGy)': row.radiation_dose_mgy || '',
+    'Contrast Volume (mL)': row.contrast_volume_ml || '',
+    'Case Time (min)': row.case_time_min || '',
+    'Anesthetic Dose': row.anesthetic_dose || '',
+  };
+}
+
+async function loadDashCases() {
+  // Try Supabase first
+  if (window.RadCallAuth && !RadCallAuth._notConfigured && RadCallAuth.supabase) {
+    try {
+      const user = await RadCallAuth.requireAuth();
+      // inject user nav
+      if (user) {
+        const nav = document.getElementById('dashUserNav');
+        if (nav) {
+          nav.innerHTML = `
+            <span style="font-size:12px;color:#94a3b8">${user.email}</span>
+            <button onclick="RadCallAuth.signOut().then(()=>location.reload())" style="padding:5px 12px;border-radius:6px;border:1px solid #2a3444;background:transparent;color:#94a3b8;font-size:12px;font-family:inherit;cursor:pointer">Logout</button>
+          `;
+        }
+        const { data, error } = await RadCallAuth.supabase.from('cases').select('date,acgme_category,procedure_name,fluoro_time_min,radiation_dose_mgy,contrast_volume_ml,case_time_min,anesthetic_dose').order('date', { ascending: false });
+        if (data && !error) {
+          _dashCases = data.map(mapDbRow);
+          renderOverview();
+          return;
+        }
+      }
+    } catch(e) { console.warn('Dashboard Supabase load failed:', e); }
+  }
+  // Fallback: use embedded CASES_FALLBACK if available
+  if (typeof CASES_FALLBACK !== 'undefined') {
+    _dashCases = CASES_FALLBACK;
+  }
+  renderOverview();
+}
+
 // ── BOOT ──
 buildCatSidebar();
 buildProcList();
 renderOverview();
+loadDashCases();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 </body>
 </html>
