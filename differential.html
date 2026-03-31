@@ -60,19 +60,12 @@ body {
 }
 .logo-text { font-weight: 600; font-size: 15px; color: var(--slate); }
 .logo-sub { font-size: 11px; color: var(--muted); font-weight: 400; }
-.nav-links { display: flex; gap: 4px; flex-shrink: 0; }
-.nav-link {
-  padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500;
-  color: var(--muted); text-decoration: none; transition: background 0.15s, color 0.15s;
-}
-.nav-link:hover { background: var(--teal-light); color: var(--teal); }
-.nav-link.active { background: var(--teal-light); color: var(--teal); }
 .nav-spacer { flex: 1; }
 
 /* ── LAYOUT ── */
 .layout {
   display: flex;
-  padding-top: 56px;
+  padding-top: 90px;
   height: 100vh;
 }
 
@@ -83,7 +76,7 @@ body {
   background: var(--warm-white);
   border-right: 1px solid var(--border);
   overflow-y: auto;
-  height: calc(100vh - 56px);
+  height: calc(100vh - 90px);
   padding: 24px 20px 40px;
 }
 .input-panel::-webkit-scrollbar { width: 4px; }
@@ -199,7 +192,7 @@ body {
 .results-panel {
   flex: 1;
   overflow-y: auto;
-  height: calc(100vh - 56px);
+  height: calc(100vh - 90px);
   padding: 28px 28px 60px;
 }
 .results-panel::-webkit-scrollbar { width: 6px; }
@@ -320,11 +313,45 @@ body {
   border-radius: 10px; padding: 16px 20px; color: var(--red); font-size: 14px;
 }
 
+/* ── BETA BADGE ── */
+.beta-badge {
+  font-size: 9px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--teal);
+  background: var(--teal-light); border: 1px solid rgba(20,184,166,0.3);
+  padding: 1px 5px; border-radius: 4px; margin-left: 5px;
+  vertical-align: middle; position: relative; top: -1px;
+}
+
+/* ── USER NAV / BACK BTN ── */
+.nav-back-btn {
+  margin-left: 8px; display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 500;
+  color: var(--muted); text-decoration: none; border: 1px solid var(--border-strong);
+  transition: all 0.15s; flex-shrink: 0;
+}
+.nav-back-btn:hover { color: var(--teal); border-color: var(--teal); background: var(--teal-light); }
+
+/* ── DISCLAIMER BAR ── */
+.disclaimer-bar {
+  position: fixed;
+  top: 56px; left: 0; right: 0;
+  z-index: 150;
+  background: rgba(245,158,11,0.07);
+  border-bottom: 1px solid rgba(245,158,11,0.18);
+  padding: 6px 24px;
+  font-size: 11px; color: #b07d2a;
+  display: flex; align-items: center; gap: 6px;
+  line-height: 1.4;
+}
+.disclaimer-bar strong { color: var(--amber); }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   .layout { flex-direction: column; }
   .input-panel { width: 100%; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--border); }
   .results-panel { height: auto; flex: 1; }
+  .disclaimer-bar { font-size: 10px; }
+  .user-email { display: none; }
 }
 @media (max-width: 600px) {
   .field-row { flex-direction: column; gap: 0; }
@@ -339,12 +366,19 @@ body {
 <nav class="topnav">
   <a class="logo" href="index.html">
     <div class="logo-icon">Dx</div>
-    <div>
-      <div class="logo-text">Differential Dx</div>
-    </div>
+    <div><div class="logo-text">Differential Dx <span class="beta-badge">beta</span></div></div>
   </a>
   <div class="nav-spacer"></div>
+  <div id="dxUserNav" style="display:flex;align-items:center;gap:8px;flex-shrink:0"></div>
+  <a href="index.html" class="nav-back-btn" title="Back to RadCall">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    RadCall
+  </a>
 </nav>
+
+<div class="disclaimer-bar">
+  ⚠️ <span><strong>For educational and reference purposes only.</strong> AI-generated differentials must not replace clinical judgement, direct patient evaluation, or formal radiologist interpretation. Always correlate with clinical context.</span>
+</div>
 
 <div class="layout">
   <!-- INPUT PANEL -->
@@ -439,6 +473,19 @@ async function initApp() {
     } catch (e) {
       console.warn('Auth not available');
     }
+    // Populate user nav
+    try {
+      const user = RadCallAuth.getUser();
+      if (user) {
+        const nav = document.getElementById('dxUserNav');
+        if (nav) {
+          nav.innerHTML = `
+            <span style="font-size:12px;color:#94a3b8">${user.email}</span>
+            <button onclick="RadCallAuth.signOut().then(()=>location.reload())" style="padding:5px 12px;border-radius:6px;border:1px solid #2a3444;background:transparent;color:#94a3b8;font-size:12px;font-family:inherit;cursor:pointer">Logout</button>
+          `;
+        }
+      }
+    } catch(e) {}
   }
   loadHistory();
 }
