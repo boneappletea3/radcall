@@ -1,0 +1,1570 @@
+<style>
+  /* ── FLUORO SECTION LOCAL STYLES ── */
+  .fluoro-disclaimer {
+    background: var(--amber-bg);
+    border: 1px solid rgba(245,158,11,0.3);
+    border-left: 3px solid var(--amber);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    font-size: 12.5px;
+    color: var(--text2);
+    margin-bottom: 20px;
+  }
+  .fluoro-disclaimer strong { color: var(--amber); }
+
+  .proc-category {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--teal);
+    padding: 18px 0 6px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2px;
+  }
+
+  /* ── PROCEDURE META BAR ── */
+  .proc-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .proc-tag {
+    font-size: 11px;
+    font-family: var(--mono);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .tag-indication { background: var(--teal-bg); color: var(--teal); border: 1px solid rgba(20,184,166,0.25); }
+  .tag-contrast   { background: var(--purple-bg); color: var(--purple); border: 1px solid rgba(168,85,247,0.25); }
+  .tag-prep       { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(245,158,11,0.25); }
+  .tag-contraind  { background: var(--red-bg); color: var(--red); border: 1px solid rgba(239,68,68,0.2); }
+
+  /* ── SECTION SUB-HEADERS ── */
+  .proc-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    margin: 16px 0 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .proc-section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── STEPS ── */
+  .proc-steps {
+    list-style: none;
+    counter-reset: step-counter;
+    margin: 0 0 4px;
+    padding: 0;
+  }
+  .proc-step {
+    counter-increment: step-counter;
+    display: flex;
+    gap: 10px;
+    padding: 5px 0;
+    font-size: 13px;
+    line-height: 1.6;
+    border-bottom: 1px solid rgba(100,160,255,0.06);
+  }
+  .proc-step:last-child { border-bottom: none; }
+  .proc-step::before {
+    content: counter(step-counter);
+    min-width: 22px;
+    height: 22px;
+    background: var(--teal-bg);
+    color: var(--teal);
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: var(--mono);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .proc-step-content { flex: 1; }
+  .proc-sub {
+    margin: 4px 0 0 2px;
+    padding-left: 12px;
+    list-style: none;
+    font-size: 12.5px;
+    color: var(--text2);
+  }
+  .proc-sub li {
+    padding: 2px 0;
+    position: relative;
+    padding-left: 12px;
+  }
+  .proc-sub li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-weight: 700;
+  }
+
+  /* ── PEARL BOXES ── */
+  .pearl-box {
+    background: var(--amber-bg);
+    border-left: 3px solid var(--amber);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 8px 12px;
+    margin: 6px 0;
+    font-size: 12.5px;
+    color: var(--text2);
+    line-height: 1.55;
+  }
+  .pearl-box strong { color: var(--amber); }
+  .pearl-grid {
+    display: grid;
+    gap: 6px;
+    margin: 8px 0;
+  }
+
+  /* ── VIEWS / POSITION DIAGRAMS ── */
+  .views-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    margin: 14px 0 8px;
+  }
+  .position-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .pos-diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    min-width: 90px;
+  }
+  .pos-diagram svg { display: block; }
+  .pos-label {
+    font-size: 10.5px;
+    font-family: var(--mono);
+    color: var(--text2);
+    text-align: center;
+    font-weight: 500;
+  }
+
+  /* ── DICTATION BOX ── */
+  .dictation-wrapper {
+    margin-top: 14px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .dictation-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: rgba(20,184,166,0.07);
+    border-bottom: 1px solid var(--border);
+  }
+  .dictation-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--teal);
+  }
+  .copy-btn {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--teal);
+    background: var(--teal-bg);
+    border: 1px solid rgba(20,184,166,0.3);
+    border-radius: 4px;
+    padding: 3px 10px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .copy-btn:hover { background: rgba(20,184,166,0.2); }
+  .copy-btn.copied { color: var(--green); background: var(--green-bg); border-color: rgba(34,197,94,0.3); }
+  .dictation-box {
+    padding: 12px 14px;
+    font-size: 12.5px;
+    font-family: var(--mono);
+    color: var(--text2);
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }
+
+  /* ── CONTRAINDICATION TABLE ── */
+  .contra-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    padding: 4px 0;
+    font-size: 12.5px;
+  }
+  .contra-badge {
+    background: var(--red-bg);
+    color: var(--red);
+    border: 1px solid rgba(239,68,68,0.2);
+    font-size: 10px;
+    font-family: var(--mono);
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ── KEY VIEWS TABLE ── */
+  .views-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    margin: 8px 0;
+  }
+  .views-table td {
+    padding: 5px 10px;
+    border-bottom: 1px solid rgba(100,160,255,0.06);
+    color: var(--text2);
+    vertical-align: top;
+  }
+  .views-table td:first-child {
+    color: var(--teal);
+    font-family: var(--mono);
+    font-size: 11.5px;
+    white-space: nowrap;
+    width: 1%;
+    padding-right: 14px;
+  }
+  .views-table tr:last-child td { border-bottom: none; }
+
+  /* ── ADULT / PEDS TABS ── */
+  .ap-tabs {
+    display: flex;
+    gap: 0;
+    margin: 12px 0 0;
+    border-bottom: 2px solid var(--border);
+  }
+  .ap-tab {
+    padding: 7px 18px;
+    font-size: 12px;
+    font-weight: 600;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    font-family: inherit;
+    transition: color 0.15s, border-color 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .ap-tab:hover { color: var(--slate); }
+  .ap-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+  .ap-tab.peds.active { color: var(--purple); border-bottom-color: var(--purple); }
+  .ap-tab-peds-badge {
+    font-size: 9px; background: var(--purple-light); color: var(--purple);
+    border-radius: 3px; padding: 1px 4px; margin-left: 4px; vertical-align: middle;
+  }
+  .ap-content { display: none; padding-top: 12px; }
+  .ap-content.active { display: block; }
+
+  /* peds-specific callout */
+  .peds-note {
+    background: rgba(168,85,247,0.07);
+    border: 1px solid rgba(168,85,247,0.2);
+    border-left: 3px solid var(--purple);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #c084fc;
+    margin-bottom: 12px;
+  }
+  .peds-note strong { color: var(--purple); }
+</style>
+
+<!-- ─────────────────────────────────────────────── -->
+<!-- SECTION HEADER                                  -->
+<!-- ─────────────────────────────────────────────── -->
+<div class="page-title">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink:0">
+    <rect x="1" y="4" width="18" height="12" rx="2" stroke="var(--teal)" stroke-width="1.5" fill="none"/>
+    <circle cx="10" cy="10" r="3" stroke="var(--teal)" stroke-width="1.5" fill="none"/>
+    <line x1="1" y1="8" x2="19" y2="8" stroke="var(--teal)" stroke-width="1" opacity="0.4"/>
+    <line x1="1" y1="12" x2="19" y2="12" stroke="var(--teal)" stroke-width="1" opacity="0.4"/>
+  </svg>
+  Fluoroscopy Procedure Guide
+</div>
+<div class="page-subtitle">Step-by-step protocols for GI/GU and special fluoroscopic examinations</div>
+
+<div class="fluoro-disclaimer">
+  <strong>Reference &amp; Educational Use Only.</strong> Always correlate with institutional protocols and attending guidance. Patient safety and clinical judgment take precedence over any reference document.
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- GI FLUOROSCOPY CATEGORY                         -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="proc-category">GI Fluoroscopy</div>
+
+<!-- ─── 1. Esophagram ─── -->
+<div class="topic-h" id="fl-esoph">
+  Esophagram / Barium Swallow
+  <span class="topic-tag tag-teal">GI</span>
+</div>
+
+<div class="proc-meta">
+  <span class="proc-tag tag-indication">Dysphagia / Odynophagia</span>
+  <span class="proc-tag tag-indication">Globus</span>
+  <span class="proc-tag tag-indication">Post-op Esophagus</span>
+  <span class="proc-tag tag-indication">Suspected Perforation</span>
+  <span class="proc-tag tag-contrast">Thin + Thick Barium; Water-soluble if perforation</span>
+  <span class="proc-tag tag-prep">NPO 2+ hours</span>
+</div>
+
+<div class="proc-section-label">Contraindications</div>
+<div class="contra-row"><span class="contra-badge">AVOID</span><span>Barium if suspected perforation — use water-soluble (Gastrografin/Omnipaque)</span></div>
+<div class="contra-row"><span class="contra-badge">NEVER</span><span>High-osmolar ionic contrast (Gastrografin) if aspiration risk — causes pulmonary edema/pneumonitis. Use low-osmolar IOCM (Omnipaque) orally instead</span></div>
+
+<div class="ap-tabs" data-group="esoph">
+  <button class="ap-tab active" onclick="apSwitch(this)">Adult</button>
+  <button class="ap-tab peds" onclick="apSwitch(this)">Pediatric <span class="ap-tab-peds-badge">Peds</span></button>
+</div>
+<div class="ap-content active" data-group="esoph" data-tab="adult">
+
+<div class="proc-section-label">Equipment</div>
+<div style="font-size:13px;color:var(--text2);margin-bottom:8px;">Thin barium (60% w/v) · Thick barium (200–250% w/v) · 12.5 mm barium tablet · Barium cup · Straw · Fluoroscopy unit with spot film capability</div>
+
+<div class="proc-section-label">Step-by-Step Protocol</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content">Review clinical history, prior imaging, and operative reports before the patient enters the room.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Explain procedure to patient; remove artifacts (ECG leads, jewelry, clips from field).</div></li>
+  <li class="proc-step"><div class="proc-step-content">Obtain scout chest radiograph before any contrast administration.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Position patient <strong>standing/sitting in LPO</strong> (this obliques the esophagus off the spine). Use supine or reverse Trendelenburg if patient unable to stand.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Give patient thick barium and observe motility before capturing images — <em>test swallow first</em>.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>LPO standing esophagus × 3:</strong> obtain 3 spot images during continuous swallowing — one each at proximal (cervical), mid-thoracic, and distal thoracic esophagus.
+    <ul class="proc-sub">
+      <li>Have patient take a full mouthful and swallow continuously (3 swallows → 3 shots)</li>
+      <li>Time exposures during active swallowing (lumen should be distended)</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Right lateral supine:</strong> lay patient supine; use thin barium (multiple sips). Obtain upper, mid, and distal esophagus including open LES. Magnify LES region.
+    <ul class="proc-sub">
+      <li>Thin barium flows more slowly and better demonstrates mucosal detail</li>
+      <li>Capture open LES — this is mandatory</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Reflux evaluation in RPO:</strong> contrast pools at cardia in this position. Perform provocative maneuvers:
+    <ul class="proc-sub">
+      <li>Valsalva / cough maneuver</li>
+      <li>Roll to right lateral and back</li>
+      <li>Water siphon test (2 sips water, watch GEJ in real-time)</li>
+      <li>Document: maneuver performed, level of reflux, clearance time</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Pharynx evaluation standing:</strong> have patient gargle thick barium.
+    <ul class="proc-sub">
+      <li>AP scout → say "EEEEE" → image; puff cheeks → image</li>
+      <li>Repeat lateral view with same maneuvers</li>
+      <li>If abnormal pharynx: acquire cine at 3 fr/sec</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Barium tablet (12.5 mm):</strong> administer tablet and document passage through esophagus.
+    <ul class="proc-sub">
+      <li>If tablet catches: have patient drink water to attempt to clear</li>
+      <li>Strictures &lt;13 mm are typically symptomatic</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content">Review images with attending; repeat any incomplete views before releasing patient.</div></li>
+</ol>
+
+<div class="views-label">Key Views / Positioning</div>
+<div class="position-grid">
+  <!-- LPO Standing -->
+  <div class="pos-diagram">
+    <svg width="70" height="72" viewBox="0 0 70 72">
+      <!-- body torso -->
+      <ellipse cx="35" cy="38" rx="16" ry="22" fill="none" stroke="var(--teal)" stroke-width="1.5"/>
+      <!-- head -->
+      <circle cx="35" cy="12" r="9" fill="none" stroke="var(--teal)" stroke-width="1.5"/>
+      <!-- esophagus line -->
+      <path d="M35 21 Q38 30 36 60" stroke="var(--amber)" stroke-width="2" fill="none" stroke-dasharray="3,2"/>
+      <!-- LPO angle indicator -->
+      <text x="4" y="68" font-size="9" fill="var(--text3)" font-family="var(--mono)">~30° LPO</text>
+    </svg>
+    <span class="pos-label">LPO Standing<br>Esophagus × 3</span>
+  </div>
+  <!-- Right Lateral Supine -->
+  <div class="pos-diagram">
+    <svg width="70" height="72" viewBox="0 0 70 72">
+      <!-- supine body (horizontal) -->
+      <ellipse cx="35" cy="42" rx="22" ry="14" fill="none" stroke="var(--teal)" stroke-width="1.5"/>
+      <!-- head -->
+      <circle cx="10" cy="42" r="8" fill="none" stroke="var(--teal)" stroke-width="1.5"/>
+      <!-- spine horizontal -->
+      <line x1="18" y1="48" x2="57" y2="52" stroke="var(--text3)" stroke-width="1" stroke-dasharray="2,2"/>
+      <!-- esophagus -->
+      <path d="M16 42 Q35 38 56 48" stroke="var(--amber)" stroke-width="2" fill="none" stroke-dasharray="3,2"/>
+      <text x="8" y="68" font-size="9" fill="var(--text3)" font-family="var(--mono)">Rt Lat</text>
+    </svg>
+    <span class="pos-label">Right Lateral<br>Supine</span>
+  </div>
+  <!-- RPO Reflux -->
+  <div class="pos-diagram">
+    <svg width="70" height="72" viewBox="0 0 70 72">
+      <ellipse cx="35" cy="38" rx="16" ry="22" fill="none" stroke="var(--teal)" stroke-width="1.5"/>
+      <circle cx="35" cy="12" r="9" fill="none" stroke="var(--teal)" stroke-width="1.5"/>
+      <!-- cardia pool indicator -->
+      <ellipse cx="30" cy="57" rx="8" ry="4" fill="rgba(245,158,11,0.2)" stroke="var(--amber)" stroke-width="1.2"/>
+      <text x="4" y="70" font-size="9" fill="var(--text3)" font-family="var(--mono)">RPO Reflux</text>
+    </svg>
+    <span class="pos-label">RPO<br>Reflux Eval</span>
+  </div>
+  <!-- AP Pharynx -->
+  <div class="pos-diagram">
+    <svg width="70" height="72" viewBox="0 0 70 72">
+      <circle cx="35" cy="14" r="10" fill="none" stroke="var(--teal)" stroke-width="1.5"/>
+      <!-- cervical spine -->
+      <rect x="30" y="24" width="10" height="28" rx="2" fill="none" stroke="var(--text3)" stroke-width="1" stroke-dasharray="2,2"/>
+      <!-- pharynx fill -->
+      <path d="M25 24 Q35 20 45 24 L43 38 Q35 42 27 38 Z" fill="rgba(20,184,166,0.15)" stroke="var(--teal)" stroke-width="1.2"/>
+      <text x="12" y="70" font-size="9" fill="var(--text3)" font-family="var(--mono)">AP Pharynx</text>
+    </svg>
+    <span class="pos-label">AP Pharynx<br>Standing</span>
+  </div>
+  <!-- Lateral Pharynx -->
+  <div class="pos-diagram">
+    <svg width="70" height="72" viewBox="0 0 70 72">
+      <circle cx="30" cy="14" r="10" fill="none" stroke="var(--teal)" stroke-width="1.5"/>
+      <!-- lateral neck -->
+      <path d="M22 24 L18 54" stroke="var(--teal)" stroke-width="1.5" fill="none"/>
+      <path d="M38 24 L42 54" stroke="var(--teal)" stroke-width="1.5" fill="none"/>
+      <!-- pharynx/esophagus lateral -->
+      <path d="M28 24 Q30 36 29 54" stroke="var(--amber)" stroke-width="1.8" fill="none" stroke-dasharray="3,2"/>
+      <text x="8" y="70" font-size="9" fill="var(--text3)" font-family="var(--mono)">Lat Pharynx</text>
+    </svg>
+    <span class="pos-label">Lateral<br>Pharynx</span>
+  </div>
+</div>
+
+<div class="proc-section-label">Imaging Pearls</div>
+<div class="pearl-grid">
+  <div class="pearl-box">⚡ <strong>Always image the open LES.</strong> Missing a distal esophageal stricture or ring is the most common error in esophagrams.</div>
+  <div class="pearl-box">⚡ <strong>Stricture persistence:</strong> if a narrowing is seen, have the patient keep drinking to confirm it persists vs. a transient peristaltic wave.</div>
+  <div class="pearl-box">⚡ <strong>Schatzki ring:</strong> mucosal (B-ring) ≥2 cm above diaphragm indicates sliding hiatal hernia. Rings &lt;11 mm are typically symptomatic. A-ring = muscular contractile ring (normal/dynamic); B-ring = mucosal ring (pathologic if &lt;13 mm).</div>
+  <div class="pearl-box">⚡ <strong>NEVER use high-osmolar ionic contrast (Gastrografin) if aspiration risk</strong> — causes severe pulmonary edema and pneumonitis. Use low-osmolar, non-ionic contrast (Omnipaque) orally instead.</div>
+</div>
+
+<div class="dictation-wrapper">
+  <div class="dictation-header">
+    <span class="dictation-title">Normal Dictation Template</span>
+    <button class="copy-btn" onclick="(function(btn){const t='Single contrast esophagram was obtained. Normal esophageal motility was observed. The esophagus is of normal caliber throughout without evidence of stricture, mass, or ulceration. The lower esophageal sphincter opens normally. No hiatal hernia or gastroesophageal reflux is identified. The pharynx is unremarkable.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
+  </div>
+  <div class="dictation-box">Single contrast esophagram was obtained. Normal esophageal motility was observed. The esophagus is of normal caliber throughout without evidence of stricture, mass, or ulceration. The lower esophageal sphincter opens normally. No hiatal hernia or gastroesophageal reflux is identified. The pharynx is unremarkable.</div>
+</div>
+</div><!-- /adult -->
+
+<div class="ap-content" data-group="esoph" data-tab="peds">
+<div class="peds-note"><strong>Pediatric Esophagram</strong> — Adapted technique for neonates, infants, and children. Radiation minimization and age-appropriate positioning are essential.</div>
+
+<div class="proc-section-label">Pediatric Indications</div>
+<div style="font-size:13px;color:var(--text2);margin-bottom:10px;">GERD / recurrent vomiting · Suspected vascular ring (dysphagia lusoria) · TEF post-repair surveillance · Foreign body evaluation · Aspiration workup · Malrotation screening (DJJ assessment)</div>
+
+<div class="proc-section-label">Key Technique Differences</div>
+<div class="pearl-grid">
+  <div class="pearl-box" style="border-left-color:var(--purple);background:rgba(168,85,247,0.07);">🟣 <strong>Fluoroscopy grabs and last-image-hold ONLY</strong> — no full-exposure spot films. Minimizes dose significantly.</div>
+  <div class="pearl-box" style="border-left-color:var(--purple);background:rgba(168,85,247,0.07);">🟣 <strong>No double contrast</strong> (no effervescent granules/fizzies) — thin barium only.</div>
+  <div class="pearl-box" style="border-left-color:var(--purple);background:rgba(168,85,247,0.07);">🟣 <strong>No barium tablet</strong> — not used in pediatric patients.</div>
+  <div class="pearl-box" style="border-left-color:var(--purple);background:rgba(168,85,247,0.07);">🟣 <strong>No pharyngeal exam</strong> unless specifically requested — separate MBS with speech pathology if swallowing evaluation needed.</div>
+</div>
+
+<div class="proc-section-label">Equipment</div>
+<div style="font-size:13px;color:var(--text2);margin-bottom:8px;">Thin barium (60% w/v) · Age-appropriate cup or bottle nipple for infants · NG tube if infant cannot swallow cooperatively · Parent/guardian in room with lead apron</div>
+
+<div class="proc-section-label">Step-by-Step Protocol (Pediatric)</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content">Have parent/guardian remain in room; provide lead apron. Children cooperate better with a familiar adult present.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Position:
+    <ul class="proc-sub">
+      <li><strong>Infants:</strong> supine or upright held by parent</li>
+      <li><strong>Toddlers/children:</strong> upright standing or sitting preferred</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Lateral view first</strong> — the lateral projection is most sensitive for detecting reflux and posterior esophageal impressions (vascular ring).</div></li>
+  <li class="proc-step"><div class="proc-step-content">Administer thin barium via bottle (infants) or cup. Watch the barium pass from pharynx through esophagus to the stomach using <strong>fluoroscopy grabs/last-image-hold</strong>.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>CRITICAL — Document the DJJ (duodenojejunal junction):</strong> Normal = at or LEFT of spine, at the level of the pylorus. If DJJ is to the RIGHT of the spine or below the pylorus → malrotation until proven otherwise.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Assess for GEJ reflux: in infants, gentle leg-raise or Trendelenburg position can provoke reflux if clinically relevant.</div></li>
+  <li class="proc-step"><div class="proc-step-content">AP and lateral spot grabs of any areas of concern. Minimize fluoroscopy time throughout.</div></li>
+</ol>
+
+<div class="proc-section-label">Pediatric Imaging Pearls</div>
+<div class="pearl-grid">
+  <div class="pearl-box">⚡ <strong>Vascular ring:</strong> look for posterior esophageal impression on the LATERAL view. Bilateral impressions (anterior + posterior) = double aortic arch. Posterior impression only = aberrant right subclavian artery (dysphagia lusoria — typically mild symptoms).</div>
+  <div class="pearl-box">⚡ <strong>H-type TEF:</strong> inject contrast through NG tube at low pressure with patient lateral. The fistula fills only under gentle injection pressure. Have a low threshold to repeat with patient in various obliquities — H-type TEFs are easily missed.</div>
+  <div class="pearl-box">⚡ <strong>Physiologic reflux in infants is common</strong> — focus on the height of reflux (above carina = aspiration risk), frequency, and gastric emptying time, not just presence/absence.</div>
+  <div class="pearl-box">⚡ <strong>DJJ is the most important landmark</strong> in pediatric UGI/esophagram. Never end the exam without documenting where the duodenum crosses the midline. Midgut volvulus is a surgical emergency.</div>
+</div>
+</div><!-- /peds -->
+
+
+<!-- ─── 2. Modified Barium Swallow ─── -->
+<div class="topic-h" id="fl-mbs">
+  Modified Barium Swallow (MBS) with Speech Pathologist
+  <span class="topic-tag tag-teal">GI</span>
+</div>
+
+<div class="proc-meta">
+  <span class="proc-tag tag-indication">Dysphagia / Aspiration Eval</span>
+  <span class="proc-tag tag-indication">Post-stroke Swallowing</span>
+  <span class="proc-tag tag-indication">Aspiration Pneumonia Workup</span>
+  <span class="proc-tag tag-indication">Neuromuscular Disease</span>
+  <span class="proc-tag tag-contrast">Barium 60% + 200–250% w/v; thickened liquids; barium paste</span>
+  <span class="proc-tag tag-prep">No prep required</span>
+</div>
+
+<div class="proc-section-label">Contraindications</div>
+<div class="contra-row"><span class="contra-badge">CAUTION</span><span>Pharyngeal perforation suspected → use water-soluble contrast. Airway fistula → avoid ionic contrast.</span></div>
+
+<div class="ap-tabs" data-group="mbs">
+  <button class="ap-tab active" onclick="apSwitch(this)">Adult</button>
+  <button class="ap-tab peds" onclick="apSwitch(this)">Pediatric <span class="ap-tab-peds-badge">Peds</span></button>
+</div>
+<div class="ap-content active" data-group="mbs" data-tab="adult">
+
+<div class="proc-section-label">Step-by-Step Protocol</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content">Introduce yourself to the speech pathologist; discuss expected findings and the study plan before beginning.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Introduce yourself to the patient as the assisting radiologist; explain the procedure.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Position: right lateral decubitus</strong>, tabletop vertical. Collimate to head and neck. <em>Do NOT include the eyes in the radiation field.</em> Use 1–2× magnification.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Speech pathologist administers progressively challenging consistencies: thin liquid → nectar-thick → honey-thick → pudding → solid.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Record entire exam</strong> (cine/video) at minimum 4 frames/sec. Coordinate swallow with count: "1…2…3…swallow."</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Lateral view first:</strong> document:
+    <ul class="proc-sub">
+      <li>Oral transit time</li>
+      <li>Nasopharyngeal reflux</li>
+      <li>Vallecular and pyriform sinus pooling</li>
+      <li>Laryngeal penetration (above cords)</li>
+      <li>Tracheal aspiration (below cords)</li>
+      <li>Cricopharyngeal muscle function</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>AP view:</strong> at least one liquid barium swallow. Collimate just wider than the cervical spine.</div></li>
+  <li class="proc-step"><div class="proc-step-content">If abnormal pharynx is identified: acquire cine at 3 fr/sec (patient holds contrast, swallows on count of 3).</div></li>
+  <li class="proc-step"><div class="proc-step-content">Phonation assessment if requested: center on vocal cords with magnification; record during sustained phonation.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Discuss findings with speech pathologist after exam; note which consistencies caused aspiration or penetration.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><em>Not necessary to review with attending before releasing patient</em> — this study is interpreted jointly with speech pathology.</div></li>
+</ol>
+
+<div class="views-label">Key Views / Positioning</div>
+<div class="position-grid">
+  <div class="pos-diagram">
+    <svg width="70" height="72" viewBox="0 0 70 72">
+      <!-- lateral head/neck -->
+      <circle cx="30" cy="14" r="10" fill="none" stroke="var(--teal)" stroke-width="1.5"/>
+      <path d="M20 24 L16 60" stroke="var(--teal)" stroke-width="1.5"/>
+      <path d="M40 24 L44 60" stroke="var(--teal)" stroke-width="1.5"/>
+      <!-- bolus path -->
+      <path d="M30 24 Q32 38 30 56" stroke="var(--amber)" stroke-width="2" fill="none" stroke-dasharray="3,2"/>
+      <!-- airway indicator -->
+      <path d="M36 32 L50 38" stroke="var(--red)" stroke-width="1.2" stroke-dasharray="2,2"/>
+      <text x="44" y="36" font-size="8" fill="var(--red)" font-family="var(--mono)">airway</text>
+    </svg>
+    <span class="pos-label">Rt Lateral<br>Pharynx/Swallow</span>
+  </div>
+  <div class="pos-diagram">
+    <svg width="70" height="72" viewBox="0 0 70 72">
+      <circle cx="35" cy="14" r="10" fill="none" stroke="var(--teal)" stroke-width="1.5"/>
+      <rect x="30" y="24" width="10" height="30" rx="2" fill="none" stroke="var(--text3)" stroke-width="1" stroke-dasharray="2,2"/>
+      <!-- bilateral pharynx walls -->
+      <path d="M24 24 L22 48" stroke="var(--teal)" stroke-width="1.2"/>
+      <path d="M46 24 L48 48" stroke="var(--teal)" stroke-width="1.2"/>
+      <path d="M35 24 Q35 36 35 54" stroke="var(--amber)" stroke-width="2" fill="none" stroke-dasharray="3,2"/>
+    </svg>
+    <span class="pos-label">AP Pharynx<br>/ Swallow</span>
+  </div>
+</div>
+
+<div class="proc-section-label">Imaging Pearls</div>
+<div class="pearl-grid">
+  <div class="pearl-box">⚡ <strong>Penetration vs Aspiration:</strong> Penetration = contrast enters larynx <em>above</em> true vocal cords. Aspiration = contrast passes <em>below</em> true cords into trachea.</div>
+  <div class="pearl-box">⚡ <strong>Significant aspiration: STOP THE EXAM immediately.</strong> Alert speech pathologist; suction if needed; ensure patient is safe before continuing.</div>
+  <div class="pearl-box">⚡ <strong>Silent aspiration</strong> (no cough reflex) is common in neurologic patients — watch carefully below the cords even if patient does not react.</div>
+  <div class="pearl-box">⚡ <strong>Vallecular pooling + cricopharyngeal bar</strong> is a common finding in elderly patients. Assess whether compensatory strategies (chin tuck, head turn) reduce pooling.</div>
+  <div class="pearl-box">⚡ <strong>Radiation safety:</strong> DO NOT include the eyes in the radiation field — always collimate tightly to the pharynx and cervical esophagus.</div>
+</div>
+
+<div class="dictation-wrapper">
+  <div class="dictation-header">
+    <span class="dictation-title">Normal Dictation Template</span>
+    <button class="copy-btn" onclick="(function(btn){const t='Videofluoroscopic swallowing evaluation was performed in conjunction with the speech pathology department. Various liquid and solid food substances were used to assess swallowing. Normal oral transit was observed. Both regular and dense barium, as well as semisolid and solid food substances, were swallowed without difficulty. No tracheal aspiration, laryngeal penetration, nasopharyngeal reflux, or significant pooling in the valleculae or pyriform sinuses was observed.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
+  </div>
+  <div class="dictation-box">Videofluoroscopic swallowing evaluation was performed in conjunction with the speech pathology department. Various liquid and solid food substances were used to assess swallowing. Normal oral transit was observed. Both regular and dense barium, as well as semisolid and solid food substances, were swallowed without difficulty. No tracheal aspiration, laryngeal penetration, nasopharyngeal reflux, or significant pooling in the valleculae or pyriform sinuses was observed.</div>
+</div>
+</div><!-- /adult -->
+
+<div class="ap-content" data-group="mbs" data-tab="peds">
+<div class="peds-note"><strong>Pediatric Modified Barium Swallow</strong> — Feeding evaluation in infants and children requires age-appropriate techniques and mandatory parent involvement.</div>
+
+<div class="proc-section-label">Pediatric Key Differences</div>
+<div class="pearl-grid">
+  <div class="pearl-box" style="border-left-color:var(--purple);background:rgba(168,85,247,0.07);">🟣 <strong>Parents MUST be present for the entire exam</strong> — children feed better in the parent's presence. Parent holds and feeds the child.</div>
+  <div class="pearl-box" style="border-left-color:var(--purple);background:rgba(168,85,247,0.07);">🟣 <strong>Age-appropriate food consistencies and utensils</strong> — bottle + nipple for infants; sippy cup for toddlers; regular cup/spoon for older children.</div>
+  <div class="pearl-box" style="border-left-color:var(--purple);background:rgba(168,85,247,0.07);">🟣 <strong>Explain the procedure to the parents, not the child</strong> — the child will follow the parent's lead and routine feeding pattern.</div>
+  <div class="pearl-box" style="border-left-color:var(--purple);background:rgba(168,85,247,0.07);">🟣 <strong>Minimize fluoroscopy time</strong> — use fluoroscopy grabs and last-image-hold. Infants swallow rapidly; capture in short bursts.</div>
+</div>
+
+<div class="proc-section-label">Step-by-Step Protocol (Pediatric)</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content">Meet with the speech-language pathologist before the exam. Discuss the child's specific feeding concerns, baseline diet, and what consistencies to test.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Greet the parent and child. Provide lead apron to parent. Explain to the parent (not the child) what will happen — children take cues from parents' demeanor.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Position:</strong>
+    <ul class="proc-sub">
+      <li><strong>Infants:</strong> held in parent's arms or in an infant seat, upright or semi-reclined as normally fed</li>
+      <li><strong>Toddlers:</strong> seated in a high chair or parent's lap</li>
+      <li><strong>Older children:</strong> seated upright in a chair, lateral to the beam</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Lateral view</strong> — set up in right lateral projection. Collimate tightly to pharynx and cervical esophagus. DO NOT include the eyes in the radiation field.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Speech pathologist administers barium-mixed food/liquid in the child's normal feeding utensil. Use thin barium first; progress to thickened as needed.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Capture swallows in short fluoroscopy bursts</strong> (2–3 second clips). Use last-image-hold for single swallow documentation.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>AP view:</strong> obtain at least one AP swallow — documents asymmetric pharyngeal pooling or unilateral aspiration.</div></li>
+  <li class="proc-step"><div class="proc-step-content">If significant aspiration is observed: <strong>STOP immediately.</strong> Alert speech pathologist. Suction if needed. Discuss with parents and clinical team before continuing.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Document findings for each consistency trialed and discuss with speech pathologist before releasing the patient.</div></li>
+</ol>
+
+<div class="proc-section-label">Pediatric Imaging Pearls</div>
+<div class="pearl-grid">
+  <div class="pearl-box">⚡ <strong>Infant swallowing is physiologically different</strong> — the larynx sits higher in infants and the epiglottis overlaps the soft palate, providing greater airway protection. Swallowing rate is faster than adults (1–2 per second during suckling).</div>
+  <div class="pearl-box">⚡ <strong>Silent aspiration</strong> is common in neurologically impaired children — watch carefully below the cords even without a cough response.</div>
+  <div class="pearl-box">⚡ <strong>Laryngomalacia</strong> — dynamic collapse of the supraglottic larynx on inspiration. Can look alarming but is not aspiration. The arytenoids collapse inward; contrast passes below without tracheal entry.</div>
+  <div class="pearl-box">⚡ <strong>Cricopharyngeal achalasia</strong> in neonates — failure of the cricopharyngeus to relax during swallowing. Contrast pools in the pyriform sinuses and may reflux or overflow into the larynx. Treated with dilation or botox injection.</div>
+  <div class="pearl-box">⚡ <strong>Behavioral feeding difficulties</strong> are common in children — if the child refuses to swallow during the exam, this itself is valuable information for the speech pathologist.</div>
+</div>
+</div><!-- /peds -->
+
+
+<!-- ─── 3. Upper GI Series ─── -->
+<div class="topic-h" id="fl-ugi">
+  Upper GI Series (UGI)
+  <span class="topic-tag tag-teal">GI</span>
+</div>
+
+<div class="proc-meta">
+  <span class="proc-tag tag-indication">Epigastric Pain / GERD</span>
+  <span class="proc-tag tag-indication">Hiatal Hernia Eval</span>
+  <span class="proc-tag tag-indication">Post-surgical Anatomy</span>
+  <span class="proc-tag tag-indication">Suspected Obstruction</span>
+  <span class="proc-tag tag-contrast">Thin + Thick Barium; water-soluble if post-op; optional effervescent granules</span>
+  <span class="proc-tag tag-prep">NPO after midnight or ≥4–6 hours</span>
+</div>
+
+<div class="proc-section-label">Contraindications</div>
+<div class="contra-row"><span class="contra-badge">AVOID</span><span>Barium if suspected perforation — use water-soluble contrast</span></div>
+<div class="contra-row"><span class="contra-badge">CAUTION</span><span>Complete obstruction — avoid barium (impaction risk); use water-soluble contrast or omit entirely</span></div>
+
+<div class="ap-tabs" data-group="ugi">
+  <button class="ap-tab active" onclick="apSwitch(this)">Adult</button>
+  <button class="ap-tab peds" onclick="apSwitch(this)">Pediatric <span class="ap-tab-peds-badge">Peds</span></button>
+</div>
+<div class="ap-content active" data-group="ugi" data-tab="adult">
+
+<div class="proc-section-label">Step-by-Step Protocol</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content">Review clinical history; note any prior surgery — post-surgical anatomy dramatically changes what you're evaluating. Review op notes if available (Nissen, Billroth I/II, Roux-en-Y, Whipple).</div></li>
+  <li class="proc-step"><div class="proc-step-content">Scout the abdomen fluoroscopically — check for: full stomach (cannot evaluate → reschedule), bowel obstruction, pneumoperitoneum, prior retained barium.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>If double contrast (fizzies):</strong> administer effervescent granules first (patient takes like a shot, chases with water). <em>Instruct patient NOT to burp</em> — this is critical for maintaining gastric distension.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Standing LPO esophagus × 3:</strong> thick barium, same technique as esophagram — proximal, mid, distal thoracic views.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Double contrast stomach coating (if fizzies used):</strong> with patient supine, roll through left lateral → prone → right lateral → back ("cement mixer") to coat gastric mucosa uniformly.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Supine stomach views — key positions:</strong>
+    <ul class="proc-sub">
+      <li><strong>LPO:</strong> optimizes gastric body and antrum</li>
+      <li><strong>RPO:</strong> optimizes lesser curvature; check for reflux here</li>
+      <li><strong>Left lateral:</strong> cardia "rosette" and fundus; anterior gastric wall</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Duodenal bulb (spade-shaped):</strong> LPO position optimizes visualization. If double contrast: try to capture air-filled bulb (may need left lateral decubitus roll to LPO while coughing).</div></li>
+  <li class="proc-step"><div class="proc-step-content">Follow contrast through <strong>duodenum (C-loop)</strong> and duodenojejunal junction. Document any abnormalities.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Upright AP:</strong> overall stomach anatomy, positional change in anatomy, check for free reflux into esophagus.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Confirm/document GERD in RPO position with provocative maneuvers if clinically relevant.</div></li>
+  <li class="proc-step"><div class="proc-step-content">If SBFT is also ordered: begin tracking contrast through small bowel (see SBFT protocol below).</div></li>
+</ol>
+
+<div class="views-label">Key Views / Positioning</div>
+<div class="position-grid">
+  <div class="pos-diagram">
+    <svg width="72" height="72" viewBox="0 0 72 72">
+      <!-- stomach LPO shape -->
+      <ellipse cx="36" cy="42" rx="18" ry="20" fill="rgba(20,184,166,0.08)" stroke="var(--teal)" stroke-width="1.5" transform="rotate(-10 36 42)"/>
+      <text x="4" y="10" font-size="9" fill="var(--text3)" font-family="var(--mono)">LPO Supine</text>
+      <text x="4" y="68" font-size="9" fill="var(--amber)" font-family="var(--mono)">Body/Antrum</text>
+    </svg>
+    <span class="pos-label">Supine LPO<br>Body / Antrum</span>
+  </div>
+  <div class="pos-diagram">
+    <svg width="72" height="72" viewBox="0 0 72 72">
+      <ellipse cx="36" cy="42" rx="18" ry="20" fill="rgba(20,184,166,0.08)" stroke="var(--teal)" stroke-width="1.5" transform="rotate(10 36 42)"/>
+      <!-- lesser curve emphasis -->
+      <path d="M22 30 Q24 42 26 54" stroke="var(--amber)" stroke-width="2" fill="none"/>
+      <text x="4" y="10" font-size="9" fill="var(--text3)" font-family="var(--mono)">RPO Supine</text>
+      <text x="2" y="68" font-size="9" fill="var(--amber)" font-family="var(--mono)">Lesser Curve</text>
+    </svg>
+    <span class="pos-label">Supine RPO<br>Lesser Curve</span>
+  </div>
+  <div class="pos-diagram">
+    <svg width="72" height="72" viewBox="0 0 72 72">
+      <!-- left lateral: stomach profile -->
+      <path d="M20 20 Q14 36 18 54 Q28 62 44 56 Q58 50 54 38 Q52 24 38 18 Q26 14 20 20Z" fill="rgba(20,184,166,0.08)" stroke="var(--teal)" stroke-width="1.5"/>
+      <!-- cardia rosette -->
+      <circle cx="26" cy="26" r="5" fill="rgba(245,158,11,0.2)" stroke="var(--amber)" stroke-width="1.2"/>
+      <text x="2" y="10" font-size="9" fill="var(--text3)" font-family="var(--mono)">Lt Lateral</text>
+      <text x="2" y="68" font-size="9" fill="var(--amber)" font-family="var(--mono)">Cardia/Fundus</text>
+    </svg>
+    <span class="pos-label">Left Lateral<br>Cardia / Fundus</span>
+  </div>
+  <div class="pos-diagram">
+    <svg width="72" height="72" viewBox="0 0 72 72">
+      <!-- duodenal bulb -->
+      <path d="M28 28 Q20 40 28 54 Q38 60 50 52 Q60 44 56 34 Q52 22 42 22 Q32 20 28 28Z" fill="rgba(20,184,166,0.08)" stroke="var(--teal)" stroke-width="1.5"/>
+      <text x="4" y="12" font-size="9" fill="var(--text3)" font-family="var(--mono)">LPO Supine</text>
+      <text x="2" y="68" font-size="9" fill="var(--amber)" font-family="var(--mono)">Duod. Bulb</text>
+    </svg>
+    <span class="pos-label">Supine LPO<br>Duodenal Bulb</span>
+  </div>
+</div>
+
+<div class="proc-section-label">Imaging Pearls</div>
+<div class="pearl-grid">
+  <div class="pearl-box">⚡ <strong>Position optimization:</strong> RPO → lesser curvature (ulcers). LPO → body/antrum. Left lateral → cardia "rosette" and anterior wall.</div>
+  <div class="pearl-box">⚡ <strong>Post-Nissen fundoplication:</strong> look for slipped Nissen wrap, herniation of wrap above diaphragm, or dysphagia from excessively tight wrap (narrowing at wrap level).</div>
+  <div class="pearl-box">⚡ <strong>Post-Roux-en-Y gastric bypass:</strong> trace the Roux limb; anastomotic leak is the critical early complication. Look for extravasation at gastrojejunal anastomosis.</div>
+  <div class="pearl-box">⚡ <strong>Full stomach = uninterpretable study.</strong> Do not proceed — reschedule with appropriate bowel prep. Document findings and reason for rescheduling.</div>
+</div>
+
+<div class="dictation-wrapper">
+  <div class="dictation-header">
+    <span class="dictation-title">Normal Dictation Template</span>
+    <button class="copy-btn" onclick="(function(btn){const t='Single contrast upper gastrointestinal examination was performed. The esophagus demonstrates normal caliber and motility without stricture or mass. There is no evidence of gastroesophageal reflux. The gastric mucosa is normal without ulceration or mass. The duodenal bulb and sweep are normal. No gastric outlet obstruction is identified. No hiatal hernia is seen.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
+  </div>
+  <div class="dictation-box">Single contrast upper gastrointestinal examination was performed. The esophagus demonstrates normal caliber and motility without stricture or mass. There is no evidence of gastroesophageal reflux. The gastric mucosa is normal without ulceration or mass. The duodenal bulb and sweep are normal. No gastric outlet obstruction is identified. No hiatal hernia is seen.</div>
+</div>
+</div><!-- /adult -->
+
+<div class="ap-content" data-group="ugi" data-tab="peds">
+<div class="peds-note"><strong>Pediatric Upper GI Series</strong> — In children, the primary goal is ruling out <strong>malrotation</strong>. The DJJ position is the most critical finding of the entire exam.</div>
+
+<div class="proc-section-label">Pediatric Indications</div>
+<div style="font-size:13px;color:var(--text2);margin-bottom:10px;">Malrotation / midgut volvulus workup · Pyloric stenosis (UGI if US indeterminate) · Duodenal atresia / stenosis · Post-surgical anatomy · Antral web · Persistent vomiting in infancy</div>
+
+<div class="proc-section-label">Critical Pediatric Difference — The DJJ</div>
+<div class="info-box teal" style="margin-bottom:12px;background:rgba(20,184,166,0.06);border:1px solid rgba(20,184,166,0.25);border-left:3px solid var(--teal);border-radius:6px;padding:10px 14px;font-size:13px;color:var(--text2);">
+  <strong>Normal DJJ (duodenojejunal junction / Ligament of Treitz):</strong> at or to the <strong>LEFT</strong> of the left vertebral pedicle, at the same horizontal level as the <strong>duodenal bulb (pylorus)</strong>.<br><br>
+  <strong style="color:var(--red);">Malrotation:</strong> DJJ is to the RIGHT of the spine, or is below the level of the pylorus. Either finding = call the attending immediately. Midgut volvulus is a surgical emergency.
+</div>
+
+<div class="proc-section-label">Step-by-Step Protocol (Pediatric)</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content">Have parent/guardian remain in room with lead apron. Prepare thin barium — no effervescent granules (no double contrast).</div></li>
+  <li class="proc-step"><div class="proc-step-content">Infant feeding technique: barium in a bottle with standard nipple. Toddlers/children: cup or straw. NG tube instillation if child cannot cooperate.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Scout fluoroscopy of the abdomen — note bowel gas pattern, any distension.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Watch barium travel from esophagus → stomach → pylorus → duodenal bulb → duodenum in real-time using <strong>fluoroscopy grabs</strong>.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>CRITICAL STEP — Document the DJJ:</strong>
+    <ul class="proc-sub">
+      <li>Follow the duodenum as it crosses to the LEFT, ascending (3rd and 4th parts)</li>
+      <li>The DJJ should be at or left of the left pedicle of the spine</li>
+      <li>The DJJ should be at the same level as the pylorus (duodenal bulb)</li>
+      <li>Take a spot grab with DJJ and pylorus both visible on the same image</li>
+      <li>If the duodenum does not cross the spine → malrotation. Call attending immediately.</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content">Document the pyloric channel:
+    <ul class="proc-sub">
+      <li>Normal: opens promptly with contrast passing through in &lt;1 minute</li>
+      <li>Pyloric stenosis: elongated, narrow pyloric channel ("string sign"); "caterpillar" peristaltic waves in antrum; delayed/no gastric emptying</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content">AP and lateral spot grabs at pyloric channel level; AP image showing the DJJ position relative to spine.</div></li>
+</ol>
+
+<div class="proc-section-label">Pediatric Imaging Pearls</div>
+<div class="pearl-grid">
+  <div class="pearl-box">⚡ <strong>DJJ is the single most important structure</strong> in the pediatric UGI. Never end the exam without a definitive image showing the DJJ position relative to the spine and pylorus.</div>
+  <div class="pearl-box">⚡ <strong>Midgut volvulus = surgical emergency.</strong> If malrotation is suspected based on DJJ position: call the attending radiologist and surgical team immediately while the patient is still on the table.</div>
+  <div class="pearl-box">⚡ <strong>Pyloric stenosis:</strong> ultrasound is the preferred first-line test (pyloric muscle thickness &gt;3 mm, length &gt;15 mm). UGI is confirmatory if US indeterminate — look for string sign and caterpillar waves. Presents in boys aged 2–8 weeks ("projectile vomiting").</div>
+  <div class="pearl-box">⚡ <strong>Duodenal atresia:</strong> "double bubble" on plain radiograph (stomach + proximal duodenum only). UGI confirms complete obstruction at the duodenal level. Associated with Down syndrome in 30% of cases.</div>
+  <div class="pearl-box">⚡ <strong>Antral web:</strong> thin membrane just proximal to the pylorus. Gives the appearance of a second "pylorus." Often missed — look carefully at the antrum for a linear filling defect.</div>
+</div>
+</div><!-- /peds -->
+
+
+<!-- ─── 4. SBFT ─── -->
+<div class="topic-h" id="fl-sbft">
+  Small Bowel Follow-Through (SBFT)
+  <span class="topic-tag tag-teal">GI</span>
+</div>
+
+<div class="proc-meta">
+  <span class="proc-tag tag-indication">Crohn's Disease Eval / Surveillance</span>
+  <span class="proc-tag tag-indication">Malabsorption</span>
+  <span class="proc-tag tag-indication">Obstruction / Stricture</span>
+  <span class="proc-tag tag-indication">GI Bleed Workup</span>
+  <span class="proc-tag tag-contrast">16–24 oz thin barium (60% w/v) orally; Gastrografin to speed transit</span>
+  <span class="proc-tag tag-prep">NPO after midnight; low-residue diet day prior</span>
+</div>
+
+<div class="proc-section-label">Step-by-Step Protocol</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content">Patient drinks 16–24 oz thin barium (can give in multiple cups; encourage patient to drink steadily).</div></li>
+  <li class="proc-step"><div class="proc-step-content">Obtain baseline overhead KUB <em>immediately</em> after drinking is complete.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Serial overhead KUBs every 15–30 minutes tracking the barium front through the small bowel. Adjust interval based on transit speed.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Fluoroscopic spot films of any abnormal-appearing loops — use compression paddle to separate overlapping loops and characterize mucosa.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Document progression through:
+    <ul class="proc-sub">
+      <li><strong>Jejunum:</strong> feathery folds (valvulae conniventes), 3–4 folds/cm, left upper quadrant</li>
+      <li><strong>Ileum:</strong> fewer/flatter folds, right lower quadrant</li>
+      <li><strong>Terminal ileum and ileocecal valve:</strong> evaluate carefully with compression spot films</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Terminal ileum is the critical structure</strong> — Crohn's is most common here. Obtain AP and oblique compression spots of the TI.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Document time when barium reaches the cecum (normal transit: 30 min – 2 hours). Obtain final overhead KUB when barium reaches terminal ileum/cecum.</div></li>
+</ol>
+
+<div class="proc-section-label">Imaging Pearls</div>
+<div class="pearl-grid">
+  <div class="pearl-box">⚡ <strong>Normal jejunum:</strong> feathery folds (valvulae conniventes), 3–4 folds/cm, left upper quadrant. Fold thickening &gt;3 mm suggests edema, inflammation, or infiltration.</div>
+  <div class="pearl-box">⚡ <strong>Normal ileum:</strong> fewer and flatter folds, right lower quadrant. Terminal ileum lymphoid follicles (cobblestone pattern) in young patients are normal.</div>
+  <div class="pearl-box">⚡ <strong>Crohn's disease:</strong> look for string sign (long segment severe narrowing), skip lesions with normal intervening bowel, rose-thorn ulcers, fistula tracts, and strictures.</div>
+  <div class="pearl-box">⚡ <strong>Use compression paddle liberally</strong> — overlapping loops conceal pathology. This is the most important technique in SBFT.</div>
+  <div class="pearl-box">⚡ <strong>Speed transit:</strong> cold water accelerates transit. If patient is slow: metoclopramide 10 mg IV or Gastrografin mixed with barium (acts as cathartic) can help.</div>
+</div>
+
+
+<!-- ─── 5. Barium Enema ─── -->
+<div class="topic-h" id="fl-be">
+  Barium Enema — Single and Double Contrast
+  <span class="topic-tag tag-teal">GI</span>
+</div>
+
+<div class="proc-meta">
+  <span class="proc-tag tag-indication">Colon Evaluation / Polyp Detection</span>
+  <span class="proc-tag tag-indication">Post-surgical Colon Anatomy</span>
+  <span class="proc-tag tag-indication">Obstruction Assessment</span>
+  <span class="proc-tag tag-indication">Intussusception Reduction</span>
+  <span class="proc-tag tag-contrast">Single contrast: thin barium. Double contrast: thin barium + air. Water-soluble for perforation/post-op.</span>
+  <span class="proc-tag tag-prep">Full bowel prep: clear liquids + laxatives + enemas; NPO night before</span>
+</div>
+
+<div class="proc-section-label">Contraindications</div>
+<div class="contra-row"><span class="contra-badge">ABSOLUTE</span><span>Known/suspected perforation, toxic megacolon — use water-soluble contrast only or defer</span></div>
+<div class="contra-row"><span class="contra-badge">RELATIVE</span><span>Recent deep biopsy (&lt;7 days), suspected complete obstruction (use water-soluble)</span></div>
+
+<div class="ap-tabs" data-group="be">
+  <button class="ap-tab active" onclick="apSwitch(this)">Adult</button>
+  <button class="ap-tab peds" onclick="apSwitch(this)">Pediatric <span class="ap-tab-peds-badge">Peds</span></button>
+</div>
+<div class="ap-content active" data-group="be" data-tab="adult">
+
+<div class="proc-section-label">Step-by-Step Protocol (Double Contrast)</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content">Review clinical and surgical history. Assess adequacy of prep on scout KUB — residual stool is a deal-breaker for double contrast.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Scout abdominal KUB — confirm adequate prep (minimal/no residual stool visible).</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Rectal tube insertion:</strong> patient in Sims position (LAO with right knee and hip flexed). Lubricate tip; advance with patient bearing down gently.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Instill thin barium with patient in left lateral decubitus (LLD); advance barium front to hepatic flexure under fluoroscopic guidance.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Drain most barium, leaving a thin mucosal coat; insufflate air to distend the colon.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Rotate patient through multiple positions</strong> to coat mucosa evenly (the "roll"):
+    <ul class="proc-sub">
+      <li>LLD → supine → RLD → prone → standing</li>
+      <li>Each roll coats different colon segments with thin barium layer</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Spot films in each position — systematic:</strong>
+    <ul class="proc-sub">
+      <li>Rectum: lateral view (mandatory — do not skip)</li>
+      <li>Sigmoid: bilateral obliques</li>
+      <li>Descending colon: LPO</li>
+      <li>Transverse colon: prone and supine</li>
+      <li>Hepatic and splenic flexures: decubitus views</li>
+      <li>Ascending colon: RPO</li>
+      <li>Cecum and appendix: AP + obliques</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Overhead films:</strong> prone, supine, LLD decubitus, RLD decubitus, AP upright.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Double-check any areas of concern with additional targeted spot films.</div></li>
+</ol>
+
+<div class="views-label">Key Views / Positioning</div>
+<div class="position-grid">
+  <div class="pos-diagram">
+    <svg width="72" height="72" viewBox="0 0 72 72">
+      <!-- lateral rectum shape -->
+      <path d="M28 16 Q18 28 18 44 Q18 58 28 62 Q38 66 46 60 Q54 52 54 40 Q54 28 46 20 Q38 14 28 16Z" fill="rgba(20,184,166,0.08)" stroke="var(--teal)" stroke-width="1.5"/>
+      <!-- lateral projection arrow -->
+      <line x1="6" y1="40" x2="14" y2="40" stroke="var(--amber)" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="4" y="12" font-size="9" fill="var(--text3)" font-family="var(--mono)">Lateral</text>
+      <text x="2" y="70" font-size="9" fill="var(--red)" font-family="var(--mono)">ESSENTIAL</text>
+    </svg>
+    <span class="pos-label">Lateral Rectum<br>(ESSENTIAL)</span>
+  </div>
+  <div class="pos-diagram">
+    <svg width="72" height="72" viewBox="0 0 72 72">
+      <!-- sigmoid oblique shape -->
+      <path d="M18 20 Q14 32 22 44 Q28 52 38 50 Q50 46 52 36 Q54 24 46 18 Q36 12 26 16 Q20 18 18 20Z" fill="rgba(20,184,166,0.08)" stroke="var(--teal)" stroke-width="1.5"/>
+      <text x="4" y="12" font-size="9" fill="var(--text3)" font-family="var(--mono)">Oblique</text>
+      <text x="2" y="70" font-size="9" fill="var(--amber)" font-family="var(--mono)">Sigmoid</text>
+    </svg>
+    <span class="pos-label">Sigmoid<br>Oblique</span>
+  </div>
+  <div class="pos-diagram">
+    <svg width="72" height="72" viewBox="0 0 72 72">
+      <!-- decubitus colon hepatic/splenic flexure -->
+      <path d="M10 24 Q8 38 14 52 Q20 60 32 58 Q44 56 52 48 Q62 38 60 26 Q58 14 46 12 Q34 10 24 16 Q14 20 10 24Z" fill="rgba(20,184,166,0.08)" stroke="var(--teal)" stroke-width="1.5"/>
+      <text x="4" y="70" font-size="8" fill="var(--amber)" font-family="var(--mono)">Flexures</text>
+    </svg>
+    <span class="pos-label">Decubitus<br>Flexures</span>
+  </div>
+  <div class="pos-diagram">
+    <svg width="72" height="72" viewBox="0 0 72 72">
+      <!-- prone AP colon -->
+      <path d="M14 16 Q10 36 14 54 Q20 62 36 62 Q52 62 58 54 Q62 36 58 18 Q52 10 36 10 Q20 10 14 16Z" fill="rgba(20,184,166,0.08)" stroke="var(--teal)" stroke-width="1.5"/>
+      <text x="4" y="70" font-size="9" fill="var(--amber)" font-family="var(--mono)">Prone AP</text>
+    </svg>
+    <span class="pos-label">AP Prone<br>/ Supine</span>
+  </div>
+</div>
+
+<div class="proc-section-label">Imaging Pearls</div>
+<div class="pearl-grid">
+  <div class="pearl-box">⚡ <strong>Lateral rectum is ESSENTIAL</strong> — anterior rectal masses and polyps are completely missed on AP-only views. Never omit this view.</div>
+  <div class="pearl-box">⚡ <strong>Annular "apple core" lesion = carcinoma until proven otherwise.</strong> Needs urgent clinical follow-up.</div>
+  <div class="pearl-box">⚡ <strong>Diverticula vs polyps:</strong> diverticula fill with barium and have a thin stalk; polyps are fixed filling defects. Double contrast: polyp = ring shadow or etched-in-white appearance.</div>
+  <div class="pearl-box">⚡ <strong>Adequate bowel prep is critical</strong> — residual stool perfectly simulates polyps. Inadequate prep = uninterpretable double contrast study.</div>
+  <div class="pearl-box">⚡ <strong>Post-anastomosis or suspected perforation:</strong> use water-soluble contrast (Gastrografin), NEVER barium — barium peritonitis is life-threatening.</div>
+</div>
+</div><!-- /adult -->
+
+<div class="ap-content" data-group="be" data-tab="peds">
+<div class="peds-note"><strong>Pediatric Enema</strong> — In children, the primary indication is <strong>intussusception reduction</strong>, which uses a completely different technique from the adult diagnostic barium enema.</div>
+
+<div class="proc-section-label">Primary Pediatric Indication: Intussusception Reduction</div>
+<div style="font-size:13px;color:var(--text2);margin-bottom:10px;">Intussusception (ileocolic in 90% of cases) · Peak age: 6 months–3 years · Presents with colicky abdominal pain, currant jelly stool, palpable sausage-shaped mass · Confirm with ultrasound first (target/donut sign)</div>
+
+<div class="proc-section-label">Contraindications to Enema Reduction</div>
+<div class="contra-row"><span class="contra-badge">ABSOLUTE</span><span>Peritonitis, pneumoperitoneum (bowel perforation) — go directly to surgery</span></div>
+<div class="contra-row"><span class="contra-badge">RELATIVE</span><span>Shock/hemodynamic instability, small bowel obstruction pattern, prolonged symptoms &gt;48h (increased perforation risk), suspected lead point (Meckel's, lymphoma)</span></div>
+
+<div class="proc-section-label">Pre-procedure Requirements</div>
+<div class="pearl-grid">
+  <div class="pearl-box" style="border-left-color:var(--purple);background:rgba(168,85,247,0.07);">🟣 <strong>Pediatric surgeon must be present or immediately available</strong> — perforation during reduction requires immediate operative intervention.</div>
+  <div class="pearl-box" style="border-left-color:var(--purple);background:rgba(168,85,247,0.07);">🟣 IV access established · Sedation/analgesia per anesthesia protocol · Consent from parent for both reduction and potential emergency surgery.</div>
+</div>
+
+<div class="proc-section-label">Air Reduction Enema Protocol (Preferred)</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content">Review US confirming intussusception. Check for free fluid, lead point, or signs of bowel ischemia.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Insert soft rectal catheter (Foley or dedicated pneumatic reduction catheter). Tape the buttocks together to maintain a seal and prevent contrast/air leakage.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Scout KUB: document baseline bowel gas pattern; confirm no free air.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Insufflate air gradually</strong> under continuous fluoroscopy. Start at 80 mmHg; maximum pressure: <strong>120 mmHg</strong>.
+    <ul class="proc-sub">
+      <li>Never exceed 120 mmHg — perforation risk increases dramatically above this threshold</li>
+      <li>Watch the intussusceptum (soft tissue mass) retract proximally as air fills the colon</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content">Watch for the "meniscus sign" (concave leading edge of air column) to disappear as the intussusceptum reduces through the ileocecal valve.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Successful reduction = air freely fills the terminal ileum</strong> through the ileocecal valve. Air entering the TI is the definitive sign — not just reaching the cecum.</div></li>
+  <li class="proc-step"><div class="proc-step-content">If first attempt unsuccessful: deflate, wait 3–5 minutes, and retry. Up to <strong>3 attempts</strong> total are standard. After 3 failed attempts → surgical consultation for operative reduction.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Post-reduction KUB: confirm adequate bowel gas pattern and absence of free air.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Admit patient for observation — recurrence risk is 5–10% within 24–48 hours. Most recurrences can be re-reduced fluoroscopically.</div></li>
+</ol>
+
+<div class="proc-section-label">Imaging Pearls — Pediatric</div>
+<div class="pearl-grid">
+  <div class="pearl-box">⚡ <strong>Terminal ileum filling = successful reduction</strong> — not just air reaching the cecum. The ileocecal valve must open and TI must fill with air.</div>
+  <div class="pearl-box">⚡ <strong>Maximum pressure: 120 mmHg (air)</strong> or 100 cm H₂O (hydrostatic). Exceeding this threshold dramatically increases perforation risk.</div>
+  <div class="pearl-box">⚡ <strong>Perforation during reduction</strong> = tension pneumoperitoneum. Immediate large-bore needle decompression (2nd ICS midclavicular line) + surgical team. Have needle decompression supplies ready before starting.</div>
+  <div class="pearl-box">⚡ <strong>Lead points:</strong> in children &lt;2 years, lead points are rare (Meckel's diverticulum, polyp). Children &gt;5 years: higher suspicion for lymphoma as a lead point — if reduction fails, suspect lead point.</div>
+  <div class="pearl-box">⚡ <strong>Recurrence:</strong> 5–10% recurrence rate, typically within 24–48h. First recurrence can usually be reduced fluoroscopically. Multiple recurrences or suspected lead point → surgical referral.</div>
+  <div class="pearl-box">⚡ <strong>Hirschsprung's disease enema:</strong> different peds indication — use water-soluble contrast; look for transition zone (narrow aganglionic segment → dilated proximal bowel). Classic location: rectosigmoid junction.</div>
+</div>
+</div><!-- /peds -->
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- GU FLUOROSCOPY CATEGORY                         -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="proc-category">GU Fluoroscopy</div>
+
+<!-- ─── 6. VCUG ─── -->
+<div class="topic-h" id="fl-vcug">
+  Voiding Cystourethrogram (VCUG)
+  <span class="topic-tag tag-amber">GU</span>
+</div>
+
+<div class="proc-meta">
+  <span class="proc-tag tag-indication">Vesicoureteral Reflux (VUR)</span>
+  <span class="proc-tag tag-indication">Urethral Abnormalities</span>
+  <span class="proc-tag tag-indication">Neurogenic Bladder</span>
+  <span class="proc-tag tag-indication">Post-traumatic Urethral Eval</span>
+  <span class="proc-tag tag-contrast">Dilute water-soluble IOCM — Omnipaque 150 (~30% concentration); dilution avoids obscuring subtle detail</span>
+  <span class="proc-tag tag-prep">Clean urine; active UTI should be treated first</span>
+</div>
+
+<div class="proc-section-label">Contraindications</div>
+<div class="contra-row"><span class="contra-badge">RELATIVE</span><span>Active UTI (contrast can cause bacterial seeding) — treat first. Urethral obstruction (evaluate with RUG first).</span></div>
+
+<div class="ap-tabs" data-group="vcug">
+  <button class="ap-tab active" onclick="apSwitch(this)">Adult</button>
+  <button class="ap-tab peds" onclick="apSwitch(this)">Pediatric <span class="ap-tab-peds-badge">Peds</span></button>
+</div>
+<div class="ap-content active" data-group="vcug" data-tab="adult">
+
+<div class="proc-section-label">Equipment</div>
+<div style="font-size:13px;color:var(--text2);margin-bottom:8px;">Foley catheter (8–10 Fr adult; 5–8 Fr pediatric) · Dilute contrast · Gravity drainage bag · Sterile drape and cleansing supplies</div>
+
+<div class="proc-section-label">Step-by-Step Protocol</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content"><strong>Sterile technique:</strong> cleanse urethral meatus; sterile drape. Lubricate catheter tip.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Insert Foley catheter; confirm correct bladder position by observing urine drainage.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Scout KUB: note any calcifications, assess spine/pelvis, identify ureteral stents or foreign bodies.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Fill bladder by gravity</strong> (bag ~1 meter above table). NEVER apply external pressure or force fill.
+    <ul class="proc-sub">
+      <li>Adult capacity: ~300–400 mL (fill until patient reports urge to void)</li>
+      <li>Pediatric formula: [age in years + 2] × 30 mL</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Filling phase imaging:</strong> spot films AP pelvis at 1/3, 2/3, and full bladder capacity.
+    <ul class="proc-sub">
+      <li>Watch for early VUR — early reflux during filling = worse grade</li>
+      <li>Document any reflux immediately as it appears</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Full bladder views:</strong> AP and bilateral posterior oblique to assess bladder wall, diverticula, and filling defects.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Remove Foley catheter.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Voiding phase (most important):</strong> image urethra during voiding — highest intravesical pressure, most likely to demonstrate VUR and urethral pathology.
+    <ul class="proc-sub">
+      <li>Male: 30–45° oblique to profile the urethra without spine overlap</li>
+      <li>Female: AP or lateral during voiding</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Post-void AP KUB:</strong> check for residual reflux, residual urine volume.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Document reflux grade (I–V per international classification) for each ureter.</div></li>
+</ol>
+
+<div class="views-label">Key Views</div>
+<table class="views-table">
+  <tr><td>AP Filling × 3</td><td>At 1/3, 2/3, and full bladder capacity — watch for early VUR</td></tr>
+  <tr><td>Bilateral Obliques</td><td>Full bladder — assess wall, diverticula, filling defects</td></tr>
+  <tr><td>Voiding Urethrogram</td><td>Oblique (male); AP or lateral (female) — mandatory</td></tr>
+  <tr><td>Post-void KUB</td><td>Residual reflux, residual urine</td></tr>
+</table>
+
+<div class="proc-section-label">VUR Grading (International Classification)</div>
+<table class="ref-table">
+  <thead><tr><th>Grade</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td>I</td><td>Contrast in ureter only — does not reach renal pelvis</td></tr>
+    <tr><td>II</td><td>Contrast reaches renal pelvis and calyces; no dilation; normal calyceal fornices</td></tr>
+    <tr><td>III</td><td>Mild dilation of ureter ± renal pelvis; mild blunting of calyceal fornices</td></tr>
+    <tr><td>IV</td><td>Moderate dilation; moderate blunting of calyceal fornices; papillary impressions still visible</td></tr>
+    <tr><td>V</td><td>Gross dilation; tortuous ureter; papillary impressions absent; intrarenal reflux</td></tr>
+  </tbody>
+</table>
+
+<div class="proc-section-label">Imaging Pearls</div>
+<div class="pearl-grid">
+  <div class="pearl-box">⚡ <strong>Fill by gravity only</strong> — never pressurize. Forced filling causes elevated intravesical pressure → false-negative reflux AND risk of bladder injury.</div>
+  <div class="pearl-box">⚡ <strong>Voiding phase is mandatory</strong> — highest intravesical pressure occurs during voiding. VUR and posterior urethral valves (boys) are most apparent during this phase.</div>
+  <div class="pearl-box">⚡ <strong>Posterior urethral valves in boys:</strong> VCUG is the gold standard diagnostic test. Look for dilated posterior urethra with a "spinning top" appearance on voiding views.</div>
+  <div class="pearl-box">⚡ <strong>Dilute contrast (1:3 to 1:4 dilution)</strong> is essential — concentrated contrast obscures subtle grade I–II reflux and urethral detail.</div>
+  <div class="pearl-box">⚡ <strong>Bladder diverticula</strong> should drain post-void but retained contrast in a diverticulum post-void is an expected normal finding.</div>
+</div>
+</div><!-- /adult -->
+
+<div class="ap-content" data-group="vcug" data-tab="peds">
+<div class="peds-note"><strong>Pediatric VCUG</strong> — Smaller catheters, weight-based fill volumes, and particular attention to posterior urethral valves in boys. Parental presence is strongly recommended.</div>
+
+<div class="proc-section-label">Pediatric Indications</div>
+<div style="font-size:13px;color:var(--text2);margin-bottom:10px;">Vesicoureteral reflux (VUR) after UTI · Suspected posterior urethral valves (boys) · Neurogenic bladder / spina bifida · Bladder/urethral anomalies · Post-surgical follow-up</div>
+
+<div class="proc-section-label">Pediatric-Specific Equipment</div>
+<div style="font-size:13px;color:var(--text2);margin-bottom:8px;"><strong>Catheter size: 5–8 Fr</strong> (vs 8–10 Fr adult) · Dilute Omnipaque 150 (same as adult) · Gravity fill bag · Sterile technique</div>
+
+<div class="proc-section-label">Bladder Fill Volume Formula</div>
+<div class="info-box teal" style="margin-bottom:12px;background:rgba(20,184,166,0.06);border:1px solid rgba(20,184,166,0.25);border-left:3px solid var(--teal);border-radius:6px;padding:10px 14px;font-size:13px;color:var(--text2);">
+  <strong>Pediatric bladder capacity = [Age in years + 2] × 30 mL</strong><br>
+  <em>Examples: 1-year-old = 90 mL · 3-year-old = 150 mL · 5-year-old = 210 mL</em><br>
+  Stop filling when child expresses strong urge to void, even if calculated volume not reached.
+</div>
+
+<div class="proc-section-label">Step-by-Step Protocol (Pediatric)</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content">Have parent/guardian present. Explain the procedure to the parent and, in age-appropriate terms, to the child. Reassurance significantly improves cooperation.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Catheter insertion (5–8 Fr):</strong> strict sterile technique. Use generous lubrication. Have parent reassure the child during catheter insertion.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Scout KUB: assess spine (spina bifida occulta, sacral agenesis), pelvic bones, prior stents or hardware.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Fill bladder by gravity only</strong> (bag 1 meter above table). Calculate fill volume using formula: [age + 2] × 30 mL. <em>Never use external pressure or force fill in children.</em></div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Filling phase:</strong> AP spot images at 1/3, 2/3, and full bladder. Watch for early VUR — early reflux (during filling) = worse grade prognosis.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Full bladder: bilateral posterior oblique views to assess bladder wall, diverticula, trabeculation (suggests high-pressure bladder / PUV).</div></li>
+  <li class="proc-step"><div class="proc-step-content">Remove catheter. Have child void into a bedpan or diaper.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Voiding phase — CRITICAL (especially in boys):</strong>
+    <ul class="proc-sub">
+      <li><strong>Boys:</strong> oblique view (30°) to profile the entire urethra. Watch for dilated posterior urethra = posterior urethral valves (PUV)</li>
+      <li>PUV appearance: dilated posterior urethra + prominent bladder neck + small caliber distal urethra ("spinning top" or "keyhole" urethra)</li>
+      <li><strong>Girls:</strong> AP or lateral during voiding</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content">Post-void AP KUB: residual reflux, bladder residual volume estimation.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Document VUR grade (I–V) per international classification for each ureter.</div></li>
+</ol>
+
+<div class="proc-section-label">VUR Grading (same as adult)</div>
+<table class="ref-table">
+  <thead><tr><th>Grade</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td>I</td><td>Contrast in ureter only</td></tr>
+    <tr><td>II</td><td>Reaches renal pelvis; no dilation</td></tr>
+    <tr><td>III</td><td>Mild dilation; mild calyceal blunting</td></tr>
+    <tr><td>IV</td><td>Moderate dilation; papillary impressions visible</td></tr>
+    <tr><td>V</td><td>Gross dilation; papillary impressions absent; intrarenal reflux</td></tr>
+  </tbody>
+</table>
+
+<div class="proc-section-label">Pediatric Imaging Pearls</div>
+<div class="pearl-grid">
+  <div class="pearl-box">⚡ <strong>Posterior urethral valves (PUV) in boys:</strong> VCUG is the gold standard diagnostic test. Look for dilated posterior urethra ("spinning top"), prominent bladder neck, trabeculated thick-walled bladder. PUV is the most common cause of severe obstructive uropathy in male neonates.</div>
+  <div class="pearl-box">⚡ <strong>Trabeculated bladder + bilateral VUR in a boy</strong> = PUV until proven otherwise. This combination demands urgent urological referral.</div>
+  <div class="pearl-box">⚡ <strong>Cyclic VCUG:</strong> some institutions perform 2–3 fill-void cycles to catch intermittent VUR. Standard is single cycle, but if initial cycle shows no reflux and clinical suspicion is high, consider a second fill cycle.</div>
+  <div class="pearl-box">⚡ <strong>Radiation minimization:</strong> use fluoroscopy grabs + last-image-hold during filling. Reserve continuous fluoroscopy for the voiding phase only (highest diagnostic yield).</div>
+  <div class="pearl-box">⚡ <strong>When to do VCUG after UTI:</strong> current guidelines (AAP/NICE) recommend VCUG after the first febrile UTI in boys; after second UTI or abnormal renal US in girls. Discuss with the referring team if timing is unclear.</div>
+  <div class="pearl-box">⚡ <strong>Neurogenic bladder (spina bifida):</strong> look for high bladder capacity, trabeculation, diverticula, and reflux. Spinal abnormality on scout KUB is a key clue. Coordinate with urology for management planning.</div>
+</div>
+</div><!-- /peds -->
+
+
+<!-- ─── 7. RUG ─── -->
+<div class="topic-h" id="fl-rug">
+  Retrograde Urethrogram (RUG)
+  <span class="topic-tag tag-amber">GU</span>
+</div>
+
+<div class="proc-meta">
+  <span class="proc-tag tag-indication">Urethral Stricture</span>
+  <span class="proc-tag tag-indication">Urethral Trauma / Pelvic Fracture</span>
+  <span class="proc-tag tag-indication">Pre-catheterization in Suspected Injury</span>
+  <span class="proc-tag tag-indication">Urethral Diverticulum / Fistula</span>
+  <span class="proc-tag tag-contrast">Undiluted or slightly diluted water-soluble contrast (Omnipaque 240–300)</span>
+  <span class="proc-tag tag-prep">No prep required</span>
+</div>
+
+<div class="proc-section-label">Contraindications</div>
+<div class="contra-row"><span class="contra-badge">RELATIVE</span><span>Active urethral infection; known contrast allergy — premedicate if indicated</span></div>
+
+<div class="proc-section-label">Equipment</div>
+<div style="font-size:13px;color:var(--text2);margin-bottom:8px;">12–14 Fr Foley catheter (tip only, not advanced) · 60 mL syringe · Water-soluble contrast (Omnipaque 240–300) · Sterile supplies</div>
+
+<div class="proc-section-label">Step-by-Step Protocol (Male)</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content"><strong>Position:</strong> patient supine, rotate to <strong>30–45° oblique (right posterior oblique preferred)</strong> to profile the urethra without overlapping the symphysis pubis or lumbar spine.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Scout image of the pelvis to document baseline anatomy and any fractures.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Catheter placement:</strong> insert catheter tip just inside the urethral meatus (do NOT advance into the bladder). Inflate balloon with only <strong>1–2 mL</strong> to occlude the meatus.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Inject contrast under continuous fluoroscopic guidance — steady, gentle injection. Approximately 20–30 mL typically needed for adequate column.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Spot films showing entire urethra in a single column:</strong>
+    <ul class="proc-sub">
+      <li>Fossa navicularis → penile urethra → bulbar urethra → membranous urethra → prostatic urethra → bladder neck</li>
+      <li>All segments should be visible and non-overlapping</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content">If complete contrast column not achieved on first pass: repeat injection; ensure no air bubbles in syringe (purge air before injecting).</div></li>
+  <li class="proc-step"><div class="proc-step-content">Document any stricture: <strong>location</strong> (anterior vs posterior), <strong>length</strong>, <strong>caliber at narrowest point</strong>, and presence of <strong>extravasation</strong>.</div></li>
+</ol>
+
+<div class="views-label">Key Views</div>
+<table class="views-table">
+  <tr><td>Oblique Urethrogram</td><td>30–45° RPO — full column of urethra from meatus to bladder neck</td></tr>
+  <tr><td>Stricture Close-up</td><td>Magnified view with measurement of length and caliber</td></tr>
+  <tr><td>Bladder Neck</td><td>If contrast passes into bladder — documents proximal extent</td></tr>
+</table>
+
+<div class="proc-section-label">Imaging Pearls</div>
+<div class="pearl-grid">
+  <div class="pearl-box">⚡ <strong>Oblique position (30–45°) is mandatory</strong> — AP view superimposes the urethra directly on the symphysis pubis, making interpretation impossible.</div>
+  <div class="pearl-box">⚡ <strong>Bulbomembranous junction = most common site</strong> of post-traumatic stricture and posterior urethral valve location. Examine this region carefully.</div>
+  <div class="pearl-box">⚡ <strong>Anterior urethra</strong> (fossa navicularis through bulbar) = common site of stricture from instrumentation, catheter injury, or gonococcal infection.</div>
+  <div class="pearl-box">⚡ <strong>Extravasation of contrast in trauma = urethral disruption.</strong> Do NOT pass a Foley catheter. Stop immediately and consult urology.</div>
+  <div class="pearl-box">⚡ <strong>Balloon only 1–2 mL</strong> — fully inflating the balloon causes significant patient pain and prevents adequate filling of the distal urethra.</div>
+</div>
+
+
+<!-- ─── 8. HSG ─── -->
+<div class="topic-h" id="fl-hsg">
+  Hysterosalpingogram (HSG)
+  <span class="topic-tag tag-amber">GU</span>
+</div>
+
+<div class="proc-meta">
+  <span class="proc-tag tag-indication">Infertility / Tubal Patency</span>
+  <span class="proc-tag tag-indication">Recurrent Pregnancy Loss</span>
+  <span class="proc-tag tag-indication">Uterine Anomaly</span>
+  <span class="proc-tag tag-indication">Post-tubal Ligation Confirmation</span>
+  <span class="proc-tag tag-contrast">Water-soluble iodinated contrast (Omnipaque 240–300); oil-based Ethiodol less common now</span>
+  <span class="proc-tag tag-prep">Days 7–10 of menstrual cycle (post-menstrual, pre-ovulatory); confirm not pregnant</span>
+</div>
+
+<div class="proc-section-label">Contraindications</div>
+<div class="contra-row"><span class="contra-badge">ABSOLUTE</span><span>Active pelvic infection / PID, confirmed pregnancy</span></div>
+<div class="contra-row"><span class="contra-badge">RELATIVE</span><span>Recent uterine surgery (&lt;6 weeks), severe contrast allergy — premedicate</span></div>
+
+<div class="proc-section-label">Equipment</div>
+<div style="font-size:13px;color:var(--text2);margin-bottom:8px;">HSG catheter with balloon tip (e.g., Rubin or Goldstein catheter) · Speculum · Tenaculum (optional) · Water-soluble contrast · Sterile supplies · NSAIDs given 1h prior (ibuprofen 600–800 mg)</div>
+
+<div class="proc-section-label">Step-by-Step Protocol</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content">Confirm LMP; ensure patient is not pregnant; verify timing is days 7–10 of cycle.
+    <ul class="proc-sub">
+      <li>This timing avoids irradiating an early pregnancy and the endometrium is thinner (better mucosal detail)</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content">Scout pelvis KUB before contrast administration.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Speculum inserted vaginally; cervix visualized and cleansed with antiseptic.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Insert HSG catheter through cervical os; inflate balloon just inside the <strong>internal os</strong> (1–2 mL) to occlude the cervical canal.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Remove speculum (reduces scatter radiation and artifact, and unobstructs the fluoroscopic view of the pelvis).</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Inject contrast under continuous fluoroscopy</strong> — watch in real-time for:
+    <ul class="proc-sub">
+      <li>Uterine cavity filling (shape and contour)</li>
+      <li>Cornual patency (both sides)</li>
+      <li>Tubal filling (medial → lateral)</li>
+      <li>Peritoneal spill (free dispersion = patent)</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>AP spot films:</strong> full uterine fill; bilateral cornua; tubes bilaterally; peritoneal spill.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Oblique views</strong> as needed to profile each tube separately if superimposition limits assessment.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Delayed film (5–10 min):</strong> confirm free intraperitoneal spill bilaterally — contrast should disperse around bowel loops freely.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Deflate balloon; remove catheter. Patient may experience cramping — this is expected.</div></li>
+</ol>
+
+<div class="proc-section-label">Imaging Pearls</div>
+<div class="pearl-grid">
+  <div class="pearl-box">⚡ <strong>Proximal tubal occlusion (cornual) artifact:</strong> a very common false positive. Cornual spasm can exactly mimic true occlusion. Try glucagon 1 mg IV, wait 5 minutes, reattempt. True occlusion persists; spasm relaxes.</div>
+  <div class="pearl-box">⚡ <strong>Septate vs bicornuate uterus:</strong> HSG cannot reliably distinguish — the internal contour appears the same. MRI is needed to evaluate external fundal contour. External fundal notch &gt;1 cm = bicornuate; flat/convex = septate.</div>
+  <div class="pearl-box">⚡ <strong>Cavity filling defects:</strong> fibroid (smooth, round), polyp (smooth, pedunculated), Asherman synechiae (irregular, linear bands), or air bubbles (move with tilting).</div>
+  <div class="pearl-box">⚡ <strong>Loculated peritoneal spill</strong> (contrast that does not disperse freely around bowel) suggests peritubal adhesions, even with tubal patency.</div>
+  <div class="pearl-box">⚡ <strong>Premedicate with NSAIDs</strong> (ibuprofen 600–800 mg) 1 hour before the procedure to reduce uterine cramping during distension.</div>
+</div>
+
+<div class="dictation-wrapper">
+  <div class="dictation-header">
+    <span class="dictation-title">Normal Dictation Template</span>
+    <button class="copy-btn" onclick="(function(btn){const t='Hysterosalpingogram was performed. The uterine cavity is normal in size and configuration with smooth margins. Both fallopian tubes fill completely and demonstrate free peritoneal spill bilaterally. No intrauterine filling defects or synechiae are identified. The findings are consistent with bilateral tubal patency.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
+  </div>
+  <div class="dictation-box">Hysterosalpingogram was performed. The uterine cavity is normal in size and configuration with smooth margins. Both fallopian tubes fill completely and demonstrate free peritoneal spill bilaterally. No intrauterine filling defects or synechiae are identified. The findings are consistent with bilateral tubal patency.</div>
+</div>
+
+
+<!-- ─── 9. Fistulogram / Sinogram ─── -->
+<div class="topic-h" id="fl-fistula">
+  Fistulogram / Sinogram
+  <span class="topic-tag tag-amber">GU</span>
+</div>
+
+<div class="proc-meta">
+  <span class="proc-tag tag-indication">Known Fistula Tract</span>
+  <span class="proc-tag tag-indication">Abscess Cavity Extent</span>
+  <span class="proc-tag tag-indication">Surgical Drain Communication</span>
+  <span class="proc-tag tag-indication">Wound Dehiscence Characterization</span>
+  <span class="proc-tag tag-contrast">Water-soluble iodinated contrast (Omnipaque 300) — NEVER barium if peritoneal or airway communication possible</span>
+  <span class="proc-tag tag-prep">Review clinical history; know suspected communication</span>
+</div>
+
+<div class="proc-section-label">Contraindications</div>
+<div class="contra-row"><span class="contra-badge">NEVER</span><span>Barium if fistula communicates with peritoneal cavity or airways — barium peritonitis and barium pleuritis are life-threatening</span></div>
+
+<div class="proc-section-label">Step-by-Step Protocol</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content">Review clinical history thoroughly — know the suspected communication (bowel, bladder, pleura, skin). Review prior cross-sectional imaging.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Scout the area of interest with fluoroscopy before injecting any contrast.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Cannulate the tract opening or connect to the existing drain with an appropriately sized catheter (Foley balloon catheter or angiocatheter). Secure the connection.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Inject contrast under real-time fluoroscopy</strong> — slow, steady injection. Note resistance (high resistance suggests narrowed tract or occlusion).</div></li>
+  <li class="proc-step"><div class="proc-step-content">Document extent of tract:
+    <ul class="proc-sub">
+      <li>Length and direction</li>
+      <li>Branching or complex anatomy</li>
+      <li>Any undrained collections / cavities</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content">Document any communications: bowel loops, bladder, pleural space, skin surface.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Multiple projections are essential</strong> — AP alone misses many tracts. Obtain obliques as needed to unravel complex or overlapping tracts.</div></li>
+</ol>
+
+<div class="proc-section-label">Imaging Pearls</div>
+<div class="pearl-grid">
+  <div class="pearl-box">⚡ <strong>Always use water-soluble contrast</strong> — barium peritonitis is a surgical emergency with high mortality. Never use barium for fistulography.</div>
+  <div class="pearl-box">⚡ <strong>Inject slowly</strong> — excessive pressure can rupture the tract or force contrast into unintended spaces (including venous absorption).</div>
+  <div class="pearl-box">⚡ <strong>Oblique views are required</strong> — many complex tracts are completely invisible on AP projections. Always image in at least two planes.</div>
+  <div class="pearl-box">⚡ <strong>If bowel communication is confirmed:</strong> ensure NPO precautions are in place; consult surgery/GI. Document the level of bowel involved.</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- BILIARY FLUOROSCOPY CATEGORY                    -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="proc-category">Biliary Fluoroscopy</div>
+
+<!-- ─── 10. T-Tube Cholangiogram ─── -->
+<div class="topic-h" id="fl-tcholangio">
+  T-Tube Cholangiogram
+  <span class="topic-tag tag-green">Biliary</span>
+</div>
+
+<div class="proc-meta">
+  <span class="proc-tag tag-indication">Post-cholecystectomy T-tube Evaluation</span>
+  <span class="proc-tag tag-indication">Retained Stone Assessment</span>
+  <span class="proc-tag tag-indication">Ductal Integrity Before Tube Removal</span>
+  <span class="proc-tag tag-contrast">Dilute water-soluble contrast (Omnipaque 150–180 diluted ~1:1); dilute to avoid obscuring small stones</span>
+  <span class="proc-tag tag-prep">Typically post-op day 7–10</span>
+</div>
+
+<div class="proc-section-label">Step-by-Step Protocol</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content">Scout fluoroscopic image of the right upper quadrant.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Clamp the T-tube; aspirate any air or bile from the tube and connecting tubing.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Connect contrast-filled tubing to the T-tube without injecting any air</strong> — purge all air bubbles from the tubing before connecting. Air = false-positive filling defect.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Inject contrast <strong>slowly</strong> under fluoroscopy — watch for:
+    <ul class="proc-sub">
+      <li>CBD filling and caliber</li>
+      <li>Intrahepatic ductal filling bilaterally</li>
+      <li>Flow into the duodenum (confirms no distal obstruction)</li>
+      <li>Filling defects (stones = round/faceted; move with gravity)</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Spot films:</strong> AP and RPO views of the biliary tree.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Document:
+    <ul class="proc-sub">
+      <li>CBD caliber (&lt;8 mm normal; up to 10 mm after cholecystectomy)</li>
+      <li>Intrahepatic duct filling bilaterally</li>
+      <li>Presence/absence of filling defects</li>
+      <li>Flow into duodenum (may require tilting table)</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content">Delayed image to confirm duodenal flow — tilt table if needed to encourage contrast past the ampulla.</div></li>
+</ol>
+
+<div class="proc-section-label">Imaging Pearls</div>
+<div class="pearl-grid">
+  <div class="pearl-box">⚡ <strong>PURGE ALL AIR from the tubing before injecting</strong> — air bubbles exactly mimic small bile duct stones (rounded filling defects). This is the most common error in T-tube cholangiography.</div>
+  <div class="pearl-box">⚡ <strong>Dilute contrast:</strong> concentrated contrast is opaque and obscures small stones. Dilute 1:1 with saline for optimal stone detection.</div>
+  <div class="pearl-box">⚡ <strong>Distinguishing stones from air:</strong> stones are gravity-dependent (settle to dependent portion); air floats. Tilting the table 30° helps differentiate.</div>
+  <div class="pearl-box">⚡ <strong>Filling defect that moves = stone; fixed filling defect = stricture or tumor.</strong> Tilt the patient to confirm mobility.</div>
+  <div class="pearl-box">⚡ <strong>Inject slowly</strong> — forceful injection causes spasm at the sphincter of Oddi, simulating a distal obstruction (false positive for obstruction).</div>
+  <div class="pearl-box">⚡ <strong>Normal CBD after cholecystectomy:</strong> up to 10 mm is considered normal (vs. 8 mm in non-cholecystectomy patients).</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- MSK / NEURO FLUOROSCOPY CATEGORY               -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="proc-category">MSK / Neuro Fluoroscopy</div>
+
+<!-- ─── 11. Joint Arthrogram ─── -->
+<div class="topic-h" id="fl-arthro">
+  Fluoroscopic Joint Arthrogram (Knee · Shoulder · Hip · Wrist)
+  <span class="topic-tag tag-purple">MSK</span>
+</div>
+
+<div class="proc-meta">
+  <span class="proc-tag tag-indication">Pre-MRI Arthrogram: Labral Tears (Shoulder / Hip)</span>
+  <span class="proc-tag tag-indication">Meniscal Tears (Knee)</span>
+  <span class="proc-tag tag-indication">TFCC Tears (Wrist)</span>
+  <span class="proc-tag tag-indication">Loose Bodies / Cartilage Assessment</span>
+  <span class="proc-tag tag-contrast">Dilute gadolinium (1:200 in saline) for MR arthrogram + iodinated contrast to confirm position first</span>
+  <span class="proc-tag tag-prep">No specific prep; confirm no MRI contraindications</span>
+</div>
+
+<div class="proc-section-label">General Principles</div>
+<div class="info-box teal" style="margin-bottom:12px;">
+  <strong>Always confirm intra-articular position with iodinated contrast BEFORE injecting gadolinium.</strong> Extravasation wastes expensive gadolinium, nullifies the exam, and requires rescheduling. Gadolinium injection is a one-way door — you cannot retrieve extravasated contrast.
+</div>
+
+<div class="proc-section-label">Knee Arthrogram Protocol</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content">Patient supine, knee slightly externally rotated.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Lateral approach: palpate the joint line; prep and drape the knee. Use a 20–22G needle.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Under fluoroscopic guidance, advance needle into the lateral joint space (just medial to the lateral femoral condyle, through the bare cartilage area of the patellofemoral compartment).</div></li>
+  <li class="proc-step"><div class="proc-step-content">Inject a small amount of iodinated contrast under fluoroscopy to confirm intra-articular position — contrast should flow freely around cartilage surfaces into the joint recesses.</div></li>
+  <li class="proc-step"><div class="proc-step-content">If confirmed intra-articular: inject gadolinium/saline mixture (knee: <strong>40–50 mL</strong>).</div></li>
+  <li class="proc-step"><div class="proc-step-content">Remove needle; send patient to MRI promptly. <strong>Scan within 30–60 minutes</strong> (joint resorption begins immediately).</div></li>
+</ol>
+
+<div class="proc-section-label">Shoulder Arthrogram Protocol</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content">Patient supine, shoulder in neutral or slight external rotation.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Anterior approach:</strong> fluoroscopic target is the inferior 1/3 of the humeral head (GH joint space).</div></li>
+  <li class="proc-step"><div class="proc-step-content">Under fluoroscopy: advance needle to bone (humeral articular surface); small iodinated test dose confirms intra-articular flow (contrast flows away from needle tip into the axillary recess and joint space).</div></li>
+  <li class="proc-step"><div class="proc-step-content">If confirmed: inject gadolinium mixture (shoulder: <strong>12–15 mL</strong>). The axillary recess will distend visibly on fluoroscopy.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Send to MRI within 30–60 minutes.</div></li>
+</ol>
+
+<div class="proc-section-label">Hip Arthrogram Protocol</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content">Patient supine.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Anterior approach:</strong> fluoroscopic target is the femoral head-neck junction (articular margin).</div></li>
+  <li class="proc-step"><div class="proc-step-content">Advance needle to bone; confirm intra-articular position with small iodinated test dose — contrast flows along the femoral neck into the joint space.</div></li>
+  <li class="proc-step"><div class="proc-step-content">If periosteal needle position (against bone but no joint flow): withdraw 1–2 mm and redirect slightly medially. Confirm again before injecting gadolinium.</div></li>
+  <li class="proc-step"><div class="proc-step-content">If confirmed intra-articular: inject gadolinium mixture (hip: <strong>12–15 mL</strong>).</div></li>
+  <li class="proc-step"><div class="proc-step-content">Send to MRI within 30–60 minutes.</div></li>
+</ol>
+
+<div class="views-label">Key Views</div>
+<table class="views-table">
+  <tr><td>Iodinated Test Dose</td><td>Confirms intra-articular position before gadolinium injection — ALWAYS do this first</td></tr>
+  <tr><td>Post-injection AP</td><td>Document joint distension; confirm adequate filling</td></tr>
+  <tr><td>Joint-specific obliques</td><td>Shoulder axillary recess; hip along femoral neck; knee medial/lateral recesses</td></tr>
+</table>
+
+<div class="proc-section-label">Imaging Pearls</div>
+<div class="pearl-grid">
+  <div class="pearl-box">⚡ <strong>Confirm intra-articular position BEFORE gadolinium</strong> — extravasated gadolinium cannot be aspirated, wastes contrast, and the exam must be rescheduled.</div>
+  <div class="pearl-box">⚡ <strong>Shoulder:</strong> contrast flowing into the subscapularis bursa or biceps tendon sheath is normal intra-articular flow — do not mistake for extravasation.</div>
+  <div class="pearl-box">⚡ <strong>Hip periosteal needle position:</strong> if needle is against cortical bone without joint flow on iodinated test dose → withdraw slightly and redirect. Never inject gadolinium without confirmed intra-articular flow.</div>
+  <div class="pearl-box">⚡ <strong>Knee approach:</strong> enter through the bare area of the patellofemoral compartment laterally — avoid injecting directly through articular cartilage.</div>
+  <div class="pearl-box">⚡ <strong>Timing is critical:</strong> MRI within 30–60 minutes of injection for best distension, gadolinium signal, and image quality.</div>
+</div>
+
+
+<!-- ─── 12. Lumbar Myelogram / LP ─── -->
+<div class="topic-h" id="fl-myelo">
+  Lumbar Myelogram / Lumbar Puncture
+  <span class="topic-tag tag-purple">MSK / Neuro</span>
+</div>
+
+<div class="proc-meta">
+  <span class="proc-tag tag-indication">Pre-op Spine Evaluation</span>
+  <span class="proc-tag tag-indication">Nerve Root Compression</span>
+  <span class="proc-tag tag-indication">Arachnoiditis Evaluation</span>
+  <span class="proc-tag tag-indication">MRI Contraindication</span>
+  <span class="proc-tag tag-indication">Post-surgical Spine Eval</span>
+  <span class="proc-tag tag-contrast">Isosmolar / low-osmolar non-ionic ONLY — Omnipaque 180–240 for lumbar</span>
+  <span class="proc-tag tag-prep">NPO 4h; hold metformin; hold anticoagulants per protocol; IV access</span>
+</div>
+
+<div class="proc-section-label">Contraindications</div>
+<div class="contra-row"><span class="contra-badge">ABSOLUTE</span><span>Coagulopathy (INR &gt;1.5, platelets &lt;50K), local infection at puncture site, elevated ICP (risk of tonsillar herniation)</span></div>
+<div class="contra-row"><span class="contra-badge">RELATIVE</span><span>Severe contrast allergy — premedicate. Prior intrathecal contrast with ionic or oil-based agents (arachnoiditis risk).</span></div>
+<div class="contra-row"><span class="contra-badge">NEVER</span><span>Ionic or oil-based (Pantopaque) contrast intrathecally — causes severe arachnoiditis</span></div>
+
+<div class="proc-section-label">Equipment</div>
+<div style="font-size:13px;color:var(--text2);margin-bottom:8px;">22–25G spinal needle (Quincke or Whitacre pencil-point) · Non-ionic isosmolar contrast (Omnipaque 180–240) · Fluoroscopy unit · Sterile prep · Local anesthetic (lidocaine 1%) · IV access · Manometer (if opening pressure needed)</div>
+
+<div class="proc-section-label">Step-by-Step Protocol</div>
+<ol class="proc-steps">
+  <li class="proc-step"><div class="proc-step-content"><strong>Position:</strong> patient prone (preferred) or lateral decubitus on the fluoroscopy table. Prone allows easier fluoroscopic guidance.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Fluoroscopic scout AP and lateral lumbar spine — identify interspace levels, assess for prior hardware or spinal stenosis.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Target:</strong> L2–3 or L3–4 interspace. Avoid L1–2 in adults (conus medullaris ends at L1 in adults, L2–3 in children).</div></li>
+  <li class="proc-step"><div class="proc-step-content">Sterile prep and drape. Local anesthesia: lidocaine 1% subcutaneously, then deeper into soft tissue toward posterior elements.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Under <strong>AP fluoroscopy:</strong> advance spinal needle toward midline at the target interspace. The needle should bisect the pedicles on AP view.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Under <strong>lateral fluoroscopy:</strong> confirm needle trajectory is heading toward the posterior thecal sac (midway between posterior vertebral bodies and the spinous process line).</div></li>
+  <li class="proc-step"><div class="proc-step-content">Remove stylet: confirm CSF flow. Clear CSF should flow freely. Check opening pressure with manometer if clinically indicated.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Inject contrast under fluoroscopy</strong> — watch the contrast column outline nerve roots and the thecal sac. Typical volume: 10–15 mL.</div></li>
+  <li class="proc-step"><div class="proc-step-content">Tilt table (head up/down) to distribute contrast to the levels of interest. For cervical disease: gentle Trendelenburg to flow contrast cranially — monitor closely.</div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Spot films at levels of interest:</strong>
+    <ul class="proc-sub">
+      <li>AP: nerve root sleeve filling bilaterally; thecal sac caliber; canal diameter</li>
+      <li>Lateral: anterior and posterior epidural fat; disc herniations</li>
+      <li>Bilateral obliques: nerve root exit zones (foraminal stenosis)</li>
+    </ul>
+  </div></li>
+  <li class="proc-step"><div class="proc-step-content"><strong>Post-procedure:</strong> patient sits at 30–45° for 2–4 hours to reduce headache risk. Encourage oral hydration. Monitor for headache, radicular symptoms, fever.</div></li>
+</ol>
+
+<div class="views-label">Key Views</div>
+<div class="position-grid">
+  <div class="pos-diagram">
+    <svg width="72" height="72" viewBox="0 0 72 72">
+      <!-- AP lumbar spine -->
+      <rect x="28" y="8" width="16" height="56" rx="3" fill="none" stroke="var(--text3)" stroke-width="1.2"/>
+      <!-- vertebral bodies AP -->
+      <rect x="30" y="12" width="12" height="8" rx="1" fill="var(--bg3)" stroke="var(--teal)" stroke-width="1"/>
+      <rect x="30" y="24" width="12" height="8" rx="1" fill="var(--bg3)" stroke="var(--teal)" stroke-width="1"/>
+      <rect x="30" y="36" width="12" height="8" rx="1" fill="var(--bg3)" stroke="var(--teal)" stroke-width="1"/>
+      <rect x="30" y="48" width="12" height="8" rx="1" fill="var(--bg3)" stroke="var(--teal)" stroke-width="1"/>
+      <!-- contrast column -->
+      <rect x="33" y="12" width="6" height="44" fill="rgba(20,184,166,0.18)" rx="1"/>
+      <text x="4" y="70" font-size="9" fill="var(--text3)" font-family="var(--mono)">AP Lumbar</text>
+    </svg>
+    <span class="pos-label">AP Lumbar<br>Spine</span>
+  </div>
+  <div class="pos-diagram">
+    <svg width="72" height="72" viewBox="0 0 72 72">
+      <!-- lateral lumbar -->
+      <rect x="18" y="8" width="22" height="56" rx="3" fill="none" stroke="var(--text3)" stroke-width="1.2"/>
+      <rect x="20" y="12" width="18" height="8" rx="1" fill="var(--bg3)" stroke="var(--teal)" stroke-width="1"/>
+      <rect x="20" y="24" width="18" height="8" rx="1" fill="var(--bg3)" stroke="var(--teal)" stroke-width="1"/>
+      <rect x="20" y="36" width="18" height="8" rx="1" fill="var(--bg3)" stroke="var(--teal)" stroke-width="1"/>
+      <rect x="20" y="48" width="18" height="8" rx="1" fill="var(--bg3)" stroke="var(--teal)" stroke-width="1"/>
+      <!-- posterior thecal sac -->
+      <path d="M38 12 Q42 38 40 64" stroke="rgba(20,184,166,0.6)" stroke-width="2" fill="none"/>
+      <text x="2" y="70" font-size="9" fill="var(--text3)" font-family="var(--mono)">Lateral</text>
+    </svg>
+    <span class="pos-label">Lateral<br>Lumbar</span>
+  </div>
+  <div class="pos-diagram">
+    <svg width="72" height="72" viewBox="0 0 72 72">
+      <!-- oblique for nerve root -->
+      <rect x="22" y="8" width="18" height="56" rx="3" fill="none" stroke="var(--text3)" stroke-width="1.2" transform="rotate(-8 31 36)"/>
+      <!-- nerve root sleeves -->
+      <path d="M34 22 Q46 20 52 26" stroke="var(--amber)" stroke-width="1.5" fill="none"/>
+      <path d="M34 36 Q46 34 52 40" stroke="var(--amber)" stroke-width="1.5" fill="none"/>
+      <path d="M34 50 Q46 48 52 54" stroke="var(--amber)" stroke-width="1.5" fill="none"/>
+      <text x="2" y="70" font-size="9" fill="var(--text3)" font-family="var(--mono)">Oblique</text>
+    </svg>
+    <span class="pos-label">Oblique<br>Nerve Roots</span>
+  </div>
+</div>
+
+<div class="proc-section-label">Imaging Pearls</div>
+<div class="pearl-grid">
+  <div class="pearl-box">⚡ <strong>Non-ionic, water-soluble, isosmolar contrast ONLY</strong> — ionic contrast (e.g., diatrizoate/Hypaque) and oil-based contrast (Pantopaque) cause severe arachnoiditis. This is an absolute rule.</div>
+  <div class="pearl-box">⚡ <strong>Target below conus medullaris</strong> — conus ends at L1 in adults (L2–3 in children). Use L2–3 or L3–4 to avoid cord injury. Never target above L2 without special indication.</div>
+  <div class="pearl-box">⚡ <strong>No CSF flow after needle placement:</strong> try rotating needle 90°; advance 1–2 mm (may be in epidural space); if still no flow → check lateral view to confirm depth.</div>
+  <div class="pearl-box">⚡ <strong>Whitacre (pencil-point) needle</strong> has a significantly lower post-LP headache rate vs. Quincke (cutting) needle. Use Whitacre when available, especially in younger patients.</div>
+  <div class="pearl-box">⚡ <strong>Send patient to CT or MRI within 4 hours</strong> of injection — contrast is optimally distributed and at peak concentration. Delayed imaging (6+ hours) shows fading of nerve root detail.</div>
+  <div class="pearl-box">⚡ <strong>Post-LP headache:</strong> positional and orthostatic in character. Treat with oral hydration, caffeine (400 mg), and flat rest. Persistent headache &gt;48 hours → consider autologous blood patch (epidural).</div>
+</div>
+
+<div class="dictation-wrapper">
+  <div class="dictation-header">
+    <span class="dictation-title">Normal Dictation Template</span>
+    <button class="copy-btn" onclick="(function(btn){const t='Lumbar myelogram was performed under fluoroscopic guidance with intrathecal administration of nonionic contrast at the L3-4 interspace. The thecal sac and nerve root sleeves fill normally at all levels. No evidence of nerve root compression, extradural defect, or intradural filling defect is identified. The thecal sac caliber is normal throughout. The contrast column flows freely without obstruction.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
+  </div>
+  <div class="dictation-box">Lumbar myelogram was performed under fluoroscopic guidance with intrathecal administration of nonionic contrast at the L3-4 interspace. The thecal sac and nerve root sleeves fill normally at all levels. No evidence of nerve root compression, extradural defect, or intradural filling defect is identified. The thecal sac caliber is normal throughout. The contrast column flows freely without obstruction.</div>
+</div>
+
+<script>
+function apSwitch(btn) {
+  var group = btn.closest('.ap-tabs').dataset.group;
+  var tab = btn.classList.contains('peds') ? 'peds' : 'adult';
+  btn.closest('.ap-tabs').querySelectorAll('.ap-tab').forEach(function(t) { t.classList.remove('active'); });
+  btn.classList.add('active');
+  document.querySelectorAll('.ap-content[data-group="' + group + '"]').forEach(function(c) {
+    c.classList.toggle('active', c.dataset.tab === tab);
+  });
+}
+</script>
