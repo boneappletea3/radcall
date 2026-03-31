@@ -1910,12 +1910,28 @@ const NAV_TREE = {
     ]},
   ],
   fluoro: [
-    { label: 'GI Fluoroscopy', first: 'fl-esoph', topics: [
-      { label: 'Esophagram / Barium Swallow', id: 'fl-esoph' },
+    { label: 'GI — Esophageal', first: 'fl-esoph-sc', topics: [
+      { label: 'Esophagram (Single Contrast)', id: 'fl-esoph-sc' },
+      { label: 'Esophagram (Double Contrast)', id: 'fl-esoph-dc' },
+      { label: 'Esophagram — Perforation', id: 'fl-esoph-perf' },
       { label: 'Modified Barium Swallow (MBS)', id: 'fl-mbs' },
-      { label: 'Upper GI Series (UGI)', id: 'fl-ugi' },
+    ]},
+    { label: 'GI — Stomach / Small Bowel', first: 'fl-ugi-sc', topics: [
+      { label: 'Upper GI (Single Contrast)', id: 'fl-ugi-sc' },
+      { label: 'Upper GI (Double Contrast)', id: 'fl-ugi-dc' },
       { label: 'Small Bowel Follow-Through', id: 'fl-sbft' },
-      { label: 'Barium Enema', id: 'fl-be' },
+    ]},
+    { label: 'GI — Colon / Rectum', first: 'fl-be-sc', topics: [
+      { label: 'Barium Enema (Single Contrast)', id: 'fl-be-sc' },
+      { label: 'Barium Enema (Double Contrast)', id: 'fl-be-dc' },
+      { label: 'Dynamic Proctography', id: 'fl-procto' },
+      { label: 'Air Enema — Intussusception', id: 'fl-airenema' },
+    ]},
+    { label: 'GI — Post-Surgical', first: 'fl-postsurg-esoph', topics: [
+      { label: 'Post-Esophagectomy', id: 'fl-postsurg-esoph' },
+      { label: 'Post-Whipple', id: 'fl-postsurg-whipple' },
+      { label: 'Post-Gastric Bypass (RYGB)', id: 'fl-postsurg-bypass' },
+      { label: 'Post-Nissen / Hiatal Hernia Repair', id: 'fl-postsurg-nissen' },
     ]},
     { label: 'GU Fluoroscopy', first: 'fl-vcug', topics: [
       { label: 'VCUG', id: 'fl-vcug' },
@@ -1928,7 +1944,12 @@ const NAV_TREE = {
     ]},
     { label: 'MSK / Neuro', first: 'fl-arthro', topics: [
       { label: 'Joint Arthrogram', id: 'fl-arthro' },
+      { label: 'Joint Aspiration', id: 'fl-aspiration' },
       { label: 'Lumbar Myelogram / LP', id: 'fl-myelo' },
+    ]},
+    { label: 'Special Procedures', first: 'fl-sniff', topics: [
+      { label: 'Sniff Test (Diaphragm)', id: 'fl-sniff' },
+      { label: 'Dobhoff / Feeding Tube Placement', id: 'fl-dobhoff' },
     ]},
   ],
 };
