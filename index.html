@@ -1053,6 +1053,7 @@ body.home-active main {
   max-width: 100%;
   padding: 0;
 }
+body.home-active footer { display: none; }
 
 /* ── Overview (in-app home) ── */
 .overview-hdr {
@@ -1541,37 +1542,15 @@ body.home-active main {
       <h2 class="lp-section-title">Everything you need on call</h2>
       <div class="lp-feat-grid">
 
-        <div class="lp-feat-card" onclick="openFeatModal('fluoro')" style="cursor:pointer">
-          <div class="lp-feat-icon" style="background:rgba(20,184,166,0.12);color:var(--teal)">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8M12 17v4"/></svg>
-          </div>
-          <div>
-            <div class="lp-feat-title">20+ Fluoroscopy Guides</div>
-            <div class="lp-feat-desc">Step-by-step protocols for every fluoroscopic procedure — esophagram, UGI, VCUG, HSG, arthrogram, and more.</div>
-          </div>
-          <span class="lp-pro-tag">Pro</span>
-        </div>
-
-        <div class="lp-feat-card" onclick="openFeatModal('search')" style="cursor:pointer">
+        <div class="lp-feat-card" onclick="openFeatModal('topics')" style="cursor:pointer">
           <div class="lp-feat-icon" style="background:rgba(59,130,246,0.12);color:var(--accent2)">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
           </div>
           <div>
-            <div class="lp-feat-title">50+ Search Patterns</div>
-            <div class="lp-feat-desc">Systematic reading frameworks for CT, MRI, X-ray, and ultrasound across chest, abdomen, MSK, neuro, and more.</div>
+            <div class="lp-feat-title">150+ Reference Topics</div>
+            <div class="lp-feat-desc">Concise, evidence-based references across every major subspecialty — distilled from guidelines and leading journals for rapid review on call.</div>
           </div>
-          <span class="lp-pro-tag">Pro</span>
-        </div>
-
-        <div class="lp-feat-card" onclick="openFeatModal('ai')" style="cursor:pointer">
-          <div class="lp-feat-icon" style="background:rgba(168,85,247,0.12);color:var(--purple)">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          </div>
-          <div>
-            <div class="lp-feat-title">AI Differential Diagnosis</div>
-            <div class="lp-feat-desc">Describe findings or upload a screenshot — get a ranked differential with Radiopaedia and PubMed references instantly.</div>
-          </div>
-          <span class="lp-pro-tag">Pro</span>
+          <span class="lp-pro-tag" style="background:var(--teal-bg);color:var(--teal);border-color:rgba(20,184,166,0.3)">Free</span>
         </div>
 
         <div class="lp-feat-card" onclick="openFeatModal('checklists')" style="cursor:pointer">
@@ -1580,18 +1559,7 @@ body.home-active main {
           </div>
           <div>
             <div class="lp-feat-title">Critical Reporting Checklists</div>
-            <div class="lp-feat-desc">Structured templates to ensure you never miss a key finding — for trauma, PE, stroke, aorta, and more.</div>
-          </div>
-          <span class="lp-pro-tag">Pro</span>
-        </div>
-
-        <div class="lp-feat-card" onclick="openFeatModal('proclog')" style="cursor:pointer">
-          <div class="lp-feat-icon" style="background:rgba(34,197,94,0.12);color:var(--green)">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><polyline points="6 8 10 12 14 8 18 12"/></svg>
-          </div>
-          <div>
-            <div class="lp-feat-title">Procedure Log &amp; Dashboard</div>
-            <div class="lp-feat-desc">Log every case with technique, tools, fluoro time, and dosing. Visual dashboard with ACGME-ready procedure counts.</div>
+            <div class="lp-feat-desc">Structured reporting checklists to ensure your report has maximum clinical impact — covering stroke, trauma, vascular, and more.</div>
           </div>
           <span class="lp-pro-tag">Pro</span>
         </div>
@@ -1603,6 +1571,39 @@ body.home-active main {
           <div>
             <div class="lp-feat-title">Save Favorites</div>
             <div class="lp-feat-desc">Star any topic for instant sidebar access — your personal quick-reference list, synced across sessions.</div>
+          </div>
+          <span class="lp-pro-tag">Pro</span>
+        </div>
+
+        <div class="lp-feat-card" onclick="openFeatModal('search')" style="cursor:pointer">
+          <div class="lp-feat-icon" style="background:rgba(59,130,246,0.12);color:var(--accent2)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <div>
+            <div class="lp-feat-title">50+ Search Patterns</div>
+            <div class="lp-feat-desc">Systematic reading frameworks for studies you may be unfamiliar with. Covers CT, MRI, and X-Ray across chest, abdomen, MSK, neuro, and more.</div>
+          </div>
+          <span class="lp-pro-tag">Pro</span>
+        </div>
+
+        <div class="lp-feat-card" onclick="openFeatModal('fluoro')" style="cursor:pointer">
+          <div class="lp-feat-icon" style="background:rgba(20,184,166,0.12);color:var(--teal)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8M12 17v4"/></svg>
+          </div>
+          <div>
+            <div class="lp-feat-title">20+ Fluoroscopy Guides</div>
+            <div class="lp-feat-desc">Step-by-step protocols for the most common fluoroscopic procedures including pediatrics — esophagram, UGI, VCUG, HSG, arthrogram, and more.</div>
+          </div>
+          <span class="lp-pro-tag">Pro</span>
+        </div>
+
+        <div class="lp-feat-card" onclick="openFeatModal('proclog')" style="cursor:pointer">
+          <div class="lp-feat-icon" style="background:rgba(34,197,94,0.12);color:var(--green)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><polyline points="6 8 10 12 14 8 18 12"/></svg>
+          </div>
+          <div>
+            <div class="lp-feat-title">Procedure Log &amp; Dashboard</div>
+            <div class="lp-feat-desc">Log cases with technique, tools, fluoro time, and radiation dose. ACGME and credentialing-level counts by category on a visual dashboard.</div>
           </div>
           <span class="lp-pro-tag">Pro</span>
         </div>
@@ -2829,17 +2830,33 @@ function showLanding(anchor) {
 
 // ── Feature detail modal ────────────────────────────────────────────────────
 const _FEAT_DATA = {
+  topics: {
+    title: '150+ Reference Topics',
+    color: 'var(--accent2)', colorBg: 'rgba(59,130,246,0.12)',
+    icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+    tag: 'Always Free',
+    tagStyle: 'background:var(--teal-bg);color:var(--teal);border-color:rgba(20,184,166,0.3)',
+    desc: 'Concise, evidence-based references distilled from clinical guidelines and leading radiology journals — organized by subspecialty and formatted for rapid review on call.',
+    bullets: [
+      'Neuroradiology — stroke, hemorrhage, spine, head & neck',
+      'Chest — PE, nodules, aorta, airway',
+      'Body / Abdomen — trauma, liver, solid organs, GI',
+      'MSK — fractures, pelvis, wrist, shoulder',
+      'Pediatrics, Nuclear Med, Contrast & Drugs, MRI Safety, and more',
+    ],
+    mockup: `<div class="feat-mockup-bar"><div class="feat-mockup-dot" style="background:#ff5f57"></div><div class="feat-mockup-dot" style="background:#febc2e"></div><div class="feat-mockup-dot" style="background:#28c840"></div><span style="font-size:9px;color:var(--text3);margin-left:6px">Reference Library</span></div><div class="feat-mockup-body"><div class="feat-mockup-section-hdr">Specialties</div><div class="feat-mockup-item highlighted">Neuroradiology</div><div class="feat-mockup-item">Chest</div><div class="feat-mockup-item">Body / Abdomen</div><div class="feat-mockup-item">MSK</div><div class="feat-mockup-item">Pediatrics</div><div class="feat-mockup-item">Nuclear Medicine</div></div>`
+  },
   fluoro: {
     title: '20+ Fluoroscopy Guides',
     color: 'var(--teal)', colorBg: 'rgba(20,184,166,0.12)',
     icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8M12 17v4"/></svg>',
-    desc: 'Detailed, step-by-step protocols for every common fluoroscopic procedure — built from expert technique guides and clinical practice standards. Formatted for quick reference at the table.',
+    desc: 'Step-by-step protocols for the most common fluoroscopic procedures including pediatrics — built from expert technique guides and clinical practice standards.',
     bullets: [
       'Esophagram, UGI, SBFT — contrast timing, positioning, spot views',
       'VCUG, HSG — catheter setup, image acquisition protocol',
       'Upper & lower extremity arthrogram — needle approach, spot technique',
+      'Pediatric-specific protocols (VCUG, upper GI, small bowel)',
       'Myelogram, tube checks, fistulogram protocols',
-      'Radiation dose optimization and ALARA tips per procedure',
     ],
     mockup: `<div class="feat-mockup-bar"><div class="feat-mockup-dot" style="background:#ff5f57"></div><div class="feat-mockup-dot" style="background:#febc2e"></div><div class="feat-mockup-dot" style="background:#28c840"></div><span style="font-size:9px;color:var(--text3);margin-left:6px">Esophagram Protocol</span></div><div class="feat-mockup-body"><div class="feat-mockup-section-hdr">Steps</div><div class="feat-mockup-step active">① Patient positioning & prep</div><div class="feat-mockup-step active">② Equipment & contrast setup</div><div class="feat-mockup-step active">③ Single-contrast phase</div><div class="feat-mockup-step">④ Double-contrast phase</div><div class="feat-mockup-step">⑤ Spot views: PA, LAT, RAO</div><div class="feat-mockup-step">⑥ Reporting pearls</div></div>`
   },
@@ -2847,12 +2864,11 @@ const _FEAT_DATA = {
     title: '50+ Search Patterns',
     color: 'var(--accent2)', colorBg: 'rgba(59,130,246,0.12)',
     icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>',
-    desc: 'Systematic reading frameworks for CT, MRI, X-ray, and ultrasound across every major subspecialty. Ensures comprehensive coverage and prevents satisfaction of search errors on call.',
+    desc: 'Systematic reading frameworks for studies you may be unfamiliar with. Covers CT, MRI, and X-Ray — ensures comprehensive coverage and prevents satisfaction of search errors on call.',
     bullets: [
       'CT chest, abdomen/pelvis, head, spine, extremities',
       'MRI brain, spine, MSK joint, pelvis, abdomen',
       'Chest X-ray, abdominal radiograph, skeletal survey',
-      'Ultrasound — OB, RUQ, renal, transplant, DVT',
       'Trauma-specific search patterns (pan-scan, extremity)',
     ],
     mockup: `<div class="feat-mockup-bar"><div class="feat-mockup-dot" style="background:#ff5f57"></div><div class="feat-mockup-dot" style="background:#febc2e"></div><div class="feat-mockup-dot" style="background:#28c840"></div><span style="font-size:9px;color:var(--text3);margin-left:6px">CT Chest Pattern</span></div><div class="feat-mockup-body"><div class="feat-mockup-section-hdr">Systematic Search</div><div class="feat-mockup-item highlighted">① Lung parenchyma — windows</div><div class="feat-mockup-item">② Airways — trachea to segmental</div><div class="feat-mockup-item">③ Pleura — effusion / pneumo</div><div class="feat-mockup-item">④ Mediastinum & hila</div><div class="feat-mockup-item">⑤ Heart & pericardium</div><div class="feat-mockup-item">⑥ Chest wall & bones</div></div>`
@@ -2875,27 +2891,28 @@ const _FEAT_DATA = {
     title: 'Critical Reporting Checklists',
     color: 'var(--amber)', colorBg: 'rgba(245,158,11,0.12)',
     icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
-    desc: 'Structured templates ensuring you never miss a reportable finding for high-stakes diagnoses. Built from ACR guidelines, peer review data, and critical miss analyses.',
+    desc: 'Structured reporting checklists to ensure your report has maximum clinical impact — covering the high-stakes diagnoses where complete, structured reporting matters most.',
     bullets: [
-      'PE — saddle, RV/LV ratio, infarct, DVT correlation',
-      'Aortic dissection — classification, branch involvement, effusion',
-      'Stroke — ASPECTS, penumbra, LVO identification',
-      'Trauma — solid organ injury grading, spine clearance',
-      'Incidental findings — ACR white paper triggers',
+      'Stroke — ASPECTS, penumbra, LVO, hemorrhagic transformation',
+      'BCVI — vessel injury grading, management implications',
+      'Traumatic aortic injury — location, classification, associated injuries',
+      'Acute aortic syndrome — dissection, IMH, PAU differentiation',
+      'Bladder injury — intra vs. extraperitoneal, associated pelvic fracture',
+      'Appendicitis, Ectopic pregnancy, Fractures, and many more',
     ],
-    mockup: `<div class="feat-mockup-bar"><div class="feat-mockup-dot" style="background:#ff5f57"></div><div class="feat-mockup-dot" style="background:#febc2e"></div><div class="feat-mockup-dot" style="background:#28c840"></div><span style="font-size:9px;color:var(--text3);margin-left:6px">PE Reporting Checklist</span></div><div class="feat-mockup-body"><div class="feat-mockup-check done"><div class="ck"></div>Saddle / main / lobar / segmental</div><div class="feat-mockup-check done"><div class="ck"></div>RV/LV ratio (axial)</div><div class="feat-mockup-check done"><div class="ck"></div>IVC reflux of contrast</div><div class="feat-mockup-check"><div class="ck"></div>Pulmonary infarct / Hampton hump</div><div class="feat-mockup-check"><div class="ck"></div>DVT on pelvic / leg windows</div><div class="feat-mockup-check"><div class="ck"></div>Incidental findings</div></div>`
+    mockup: `<div class="feat-mockup-bar"><div class="feat-mockup-dot" style="background:#ff5f57"></div><div class="feat-mockup-dot" style="background:#febc2e"></div><div class="feat-mockup-dot" style="background:#28c840"></div><span style="font-size:9px;color:var(--text3);margin-left:6px">Stroke Reporting Checklist</span></div><div class="feat-mockup-body"><div class="feat-mockup-check done"><div class="ck"></div>ASPECTS score (regions involved)</div><div class="feat-mockup-check done"><div class="ck"></div>LVO — vessel & level</div><div class="feat-mockup-check done"><div class="ck"></div>Penumbra / core mismatch</div><div class="feat-mockup-check"><div class="ck"></div>Hemorrhagic transformation</div><div class="feat-mockup-check"><div class="ck"></div>Contralateral findings</div><div class="feat-mockup-check"><div class="ck"></div>Old infarct / atrophy</div></div>`
   },
   proclog: {
     title: 'Procedure Log & Dashboard',
     color: 'var(--green)', colorBg: 'rgba(34,197,94,0.12)',
     icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><polyline points="6 8 10 12 14 8 18 12"/></svg>',
-    desc: 'Log procedures as you do them — technique, access, tools, fluoro time, radiation dose, and outcome. Visual dashboard gives you real-time ACGME-ready counts by category.',
+    desc: 'Log cases with technique, tools, fluoro time, and radiation dose. Visual dashboard gives you ACGME and credentialing-level counts by category — ready for milestone tracking.',
     bullets: [
       'Quick-entry form — log a case in under 30 seconds',
-      'Fields for access, tools, fluoro time, DAP/Air kerma',
-      'Auto-categorizes by ACGME procedure type',
-      'Visual bar charts and cumulative progress',
-      'Export-ready for residency milestone tracking',
+      'Fields for technique, tools, fluoro time, radiation dose, and pearls',
+      'ACGME and credentialing-level counts by procedure category',
+      'Visual bar charts and cumulative progress dashboard',
+      'Export-ready for residency and fellowship milestone reporting',
     ],
     mockup: `<div class="feat-mockup-bar"><div class="feat-mockup-dot" style="background:#ff5f57"></div><div class="feat-mockup-dot" style="background:#febc2e"></div><div class="feat-mockup-dot" style="background:#28c840"></div><span style="font-size:9px;color:var(--text3);margin-left:6px">Procedure Dashboard</span></div><div class="feat-mockup-body"><div class="feat-mockup-section-hdr">Progress by Category</div><div class="feat-mockup-row"><span class="feat-mockup-label">Port Access</span><div class="feat-mockup-bar-fill" style="width:82%;background:var(--green)"></div></div><div class="feat-mockup-row"><span class="feat-mockup-label">Fluoro</span><div class="feat-mockup-bar-fill" style="width:65%;background:var(--accent2)"></div></div><div class="feat-mockup-row"><span class="feat-mockup-label">Drainage</span><div class="feat-mockup-bar-fill" style="width:48%;background:var(--teal)"></div></div><div class="feat-mockup-row"><span class="feat-mockup-label">Ablation</span><div class="feat-mockup-bar-fill" style="width:30%;background:var(--purple)"></div></div><div class="feat-mockup-row"><span class="feat-mockup-label">Biopsy</span><div class="feat-mockup-bar-fill" style="width:55%;background:var(--amber)"></div></div></div>`
   },
@@ -2926,6 +2943,11 @@ function openFeatModal(key) {
   const ul = document.getElementById('feat-modal-bullets');
   ul.innerHTML = d.bullets.map(b => `<li>${b}</li>`).join('');
   document.getElementById('feat-modal-mockup').innerHTML = d.mockup;
+  const tagEl = document.querySelector('#feat-modal-overlay .feat-modal-tag');
+  if (tagEl) {
+    tagEl.textContent = d.tag || 'Pro Feature';
+    tagEl.style.cssText = d.tagStyle || '';
+  }
   document.getElementById('feat-modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
