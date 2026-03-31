@@ -305,6 +305,46 @@
   }
   .peds-note strong { color: var(--purple); }
 
+  /* ── EMBEDDED RADIOGRAPH IMAGES ── */
+  .fluoro-img-block {
+    margin: 10px 0 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #000;
+    display: inline-block;
+    width: 100%;
+    max-width: 500px;
+  }
+  .fluoro-img-block img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .fluoro-img-caption {
+    padding: 5px 10px;
+    font-size: 11px;
+    color: var(--text3);
+    background: var(--bg3);
+    border-top: 1px solid var(--border);
+    line-height: 1.5;
+  }
+  .fluoro-img-caption strong { color: var(--text2); }
+  .fluoro-img-caption a { color: var(--teal); text-decoration: none; }
+  .fluoro-img-caption a:hover { text-decoration: underline; }
+  .fluoro-img-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 0 14px;
+  }
+  .fluoro-img-row .fluoro-img-block {
+    flex: 1;
+    min-width: 200px;
+    max-width: 340px;
+    margin: 0;
+  }
+
   /* ── IMAGE PLACEHOLDER ── */
   .img-placeholder {
     background: var(--bg3);
@@ -530,13 +570,15 @@
   </div>
 </div>
 
-<div class="img-placeholder">
-  <span class="img-placeholder-icon">🖼</span>
-  <div><strong>Example: LPO esophagram</strong>Continuous column of barium filling the esophagus from cricopharyngeus to LES. Note smooth, tapering transition at the LES (open). Any fixed narrowing or mucosal irregularity should prompt additional views.</div>
+<div class="fluoro-img-row">
+  <div class="fluoro-img-block">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Fluoroscopy_of_normal_barium_swallow.gif" alt="Normal barium swallow — continuous fluoroscopic recording" loading="lazy">
+  <div class="fluoro-img-caption"><strong>Normal barium swallow — continuous fluoroscopic recording</strong> · <a href="https://commons.wikimedia.org/wiki/File:Fluoroscopy_of_normal_barium_swallow.gif" target="_blank" rel="noopener">Wikimedia Commons</a> · CC BY-SA 4.0</div>
 </div>
-<div class="img-placeholder">
-  <span class="img-placeholder-icon">🖼</span>
-  <div><strong>Example: Barium tablet transit</strong>Tablet seen as round filling defect passing through esophagus. Halt at a ring or stricture confirms anatomic narrowing. Normal: tablet clears with water swallow. Abnormal: tablet persists after water wash.</div>
+  <div class="fluoro-img-block">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/ZenkerSchraeg.gif" alt="Zenker's diverticulum — barium pooling in posterior pharyngeal pouch" loading="lazy">
+  <div class="fluoro-img-caption"><strong>Zenker's diverticulum — barium pooling in posterior pharyngeal pouch</strong> · <a href="https://commons.wikimedia.org/wiki/File:ZenkerSchraeg.gif" target="_blank" rel="noopener">Wikimedia Commons</a> · Public domain</div>
+</div>
 </div>
 
 <div class="proc-section-label">Imaging Pearls</div>
@@ -641,13 +683,9 @@
   <li class="proc-step"><div class="proc-step-content">Pharynx evaluation if indicated.</div></li>
 </ol>
 
-<div class="img-placeholder">
-  <span class="img-placeholder-icon">🖼</span>
-  <div><strong>Example: Double contrast esophagram</strong>Fine mucosal pattern on en-face view. Normal: uniform thin barium coating without plaques or nodularity. Abnormal: granular/nodular mucosa (esophagitis, Barrett's), discrete plaques (candida), varices (longitudinal serpiginous filling defects).</div>
-</div>
-<div class="img-placeholder">
-  <span class="img-placeholder-icon">🖼</span>
-  <div><strong>Example: Carcinoma on DC esophagram</strong>Irregular mucosal destruction, shouldering, and narrowing. Compare to normal smooth mucosal coating in adjacent esophagus.</div>
+<div class="fluoro-img-block">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/UpperGIEsophagealCAMark.png/480px-UpperGIEsophagealCAMark.png" alt="Esophageal carcinoma — filling defect and shouldering on barium study" loading="lazy">
+  <div class="fluoro-img-caption"><strong>Esophageal carcinoma — filling defect and shouldering on barium study</strong> · <a href="https://commons.wikimedia.org/wiki/File:UpperGIEsophagealCAMark.png" target="_blank" rel="noopener">Wikimedia Commons</a> · CC BY-SA 3.0</div>
 </div>
 
 <div class="proc-section-label">Imaging Pearls</div>
@@ -719,711 +757,10 @@
   <li class="proc-step"><div class="proc-step-content">Document: site of extravasation, extent of mediastinal contamination, communication with pleural space, size of leak.</div></li>
 </ol>
 
-<div class="img-placeholder">
-  <span class="img-placeholder-icon">🖼</span>
-  <div><strong>Example: Esophageal perforation</strong>Water-soluble contrast extravasating from the left posterolateral esophagus at the GEJ level (classic Boerhaave location). Contrast tracks into the left pleural space. Leak best seen on the lateral view.</div>
+<div class="fluoro-img-block">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Urethra_stricture.jpg/480px-Urethra_stricture.jpg" alt="Retrograde urethrogram — urethral stricture with abrupt caliber change" loading="lazy">
+  <div class="fluoro-img-caption"><strong>Retrograde urethrogram — urethral stricture with abrupt caliber change</strong> · <a href="https://commons.wikimedia.org/wiki/File:Urethra_stricture.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · CC BY-SA 3.0</div>
 </div>
-<div class="img-placeholder">
-  <span class="img-placeholder-icon">🖼</span>
-  <div><strong>Example: Anastomotic leak post-esophagectomy</strong>Linear extravasation of water-soluble contrast from the esophagogastric anastomosis. Contrast pools in the mediastinum adjacent to the anastomosis. Correlate with CT chest for full extent.</div>
-</div>
-
-<div class="proc-section-label">Imaging Pearls</div>
-<div class="pearl-grid">
-  <div class="pearl-box">⚡ <strong>Negative water-soluble study does NOT exclude perforation</strong> — sensitivity is ~50–75%. If clinical suspicion persists, proceed with thin barium (sensitivity &gt;90%).</div>
-  <div class="pearl-box">⚡ <strong>Gastrografin in the lungs = bilateral pulmonary edema within minutes.</strong> Even a small aspiration is dangerous. Default to Omnipaque.</div>
-  <div class="pearl-box">⚡ <strong>Lateral view catches more leaks than AP alone</strong> — posterior mediastinal extravasation is frequently missed on AP.</div>
-  <div class="pearl-box">⚡ <strong>Right lateral decubitus</strong> is optimal for demonstrating GEJ perforation — contrast pools at the leak site.</div>
-  <div class="pearl-box">⚡ <strong>Timing matters:</strong> small early leaks managed endoscopically (stent); large leaks or mediastinal contamination need surgery. Your report guides this decision.</div>
-  <div class="pearl-box">⚡ <strong>Cervical vs. thoracic perforation:</strong> cervical (Zenker's, post-scope) = typically more contained, better prognosis. Thoracic (Boerhaave) = high mortality, urgent surgical consultation.</div>
-</div>
-
-<div class="dictation-wrapper">
-  <div class="dictation-header">
-    <span class="dictation-title">Normal Dictation Template</span>
-    <button class="copy-btn" onclick="(function(btn){const t='Esophagram for suspected perforation was performed using Omnipaque 300 water-soluble contrast. PA and lateral chest scout demonstrates no pneumomediastinum or pleural effusion. Sequential views of the pharynx, cervical, thoracic, and distal esophagus were obtained. No extravasation of contrast is identified. The esophageal lumen is intact without evidence of perforation, fistula, or anastomotic dehiscence.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
-  </div>
-  <div class="dictation-box">Esophagram for suspected perforation was performed using Omnipaque 300 water-soluble contrast. PA and lateral chest scout demonstrates no pneumomediastinum or pleural effusion. Sequential views of the pharynx, cervical, thoracic, and distal esophagus were obtained. No extravasation of contrast is identified. The esophageal lumen is intact without evidence of perforation, fistula, or anastomotic dehiscence.</div>
-</div>
-</div><!-- /esoph-perf -->
-
-
-<!-- ═══════════════════════════ MBS ═══════════════════════════ -->
-<div class="topic-h" id="fl-mbs">
-  Modified Barium Swallow (MBS)
-</div>
-
-<div class="proc-meta"><span class="proc-tag gi">GI — Esophageal</span></div>
-
-<div class="ap-tabs" data-group="mbs">
-    <button class="ap-tab active" data-group="mbs" data-tab="adult" onclick="apSwitch(this)">Adult</button>
-    <button class="ap-tab" data-group="mbs" data-tab="peds" onclick="apSwitch(this)">Peds</button>
-  </div>
-
-  <div class="ap-content active" data-group="mbs" data-tab="adult">
-    <div class="proc-section-label">Indications</div>
-    <div class="info-box teal">Dysphagia, aspiration, neurogenic swallowing dysfunction, post-stroke, post-surgical swallowing evaluation. Performed with speech-language pathologist (SLP) present.</div>
-
-    <div class="proc-section-label">Patient Prep</div>
-    <div class="info-box amber">NPO 4 hours. SLP coordinates the study — they bring the patient, set up food/liquid textures, and direct timing of images. Your role is real-time fluoroscopic imaging and radiation dose management.</div>
-
-    <div class="proc-section-label">Contrast &amp; Equipment</div>
-    <ul class="proc-steps">
-      <li class="proc-step"><div class="proc-step-content">Varibar barium products (thin, nectar, honey, pudding) — or crush Varibar pudding into food items.</div></li>
-      <li class="proc-step"><div class="proc-step-content">Chair at 90° upright or SLP-specified position. Lateral and AP views.</div></li>
-    </ul>
-
-    <div class="proc-section-label">Protocol</div>
-    <ol class="proc-steps" style="counter-reset:step-counter">
-      <li class="proc-step"><div class="proc-step-content"><strong>Lateral view first (primary view for MBS).</strong> Includes lips anteriorly to cervical spine posteriorly; skull base superiorly to below cricopharyngeus.</div></li>
-      <li class="proc-step"><div class="proc-step-content">SLP presents thin liquid (5 mL, then cup sip). Fluoro in pulse mode during each swallow. Document oral, pharyngeal, and esophageal phases.</div></li>
-      <li class="proc-step"><div class="proc-step-content">Nectar-thick liquid (5 mL, then cup sip) if thin liquid study is complete.</div></li>
-      <li class="proc-step"><div class="proc-step-content">Honey-thick liquid (5 mL) if indicated by SLP.</div></li>
-      <li class="proc-step"><div class="proc-step-content">Pudding consistency (teaspoon) — tests solid/semi-solid bolus transport.</div></li>
-      <li class="proc-step"><div class="proc-step-content">Cookie (Lorna Doone) coated with pudding barium — tests mastication and oral preparation.</div></li>
-      <li class="proc-step"><div class="proc-step-content"><strong>AP view</strong> if SLP wants to assess vallecular or piriform sinus asymmetry, or to evaluate vocal cord adduction.</div></li>
-      <li class="proc-step"><div class="proc-step-content">SLP may request compensatory strategies (chin tuck, head rotation, supraglottic swallow) — fluoro during these maneuvers.</div></li>
-    </ol>
-
-    <div class="img-placeholder">
-      <span class="img-placeholder-icon">🖼</span>
-      <div><strong>Example: Normal lateral MBS</strong>Smooth bolus propulsion, complete epiglottic inversion, no laryngeal penetration or aspiration. Contrast clears valleculae and piriform sinuses after swallow.</div>
-    </div>
-    <div class="img-placeholder">
-      <span class="img-placeholder-icon">🖼</span>
-      <div><strong>Example: Silent aspiration</strong>Contrast passes below true vocal cords without cough reflex. Identified only by fluoroscopy — clinically silent.</div>
-    </div>
-
-    <div class="proc-section-label">Imaging Pearls</div>
-    <div class="pearl-grid">
-      <div class="pearl-box">⚡ <strong>Penetration vs. aspiration:</strong> Penetration = contrast enters laryngeal vestibule above vocal cords. Aspiration = contrast passes below true vocal cords into trachea.</div>
-      <div class="pearl-box">⚡ <strong>Silent aspiration</strong> (no cough) is common post-stroke — fluoro is the only way to detect it.</div>
-      <div class="pearl-box">⚡ <strong>Pulse fluoro:</strong> 15 fps or 7.5 fps. Record everything — SLP will review the video after.</div>
-      <div class="pearl-box">⚡ <strong>FEES vs. MBS:</strong> FEES (endoscopic) done bedside, no radiation; MBS gives better pharyngeal/esophageal anatomy and radiation-free timing can be prolonged.</div>
-      <div class="pearl-box">⚡ <strong>Radiation dose matters.</strong> This study is often repeated serially. Minimize fluoro time; pulse mode required.</div>
-    </div>
-
-    <div class="dictation-wrapper">
-      <div class="dictation-header">
-        <span class="dictation-title">Normal Dictation Template</span>
-        <button class="copy-btn" onclick="(function(btn){const t='Modified barium swallow was performed in collaboration with speech-language pathology. Thin liquid, nectar-thick, honey-thick, and pudding consistencies were evaluated in the lateral and AP projections. The oral preparatory and oral transport phases are intact. Pharyngeal swallow is triggered promptly. Epiglottic inversion is complete. No laryngeal penetration or aspiration is identified with any consistency. The cricopharyngeus relaxes appropriately. No residue in valleculae or piriform sinuses after swallow. Esophageal inlet is patent.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
-      </div>
-      <div class="dictation-box">Modified barium swallow was performed in collaboration with speech-language pathology. Thin liquid, nectar-thick, honey-thick, and pudding consistencies were evaluated in the lateral and AP projections. The oral preparatory and oral transport phases are intact. Pharyngeal swallow is triggered promptly. Epiglottic inversion is complete. No laryngeal penetration or aspiration is identified with any consistency. The cricopharyngeus relaxes appropriately. No residue in valleculae or piriform sinuses after swallow. Esophageal inlet is patent.</div>
-    </div>
-  </div><!-- /mbs adult -->
-
-  <div class="ap-content" data-group="mbs" data-tab="peds">
-    <div class="peds-note">Peds MBS is performed with a pediatric SLP. Neonates and infants are evaluated in feeding position (semi-reclined or upright). Use age-appropriate nipple/bottle or cup. Breast-milk consistency barium (Varibar thin) is standard for infants.</div>
-
-    <div class="proc-section-label">Age-Specific Notes</div>
-    <div class="info-box amber">
-      <strong>Neonates/Infants:</strong> Hold in caregiver arms or infant seat. Use Varibar thin in bottle with appropriate nipple flow rate. Do not exceed 3–5 swallows per consistency — radiation dose is paramount.<br><br>
-      <strong>Toddlers (1–3y):</strong> Challenging cooperation. SLP leads. Cup sipping of thin/nectar. Cracker with pudding barium if developmentally appropriate.<br><br>
-      <strong>Older children:</strong> Same as adult protocol adapted for cooperation level.
-    </div>
-
-    <div class="proc-section-label">Key Findings in Peds</div>
-    <div class="info-box teal">Laryngeal cleft (type I–IV), laryngomalacia, tracheoesophageal fistula (H-type), pharyngeal dysmotility, nasal regurgitation, vallecular residue. Premature infants may have disorganized suck-swallow-breathe coordination.</div>
-
-    <div class="dictation-wrapper">
-      <div class="dictation-header">
-        <span class="dictation-title">Normal Peds Dictation Template</span>
-        <button class="copy-btn" onclick="(function(btn){const t='Modified barium swallow was performed with pediatric speech-language pathology present. Age-appropriate consistencies including thin liquid were evaluated. The oral phase demonstrates coordinated suck-swallow pattern. Pharyngeal swallow is triggered appropriately. Complete epiglottic deflection. No laryngeal penetration or aspiration identified. No nasal regurgitation. No evidence of tracheoesophageal fistula. Esophageal inlet patent.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
-      </div>
-      <div class="dictation-box">Modified barium swallow was performed with pediatric speech-language pathology present. Age-appropriate consistencies including thin liquid were evaluated. The oral phase demonstrates coordinated suck-swallow pattern. Pharyngeal swallow is triggered appropriately. Complete epiglottic deflection. No laryngeal penetration or aspiration identified. No nasal regurgitation. No evidence of tracheoesophageal fistula. Esophageal inlet patent.</div>
-    </div>
-  </div><!-- /mbs peds -->
-
-<!-- ═══════════════════════ GI — STOMACH / SMALL BOWEL ═══════════════════════ -->
-<div class="proc-category">GI — Stomach / Small Bowel</div>
-
-<!-- ════════════════════════ UGI SC ════════════════════════ -->
-<div class="topic-h" id="fl-ugi-sc">
-  Upper GI Series — Single Contrast (SC)
-</div>
-
-<div class="proc-meta"><span class="proc-tag gi">GI — Stomach/Small Bowel</span></div>
-
-<div class="ap-tabs" data-group="ugi-sc">
-    <button class="ap-tab active" data-group="ugi-sc" data-tab="adult" onclick="apSwitch(this)">Adult</button>
-    <button class="ap-tab" data-group="ugi-sc" data-tab="peds" onclick="apSwitch(this)">Peds</button>
-  </div>
-
-  <div class="ap-content active" data-group="ugi-sc" data-tab="adult">
-    <div class="proc-section-label">Indications</div>
-    <div class="info-box teal">Suspected pyloric obstruction, gastric outlet obstruction, peptic ulcer disease (initial eval), post-operative anatomy check, hiatal hernia, GERD evaluation, suspected stricture/mass when EGD not available.</div>
-
-    <div class="proc-section-label">Patient Prep</div>
-    <div class="info-box amber">NPO after midnight. No smoking or gum (stimulates gastric acid and motility). Remove metallic objects from field.</div>
-
-    <div class="proc-section-label">Protocol</div>
-    <ol class="proc-steps" style="counter-reset:step-counter">
-      <li class="proc-step"><div class="proc-step-content">Scout film of abdomen.</div></li>
-      <li class="proc-step"><div class="proc-step-content">Patient drinks 100–200 mL of thin barium (low density, ~40–60% w/v) through a straw.</div></li>
-      <li class="proc-step"><div class="proc-step-content"><strong>Esophagus:</strong> LPO standing (3 images during continuous swallowing), right lateral, AP — same as SC esophagram.</div></li>
-      <li class="proc-step"><div class="proc-step-content"><strong>Stomach/duodenum upright:</strong> RAO standing — best view for gastric antrum and pylorus. PA erect. Right lateral — gastric body and fundus in profile.</div></li>
-      <li class="proc-step"><div class="proc-step-content">Have patient roll prone then supine to coat all mucosal surfaces. Spot images throughout.</div></li>
-      <li class="proc-step"><div class="proc-step-content"><strong>Supine RAO:</strong> duodenal bulb en face. Document duodenal sweep to ligament of Treitz.</div></li>
-      <li class="proc-step"><div class="proc-step-content">Assess for reflux: prone Trendelenburg with water siphon test or gentle abdominal compression.</div></li>
-      <li class="proc-step"><div class="proc-step-content">Additional images as needed for specific findings.</div></li>
-    </ol>
-
-    <div class="img-placeholder">
-      <span class="img-placeholder-icon">🖼</span>
-      <div><strong>Example: Normal UGI SC</strong>Smooth gastric folds, intact antrum and pylorus, patent duodenal bulb. Barium flows freely to ligament of Treitz.</div>
-    </div>
-
-    <div class="proc-section-label">Imaging Pearls</div>
-    <div class="pearl-grid">
-      <div class="pearl-box">⚡ <strong>RAO supine</strong> is the money view for the duodenal bulb — fills antrum well and opens the bulb en face.</div>
-      <div class="pearl-box">⚡ <strong>Pyloric channel ulcer</strong> can mimic pyloric stenosis — scarring causes narrowing. Look for ulcer crater en face or in profile.</div>
-      <div class="pearl-box">⚡ <strong>Hiatal hernia</strong> is best seen in the Trendelenburg position — gastric rugae above the diaphragm.</div>
-      <div class="pearl-box">⚡ <strong>Document ligament of Treitz</strong> position (should be at or left of left pedicle at L1-L2 level) — malrotation workup.</div>
-    </div>
-
-    <div class="dictation-wrapper">
-      <div class="dictation-header">
-        <span class="dictation-title">Normal Dictation Template</span>
-        <button class="copy-btn" onclick="(function(btn){const t='Single contrast upper GI series was performed. The esophagus demonstrates normal peristalsis without mucosal irregularity, stricture, or filling defect. The gastroesophageal junction is normally positioned below the diaphragm. No hiatal hernia. The gastric mucosa demonstrates normal fold pattern. The pylorus opens freely. The duodenal bulb and sweep are normal without filling defect or ulceration. Barium passes freely to the ligament of Treitz which is in normal position at the level of L1-2, left of midline. No evidence of malrotation.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
-      </div>
-      <div class="dictation-box">Single contrast upper GI series was performed. The esophagus demonstrates normal peristalsis without mucosal irregularity, stricture, or filling defect. The gastroesophageal junction is normally positioned below the diaphragm. No hiatal hernia. The gastric mucosa demonstrates normal fold pattern. The pylorus opens freely. The duodenal bulb and sweep are normal without filling defect or ulceration. Barium passes freely to the ligament of Treitz which is in normal position at the level of L1-2, left of midline. No evidence of malrotation.</div>
-    </div>
-  </div><!-- /ugi-sc adult -->
-
-  <div class="ap-content" data-group="ugi-sc" data-tab="peds">
-    <div class="peds-note">Pediatric UGI is one of the most common fluoroscopic studies in children. <strong>Malrotation/volvulus is the primary concern in neonates and infants with bilious vomiting — this is a surgical emergency.</strong></div>
-
-    <div class="proc-section-label">Age-Specific Protocol</div>
-    <div class="info-box teal">
-      <strong>Neonates/Infants:</strong> Omnipaque or dilute barium via bottle or NG. Lateral and AP views. Document esophagus, stomach, duodenal bulb, and ligament of Treitz (LoT) position.<br><br>
-      <strong>Toddlers/Children:</strong> Same as adult single contrast. Use age-appropriate contrast volume.
-    </div>
-
-    <div class="proc-section-label">Malrotation Protocol</div>
-    <ol class="proc-steps" style="counter-reset:step-counter">
-      <li class="proc-step"><div class="proc-step-content">AP scout. Give small amount of contrast (10–20 mL for neonates; more for older children).</div></li>
-      <li class="proc-step"><div class="proc-step-content"><strong>AP view of duodenum:</strong> Document the duodenojejunal junction (DJ junction / ligament of Treitz). Should be at or left of left pedicle, at the level of the duodenal bulb (L1-2).</div></li>
-      <li class="proc-step"><div class="proc-step-content"><strong>Lateral view</strong> to confirm retroperitoneal position of 3rd portion of duodenum (passes posterior to SMA).</div></li>
-      <li class="proc-step"><div class="proc-step-content">If LoT is low or right of midline → malrotation. Urgent surgical consultation.</div></li>
-      <li class="proc-step"><div class="proc-step-content">"Corkscrew" duodenum = midgut volvulus — emergent.</div></li>
-    </ol>
-
-    <div class="info-box red">If you see a "corkscrew" duodenum or the duodenum fails to cross midline — call the referring team immediately. Do not wait for the radiologist to read it.</div>
-
-    <div class="dictation-wrapper">
-      <div class="dictation-header">
-        <span class="dictation-title">Normal Peds Dictation Template</span>
-        <button class="copy-btn" onclick="(function(btn){const t='Upper GI series was performed. The esophagus is normal in caliber and course. The stomach is in normal position. The duodenum crosses midline and the duodenojejunal junction (ligament of Treitz) is identified at the level of L1-2, to the left of the left pedicle, consistent with normal intestinal rotation. No evidence of malrotation or volvulus. The duodenal bulb is normal.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
-      </div>
-      <div class="dictation-box">Upper GI series was performed. The esophagus is normal in caliber and course. The stomach is in normal position. The duodenum crosses midline and the duodenojejunal junction (ligament of Treitz) is identified at the level of L1-2, to the left of the left pedicle, consistent with normal intestinal rotation. No evidence of malrotation or volvulus. The duodenal bulb is normal.</div>
-    </div>
-  </div><!-- /ugi-sc peds -->
-
-<!-- ════════════════════════ UGI DC ════════════════════════ -->
-<div class="topic-h" id="fl-ugi-dc">
-  Upper GI Series — Double Contrast (DC)
-</div>
-
-<div class="proc-meta"><span class="proc-tag gi">GI — Stomach/Small Bowel</span><span class="proc-tag adult-only">Adult</span></div>
-
-<div class="proc-section-label">Indications</div>
-  <div class="info-box teal">Suspected gastric carcinoma, early gastric cancer screening (Japan), gastric lymphoma, subtle mucosal lesions not seen on SC study, peptic ulcer disease with prior negative SC, NSAID gastropathy.</div>
-
-  <div class="proc-section-label">Patient Prep</div>
-  <div class="info-box amber">NPO after midnight. No anticholinergics (glucagon optional — 0.1 mg IV to reduce peristalsis). Effervescent granules + dense barium (250% w/v).</div>
-
-  <div class="proc-section-label">Protocol</div>
-  <ol class="proc-steps" style="counter-reset:step-counter">
-    <li class="proc-step"><div class="proc-step-content">Scout film of abdomen.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Give effervescent granules dry (or with 1 tsp water). <strong>Patient must not burp.</strong></div></li>
-    <li class="proc-step"><div class="proc-step-content">Immediately give 60–90 mL dense barium (250% w/v). Patient drinks quickly.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Roll patient to coat all mucosal surfaces: supine → right lateral → prone → left lateral → supine (full rotation).</div></li>
-    <li class="proc-step"><div class="proc-step-content"><strong>Supine RAO:</strong> body of stomach and antrum en face — best for detecting early gastric cancer, ulcers, rugal fold pattern.</div></li>
-    <li class="proc-step"><div class="proc-step-content"><strong>Supine LPO:</strong> fundus and cardia en face.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Right lateral — posterior gastric wall profile.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Add single contrast (additional barium) for duodenum and esophagus — same as SC UGI steps.</div></li>
-  </ol>
-
-  <div class="img-placeholder">
-    <span class="img-placeholder-icon">🖼</span>
-    <div><strong>Example: Gastric ulcer on DC UGI</strong>En-face view shows discrete collection of barium (ulcer crater) with smooth surrounding mound and radiating folds.</div>
-  </div>
-
-  <div class="proc-section-label">Imaging Pearls</div>
-  <div class="pearl-grid">
-    <div class="pearl-box">⚡ <strong>Benign vs. malignant ulcer:</strong> Benign = smooth, round crater projecting beyond lumen, Hampton line, radiating folds tapered to edge. Malignant = crater within lumen, nodular folds, irregular margin.</div>
-    <div class="pearl-box">⚡ <strong>Early gastric cancer</strong> (type IIc/III) — subtle depression or ulcer; DC technique critical for detection.</div>
-    <div class="pearl-box">⚡ <strong>Linitis plastica:</strong> diffuse thickening, loss of distensibility, rigid "leather bottle" stomach — scirrhous carcinoma or metastasis (breast).</div>
-    <div class="pearl-box">⚡ <strong>MALT lymphoma:</strong> thickened folds, multiple nodules, without the rigidity of carcinoma.</div>
-  </div>
-
-  <div class="dictation-wrapper">
-    <div class="dictation-header">
-      <span class="dictation-title">Normal Dictation Template</span>
-      <button class="copy-btn" onclick="(function(btn){const t='Double contrast upper GI series was performed with effervescent granules and high-density barium. The gastric mucosa demonstrates a normal areae gastricae pattern without erosions, ulceration, or mass lesion. No focal filling defect identified. The gastric folds are of normal thickness and taper smoothly to the antrum. The pylorus opens freely. The duodenal bulb and sweep are normal. The esophagus is normal without stricture or mucosal irregularity.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
-    </div>
-    <div class="dictation-box">Double contrast upper GI series was performed with effervescent granules and high-density barium. The gastric mucosa demonstrates a normal areae gastricae pattern without erosions, ulceration, or mass lesion. No focal filling defect identified. The gastric folds are of normal thickness and taper smoothly to the antrum. The pylorus opens freely. The duodenal bulb and sweep are normal. The esophagus is normal without stricture or mucosal irregularity.</div>
-  </div>
-
-<!-- ════════════════════════ SBFT ════════════════════════ -->
-<div class="topic-h" id="fl-sbft">
-  Small Bowel Follow-Through (SBFT)
-</div>
-
-<div class="proc-meta"><span class="proc-tag gi">GI — Stomach/Small Bowel</span><span class="proc-tag adult-only">Adult</span></div>
-
-<div class="proc-section-label">Indications</div>
-  <div class="info-box teal">Crohn's disease evaluation/follow-up, small bowel obstruction (partial, chronic), malabsorption workup, suspected small bowel mass or stricture. Largely replaced by CT enterography/MR enterography but still used in some centers.</div>
-
-  <div class="proc-section-label">Patient Prep</div>
-  <div class="info-box amber">Low-residue diet day before. NPO 8–12 hours. No laxatives unless specified. This is a time-intensive study (1–4 hours).</div>
-
-  <div class="proc-section-label">Protocol</div>
-  <ol class="proc-steps" style="counter-reset:step-counter">
-    <li class="proc-step"><div class="proc-step-content">Scout film of abdomen.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Patient drinks 450–600 mL of thin barium (40% w/v). Some centers add methylcellulose to improve mucosal coating.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Serial overhead films at 15–30 minute intervals: 15 min, 30 min, 45 min, 60 min, then every 30–60 min until barium reaches terminal ileum/cecum.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Fluoroscopic spot views of any area of concern (narrowing, separation, flocculation).</div></li>
-    <li class="proc-step"><div class="proc-step-content"><strong>Terminal ileum:</strong> fluoroscopic compression spot views in RPO and supine positions. This is the most important area — Crohn's, lymphoma, carcinoid.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Document transit time from stomach to cecum (normal: 30–120 min).</div></li>
-    <li class="proc-step"><div class="proc-step-content">Overhead when barium reaches cecum for full-column image.</div></li>
-  </ol>
-
-  <div class="img-placeholder">
-    <span class="img-placeholder-icon">🖼</span>
-    <div><strong>Example: Terminal ileum Crohn's</strong>String sign (severe luminal narrowing due to spasm or fibrosis), cobblestone mucosa, skip lesions, prestenotic dilatation.</div>
-  </div>
-
-  <div class="proc-section-label">Imaging Pearls</div>
-  <div class="pearl-grid">
-    <div class="pearl-box">⚡ <strong>String sign of Kantor</strong> — severe terminal ileal narrowing in Crohn's. May be reversible (spasm) or fixed (fibrosis).</div>
-    <div class="pearl-box">⚡ <strong>Separation of bowel loops</strong> suggests mesenteric thickening — Crohn's, carcinoid desmoplastic reaction, lymphoma.</div>
-    <div class="pearl-box">⚡ <strong>Flocculation/segmentation</strong> of barium — celiac disease, malabsorption. Diluted barium and dilated loops.</div>
-    <div class="pearl-box">⚡ <strong>Jejunoileal fold pattern:</strong> Jejunum = 3–5 folds/cm ("stacked coins"). Ileum = fewer folds (1–2/cm), smooth.</div>
-    <div class="pearl-box">⚡ <strong>Hypomotility:</strong> prolonged transit (&gt;4 hours) suggests pseudo-obstruction, scleroderma, or hypothyroid.</div>
-  </div>
-
-  <div class="dictation-wrapper">
-    <div class="dictation-header">
-      <span class="dictation-title">Normal Dictation Template</span>
-      <button class="copy-btn" onclick="(function(btn){const t='Small bowel follow-through was performed. Sequential overhead films were obtained at [X] minute intervals. Barium progressed from the stomach through the small bowel to the terminal ileum and cecum over [X] hours. The small bowel loops are of normal caliber and distribution. Fold pattern of the jejunum and ileum is normal. No stricture, obstruction, separation of loops, or mucosal abnormality. Terminal ileum demonstrates normal caliber and fold pattern without evidence of inflammatory bowel disease. Normal barium transit time.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
-    </div>
-    <div class="dictation-box">Small bowel follow-through was performed. Sequential overhead films were obtained at [X] minute intervals. Barium progressed from the stomach through the small bowel to the terminal ileum and cecum over [X] hours. The small bowel loops are of normal caliber and distribution. Fold pattern of the jejunum and ileum is normal. No stricture, obstruction, separation of loops, or mucosal abnormality. Terminal ileum demonstrates normal caliber and fold pattern without evidence of inflammatory bowel disease. Normal barium transit time.</div>
-  </div>
-
-
-<!-- ═══════════════════════ GI — COLON / RECTUM ═══════════════════════ -->
-<div class="proc-category">GI — Colon / Rectum</div>
-
-<!-- ════════════════════════ BE SC ════════════════════════ -->
-<div class="topic-h" id="fl-be-sc">
-  Barium Enema — Single Contrast (SC)
-</div>
-
-<div class="proc-meta"><span class="proc-tag gi">GI — Colon/Rectum</span><span class="proc-tag adult-only">Adult</span></div>
-
-<div class="proc-section-label">Indications</div>
-  <div class="info-box teal">Suspected large bowel obstruction, diverticulosis, volvulus, fistula assessment, colostomy evaluation, post-surgical anastomosis check (contrast enema). SC is preferred when evaluating obstruction or when patient cannot cooperate with DC prep.</div>
-
-  <div class="proc-section-label">Patient Prep</div>
-  <div class="info-box amber">Full bowel prep (Miralax + bisacodyl or similar). Clear liquids day before. NPO 4 hours. No enemas day-of (removes residual coating). Warm the barium to body temperature.</div>
-
-  <div class="proc-section-label">Protocol</div>
-  <ol class="proc-steps" style="counter-reset:step-counter">
-    <li class="proc-step"><div class="proc-step-content">Scout film of abdomen (supine ± prone).</div></li>
-    <li class="proc-step"><div class="proc-step-content">Place rectal tube with balloon inflated (30–60 mL). Confirm position below levators on lateral scout.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Administer 20–25% w/v barium by gravity from 90 cm above table. Flow rate ~100–150 mL/min.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Fluoroscopic spot views as colon fills: rectum, sigmoid, descending, splenic flexure, transverse, hepatic flexure, ascending, cecum.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Overhead films: AP supine, PA prone, bilateral decubiti (for rectosigmoid), lateral rectum (for rectal masses/fistula).</div></li>
-    <li class="proc-step"><div class="proc-step-content">Document cecal filling and ileocecal valve.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Post-evacuation film to assess mucosal pattern and completeness of evacuation.</div></li>
-  </ol>
-
-  <div class="img-placeholder">
-    <span class="img-placeholder-icon">🖼</span>
-    <div><strong>Example: Sigmoid diverticulosis on SC BE</strong>Multiple flask-shaped outpouchings along antimesenteric border of sigmoid. Note smooth luminal contour between diverticula.</div>
-  </div>
-
-  <div class="proc-section-label">Imaging Pearls</div>
-  <div class="pearl-grid">
-    <div class="pearl-box">⚡ <strong>Apple core lesion</strong> — carcinoma causing shouldered circumferential narrowing. Abrupt transition from normal to narrowed lumen.</div>
-    <div class="pearl-box">⚡ <strong>Sigmoid volvulus:</strong> "bent inner tube" / coffee-bean sign on scout. SC enema may detorse it.</div>
-    <div class="pearl-box">⚡ <strong>Diverticulitis:</strong> SC enema is CONTRAINDICATED in acute diverticulitis. Use CT.</div>
-    <div class="pearl-box">⚡ <strong>Anastomotic leak:</strong> use water-soluble contrast (Omnipaque) — NOT barium — if leak is suspected.</div>
-  </div>
-
-  <div class="dictation-wrapper">
-    <div class="dictation-header">
-      <span class="dictation-title">Normal Dictation Template</span>
-      <button class="copy-btn" onclick="(function(btn){const t='Single contrast barium enema was performed. The rectum, sigmoid, descending, transverse, ascending colon, and cecum fill completely. No filling defects, strictures, or mucosal abnormality. Haustral pattern is normal throughout. The ileocecal valve is competent. Post-evacuation images confirm complete evacuation without significant residual. No evidence of obstruction or perforation.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
-    </div>
-    <div class="dictation-box">Single contrast barium enema was performed. The rectum, sigmoid, descending, transverse, ascending colon, and cecum fill completely. No filling defects, strictures, or mucosal abnormality. Haustral pattern is normal throughout. The ileocecal valve is competent. Post-evacuation images confirm complete evacuation without significant residual. No evidence of obstruction or perforation.</div>
-  </div>
-
-<!-- ════════════════════════ BE DC ════════════════════════ -->
-<div class="topic-h" id="fl-be-dc">
-  Barium Enema — Double Contrast (DC)
-</div>
-
-<div class="proc-meta"><span class="proc-tag gi">GI — Colon/Rectum</span></div>
-
-<div class="ap-tabs" data-group="be-dc">
-    <button class="ap-tab active" data-group="be-dc" data-tab="adult" onclick="apSwitch(this)">Adult</button>
-    <button class="ap-tab" data-group="be-dc" data-tab="peds" onclick="apSwitch(this)">Peds</button>
-  </div>
-
-  <div class="ap-content active" data-group="be-dc" data-tab="adult">
-    <div class="proc-section-label">Indications</div>
-    <div class="info-box teal">Colorectal cancer screening (largely replaced by colonoscopy/CT colonography), polyp detection, inflammatory bowel disease evaluation (Crohn's colitis, UC), evaluation of mucosal lesions.</div>
-
-    <div class="proc-section-label">Patient Prep</div>
-    <div class="info-box amber">Full bowel prep essential — any residual stool creates false-positive findings. Same prep as SC BE. <strong>Glucagon 0.1 mg IV</strong> optional to reduce colonic spasm (give just before air insufflation).</div>
-
-    <div class="proc-section-label">Protocol</div>
-    <ol class="proc-steps" style="counter-reset:step-counter">
-      <li class="proc-step"><div class="proc-step-content">Scout film.</div></li>
-      <li class="proc-step"><div class="proc-step-content">Rectal tube with balloon (30–60 mL). Lateral scout to confirm position.</div></li>
-      <li class="proc-step"><div class="proc-step-content">Infuse 250–350 mL dense barium (80–100% w/v) slowly. Fill to splenic flexure only — do not fill entire colon with barium.</div></li>
-      <li class="proc-step"><div class="proc-step-content">Clamp tube. Roll patient (right lateral → prone → left lateral → supine) to coat all mucosal surfaces with barium.</div></li>
-      <li class="proc-step"><div class="proc-step-content">Drain barium back into bag (unclamp tube, tilt table head-up).</div></li>
-      <li class="proc-step"><div class="proc-step-content">Insufflate air (or CO2) via rectal tube — 1000–1500 mL — until colon fully distended. Fluoroscopic monitoring.</div></li>
-      <li class="proc-step"><div class="proc-step-content">Overhead films in standard projections: PA prone, AP supine, bilateral decubiti, bilateral obliques of rectosigmoid, lateral rectum.</div></li>
-      <li class="proc-step"><div class="proc-step-content">Spot views of any suspicious area.</div></li>
-    </ol>
-
-    <div class="img-placeholder">
-      <span class="img-placeholder-icon">🖼</span>
-      <div><strong>Example: Sessile polyp on DC BE</strong>Filling defect coated by thin barium with "etched in white" ring on dependent wall. Compare air-contrast interface on non-dependent wall.</div>
-    </div>
-
-    <div class="proc-section-label">Imaging Pearls</div>
-    <div class="pearl-grid">
-      <div class="pearl-box">⚡ <strong>"Etched in white" polyp</strong> — ring of barium around a sessile polyp on the dependent wall. On non-dependent wall, polyp projects as a filling defect into air column.</div>
-      <div class="pearl-box">⚡ <strong>UC vs. Crohn's:</strong> UC — continuous from rectum, lead-pipe colon (late), loss of haustra. Crohn's — skip lesions, terminal ileum, transmural (fistulae, aphthous ulcers).</div>
-      <div class="pearl-box">⚡ <strong>Pseudopolyps</strong> in UC — islands of inflamed mucosa between ulcers. Not true polyps.</div>
-      <div class="pearl-box">⚡ <strong>Residual stool</strong> moves with patient repositioning; true polyps stay fixed. Always get two views perpendicular to each other.</div>
-    </div>
-
-    <div class="dictation-wrapper">
-      <div class="dictation-header">
-        <span class="dictation-title">Normal Dictation Template</span>
-        <button class="copy-btn" onclick="(function(btn){const t='Double contrast barium enema was performed with complete colonic distension achieved. The rectum, sigmoid, descending, transverse, ascending colon, and cecum are well distended and coated. Haustral pattern is preserved. No polypoid filling defects, mucosal irregularity, or stricture. The ileocecal valve is normal. The appendix is not visualized (normal variant). No evidence of inflammatory bowel disease or carcinoma.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
-      </div>
-      <div class="dictation-box">Double contrast barium enema was performed with complete colonic distension achieved. The rectum, sigmoid, descending, transverse, ascending colon, and cecum are well distended and coated. Haustral pattern is preserved. No polypoid filling defects, mucosal irregularity, or stricture. The ileocecal valve is normal. The appendix is not visualized (normal variant). No evidence of inflammatory bowel disease or carcinoma.</div>
-    </div>
-  </div><!-- /be-dc adult -->
-
-  <div class="ap-content" data-group="be-dc" data-tab="peds">
-    <div class="peds-note">Pediatric DC BE is uncommon. Most common indication: Hirschsprung's disease evaluation (transition zone), colonic stricture, or polyp. Hirschsprung's uses a specialized low-volume contrast enema without prior prep.</div>
-
-    <div class="proc-section-label">Hirschsprung's Disease Protocol</div>
-    <div class="info-box teal">
-      <strong>No bowel prep</strong> — prep flushes out the transition zone. Use rectal tube WITHOUT balloon inflation (balloon distension can obscure the aganglionic segment).<br><br>
-      Give small amount of water-soluble contrast (Omnipaque 300, diluted 1:3). Fill rectum and sigmoid slowly under fluoroscopy.<br><br>
-      Classic: narrow aganglionic distal segment → transition zone → dilated proximal bowel.
-    </div>
-
-    <div class="info-box amber">
-      <strong>Transition zone:</strong> typically at rectosigmoid junction in classic Hirschsprung's. Long-segment and total colonic aganglionosis have transition zones more proximally.<br><br>
-      <strong>Get 24-hour delayed film</strong> — retained contrast at 24 hours is highly suggestive of Hirschsprung's.
-    </div>
-
-    <div class="dictation-wrapper">
-      <div class="dictation-header">
-        <span class="dictation-title">Normal Hirschsprung's Contrast Enema</span>
-        <button class="copy-btn" onclick="(function(btn){const t='Contrast enema for evaluation of Hirschsprung disease was performed without prior bowel preparation using water-soluble contrast. Contrast was instilled via rectal tube. The rectum and sigmoid are of normal caliber. No transition zone is identified. The colon fills retrograde to the cecum with normal haustral pattern. No retained contrast on 24-hour delayed image [if obtained]. Findings do not identify a transition zone to suggest Hirschsprung disease.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
-      </div>
-      <div class="dictation-box">Contrast enema for evaluation of Hirschsprung disease was performed without prior bowel preparation using water-soluble contrast. Contrast was instilled via rectal tube. The rectum and sigmoid are of normal caliber. No transition zone is identified. The colon fills retrograde to the cecum with normal haustral pattern. No retained contrast on 24-hour delayed image [if obtained]. Findings do not identify a transition zone to suggest Hirschsprung disease.</div>
-    </div>
-  </div><!-- /be-dc peds -->
-
-<!-- ════════════════════════ DEFECOGRAPHY ════════════════════════ -->
-<div class="topic-h" id="fl-procto">
-  Defecography (Fluoroscopic Proctography)
-</div>
-
-<div class="proc-meta"><span class="proc-tag gi">GI — Colon/Rectum</span><span class="proc-tag adult-only">Adult</span></div>
-
-<div class="proc-section-label">Indications</div>
-  <div class="info-box teal">Obstructed defecation, rectal prolapse, rectocele, intussusception, anismus (pelvic floor dysfunction), post-surgical evaluation of rectal repair. MR defecography is increasingly preferred when available.</div>
-
-  <div class="proc-section-label">Patient Prep</div>
-  <div class="info-box amber">Cleansing enema 2 hours before. Vaginal opacification with contrast (for females — to identify enterocele). Small bowel opacification optional (dilute oral barium 1–2 hours prior to show enterocele). Bladder opacification optional.</div>
-
-  <div class="proc-section-label">Protocol</div>
-  <ol class="proc-steps" style="counter-reset:step-counter">
-    <li class="proc-step"><div class="proc-step-content">Patient seated on radiolucent commode on the fluoroscopic table.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Instill 150–200 mL thick barium paste (potato starch + barium) per rectum via catheter.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Lateral fluoroscopic images throughout (primary view — sagittal plane).</div></li>
-    <li class="proc-step"><div class="proc-step-content">Phases: <strong>rest, squeeze (maximum voluntary contraction), strain (Valsalva), defecation.</strong></div></li>
-    <li class="proc-step"><div class="proc-step-content">Document: anorectal angle (ARA) at rest and squeeze. Normal ARA at rest = 90–110°. During squeeze = ARA decreases (puborectalis tightens). During defecation = ARA increases (&gt;130°).</div></li>
-    <li class="proc-step"><div class="proc-step-content">Measure pelvic floor descent from pubococcygeal line at rest vs. straining. &gt;3.5 cm descent = abnormal.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Document rectocele (anterior rectal wall herniation) size and whether it empties.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Document any rectal intussusception (infolding of rectal wall during evacuation) or complete prolapse.</div></li>
-  </ol>
-
-  <div class="proc-section-label">Imaging Pearls</div>
-  <div class="pearl-grid">
-    <div class="pearl-box">⚡ <strong>Anismus (non-relaxing puborectalis):</strong> ARA fails to open during defecation, narrow anorectal junction, incomplete evacuation. Paradoxical puborectalis contraction.</div>
-    <div class="pearl-box">⚡ <strong>Rectocele:</strong> anterior herniation &gt;2 cm is significant. Trapping of contrast = functional impairment. Most rectoceles are asymptomatic.</div>
-    <div class="pearl-box">⚡ <strong>Enterocele:</strong> small bowel loops herniate between vagina and rectum during straining — opacified with oral contrast.</div>
-    <div class="pearl-box">⚡ <strong>This is an inherently uncomfortable and potentially embarrassing study.</strong> Explain to patient beforehand that they should defecate normally regardless of how it seems.</div>
-  </div>
-
-  <div class="dictation-wrapper">
-    <div class="dictation-header">
-      <span class="dictation-title">Normal Dictation Template</span>
-      <button class="copy-btn" onclick="(function(btn){const t='Fluoroscopic defecography was performed with barium paste instilled per rectum. Dynamic lateral images obtained at rest, during voluntary squeeze, Valsalva, and defecation. Anorectal angle at rest is [X] degrees, decreasing appropriately during squeeze and increasing to [X] degrees during defecation consistent with normal puborectalis relaxation. Pelvic floor descent during straining measures [X] cm (normal <3.5 cm). No significant rectocele, intussusception, or rectal prolapse. Complete rectal evacuation. No enterocele identified.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
-    </div>
-    <div class="dictation-box">Fluoroscopic defecography was performed with barium paste instilled per rectum. Dynamic lateral images obtained at rest, during voluntary squeeze, Valsalva, and defecation. Anorectal angle at rest is [X] degrees, decreasing appropriately during squeeze and increasing to [X] degrees during defecation consistent with normal puborectalis relaxation. Pelvic floor descent during straining measures [X] cm (normal &lt;3.5 cm). No significant rectocele, intussusception, or rectal prolapse. Complete rectal evacuation. No enterocele identified.</div>
-  </div>
-
-<!-- ════════════════════════ AIR ENEMA ════════════════════════ -->
-<div class="topic-h" id="fl-airenema">
-  Air Enema (Intussusception Reduction)
-</div>
-
-<div class="proc-meta"><span class="proc-tag gi">GI — Colon/Rectum</span><span class="proc-tag peds-only">Peds</span></div>
-
-<div class="proc-section-label">Indications</div>
-  <div class="info-box teal">Ileocolic intussusception (most common cause: idiopathic in ages 6 mo–3 yr). Also used for reduction of colonic intussusception. Air is the preferred reduction medium at most centers (vs. barium or water-soluble contrast).</div>
-
-  <div class="proc-section-label">Contraindications</div>
-  <div class="info-box red"><strong>Free air on scout (perforation) — absolute contraindication.</strong> Peritonitis, hemodynamic instability, complete small bowel obstruction, obvious lead point (Meckel's, lymphoma) — relative contraindications. Always confirm with Surgery before starting.</div>
-
-  <div class="proc-section-label">Pre-Procedure</div>
-  <div class="info-box amber">Surgical team must be on standby or immediately available. IV access and resuscitation equipment present. Confirm patient hemodynamically stable. Get informed consent. Scout film to exclude free air and confirm intussusception location.</div>
-
-  <div class="proc-section-label">Protocol</div>
-  <ol class="proc-steps" style="counter-reset:step-counter">
-    <li class="proc-step"><div class="proc-step-content">Scout film of abdomen — exclude free air; look for soft tissue mass in RUQ/transverse colon; confirm absence of small bowel obstruction.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Place rectal catheter (Foley 16–18 Fr). Inflate balloon (30–60 mL). Tape buttocks together to minimize air leak.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Begin air insufflation with pressure-controlled device. <strong>Maximum pressure: 120 mmHg</strong> (most centers use 80–100 mmHg initially).</div></li>
-    <li class="proc-step"><div class="proc-step-content">Fluoroscopic monitoring — watch intussusceptum (soft tissue mass) being pushed retrograde toward ileocecal valve.</div></li>
-    <li class="proc-step"><div class="proc-step-content"><strong>Reduction endpoint:</strong> sudden rush of air into terminal ileum with disappearance of soft tissue mass. Reflux of air into terminal ileum confirms complete reduction.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Allow up to 3 attempts (1–3 min each). Brief intervals between attempts allow bowel wall to rest.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Post-reduction: deflate balloon, remove catheter. Post-reduction scout film.</div></li>
-    <li class="proc-step"><div class="proc-step-content">If reduction fails after 3 attempts → surgical reduction.</div></li>
-  </ol>
-
-  <div class="proc-section-label">Imaging Pearls</div>
-  <div class="pearl-grid">
-    <div class="pearl-box">⚡ <strong>Success rate:</strong> ~80–90% for ileocolic intussusception. Duration of symptoms &lt;24h correlates with higher success.</div>
-    <div class="pearl-box">⚡ <strong>Pneumoperitoneum during enema</strong> = perforation → stop immediately, call surgery, upright or decubitus film to confirm.</div>
-    <div class="pearl-box">⚡ <strong>Air into terminal ileum = success.</strong> Without TI reflux, reduction may be incomplete — intussusception can reform.</div>
-    <div class="pearl-box">⚡ <strong>Recurrence rate:</strong> ~10% within 24–48 hrs. Parents should be counseled to return with recurrent symptoms.</div>
-    <div class="pearl-box">⚡ <strong>"Dancing" mass</strong> — intussusception moving during insufflation = good sign of reducibility.</div>
-  </div>
-
-  <div class="dictation-wrapper">
-    <div class="dictation-header">
-      <span class="dictation-title">Successful Reduction Dictation</span>
-      <button class="copy-btn" onclick="(function(btn){const t='Air enema for reduction of ileocolic intussusception was performed. Scout radiograph confirmed no pneumoperitoneum. Intussusceptum was identified in the [location]. Air enema was performed with maximum pressure of [X] mmHg. Successful reduction was achieved after [1/2/3] attempt(s), confirmed by reflux of air into the terminal ileum and disappearance of the soft tissue mass. No pneumoperitoneum on post-reduction film. Findings consistent with complete reduction.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
-    </div>
-    <div class="dictation-box">Air enema for reduction of ileocolic intussusception was performed. Scout radiograph confirmed no pneumoperitoneum. Intussusceptum was identified in the [location]. Air enema was performed with maximum pressure of [X] mmHg. Successful reduction was achieved after [1/2/3] attempt(s), confirmed by reflux of air into the terminal ileum and disappearance of the soft tissue mass. No pneumoperitoneum on post-reduction film. Findings consistent with complete reduction.</div>
-  </div>
-
-<!-- ═══════════════════════ GI — POST-SURGICAL ═══════════════════════ -->
-<div class="proc-category">GI — Post-Surgical</div>
-
-<!-- ════════════════════ POST-SURG ESOPH ════════════════════ -->
-<div class="topic-h" id="fl-postsurg-esoph">
-  Post-Surgical Esophagus (Esophagectomy / Anastomosis Check)
-</div>
-
-<div class="proc-meta"><span class="proc-tag gi">GI — Post-Surgical</span><span class="proc-tag adult-only">Adult</span></div>
-
-<div class="proc-section-label">Indications</div>
-  <div class="info-box teal">Post-esophagectomy anastomotic leak check (Ivor Lewis, transhiatal), post-fundoplication evaluation, post-myotomy (Heller), post-peroral endoscopic myotomy (POEM), esophageal stent placement confirmation.</div>
-
-  <div class="proc-section-label">Key Pre-Study Info</div>
-  <div class="info-box amber">Always know the surgical procedure performed. <strong>Use water-soluble contrast (Omnipaque 300) first</strong> — if no leak, can follow with thin barium for better mucosal detail. Never use barium if perforation/leak is suspected. Know anastomosis level (cervical vs. thoracic).</div>
-
-  <div class="proc-section-label">Protocol</div>
-  <ol class="proc-steps" style="counter-reset:step-counter">
-    <li class="proc-step"><div class="proc-step-content">PA chest and upper abdomen scout.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Patient drinks Omnipaque 300 (undiluted or 1:1 diluted) in small sips. Upright position.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Fluoroscopic spot images: anterior, oblique, and lateral views of anastomotic site.</div></li>
-    <li class="proc-step"><div class="proc-step-content">If no leak on water-soluble: follow with thin barium for better mucosal detail and to evaluate anastomotic narrowing.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Document: anastomosis location, caliber, leak, stricture, conduit position, emptying.</div></li>
-    <li class="proc-step"><div class="proc-step-content">For post-fundoplication: document wrap position, GEJ location, any disruption.</div></li>
-  </ol>
-
-  <div class="proc-section-label">Imaging Pearls</div>
-  <div class="pearl-grid">
-    <div class="pearl-box">⚡ <strong>Ivor Lewis:</strong> thoracic anastomosis at level of carina. Transhiatal: cervical anastomosis.</div>
-    <div class="pearl-box">⚡ <strong>Anastomotic leak:</strong> extravasation of contrast beyond lumen. Small contained leak vs. free mediastinal extravasation — document extent.</div>
-    <div class="pearl-box">⚡ <strong>Anastomotic stricture:</strong> concentric narrowing at anastomotic site — common complication, may require dilation.</div>
-    <div class="pearl-box">⚡ <strong>Cervical anastomosis leaks</strong> are often contained and managed conservatively; thoracic leaks are more morbid.</div>
-  </div>
-
-  <div class="dictation-wrapper">
-    <div class="dictation-header">
-      <span class="dictation-title">Normal Post-Esophagectomy Dictation</span>
-      <button class="copy-btn" onclick="(function(btn){const t='Post-esophagectomy contrast study was performed using water-soluble contrast followed by thin barium. The [cervical/thoracic] anastomosis is patent. No extravasation of contrast to suggest anastomotic leak. The anastomosis is of adequate caliber without significant stricture. Contrast passes freely through the conduit into the stomach/jejunal conduit. No evidence of conduit leak or herniation.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
-    </div>
-    <div class="dictation-box">Post-esophagectomy contrast study was performed using water-soluble contrast followed by thin barium. The [cervical/thoracic] anastomosis is patent. No extravasation of contrast to suggest anastomotic leak. The anastomosis is of adequate caliber without significant stricture. Contrast passes freely through the conduit into the stomach/jejunal conduit. No evidence of conduit leak or herniation.</div>
-  </div>
-
-<!-- ════════════════════ POST-SURG WHIPPLE ════════════════════ -->
-<div class="topic-h" id="fl-postsurg-whipple">
-  Post-Whipple UGI
-</div>
-
-<div class="proc-meta"><span class="proc-tag gi">GI — Post-Surgical</span><span class="proc-tag adult-only">Adult</span></div>
-
-<div class="proc-section-label">Indications</div>
-  <div class="info-box teal">Post-pancreaticoduodenectomy evaluation: anastomotic leak (gastrojejunostomy, hepaticojejunostomy, pancreaticojejunostomy), delayed gastric emptying, afferent limb obstruction, stomal obstruction.</div>
-
-  <div class="proc-section-label">Anatomy After Whipple</div>
-  <div class="info-box amber">
-    Standard Whipple (PD): resection of head of pancreas, duodenum, distal common bile duct, gallbladder, ± distal stomach. Reconstruction: <em>pancreaticojejunostomy → hepaticojejunostomy → gastrojejunostomy</em> (all on same jejunal limb, classic Child reconstruction).<br><br>
-    Know whether patient had <strong>pylorus-preserving</strong> (PP-PD) — pylorus and proximal duodenum retained — vs. standard (includes antrectomy + gastrojejunostomy).
-  </div>
-
-  <div class="proc-section-label">Protocol</div>
-  <ol class="proc-steps" style="counter-reset:step-counter">
-    <li class="proc-step"><div class="proc-step-content">Scout film (AP abdomen). Note surgical clips and drain positions.</div></li>
-    <li class="proc-step"><div class="proc-step-content"><strong>Water-soluble contrast first.</strong> Dilute Omnipaque 300 (1:1) — patient drinks 60–100 mL in small sips.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Fluoroscopic spot views: esophagus, gastric remnant/stomach, gastrojejunostomy anastomosis, efferent and afferent limbs.</div></li>
-    <li class="proc-step"><div class="proc-step-content">If no leak: follow with thin barium if greater detail needed. Document gastrojejunostomy caliber and emptying.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Erect and supine overhead films to document anatomy.</div></li>
-  </ol>
-
-  <div class="proc-section-label">Imaging Pearls</div>
-  <div class="pearl-grid">
-    <div class="pearl-box">⚡ <strong>Delayed gastric emptying (DGE)</strong> — most common complication. Gastric remnant distended, poor emptying through gastrojejunostomy. May persist weeks. Managed conservatively.</div>
-    <div class="pearl-box">⚡ <strong>Afferent limb obstruction</strong> — biliopancreatic limb obstruction causes RUQ pain, jaundice, amylase elevation. Fluoro may show dilated afferent limb; CT more useful.</div>
-    <div class="pearl-box">⚡ <strong>Marginal ulcer</strong> — peptic ulceration at gastrojejunostomy. Look for crater at anastomosis.</div>
-  </div>
-
-  <div class="dictation-wrapper">
-    <div class="dictation-header">
-      <span class="dictation-title">Normal Post-Whipple Dictation</span>
-      <button class="copy-btn" onclick="(function(btn){const t='Post-Whipple upper GI series was performed using water-soluble contrast. The gastric remnant is of normal caliber. The gastrojejunostomy is patent with no extravasation to suggest anastomotic leak. Contrast flows freely through the efferent limb. No evidence of obstruction or marginal ulceration at the anastomotic site. Gastric emptying appears adequate.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
-    </div>
-    <div class="dictation-box">Post-Whipple upper GI series was performed using water-soluble contrast. The gastric remnant is of normal caliber. The gastrojejunostomy is patent with no extravasation to suggest anastomotic leak. Contrast flows freely through the efferent limb. No evidence of obstruction or marginal ulceration at the anastomotic site. Gastric emptying appears adequate.</div>
-  </div>
-
-<!-- ════════════════════ POST-SURG BYPASS ════════════════════ -->
-<div class="topic-h" id="fl-postsurg-bypass">
-  Post-Gastric Bypass UGI (Roux-en-Y)
-</div>
-
-<div class="proc-meta"><span class="proc-tag gi">GI — Post-Surgical</span><span class="proc-tag adult-only">Adult</span></div>
-
-<div class="proc-section-label">Indications</div>
-  <div class="info-box teal">Post-RYGB complications: anastomotic leak (gastrojejunostomy or jejunojejunostomy), stomal stenosis/stricture (most common complication requiring dilation), marginal ulcer, internal hernia, band erosion.</div>
-
-  <div class="proc-section-label">Anatomy After RYGB</div>
-  <div class="info-box amber">
-    <strong>Gastric pouch</strong> (small — 15–30 mL) at top. <strong>Gastrojejunostomy (GJ)</strong> — pouch connects to Roux limb (alimentary limb). <strong>Jejunojejunostomy (JJ)</strong> — Roux limb reconnects to biliopancreatic limb ~75–150 cm distal. <br><br>
-    Excluded stomach, duodenum, and proximal jejunum (biliopancreatic limb) are NOT opacified by oral contrast on UGI.
-  </div>
-
-  <div class="proc-section-label">Protocol</div>
-  <ol class="proc-steps" style="counter-reset:step-counter">
-    <li class="proc-step"><div class="proc-step-content">Scout film. Note band/staple line location.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Water-soluble contrast first (suspected leak). Patient drinks 60–100 mL. Upright position.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Fluoroscopic spot views: esophagus, gastric pouch, GJ anastomosis, proximal Roux limb.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Document GJ anastomosis caliber (&lt;10 mm = stricture). Stomal stenosis is the #1 reason for UGI post-RYGB.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Follow contrast into Roux limb distally. Note JJ anastomosis if visualized.</div></li>
-    <li class="proc-step"><div class="proc-step-content">If no leak on water-soluble: add thin barium for better mucosal detail.</div></li>
-  </ol>
-
-  <div class="proc-section-label">Imaging Pearls</div>
-  <div class="pearl-grid">
-    <div class="pearl-box">⚡ <strong>Stomal stenosis:</strong> GJ anastomosis &lt;10 mm. Patient presents with dysphagia and vomiting. Treated with endoscopic balloon dilation.</div>
-    <div class="pearl-box">⚡ <strong>GJ leak:</strong> extravasation at anastomosis — surgical emergency post-operatively. Late leaks may be contained.</div>
-    <div class="pearl-box">⚡ <strong>Marginal ulcer:</strong> ulcer at or just distal to GJ anastomosis. May cause GJ fistula (connect to excluded stomach or duodenum).</div>
-    <div class="pearl-box">⚡ <strong>Internal hernia:</strong> NOT visible on fluoro. If suspected → CT. Intermittent abdominal pain post-RYGB = think internal hernia (Petersen's, trans-mesenteric, JJ mesenteric defect).</div>
-  </div>
-
-  <div class="dictation-wrapper">
-    <div class="dictation-header">
-      <span class="dictation-title">Normal Post-RYGB Dictation</span>
-      <button class="copy-btn" onclick="(function(btn){const t='Post-Roux-en-Y gastric bypass upper GI series was performed using water-soluble contrast. The gastric pouch is of normal size and configuration. The gastrojejunostomy anastomosis measures [X] mm and is patent. No extravasation of contrast to suggest anastomotic leak. Contrast flows freely through the Roux limb. No evidence of stomal stenosis, marginal ulceration, or obstruction.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
-    </div>
-    <div class="dictation-box">Post-Roux-en-Y gastric bypass upper GI series was performed using water-soluble contrast. The gastric pouch is of normal size and configuration. The gastrojejunostomy anastomosis measures [X] mm and is patent. No extravasation of contrast to suggest anastomotic leak. Contrast flows freely through the Roux limb. No evidence of stomal stenosis, marginal ulceration, or obstruction.</div>
-  </div>
-
-<!-- ════════════════════ POST-SURG NISSEN ════════════════════ -->
-<div class="topic-h" id="fl-postsurg-nissen">
-  Post-Nissen Fundoplication UGI
-</div>
-
-<div class="proc-meta"><span class="proc-tag gi">GI — Post-Surgical</span><span class="proc-tag adult-only">Adult</span></div>
-
-<div class="proc-section-label">Indications</div>
-  <div class="info-box teal">Post-fundoplication: dysphagia (wrap too tight), recurrent reflux (wrap disruption, slipped wrap), gas-bloat syndrome, wrap herniation above diaphragm, dysphagia to solids after fundoplication.</div>
-
-  <div class="proc-section-label">Protocol</div>
-  <ol class="proc-steps" style="counter-reset:step-counter">
-    <li class="proc-step"><div class="proc-step-content">PA chest scout (check for wrap above diaphragm).</div></li>
-    <li class="proc-step"><div class="proc-step-content">Patient drinks thin barium (150–200 mL). Upright LPO and PA views of esophagus during swallowing.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Document esophageal caliber at GEJ level — look for extrinsic narrowing from wrap.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Supine right lateral: document GEJ position relative to diaphragm. Fundoplication wrap = smooth extrinsic compression at GEJ.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Assess for reflux with Trendelenburg and abdominal compression.</div></li>
-    <li class="proc-step"><div class="proc-step-content">Note wrap position (above vs. below diaphragm — wrap herniation through hiatus = failure).</div></li>
-  </ol>
-
-  <div class="proc-section-label">Imaging Pearls</div>
-  <div class="pearl-grid">
-    <div class="pearl-box">⚡ <strong>Normal post-Nissen:</strong> smooth extrinsic impression on distal esophagus from wrap. Slight narrowing at GEJ on barium swallow is expected.</div>
-    <div class="pearl-box">⚡ <strong>Tight wrap:</strong> dysphagia + significant narrowing at GEJ level + proximal dilation. May require revision.</div>
-    <div class="pearl-box">⚡ <strong>Slipped/disrupted wrap:</strong> wrap moves onto proximal stomach; reflux recurs. "Telescoping" appearance.</div>
-    <div class="pearl-box">⚡ <strong>Wrap herniation:</strong> wrap and GEJ above diaphragm. Common cause of post-fundoplication failure.</div>
-  </div>
-
-  <div class="dictation-wrapper">
-    <div class="dictation-header">
-      <span class="dictation-title">Normal Post-Nissen Dictation</span>
-      <button class="copy-btn" onclick="(function(btn){const t='Post-fundoplication upper GI series was performed. The fundoplication wrap produces a smooth extrinsic impression on the distal esophagus at the level of the gastroesophageal junction, which is positioned below the diaphragm. The wrap appears intact and in normal position. The esophagus empties freely without obstruction. No evidence of wrap disruption, herniation above the diaphragm, or significant stricture. No gastroesophageal reflux identified.';navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1800)})})(this)">Copy</button>
-    </div>
-    <div class="dictation-box">Post-fundoplication upper GI series was performed. The fundoplication wrap produces a smooth extrinsic impression on the distal esophagus at the level of the gastroesophageal junction, which is positioned below the diaphragm. The wrap appears intact and in normal position. The esophagus empties freely without obstruction. No evidence of wrap disruption, herniation above the diaphragm, or significant stricture. No gastroesophageal reflux identified.</div>
-  </div>
-
-
-<!-- ═══════════════════════ GU FLUOROSCOPY ═══════════════════════ -->
-<div class="proc-category">GU Fluoroscopy</div>
-
-<!-- ════════════════════════ VCUG ════════════════════════ -->
-<div class="topic-h" id="fl-vcug">
-  Voiding Cystourethrogram (VCUG)
-</div>
-
-<div class="proc-meta"><span class="proc-tag gu">GU</span></div>
-
-<div class="ap-tabs" data-group="vcug">
-    <button class="ap-tab active" data-group="vcug" data-tab="adult" onclick="apSwitch(this)">Adult</button>
-    <button class="ap-tab" data-group="vcug" data-tab="peds" onclick="apSwitch(this)">Peds</button>
-  </div>
-
-  <div class="ap-content active" data-group="vcug" data-tab="adult">
-    <div class="proc-section-label">Indications</div>
-    <div class="info-box teal">Stress urinary incontinence, urethral stricture, post-trauma urethral evaluation, bladder outlet obstruction, neurogenic bladder, vesicoureteral reflux (VUR) in adults, post-operative bladder evaluation, urethral diverticulum.</div>
-
-    <div class="proc-section-label">Patient Prep</div>
-    <div class="info-box amber">Verify no active UTI (check UA/culture). Confirm pregnancy status in women of childbearing age. Explain procedure — patient will need to void on the table. Confirm consent.</div>
-
-    <div class="proc-section-label">Protocol</div>
-    <ol class="proc-steps" style="counter-reset:step-counter">
-      <li class="proc-step"><div class="proc-step-content">Scout film of pelvis.</div></li>
-      <li class="proc-step"><div class="proc-step-content">Place urethral catheter (14–16 Fr Foley). Drain residual urine — document volume.</div></li>
-      <li class="proc-step"><div class="proc-step-content">Instill dilute contrast (Omnipaque 300 diluted 1:3 in saline) by gravity from 60–80 cm above table. Fill to capacity or patient urge.</div></li>
-      <li class="proc-step"><div class="proc-step-content"><strong>Filling phase spots:</strong> AP pelvis (early, mid, full), oblique views for ureteral orifices (VUR), lateral for posterior bladder wall (cystocele).</div></li>
-      <li class="proc-step"><div class="proc-step-content">Remove catheter when bladder is full.</div></li>
-      <li class="proc-step"><div class="proc-step-content"><strong>Voiding phase (critical):</strong> Patient voids in oblique position (males) or lateral/oblique (females). Continuous fluoroscopy during voiding. Document urethra in its entirety.</div></li>
-      <li class="proc-step"><div class="proc-step-content">Post-void film — assess residual, any late VUR.</div></li>
-    </ol>
-
-    <div class="proc-section-label">Imaging Pearls</div>
-    <div class="pearl-grid">
-      <div class="pearl-box">⚡ <strong>Male urethra oblique:</strong> right posterior oblique to open the entire urethra (prostatic, membranous, bulbous, penile).</div>
-      <div class="pearl-box">⚡ <strong>VUR grading:</strong> Grade I = ureter only. II = ureter + renal pelvis, no dilation. III = mild dilation. IV = moderate dilation + blunted calyces. V = severe, tortuous.</div>
-      <div class="pearl-box">⚡ <strong>Posterior urethral valves (PUV):</strong> males — dilated posterior urethra, abrupt cutoff at verumontanum, trabeculated bladder. This is a VCUG diagnosis.</div>
-      <div class="pearl-box">⚡ <strong>Bladder diverticulum:</strong> smooth outpouching. May retain contrast post-void.</div>
-    </div>
 
     <div class="dictation-wrapper">
       <div class="dictation-header">
