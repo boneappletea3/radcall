@@ -1840,7 +1840,7 @@ async function _loadSection(id) {
   // Show spinner
   sec.innerHTML = '<div class="lazy-spinner"><div class="lazy-dot"></div><div class="lazy-dot"></div><div class="lazy-dot"></div></div>';
   try {
-    const r = await fetch('sections/' + id + '.html?v=8');
+    const r = await fetch('sections/' + id + '.html?v=9');
     if (!r.ok) throw new Error('HTTP ' + r.status);
     sec.innerHTML = await r.text();
     sec.dataset.loaded = '1';
@@ -3279,22 +3279,78 @@ Retroplacental hematoma: {absent | present — measuring approximately [blank] c
 Marginal hematoma: {absent | present}.
 
 UTERUS / MYOMETRIUM:
-Uterine wall contour is {intact | disrupted — myometrial defect identified at the {fundus | anterior wall | [blank]}}. {No fetal parts are identified outside the uterine contour. | Fetal parts are identified outside the uterine contour, consistent with uterine rupture.}
+Uterine wall contour is {intact | disrupted — myometrial defect at the [blank]}. {No fetal parts identified outside the uterine contour. | Fetal parts identified outside the uterine contour, consistent with uterine rupture.}
 
 AMNIOTIC FLUID:
-Grossly normal amniotic fluid volume. {No fluid identified in the vagina. | Fluid is identified in the vagina, raising concern for premature rupture of membranes.}
+Grossly normal amniotic fluid volume. {No fluid identified in the vagina. | Fluid identified in the vagina, raising concern for premature rupture of membranes.}
 
 FETAL ASSESSMENT:
-{No definite fetal skeletal injury identified on CT. | Fetal skull fracture present — {linear nondisplaced | depressed} involving the [blank]. Fetal intracranial hemorrhage: {absent | present}. Long bone / rib fractures: {absent | present — [blank]}.}
+Fetal skeletal injury: {none identified on CT | skull fracture — [blank] | intracranial hemorrhage present | long bone or rib fracture — [blank] | [blank]}.
 
 FREE FLUID / HEMOPERITONEUM:
-{No significant intraperitoneal free fluid. | Free fluid is present in the {pelvis | perihepatic space | perisplenic space | [blank]}, with attenuation of approximately [blank] HU, consistent with hemoperitoneum.}
+{No significant intraperitoneal free fluid. | Free fluid present in the [blank], attenuation approximately [blank] HU, consistent with hemoperitoneum.}
 
 PELVIC RING:
-{No pelvic ring fracture. | Pelvic ring fracture — [blank]. Proximity to fetal head: {not engaged | fetal head is engaged in the pelvis}.}
+{No pelvic ring fracture. | Pelvic ring fracture — [blank].} Fetal head is {not engaged in the pelvis | engaged in the pelvis}.
 
 BLADDER:
 {Grossly normal bladder wall without definite extravasation, though evaluation is limited without excretory phase imaging. | Bladder wall intact. No extravasation. | Bladder wall defect identified. Contrast extravasation present on delayed images.}`
+  },
+
+  'liver-injury': {
+    title: 'Liver Injury — AAST Grading',
+    filename: 'RadCall_Macro_Liver_Injury_AAST.txt',
+    text: `CT of the abdomen demonstrates {right lobe | left lobe | right and left lobe} hepatic injury, AAST Grade {I | II | III | IV | V | VI}.
+
+Laceration depth: {absent | <1 cm (Grade I) | 1-3 cm, <10 cm length (Grade II) | >3 cm (Grade III) | 25-75% lobar disruption (Grade IV) | >75% lobar disruption (Grade V) | hepatic avulsion (Grade VI)}.
+Subcapsular hematoma: {absent | <10% surface area (Grade I) | 10-50% surface area (Grade II) | >50% surface area or expanding (Grade III)}.
+Intraparenchymal hematoma: {absent | <10 cm diameter (Grade II) | >10 cm or expanding (Grade III)}.
+Vascular injury: {none | juxtahepatic venous injury — retrohepatic IVC or central hepatic veins (Grade V) | hepatic avulsion (Grade VI)}.
+
+Active hemorrhage: {absent | present}.
+Perihepatic hematoma / hemoperitoneum: {absent | small | moderate | large}.
+Biloma / bile leak: {no evidence | suspected — perihepatic low-density collection}.`
+  },
+
+  'renal-injury': {
+    title: 'Renal Injury — AAST Grading',
+    filename: 'RadCall_Macro_Renal_Injury_AAST.txt',
+    text: `CT of the abdomen and pelvis demonstrates {right | left | bilateral} renal injury, AAST Grade {I | II | III | IV | V}.
+
+Injury: {contusion — no laceration (Grade I) | subcapsular nonexpanding hematoma (Grade I) | nonexpanding perirenal hematoma confined to retroperitoneum (Grade II) | cortical laceration <1 cm without collecting system injury (Grade II) | cortical laceration >1 cm without collecting system injury (Grade III) | full-thickness laceration through cortex, medulla, and collecting system (Grade IV) | shattered kidney (Grade V) | hilar avulsion with devascularization (Grade V)}.
+
+Collecting system: {intact — no urinary extravasation | urinary extravasation present}.
+Perirenal hematoma: {absent | present}.
+Active hemorrhage: {absent | present}.
+Renal vasculature: {intact | main renal artery or vein injury with contained hemorrhage (Grade IV) | complete renal devascularization (Grade V)}.`
+  },
+
+  'splenic-injury': {
+    title: 'Splenic Injury — AAST Grading',
+    filename: 'RadCall_Macro_Splenic_Injury_AAST.txt',
+    text: `CT of the abdomen demonstrates splenic injury, AAST Grade {I | II | III | IV | V}.
+
+Laceration: {absent | <1 cm depth (Grade I) | 1-3 cm depth, not involving trabecular vessels (Grade II) | >3 cm depth or involving trabecular vessels (Grade III) | involving segmental or hilar vessels with >25% devascularization (Grade IV) | shattered spleen (Grade V)}.
+Subcapsular hematoma: {absent | <10% surface area (Grade I) | 10-50% surface area (Grade II) | >50% surface area or expanding (Grade III)}.
+Intraparenchymal hematoma: {absent | <5 cm (Grade II) | >=5 cm or expanding (Grade III)}.
+Splenic vascular injury: {absent | pseudoaneurysm | active extravasation}.
+
+Perisplenic hematoma: {absent | present}.
+Hemoperitoneum: {absent | small | moderate | large}.`
+  },
+
+  'panc-injury': {
+    title: 'Pancreatic Injury — AAST Grading',
+    filename: 'RadCall_Macro_Pancreatic_Injury_AAST.txt',
+    text: `CT of the abdomen demonstrates pancreatic injury involving the {head | neck | body | tail | body and tail | [blank]}, AAST Grade {I | II | III | IV | V}.
+
+Injury: {minor contusion without duct injury (Grade I) | superficial laceration without duct injury (Grade I) | major contusion without duct injury (Grade II) | major laceration without duct injury (Grade II) | distal transection with probable main duct injury (Grade III) | proximal transection or ampullary involvement (Grade IV) | massive disruption of pancreatic head (Grade V)}.
+
+Main pancreatic duct: {no definite injury identified | probable disruption — peripancreatic fluid tracking along duct | transection identified}.
+Peripancreatic fluid / stranding: {absent | small | moderate | extensive}.
+Active hemorrhage: {absent | present}.
+
+Note: MRCP or ERCP recommended for definitive ductal assessment when Grade III or higher injury is suspected.`
   },
 
   'bladder-rupture': {
@@ -3748,7 +3804,7 @@ async function _preIndexBackground() {
     if (!sec || sec.dataset.searchIndexed) continue;
     if (sec.dataset.loaded) { _indexSectionContent(id, sec); continue; }
     try {
-      const r = await fetch('sections/' + id + '.html?v=8');
+      const r = await fetch('sections/' + id + '.html?v=9');
       if (!r.ok) continue;
       const tmp = document.createElement('div');
       tmp.innerHTML = await r.text();
