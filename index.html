@@ -1816,6 +1816,7 @@ async function showSection(id) {
     // Lazy-load if needed, then init
     await _loadSection(id);
     initAccordions(sec);
+    _indexSectionContent(id, sec);
     Favorites.injectStars(sec, id);
   }
   document.querySelectorAll('.nav-item').forEach(n => {
@@ -2769,6 +2770,64 @@ async function goToResult(section, topic) {
   }, 50);
 }
 
+// ── SEARCH CONTENT INDEXING ──────────────────────────────────────────────────
+// Extracts text from rendered topic-body elements and appends to the search index.
+// Called after initAccordions() so topic-body wrappers already exist.
+function _indexSectionContent(sectionId, sectionEl) {
+  if (sectionEl.dataset.searchIndexed) return;
+  sectionEl.dataset.searchIndexed = 'true';
+  sectionEl.querySelectorAll('.topic-toggle').forEach(toggle => {
+    const topicId = toggle.id;
+    if (!topicId) return;
+    const body = toggle.nextElementSibling;
+    if (!body || !body.classList.contains('topic-body')) return;
+    const text = body.textContent.replace(/\s+/g, ' ').trim().toLowerCase().slice(0, 4000);
+    if (!text) return;
+    const existing = searchIndex.find(e => e.topic === topicId);
+    if (existing) { existing.q += ' ' + text; }
+    else {
+      const label = toggle.textContent.replace(/\s+/g, ' ').trim();
+      searchIndex.push({ q: text, section: sectionId, topic: topicId, label: label + ' — ' + (SECTION_NAMES[sectionId] || sectionId) });
+    }
+  });
+}
+
+// Pre-index all sections in the background after page load so search works
+// even before the user has visited a section.
+async function _preIndexBackground() {
+  const ids = ['neuro','chest','body','msk','us','peds','nucs','contrast','incidentaloma','ir','fluoro','mrisafety','anatomy','searchpatterns','callprep'];
+  for (const id of ids) {
+    const sec = document.getElementById('sec-' + id);
+    if (!sec || sec.dataset.searchIndexed) continue;
+    if (sec.dataset.loaded) { _indexSectionContent(id, sec); continue; }
+    try {
+      const r = await fetch('sections/' + id + '.html?v=2');
+      if (!r.ok) continue;
+      const tmp = document.createElement('div');
+      tmp.innerHTML = await r.text();
+      const headings = [...tmp.querySelectorAll('.topic-h')];
+      headings.forEach(h => {
+        const topicId = h.id;
+        if (!topicId) return;
+        let text = '';
+        let sib = h.nextElementSibling;
+        while (sib && !sib.classList.contains('topic-h') && !sib.classList.contains('sec-group-label')) {
+          text += ' ' + sib.textContent;
+          sib = sib.nextElementSibling;
+        }
+        text = text.replace(/\s+/g, ' ').trim().toLowerCase().slice(0, 4000);
+        if (!text) return;
+        const existing = searchIndex.find(e => e.topic === topicId);
+        if (existing) { if (!existing._bgIndexed) { existing.q += ' ' + text; existing._bgIndexed = true; } }
+        else {
+          searchIndex.push({ q: text, section: id, topic: topicId, label: h.textContent.trim() + ' — ' + (SECTION_NAMES[id] || id), _bgIndexed: true });
+        }
+      });
+    } catch(e) {}
+    await new Promise(res => setTimeout(res, 30)); // yield between fetches
+  }
+}
+
 function handleSearch(val) {
   const q = val.trim().toLowerCase();
   const resultsEl = document.getElementById('search-results');
@@ -2777,8 +2836,10 @@ function handleSearch(val) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   resultsEl.classList.add('visible');
 
+  const words = q.split(' ').filter(w => w.length > 1);
   const results = searchIndex.filter(item => {
-    return q.split(' ').some(word => word.length > 1 && item.q.includes(word));
+    const hay = item.q + ' ' + item.label.toLowerCase();
+    return words.some(word => hay.includes(word));
   });
 
   if (results.length === 0) {
@@ -3030,6 +3091,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   _initHeaderBtns();
+
+  // Pre-index all section content for full-text search (runs in background)
+  setTimeout(_preIndexBackground, 1500);
 
   // Favorites: load on auth ready
   function _initFavorites() {
