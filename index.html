@@ -3958,7 +3958,7 @@ function buildPS360RTF(macroText) {
     `} {\\xml}${xmlStr}`;
 }
 
-function downloadMacro(macroId) {
+async function downloadMacro(macroId) {
   const macro = _PS_MACROS[macroId];
   if (!macro) return;
   // Pro gate — require login
@@ -3966,8 +3966,9 @@ function downloadMacro(macroId) {
     window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal();
     return;
   }
-  const rtf = buildPS360RTF(macro.text);
-  const blob = new Blob([rtf], { type: 'application/rtf;charset=utf-8' });
+  // Serve the pre-built hand-edited RTF from /macros/
+  const res = await fetch('macros/' + macro.filename);
+  const blob = await res.blob();
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url; a.download = macro.filename;
@@ -3986,10 +3987,12 @@ async function downloadAllMacros() {
     return;
   }
   const zip = new JSZip();
-  for (const [id, macro] of Object.entries(_PS_MACROS)) {
-    const rtf = buildPS360RTF(macro.text);
-    zip.file(macro.filename, rtf);
-  }
+  // Fetch all pre-built RTFs in parallel then add to zip
+  await Promise.all(Object.values(_PS_MACROS).map(async macro => {
+    const res = await fetch('macros/' + macro.filename);
+    const buf = await res.arrayBuffer();
+    zip.file(macro.filename, buf);
+  }));
   const blob = await zip.generateAsync({ type: 'blob' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
