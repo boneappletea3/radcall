@@ -4023,13 +4023,13 @@ document.addEventListener('keydown', function(e) {
   <div id="lightbox-caption"></div>
 </div>
 <script>
-document.querySelectorAll('.ref-figure img').forEach(img => {
-  img.addEventListener('click', function(e) {
-    e.stopPropagation();
-    document.getElementById('lightbox-img').src = this.src.replace('?w=800','?w=1600');
-    document.getElementById('lightbox-caption').textContent = this.alt || '';
-    document.getElementById('lightbox').classList.add('open');
-  });
+document.addEventListener('click', function(e) {
+  const img = e.target.closest('.ref-figure img');
+  if (!img) return;
+  e.stopPropagation();
+  document.getElementById('lightbox-img').src = img.src.replace('?w=800','?w=1600');
+  document.getElementById('lightbox-caption').textContent = img.alt || '';
+  document.getElementById('lightbox').classList.add('open');
 });
 function closeLightbox() {
   document.getElementById('lightbox').classList.remove('open');
