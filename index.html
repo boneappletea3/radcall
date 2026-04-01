@@ -2250,6 +2250,7 @@ const searchIndex = [
   { q: 'cervical fractures hangman jefferson burst teardrop', section: 'neuro', topic: 'n-cx-fractures', label: 'Cervical Fractures — Neuroradiology' },
   { q: 'spine trauma cervical thoracic lumbar ao classification', section: 'neuro', topic: 'n-spine', label: 'Spine Trauma — Neuroradiology' },
   { q: 'thoracolumbar spine trauma tl classification burst compression TLICS PLC posterior ligamentous complex', section: 'neuro', topic: 'n-tl-spine', label: 'T/L Spine Trauma — TLICS — Neuroradiology' },
+  { q: 'rigid spine ankylosing spondylitis AS DISH degenerative spondylosis surgically fused spine fracture hyperextension bamboo spine Andersson lesion epidural hematoma', section: 'neuro', topic: 'n-rigid-spine', label: 'Rigid Spine Injuries — Neuroradiology' },
   { q: 'mandible fracture condyle symphysis parasymphysis', section: 'neuro', topic: 'n-mandible', label: 'Mandible Fractures — Neuroradiology' },
   { q: 'le fort facial trauma maxillofacial noe orbit', section: 'neuro', topic: 'n-maxface', label: 'Maxillofacial Trauma — Neuroradiology' },
   { q: 'temporal bone fracture otic capsule ossicular', section: 'neuro', topic: 'n-temporal', label: 'Temporal Bone — Neuroradiology' },
@@ -2386,6 +2387,7 @@ const NAV_TREE = {
       { label: 'Ligamentous injury', id: 'n-lig-injury' },
       { label: 'Spine trauma', id: 'n-spine' },
       { label: 'T/L spine trauma', id: 'n-tl-spine' },
+      { label: 'Rigid spine', id: 'n-rigid-spine' },
       { label: 'Mandible', id: 'n-mandible' },
       { label: 'Maxillofacial', id: 'n-maxface' },
       { label: 'BCVI', id: 'n-bcvi' },
@@ -3329,6 +3331,31 @@ Perforation: {no perforation identified | perforation suspected — {localized f
 Appendix position: {standard | retrocecal | pelvic | pre-ileal | [blank]}.
 
 Free fluid: {absent | present in the [blank]}.`
+  },
+
+  'rigid-spine': {
+    title: 'Rigid Spine Fracture — CT/MRI Findings',
+    filename: 'RadCall_Macro_Rigid_Spine.txt',
+    text: `RIGID SPINE ENTITY: {ankylosing spondylitis | diffuse idiopathic skeletal hyperostosis (DISH) | degenerative spondylosis | surgically fused spine} — AOSpine M2 modifier.
+
+FRACTURE LEVEL: [blank].
+
+FRACTURE MORPHOLOGY: {transverse hyperextension-distraction — disk space widening | transverse through vertebral body | compression | burst | translation | [blank]}.
+Fracture location: {through disk space | through vertebral body | through posterior elements}.
+
+THREE-COLUMN INVOLVEMENT:
+Anterior column: {intact | involved}.
+Posterior elements (facets/lamina/spinous process): {intact — potentially stable | involved — unstable pattern}.
+
+Displacement: {nondisplaced | displaced — [blank] mm translation | distracted — [blank] mm disk space widening}.
+
+Spinal canal: {no compromise | retropulsion with approximately [blank]% canal compromise}.
+
+EPIDURAL HEMATOMA: {absent | present — extending from [blank] to [blank], [blank] mm AP thickness, causing {mild | moderate | severe} cord compression}.
+
+CORD/NERVE ROOT (MRI): {no cord or nerve root signal abnormality | cord signal abnormality at [blank] — {T2 hyperintensity | cord edema | cord contusion} | cauda equina compression | nerve root compression at [blank]}.
+
+NONCONTIGUOUS INJURIES: {none identified | present at [blank] — whole-spine CT/MRI recommended}.`
   },
 
   'thoracolumbar': {
