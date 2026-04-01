@@ -613,6 +613,43 @@
   .nav-sub-item:hover { color: var(--text1); background: var(--bg3); }
   .nav-sub-item.active { color: var(--accent2); border-left-color: var(--accent2); font-weight: 500; }
 
+  .calc-box {
+    background: rgba(20,184,166,0.07);
+    border: 1px solid rgba(20,184,166,0.25);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 12px 0;
+  }
+  .calc-title {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--accent2); margin-bottom: 12px;
+  }
+  .calc-fields {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px;
+  }
+  .calc-field {
+    display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 80px;
+  }
+  .calc-field label {
+    font-size: 10px; color: var(--text-muted); letter-spacing: 0.03em;
+  }
+  .calc-field input {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 6px; color: var(--text); font-size: 14px; font-family: var(--mono);
+    padding: 6px 8px; width: 100%; box-sizing: border-box;
+    transition: border-color 0.15s;
+  }
+  .calc-field input:focus { outline: none; border-color: var(--accent2); }
+  .calc-result {
+    font-size: 22px; font-weight: 700; font-family: var(--mono);
+    color: var(--text-muted); margin-bottom: 4px;
+    transition: color 0.2s;
+  }
+  .calc-result-active { color: var(--accent2); }
+  .calc-formula {
+    font-size: 10px; color: var(--text-muted); font-family: var(--mono);
+  }
+
   .checklist-box {
     background: var(--amber-bg);
     border: 1px solid rgba(245,158,11,0.25);
@@ -1800,7 +1837,7 @@ async function _loadSection(id) {
   // Show spinner
   sec.innerHTML = '<div class="lazy-spinner"><div class="lazy-dot"></div><div class="lazy-dot"></div><div class="lazy-dot"></div></div>';
   try {
-    const r = await fetch('sections/' + id + '.html?v=2');
+    const r = await fetch('sections/' + id + '.html?v=3');
     if (!r.ok) throw new Error('HTTP ' + r.status);
     sec.innerHTML = await r.text();
     sec.dataset.loaded = '1';
@@ -2862,6 +2899,402 @@ The aortic diameter proximal to the injury measures [blank] mm and distal to the
 There is {no hemothorax | a small left hemothorax | a moderate left hemothorax | a large left hemothorax | bilateral hemothoraces}. There is {no pneumothorax | a small left pneumothorax | a moderate left pneumothorax | a large left pneumothorax | bilateral pneumothoraces}.
 
 {No additional thoracic injuries are identified. | Additional thoracic injuries include [blank].}`
+  },
+
+  'pelvic-fractures': {
+    title: 'Pelvic Fractures — CT Findings',
+    filename: 'RadCall_Macro_Pelvic_Fractures.txt',
+    text: `There is a {APC I | APC II | APC III | LC I | LC II | LC III | vertical shear | combined mechanism} pelvic ring injury.
+
+Anterior ring: {intact | pubic symphysis diastasis — [blank] mm | unilateral pubic rami fractures involving the [blank] pubic rami | bilateral pubic rami fractures involving the [blank] pubic rami | [blank]}.
+
+Posterior ring: {intact | SI joint widening — [blank] mm | sacral fracture — Denis zone {I | II | III} | [blank]}.
+
+{No acetabular fracture. | Acetabular fracture present — see below.}
+
+[IF ACETABULAR FRACTURE]
+Acetabular fracture: there is a {anterior wall | anterior column | posterior wall | posterior column | transverse | T-type | both column | [blank]} pattern with {no articular step-off | articular step-off of [blank] mm}. {No intraarticular fragments. | Intraarticular fragments are present.} Femoral head: {congruent | subluxed | dislocated}.
+[END ACETABULAR FRACTURE]
+
+{No pelvic hematoma or active extravasation. | Pelvic hematoma is present, measuring [blank] cm. Active arterial extravasation: {absent | present — IR consultation recommended}.}
+
+{No L5 transverse process fracture. | L5 transverse process fracture is present.}`
+  },
+
+  'mid-tibia-fibula': {
+    title: 'Mid Tibia/Fibula Fracture — Radiograph Findings',
+    filename: 'RadCall_Macro_Mid_Tibia_Fibula.txt',
+    text: `There is a {transverse | oblique | spiral | comminuted | wedge} tibial shaft fracture.
+
+Displacement: {nondisplaced | [blank] mm shortening | [blank] mm distraction | [blank]° angulation — {varus | valgus | apex anterior | apex posterior}}.
+
+{No segmental fracture. | Segmental (intercalated) fracture is present.}
+
+{Fibula intact. | Associated fibula fracture at the [blank].}`
+  },
+
+  'tibial-plateau': {
+    title: 'Tibial Plateau Fracture — CT Findings',
+    filename: 'RadCall_Macro_Tibial_Plateau.txt',
+    text: `There is a {Schatzker type I — lateral split | Schatzker type II — lateral split-depression | Schatzker type III — lateral pure depression | Schatzker type IV — medial condyle | Schatzker type V — bicondylar | Schatzker type VI — bicondylar with metaphyseal dissociation} tibial plateau fracture.
+
+Articular depression: {absent | present — [blank] mm}.
+
+Condylar diastasis: {absent | present — [blank] mm}.
+
+{No contralateral joint space widening. | Contralateral joint space widening is present, suggesting ligamentous injury.}
+
+{No fibular head fracture. | Associated fibular head fracture is present.}`
+  },
+
+  'distal-radius': {
+    title: 'Distal Radius Fracture — Radiograph Findings',
+    filename: 'RadCall_Macro_Distal_Radius.txt',
+    text: `There is a {nondisplaced | dorsally angulated | volarly angulated | [blank]} distal radius fracture {with | without} intraarticular extension.
+
+Volar tilt: {preserved | reduced — [blank]°}.
+
+Radial inclination: {preserved | reduced — [blank]°}.
+
+Radial shortening: {none | [blank] mm relative to the ulna}.
+
+{No articular diastasis or depression. | Articular {diastasis | depression} of [blank] mm is present.}
+
+{No comminution. | Comminution is present — {dorsal | volar | metaphyseal | [blank]}.}
+
+Ulnar styloid: {intact | tip fracture | base fracture — DRUJ integrity {maintained | disrupted}}.
+
+Carpal arcs: {intact | disrupted — [blank]}.`
+  },
+
+  'calcaneus': {
+    title: 'Calcaneus Fracture — CT Findings',
+    filename: 'RadCall_Macro_Calcaneus.txt',
+    text: `There is a {Sanders type I — nondisplaced | Sanders type II — two-part | Sanders type III — three-part | Sanders type IV — comminuted} calcaneus fracture.
+
+Number of sagittal fracture lines entering the posterior subtalar joint: [blank].
+
+Articular depression: {absent | present — [blank] mm}.
+
+{No extension into the calcaneocuboid joint. | Extension into the calcaneocuboid joint is present.}
+
+{No cortical fragments between dominant fragments. | Cortical fragments are present between dominant fragments.}
+
+{No peroneal retinaculum avulsion. | Peroneal retinaculum avulsion is present.}
+
+{No tendon entrapment identified. | Tendon entrapment is suspected — {peroneal tendon | FHL | tibial nerve at sustentaculum | [blank]}.}`
+  },
+
+  'radial-head': {
+    title: 'Radial Head Fracture — Radiograph Findings',
+    filename: 'RadCall_Macro_Radial_Head.txt',
+    text: `There is a {Mason type I — nondisplaced | Mason type II — displaced [blank] mm | Mason type III — comminuted | Mason type IV — associated elbow dislocation} radial head fracture.
+
+Articular surface involvement: approximately [blank]%.
+
+{No elbow dislocation. | Elbow dislocation is present — {anterior | posterior | lateral | medial}.}`
+  },
+
+  'olecranon': {
+    title: 'Olecranon Fracture — Radiograph Findings',
+    filename: 'RadCall_Macro_Olecranon.txt',
+    text: `There is a {nondisplaced | displaced — [blank] mm} olecranon fracture with {no comminution | comminution}.`
+  },
+
+  'distal-humerus': {
+    title: 'Distal Humerus Fracture — Radiograph/CT Findings',
+    filename: 'RadCall_Macro_Distal_Humerus.txt',
+    text: `There is a {medial column | lateral column | bicolumn | medial epicondyle avulsion | lateral epicondyle avulsion | supracondylar | [blank]} distal humerus fracture.
+
+Displacement: {nondisplaced | displaced — {medially | laterally | anteriorly | posteriorly} by [blank] mm}.
+
+{No comminution. | Comminution is present.}
+
+{Single column injury. | Two-column injury — {T-type | Y-type | [blank]}.}
+
+Articular surface: {intact | involved — step-off [blank] mm}.`
+  },
+
+  'clavicle': {
+    title: 'Clavicle Fracture — Radiograph Findings',
+    filename: 'RadCall_Macro_Clavicle.txt',
+    text: `There is a {nondisplaced | minimally displaced | displaced} {lateral third | middle third | medial third} clavicle fracture with {no comminution | comminution}.
+
+Displacement: {no significant displacement | [blank]% shortening | superior | inferior | anterior | posterior} angulation.
+
+AC joint: {intact | widened — [blank] mm}.
+
+Coracoclavicular distance: {normal | increased — [blank] mm}.
+
+SC joint: {intact | disrupted}.`
+  },
+
+  'glenohumeral-post-reduction': {
+    title: 'Glenohumeral Dislocation — Post-Reduction',
+    filename: 'RadCall_Macro_Glenohumeral_Post_Reduction.txt',
+    text: `The glenohumeral joint is {concentrically reduced with no residual fragment interposition | not concentrically reduced — [blank]}.
+
+{No new fracture identified post-reduction. | New fracture identified post-reduction — [blank].}`
+  },
+
+  'glenohumeral-dislocation': {
+    title: 'Glenohumeral Dislocation — Radiograph/CT Findings',
+    filename: 'RadCall_Macro_Glenohumeral_Dislocation.txt',
+    text: `There is a {anterior | posterior | inferior (luxatio erecta)} glenohumeral dislocation.
+
+{Anterior dislocation:}
+Hill-Sachs defect: {absent | present — {small | moderate | large}, involving approximately [blank]% of the humeral head}.
+
+Osseous Bankart: {absent | present — fragment measuring [blank] mm, representing approximately [blank]% of the glenoid width}.
+
+{Posterior dislocation:}
+Reverse Hill-Sachs (trough) lesion: {absent | present — involving approximately [blank]% of the humeral head}.
+
+Reverse Bankart: {absent | present}.
+
+Greater tuberosity fracture: {absent | present — {nondisplaced | displaced [blank] mm}}.
+
+Lesser tuberosity fracture: {absent | present}.
+
+Surgical neck fracture: {absent | present}.`
+  },
+
+  'pilon': {
+    title: 'Pilon Fracture — CT Findings',
+    filename: 'RadCall_Macro_Pilon.txt',
+    text: `There is a {Ruedi-Allgower type I | Ruedi-Allgower type II | Ruedi-Allgower type III | comminuted | [blank]} pilon fracture.
+
+Articular depression: {absent | present — [blank] mm, at the {anterior | posterior | central | [blank]} articular surface}.
+
+Major fragment count: [blank], involving the [blank].
+
+Syndesmotic disruption: {absent | present — {widening of the syndesmosis | bony fragment in the syndesmosis | [blank]}}.
+
+{No tendon injury or entrapment identified. | Tendon {injury | entrapment} involving the [blank].}
+
+{No retinacular injury identified. | Retinacular injury involving the [blank].}`
+  },
+
+  'ankle': {
+    title: 'Ankle Fracture — Radiograph/CT Findings',
+    filename: 'RadCall_Macro_Ankle.txt',
+    text: `There is a {Weber A | Weber B | Weber C} {fibular | bimalleolar | trimalleolar | [blank]} fracture.
+
+Fracture pattern: {transverse | oblique | spiral | comminuted}.
+
+Medial clear space: {normal — ≤4 mm | widened — [blank] mm, suggesting deltoid ligament injury}.
+
+Lateral clear space: {normal | widened}.
+
+{No dislocation. | Dislocation is present — {lateral | medial | posterior | [blank]}}.
+
+{No associated posterior malleolus fracture. | Posterior malleolus fracture is present, involving approximately [blank]% of the articular surface.}`
+  },
+
+  'acetabular-fractures': {
+    title: 'Acetabular Fractures — CT Findings',
+    filename: 'RadCall_Macro_Acetabular_Fractures.txt',
+    text: `There is a {anterior wall | anterior column | posterior wall | posterior column | transverse | T-type | anterior column + posterior hemitransverse | both column | transverse + posterior wall} acetabular fracture.
+
+Articular step-off: {none | [blank] mm}.
+
+Intraarticular fragments: {absent | present, measuring [blank] mm}.
+
+Posterior wall involvement: {absent | present, involving approximately [blank]% of the posterior wall}.
+
+Marginal impaction: {absent | present}.
+
+Femoral head: {congruent | subluxed | dislocated — {anteriorly | posteriorly}}.
+
+Ipsilateral femoral neck fracture: {absent | present}.`
+  },
+
+  'nat': {
+    title: 'Non-Accidental Trauma — Skeletal Survey Findings',
+    filename: 'RadCall_Macro_NAT.txt',
+    text: `{No high-specificity fractures identified. | High-specificity fractures are present: [MULTI-SELECT: posterior rib fractures | classic metaphyseal lesions (CMLs) | interhemispheric subdural hematoma | scapular body fracture | spinous process fracture | sternal fracture].}
+
+{No fractures of differing ages. | Fractures of differing ages are present, raising concern for repeated injury.}
+
+The provided clinical history is {adequate and consistent with imaging findings | inadequate | inconsistent with the pattern of injury identified}. Findings are of concern for non-accidental trauma. Mandatory reporting per institutional protocol.`
+  },
+
+  'rpoc': {
+    title: 'Retained Products of Conception — US Findings',
+    filename: 'RadCall_Macro_RPOC.txt',
+    text: `The endometrium measures [blank] mm in thickness with {homogeneous | heterogeneous | echogenic} contents.
+
+Internal vascularity on color Doppler: {absent | present — {low-resistance waveform (RI <0.4), consistent with trophoblastic flow | non-specific flow}}.
+
+Myometrial vascularity: {normal | increased — {AVM | SIPS | [blank]} cannot be excluded}.
+
+{No recognizable gestational products identified. | A recognizable {gestational sac | yolk sac | embryo} is present.}
+
+Free fluid: {absent | trace | present in the [blank]}.`
+  },
+
+  'dvt': {
+    title: 'Deep Vein Thrombosis — US Findings',
+    filename: 'RadCall_Macro_DVT.txt',
+    text: `There is {acute | chronic appearing | acute-on-chronic} deep vein thrombosis involving the {right | left | bilateral} [MULTI-SELECT: common femoral vein | femoral vein | popliteal vein | posterior tibial vein | peroneal vein | great saphenous vein].
+
+Proximal extent of thrombus: [blank].
+
+Free-floating thrombus: {absent | present — increased PE risk}.`
+  },
+
+  'bladder-rupture': {
+    title: 'Bladder Rupture — CT Cystography Findings',
+    filename: 'RadCall_Macro_Bladder_Rupture.txt',
+    text: `CT cystography demonstrates {extraperitoneal | intraperitoneal | combined extraperitoneal and intraperitoneal} bladder rupture.
+
+Defect location: [blank].
+
+Pattern of extravasation: {flame-shaped perivesical contrast extravasation | contrast outlining bowel loops and peritoneal gutters | [blank]}.
+
+Pelvic hematoma: {absent | present — {perivesical | presacral | [blank]}, measuring [blank] cm}.
+
+Associated pelvic ring fracture: {absent | present — [blank]}.`
+  },
+
+  'ovarian-torsion': {
+    title: 'Ovarian Torsion — US Findings',
+    filename: 'RadCall_Macro_Ovarian_Torsion.txt',
+    text: `The {right | left} ovary is enlarged, measuring [blank] × [blank] × [blank] cm (volume [blank] mL), {asymmetric compared to the contralateral ovary | with no contralateral ovary for comparison}.
+
+Doppler flow: {absent | reduced | asymmetric} on the {right | left}.
+
+Whirlpool sign: {absent | present}.
+
+{No underlying ovarian lesion identified. | An underlying {cyst | dermoid | hemorrhagic cyst | solid mass | [blank]} is present, measuring [blank] cm.}
+
+Free pelvic fluid: {absent | present — {simple | complex | hemorrhagic appearing}, {small | moderate | large} in volume}.
+
+Contralateral ovary: {normal in size and flow | [blank]}.`
+  },
+
+  'bowel-obstruction': {
+    title: 'Bowel Obstruction — CT Findings',
+    filename: 'RadCall_Macro_Bowel_Obstruction.txt',
+    text: `There is a {small bowel | large bowel | gastric outlet} obstruction with a transition point at the [blank].
+
+Proximal bowel caliber at the transition point measures [blank] mm.
+
+Etiology: {no definitive etiology identified | hernia — {inguinal | femoral | umbilical | incisional | internal | [blank]} | adhesion band | mass at [blank] | volvulus | intussusception — lead point {identified at [blank] | not identified} | [blank]}.
+
+Closed loop obstruction: {absent | present — {C-shaped loop | U-shaped loop | mesenteric swirl | beak sign}}.
+
+Ischemia: {no signs of ischemia | signs of ischemia present — {bowel wall thickening | pneumatosis intestinalis | portal venous gas | mesenteric haziness | [blank]}}.
+
+Free air: {absent | present — perforation suspected}.
+
+{Rectum is decompressed, consistent with complete obstruction. | Gas present in the rectum, consistent with partial obstruction.}`
+  },
+
+  'pancreatitis': {
+    title: 'Pancreatitis — CT Findings',
+    filename: 'RadCall_Macro_Pancreatitis.txt',
+    text: `There is {interstitial edematous | necrotizing} pancreatitis involving the {head | body | tail | entire gland | [blank]}.
+
+Necrosis: {absent | present, involving approximately [blank]% of the gland, affecting the {head | body | tail | [blank]}}.
+
+Peripancreatic fluid collections: {absent | present — [blank] collection(s), the largest measuring [blank] cm, located in the [blank], {without | with} a discernible wall {consistent with acute peripancreatic fluid collection | consistent with walled-off necrosis | consistent with pseudocyst}}.
+
+Pancreatic duct: {not dilated | dilated, measuring [blank] mm} with {no ductal disruption identified | ductal disruption at the [blank]}.
+
+Splenic vein thrombosis: {absent | present}.
+
+Pseudoaneurysm: {absent | present involving the [blank], measuring [blank] mm}.
+
+Common bile duct: [blank] mm. Choledocholithiasis: {absent | present}. Gallstones: {absent | present}.`
+  },
+
+  'cholecystitis': {
+    title: 'Cholecystitis — CT/US Findings',
+    filename: 'RadCall_Macro_Cholecystitis.txt',
+    text: `The gallbladder is {distended, measuring [blank] cm in transverse diameter | not distended} with {diffuse | fundal | neck} wall thickening measuring [blank] mm.
+
+Gallstones: {absent | present with impaction at the {neck | body | fundus}}.
+
+Pericholecystic fluid and fat stranding: {absent | present}.
+
+{No gangrenous features. | Gangrenous features are present — {intraluminal membranes | sloughed mucosa | heterogeneous wall enhancement | [blank]}}.
+
+{No gas in the gallbladder wall or lumen. | Gas is present in the {gallbladder wall | lumen}, consistent with emphysematous cholecystitis.}
+
+Common bile duct diameter: [blank] mm. Choledocholithiasis: {absent | present at [blank]}.`
+  },
+
+  'appendicitis': {
+    title: 'Appendicitis — CT Findings',
+    filename: 'RadCall_Macro_Appendicitis.txt',
+    text: `The appendix measures [blank] mm in outer wall-to-outer wall diameter, with {preserved mural stratification and enhancement | loss of mural enhancement consistent with gangrenous appendicitis}.
+
+Periappendiceal fat stranding: {absent | present}.
+
+Appendicolith: {absent | present at the {tip | body | base}}.
+
+Perforation: {no perforation identified | perforation suspected — {localized free air | periappendiceal phlegmon | abscess measuring [blank] cm | [blank]}}.
+
+Appendix position: {standard | retrocecal | pelvic | pre-ileal | [blank]}.
+
+Free fluid: {absent | present in the [blank]}.`
+  },
+
+  'bcvi': {
+    title: 'Blunt Cerebrovascular Injury (BCVI) — CTA Findings',
+    filename: 'RadCall_Macro_BCVI.txt',
+    text: `There is a Denver grade {I | II | III | IV | V} blunt cerebrovascular injury involving the {right | left | bilateral} {internal carotid artery | vertebral artery | [blank]}, {petrous | cavernous | supraclinoid} segment {of the internal carotid artery | [blank]}, at the {V1 | V2 | V3 | V4} segment {of the vertebral artery | [blank]}.
+
+Findings are consistent with {intimal irregularity | dissection | intraluminal thrombus | pseudoaneurysm | occlusion | transection}.
+
+{No pseudoaneurysm identified. | A pseudoaneurysm is present, measuring [blank] mm.}
+
+Estimated luminal stenosis: {<25% | 25–50% | 50–75% | >75% | occlusion}.
+
+{No associated ischemic changes identified. | There are associated ischemic changes in the [blank] territory.}
+
+{No skull base or cervical spine fracture involving the carotid canal or transverse foramen. | Associated {skull base fracture involving the carotid canal | cervical spine fracture through the transverse foramen} is present at [blank].}`
+  },
+
+  'intracranial-hemorrhage': {
+    title: 'Intracranial Hemorrhage — CT Findings',
+    filename: 'RadCall_Macro_Intracranial_Hemorrhage.txt',
+    text: `There is {an epidural hematoma | a subdural hematoma | subarachnoid hemorrhage | an intraparenchymal hemorrhage | intraventricular hemorrhage | [blank]} in the [blank].
+
+Volume: approximately [blank] mL (ABC/2 method).
+
+Midline shift: {none | [blank] mm to the {right | left}}.
+
+Herniation: {none | subfalcine herniation as above | {right | left} uncal herniation | transtentorial herniation | tonsillar herniation | [blank]}.
+
+Basal cisterns: {patent | partially effaced | obliterated}.
+
+Hydrocephalus: {absent | present}.
+
+{No underlying lesion identified. | An underlying lesion is suspected — {AVM | tumor | cavernoma | aneurysm | [blank]} cannot be excluded.}`
+  },
+
+  'acute-ischemic-stroke': {
+    title: 'Acute Ischemic Stroke — CT/CTA Findings',
+    filename: 'RadCall_Macro_Acute_Ischemic_Stroke.txt',
+    text: `There is an acute infarct involving the {right | left | bilateral} {MCA territory | ACA territory | PCA territory | posterior fossa | brainstem | [blank]} with {loss of gray-white differentiation | sulcal effacement | hypodense parenchyma | [blank]}.
+
+{MCA territory infarct | Non-MCA territory — ASPECTS not applicable}
+
+[IF MCA TERRITORY]
+ASPECTS: There is involvement of the [MULTI-SELECT: Caudate (C) | Lentiform (L) | Insula (I) | Internal capsule (IC) | M1 | M2 | M3 | M4 | M5 | M6].
+[END MCA TERRITORY]
+
+[IF CTP PERFORMED]
+CT perfusion: ischemic core [blank] mL, penumbra [blank] mL, mismatch ratio {favorable — greater than 1.8 | unfavorable — less than 1.8}.
+[END CTP]
+
+Hemorrhagic transformation: {absent | present — {HI1 | HI2 | PH1 | PH2}}.
+
+Herniation: {none | subfalcine herniation to the {right | left}, measuring [blank] mm | {right | left} uncal herniation | transtentorial herniation | tonsillar herniation | [blank]}.
+
+{No prior infarcts identified. | Prior infarcts are present in the [blank], appearing {subacute | chronic}.}`
   }
 };
 
@@ -2912,7 +3345,7 @@ async function _preIndexBackground() {
     if (!sec || sec.dataset.searchIndexed) continue;
     if (sec.dataset.loaded) { _indexSectionContent(id, sec); continue; }
     try {
-      const r = await fetch('sections/' + id + '.html?v=2');
+      const r = await fetch('sections/' + id + '.html?v=3');
       if (!r.ok) continue;
       const tmp = document.createElement('div');
       tmp.innerHTML = await r.text();
