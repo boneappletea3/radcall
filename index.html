@@ -2249,7 +2249,7 @@ const searchIndex = [
   { q: 'craniocervical junction atlantoaxial atlas axis occipital condyle', section: 'neuro', topic: 'n-craniocervical', label: 'Craniocervical Junction — Neuroradiology' },
   { q: 'cervical fractures hangman jefferson burst teardrop', section: 'neuro', topic: 'n-cx-fractures', label: 'Cervical Fractures — Neuroradiology' },
   { q: 'spine trauma cervical thoracic lumbar ao classification', section: 'neuro', topic: 'n-spine', label: 'Spine Trauma — Neuroradiology' },
-  { q: 'thoracolumbar spine trauma tl classification burst compression', section: 'neuro', topic: 'n-tl-spine', label: 'T/L Spine Trauma — Neuroradiology' },
+  { q: 'thoracolumbar spine trauma tl classification burst compression TLICS PLC posterior ligamentous complex', section: 'neuro', topic: 'n-tl-spine', label: 'T/L Spine Trauma — TLICS — Neuroradiology' },
   { q: 'mandible fracture condyle symphysis parasymphysis', section: 'neuro', topic: 'n-mandible', label: 'Mandible Fractures — Neuroradiology' },
   { q: 'le fort facial trauma maxillofacial noe orbit', section: 'neuro', topic: 'n-maxface', label: 'Maxillofacial Trauma — Neuroradiology' },
   { q: 'temporal bone fracture otic capsule ossicular', section: 'neuro', topic: 'n-temporal', label: 'Temporal Bone — Neuroradiology' },
@@ -3329,6 +3329,33 @@ Perforation: {no perforation identified | perforation suspected — {localized f
 Appendix position: {standard | retrocecal | pelvic | pre-ileal | [blank]}.
 
 Free fluid: {absent | present in the [blank]}.`
+  },
+
+  'thoracolumbar': {
+    title: 'Thoracolumbar Spine Trauma — CT/MRI Findings',
+    filename: 'RadCall_Macro_Thoracolumbar.txt',
+    text: `INJURY LEVEL: [blank].
+
+INJURY MORPHOLOGY: {compression — anterior body height loss / endplate disruption | burst — posterior wall involvement with retropulsion | translation/rotation — horizontal displacement or rotation | distraction — vertical dissociation through anterior and/or posterior elements}.
+
+Vertebral body height loss: approximately [blank]%.
+Retropulsion: {absent | present — [blank] mm, with approximately [blank]% spinal canal compromise}.
+Kyphosis: {none | mild | [blank] degrees}.
+Comminution: {absent | present}.
+
+PLC STATUS (CT predictors): {no CT signs of PLC injury | interspinous distance widening | facet joint widening | empty/naked facet joints | perched facets | dislocated facets | spinous process avulsion | vertebral subluxation | vertebral dislocation}.
+
+PLC STATUS (MRI): {intact — continuous low-signal PLC on T1/T2 | indeterminate — edema without definite disruption | disrupted — loss of low-signal stripe / fluid signal in PLC}.
+Supraspinous ligament: {intact | indeterminate | disrupted}.
+Ligamentum flavum: {intact | indeterminate | disrupted}.
+Interspinous ligaments: {intact | indeterminate | disrupted}.
+Facet capsules: {intact | indeterminate | disrupted}.
+
+NEUROLOGIC: {no cord or nerve root injury identified | cord/conus signal abnormality at [blank] | cauda equina compression | nerve root injury | epidural hematoma — [blank]}.
+
+ADDITIONAL LEVELS: {no contiguous or noncontiguous injuries | [blank]}.
+
+TLICS SCORE: morphology [blank] + PLC [blank] + neurologic [blank] = total [blank].`
   },
 
   'bcvi': {
