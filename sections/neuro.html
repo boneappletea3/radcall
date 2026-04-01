@@ -201,23 +201,20 @@
 <div class="link-grid"><a class="link-card" href="https://radiologyassistant.nl/spine/trauma/thoracolumbar-spine-injury" target="_blank"><div class="link-card-icon">🔗</div><div class="link-card-body"><div class="link-card-title">Thoracolumbar Spine Injury</div><div class="link-card-src">RadiologyAssistant</div></div></a><a class="link-card" href="https://radiopaedia.org/articles/thoracolumbar-injury-classification-and-severity-score-tlics" target="_blank"><div class="link-card-icon">🔗</div><div class="link-card-body"><div class="link-card-title">TLICS Score</div><div class="link-card-src">Radiopaedia</div></div></a></div>
 <figure class="ref-figure"><img src="images/untitled_artwork-10-edited.png" alt="Three column concept of the spine (Denis): ALL = anterior longitudinal ligament; PLL = posterior longitudinal ligament" loading="lazy"><figcaption>Three column concept of the spine (Denis): ALL = anterior longitudinal ligament; PLL = posterior longitudinal ligament</figcaption></figure>
 
-    <h3 style="font-size:13px;font-weight:500;color:var(--text2);margin:14px 0 6px;padding-top:4px">TLICS — Thoracolumbar Injury Classification and Severity Score</h3>
-    <div class="info-box blue"><strong>Three independent domains</strong> are scored and summed. Score ≤3 = nonsurgical (brace + mobilization); score 4 = equivocal (surgical or nonsurgical); score ≥5 = surgical (deformity correction ± decompression + stabilization). If multiple injury morphologies present, use the highest-scoring pattern. Each level assessed independently for multilevel injuries.</div>
+    <h3 style="font-size:13px;font-weight:500;color:var(--text2);margin:14px 0 6px;padding-top:4px">AO Spine Classification</h3>
+    <div class="info-box blue"><strong>Three injury types</strong> reflecting progressive instability. Type A = vertebral body compression (A0–A4). Type B = posterior tension band disruption (B1–B3). Type C = translational/rotational — complete column disruption (always surgical). Neurologic modifier N0–N4/NX and patient modifier M1–M4 appended. M1 = indeterminate PLC on CT; M2 = rigid spine; M3 = metabolic bone disease.</div>
     <table class="ref-table">
-      <thead><tr><th>Category</th><th>Finding</th><th>Points</th></tr></thead>
+      <thead><tr><th>Type</th><th>Subtype</th><th>Description</th></tr></thead>
       <tbody>
-        <tr><td rowspan="4"><strong>Injury Morphology</strong></td><td>Compression — visible anterior body height loss or endplate disruption</td><td>1</td></tr>
-        <tr><td>Burst — posterior vertebral wall involvement with retropulsion into canal</td><td>2</td></tr>
-        <tr><td>Translation / Rotation — horizontal displacement or rotation of one vertebra on another; spinous process rotation, facet fracture-dislocation</td><td>3</td></tr>
-        <tr><td>Distraction — vertical dissociation through anterior and/or posterior elements</td><td>4</td></tr>
-        <tr><td rowspan="3"><strong>PLC Status</strong></td><td>Intact</td><td>0</td></tr>
-        <tr><td>Suspected / indeterminate (edema without definite disruption on MRI)</td><td>2</td></tr>
-        <tr><td>Injured — confirmed disruption</td><td>3</td></tr>
-        <tr><td rowspan="5"><strong>Neurologic Status</strong></td><td>Intact</td><td>0</td></tr>
-        <tr><td>Nerve root injury</td><td>2</td></tr>
-        <tr><td>Incomplete spinal cord or conus medullaris injury</td><td>3</td></tr>
-        <tr><td>Complete spinal cord injury</td><td>2</td></tr>
-        <tr><td>Cauda equina syndrome</td><td>3</td></tr>
+        <tr><td rowspan="5"><strong>A — Compression</strong></td><td>A0</td><td>Minor — transverse process or spinous process fracture; no body involvement</td></tr>
+        <tr><td>A1</td><td>Wedge — single endplate; posterior wall intact</td></tr>
+        <tr><td>A2</td><td>Pincer / split — both endplates; posterior wall intact</td></tr>
+        <tr><td>A3</td><td>Incomplete burst — one endplate + posterior wall involvement; retropulsion</td></tr>
+        <tr><td>A4</td><td>Complete burst — both endplates + posterior wall; highest compression severity</td></tr>
+        <tr><td rowspan="3"><strong>B — Tension Band</strong></td><td>B1</td><td>Bony Chance — monosegmental posterior tension band disruption through bone</td></tr>
+        <tr><td>B2</td><td>Posterior tension band disruption — ligamentous ± osseous; often with anterior compression</td></tr>
+        <tr><td>B3</td><td>Hyperextension shear — disruption through anterior disk; anterior column distraction</td></tr>
+        <tr><td><strong>C — Translation</strong></td><td>C</td><td>Translational / rotational dislocation — complete disruption of all columns; always surgical</td></tr>
       </tbody>
     </table>
 
@@ -234,8 +231,8 @@
       </tbody>
     </table>
 
-    <div class="checklist-box"><div class="checklist-title"><span class="checklist-title-text">📋 Reporting Checklist — Thoracolumbar Trauma</span><button class="macro-dl-btn" onclick="downloadMacro('thoracolumbar')">⬇ PS Macro</button></div><ul>
-      <li><strong>CT — Injury morphology:</strong> compression / burst / translation-rotation / distraction; degree of comminution</li>
+    <div class="checklist-box"><div class="checklist-title"><span class="checklist-title-text">📋 Reporting Checklist — Thoracolumbar Trauma</span><button class="macro-dl-btn" onclick="downloadMacro('ao-spine-tl')">⬇ AO Spine Macro</button></div><ul>
+      <li><strong>CT — AO Spine type:</strong> A0–A4 / B1–B3 / C; degree of comminution</li>
       <li><strong>Vertebral body height loss:</strong> estimate % anterior compression relative to adjacent levels</li>
       <li><strong>Retropulsion:</strong> distance (mm); % spinal canal compromise = (1 − x/y) × 100, where x = midsagittal canal at injury, y = mean of levels above and below</li>
       <li><strong>Degree of kyphosis</strong> at injury level</li>
@@ -243,7 +240,8 @@
       <li><strong>Contiguous and noncontiguous injuries:</strong> document all levels</li>
       <li><strong>MRI — PLC status</strong> (intact / indeterminate / disrupted): supraspinous ligament, ligamentum flavum, interspinous ligaments, facet capsules, ALL, PLL, intervertebral disk</li>
       <li><strong>MRI — Neurologic injuries:</strong> cord/conus signal change · cauda equina compression · nerve root injury · epidural hematoma</li>
-      <li><strong>TLICS score:</strong> morphology [blank] + PLC [blank] + neurologic [blank] = total [blank] — include if neurologic injury identified on imaging</li>
+      <li><strong>Neurologic modifier (N):</strong> N0 intact / N2 radiculopathy / N3 incomplete SCI or cauda equina / N4 complete SCI</li>
+      <li><strong>Patient modifier (M):</strong> M1 indeterminate PLC on CT / M2 rigid spine / M3 metabolic bone disease</li>
     </ul></div>
     <div class="cite"><span class="cite-bullet">📄</span><span><a href="https://doi.org/10.1148/rg.337135018" target="_blank" rel="noopener">Khurana B et al. Traumatic Thoracolumbar Spine Injuries: What the Spine Surgeon Wants to Know. <em>RadioGraphics.</em> 2013;33(7):2031–46.</a></span></div>
 
@@ -281,23 +279,11 @@
     </table>
 
     <h3 style="font-size:13px;font-weight:500;color:var(--text2);margin:14px 0 6px;padding-top:4px">Andersson Lesion (AS-specific)</h3>
-    <div class="info-box amber"><strong>Andersson lesion = pseudarthrosis from nonunion</strong> of a traumatic or insufficiency fracture in AS. Can mimic infection — key distinguishing features: fracture line extends to posterior elements (facets); minimal soft-tissue swelling (unlike infection); T1 hypointense fracture line with T2 hyperintense reactive changes in surrounding bone. Disk destruction + reactive sclerosis without significant soft-tissue mass. May be unstable and require surgery. Infection has more prominent soft-tissue swelling and abscess formation.</div>
+    <div class="info-box amber"><strong><a href="https://radiopaedia.org/articles/andersson-lesion" target="_blank" rel="noopener">Andersson lesion</a> = pseudarthrosis from nonunion</strong> of a traumatic or insufficiency fracture in AS. Can mimic infection — key distinguishing features: fracture line extends to posterior elements (facets); minimal soft-tissue swelling (unlike infection); T1 hypointense fracture line with T2 hyperintense reactive changes in surrounding bone. Disk destruction + reactive sclerosis without significant soft-tissue mass. May be unstable and require surgery. Infection has more prominent soft-tissue swelling and abscess formation.</div>
 
     <h3 style="font-size:13px;font-weight:500;color:var(--text2);margin:14px 0 6px;padding-top:4px">Imaging Strategy</h3>
     <div class="info-box blue"><strong>CT:</strong> Always first step. Assess with spine windows (not body windows). Whole-spine CT mandatory after any fracture detected. For DISH without posterior element involvement and no neurologic deficit: fracture may be managed conservatively. <strong>MRI:</strong> Mandatory in AS (high rate of epidural hematoma + cord injury). Low threshold in all rigid spine with neurologic deficit. Assess PLC, epidural hematoma (may extend over long segment in AS), cord signal, nerve roots. DISH posterior element involvement → unstable → MRI for surgical planning.</div>
 
-    <div class="checklist-box"><div class="checklist-title"><span class="checklist-title-text">📋 Reporting Checklist — Rigid Spine Fracture</span><button class="macro-dl-btn" onclick="downloadMacro('rigid-spine')">⬇ PS Macro</button></div><ul>
-      <li><strong>Rigid spine entity:</strong> AS / DISH / DS / surgically fused (note in report — AOSpine M2 modifier)</li>
-      <li><strong>Fracture level(s):</strong> location, morphology (transverse / compression / burst / hyperextension-distraction); through disk vs vertebral body</li>
-      <li><strong>Three-column involvement:</strong> anterior only vs posterior elements (facets, lamina, spinous process) — posterior extension = unstable</li>
-      <li><strong>Displacement:</strong> translation / distraction of fracture; disk space widening (hyperextension sign)</li>
-      <li><strong>Spinal canal compromise:</strong> retropulsion; % canal narrowing</li>
-      <li><strong>Epidural hematoma:</strong> present / absent; craniocaudal extent; cord compression</li>
-      <li><strong>Cord / conus / nerve root injury:</strong> signal change on MRI; level</li>
-      <li><strong>Noncontiguous fractures:</strong> document all levels — whole spine must be assessed</li>
-      <li><strong>Andersson lesion (AS):</strong> pseudarthrosis vs acute injury; posterior element extension</li>
-      <li><strong>Surgical indications to flag:</strong> neurologic deficit · unstable fracture (posterior element involvement) · epidural hematoma</li>
-    </ul></div>
     <div class="cite"><span class="cite-bullet">📄</span><span><a href="https://doi.org/10.1148/rg.2019180125" target="_blank" rel="noopener">Shah NG et al. Injuries to the Rigid Spine: What the Spine Surgeon Wants to Know. <em>RadioGraphics.</em> 2019;39(3):868–889.</a></span></div>
 
     <div class="topic-h" id="n-mandible">Mandibular Anatomy</div>
