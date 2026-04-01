@@ -2251,6 +2251,8 @@ const searchIndex = [
   { q: 'spine trauma cervical thoracic lumbar ao classification', section: 'neuro', topic: 'n-spine', label: 'Spine Trauma — Neuroradiology' },
   { q: 'thoracolumbar spine trauma tl classification burst compression TLICS PLC posterior ligamentous complex', section: 'neuro', topic: 'n-tl-spine', label: 'T/L Spine Trauma — TLICS — Neuroradiology' },
   { q: 'rigid spine ankylosing spondylitis AS DISH degenerative spondylosis surgically fused spine fracture hyperextension bamboo spine Andersson lesion epidural hematoma', section: 'neuro', topic: 'n-rigid-spine', label: 'Rigid Spine Injuries — Neuroradiology' },
+  { q: 'spinal hematoma epidural subdural subarachnoid SEH SSH biconvex crescentic anticoagulation cord compression MRI signal blood products', section: 'neuro', topic: 'n-spine-hematoma', label: 'Spinal Hematomas — Neuroradiology' },
+  { q: 'nontraumatic cord myelopathy compressive epidural intradural intramedullary disk herniation abscess metastasis MESCC meningioma schwannoma ependymoma astrocytoma MS NMO DAVF cord infarction B12 subacute combined degeneration ADEM transverse myelitis', section: 'neuro', topic: 'n-cord-nontrauma', label: 'Nontraumatic Cord Emergencies — Neuroradiology' },
   { q: 'mandible fracture condyle symphysis parasymphysis', section: 'neuro', topic: 'n-mandible', label: 'Mandible Fractures — Neuroradiology' },
   { q: 'le fort facial trauma maxillofacial noe orbit', section: 'neuro', topic: 'n-maxface', label: 'Maxillofacial Trauma — Neuroradiology' },
   { q: 'temporal bone fracture otic capsule ossicular', section: 'neuro', topic: 'n-temporal', label: 'Temporal Bone — Neuroradiology' },
@@ -2388,6 +2390,8 @@ const NAV_TREE = {
       { label: 'Spine trauma', id: 'n-spine' },
       { label: 'T/L spine trauma', id: 'n-tl-spine' },
       { label: 'Rigid spine', id: 'n-rigid-spine' },
+      { label: 'Spinal hematoma', id: 'n-spine-hematoma' },
+      { label: 'Nontraumatic cord', id: 'n-cord-nontrauma' },
       { label: 'Mandible', id: 'n-mandible' },
       { label: 'Maxillofacial', id: 'n-maxface' },
       { label: 'BCVI', id: 'n-bcvi' },
@@ -3377,6 +3381,66 @@ EPIDURAL HEMATOMA: {absent | present — extending from [blank] to [blank], [bla
 CORD/NERVE ROOT (MRI): {no cord or nerve root signal abnormality | cord signal abnormality at [blank] — {T2 hyperintensity | cord edema | cord contusion} | cauda equina compression | nerve root compression at [blank]}.
 
 NONCONTIGUOUS INJURIES: {none identified | present at [blank] — whole-spine CT/MRI recommended}.`
+  },
+
+  'spine-hematoma': {
+    title: 'Spinal Hematoma — MRI Findings',
+    filename: 'RadCall_Macro_Spinal_Hematoma.txt',
+    text: `HEMATOMA TYPE: {spinal epidural hematoma (SEH) | spinal subdural hematoma (SSH) | spinal subarachnoid hematoma}.
+
+LOCATION: {posterior epidural | anterior epidural | circumferential subdural | diffuse subarachnoid}.
+
+LEVEL AND EXTENT: [blank] to [blank] ([blank] vertebral levels).
+
+AXIAL MORPHOLOGY: {biconvex/lenticular — epidural | crescentic/banana-shaped — subdural | circumferential}.
+
+MIDLINE DARK T2 SEPTUM: {present — fibrous septation consistent with SEH | absent}.
+
+T1 SIGNAL: {isointense — hyperacute, early hematoma cannot be excluded | hyperintense — subacute blood products | hypointense | heterogeneous}.
+
+T2 SIGNAL: {hypointense | hyperintense | heterogeneous with T2-dark midline rim | heterogeneous without distinct septum}.
+
+EPIDURAL FAT: {effaced at level of collection | preserved — favors intradural process}.
+
+CORD/THECAL SAC COMPRESSION: {mild — partial CSF preservation | moderate — near-complete CSF effacement | severe — partial or complete cord deformation}.
+
+INTRAMEDULLARY T2 SIGNAL: {absent | present at [blank] — [blank] mm craniocaudal extent — cord edema/injury}.
+
+CONTRAST ENHANCEMENT: {not administered | none | peripheral — organizing hematoma | focal avid foci — active extravasation suspected}.
+
+ASSOCIATED SPONDYLODISCITIS: {absent | present at [blank] — abscess should be included in differential}.
+
+IMPRESSION: {[blank] spinal epidural hematoma extending [blank] to [blank] with [blank] cord compression — urgent neurosurgical consultation recommended | [blank] spinal subdural hematoma with [blank] cord compression | [blank]}.
+
+RECOMMENDATION: {Urgent neurosurgical consultation. Anticoagulation reversal if applicable. | Clinical correlation and follow-up MRI. | MR angiography of the spine to evaluate for underlying vascular malformation.}`
+  },
+
+  'cord-nontrauma': {
+    title: 'Nontraumatic Cord / Myelopathy — MRI Findings',
+    filename: 'RadCall_Macro_Cord_Nontrauma.txt',
+    text: `COMPARTMENT: {epidural | intradural extramedullary | intramedullary | noncompressive — no mass lesion identified}.
+
+LEVEL: [blank]. LONGITUDINAL EXTENT: [blank] vertebral segments ([blank] to [blank]).
+
+EPIDURAL FAT: {effaced at level of lesion — epidural process | preserved}.
+
+CORD COMPRESSION GRADE: {none | mild — partial CSF preservation | moderate — near-complete CSF effacement | high-grade — partial or complete cord deformation}.
+
+INTRAMEDULLARY T2 SIGNAL: {absent | present — {anterior 2/3 — vascular territory | posterior columns — bilateral symmetric, metabolic | central gray and white matter | peripheral white matter — asymmetric | diffuse | multifocal}}.
+
+T1 CORD SIGNAL: {normal | hypointense — possible chronic injury or myelomalacia | hyperintense — blood products or intratumoral hemorrhage}.
+
+ENHANCEMENT: {none | homogeneous | ring/peripheral | avid | leptomeningeal | incomplete ring — demyelinating pattern | [blank]}.
+
+PERIMEDULLARY FLOW VOIDS: {absent | present — dural AVF should be excluded; CE-MRI and MR angiography recommended}.
+
+ASSOCIATED FINDINGS: {spondylodiscitis at [blank] | vertebral body marrow signal abnormality | paravertebral soft tissue | no associated abnormality | [blank]}.
+
+DWI: {not performed | no restricted diffusion | restricted diffusion present — cord infarction favored}.
+
+WORKING IMPRESSION: {compressive myelopathy most likely secondary to [blank] | noncompressive myelopathy — pattern most consistent with {vascular: cord infarction | vascular: dural AVF | metabolic: subacute combined degeneration (B12) | inflammatory: multiple sclerosis | inflammatory: NMO spectrum disorder | inflammatory: ADEM | acute transverse myelitis | [blank]} | [blank]}.
+
+RECOMMENDATION: {Urgent neurosurgical consultation for compressive myelopathy. | Neurology consultation — CSF analysis and serologic workup recommended (AQP4-IgG, MOG-IgG, B12, methylmalonic acid). | MR angiography of the spine to evaluate for dural AVF. | [blank].}`
   },
 
   'thoracolumbar': {
