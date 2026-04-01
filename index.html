@@ -1840,7 +1840,7 @@ async function _loadSection(id) {
   // Show spinner
   sec.innerHTML = '<div class="lazy-spinner"><div class="lazy-dot"></div><div class="lazy-dot"></div><div class="lazy-dot"></div></div>';
   try {
-    const r = await fetch('sections/' + id + '.html?v=5');
+    const r = await fetch('sections/' + id + '.html?v=6');
     if (!r.ok) throw new Error('HTTP ' + r.status);
     sec.innerHTML = await r.text();
     sec.dataset.loaded = '1';
@@ -2310,6 +2310,9 @@ const searchIndex = [
   { q: 'ovarian torsion whirlpool sign enlarged', section: 'body', topic: 'b-ovarian-torsion', label: 'Ovarian Torsion — Body' },
   { q: 'pancreatitis atlanta classification walled off necrosis pseudocyst', section: 'body', topic: 'b-panc', label: 'Pancreatitis — Body' },
   { q: 'volvulus sigmoid cecal closed loop', section: 'body', topic: 'b-volvulus', label: 'Volvulus — Body' },
+  { q: 'trauma pregnancy pregnant obstetric placental abruption uterine rupture fetal radiation', section: 'body', topic: 'b-preg-trauma', label: 'Trauma in Pregnancy — Body' },
+  { q: 'placental abruption TAPS traumatic abruptio placenta scale CT grading', section: 'body', topic: 'b-preg-trauma', label: 'Placental Abruption TAPS — Body' },
+  { q: 'fetal radiation dose CT mGy threshold pregnancy imaging', section: 'body', topic: 'b-preg-trauma', label: 'Fetal Radiation Dose — Body' },
   // MSK
   { q: 'acetabulum fracture judet letournel column wall', section: 'msk', topic: 'm-acetabulum', label: 'Acetabulum — MSK' },
   { q: 'ankle fracture ottawa pilon trimalleolar bimalleolar', section: 'msk', topic: 'm-ankle', label: 'Ankle &amp; Pilon — MSK' },
@@ -2390,6 +2393,7 @@ const NAV_TREE = {
       { label: 'Stroke protocol', id: 'n-stroke' },
       { label: 'ASPECTS', id: 'n-aspects' },
       { label: 'CT Perfusion', id: 'n-ctp' },
+      { label: 'Heidelberg classification', id: 'n-heidelberg' },
     ]},
     { label: 'Trauma', first: 'n-craniocervical', topics: [
       { label: 'Craniocervical', id: 'n-craniocervical' },
@@ -2404,12 +2408,20 @@ const NAV_TREE = {
       { label: 'Maxillofacial', id: 'n-maxface' },
       { label: 'BCVI', id: 'n-bcvi' },
       { label: 'Visceral neck trauma', id: 'n-visceral-neck' },
+      { label: 'Temporal bone trauma', id: 'n-tbone-trauma' },
+      { label: 'Orbital trauma', id: 'n-orbital-trauma' },
     ]},
     { label: 'Infection', first: 'n-sinusitis-complications', topics: [
       { label: 'Sinusitis complications', id: 'n-sinusitis-complications' },
       { label: 'Odontogenic', id: 'n-odontogenic' },
       { label: 'Neck abscess', id: 'n-peritonsillar' },
       { label: 'Epiglottitis', id: 'n-epiglottitis' },
+      { label: 'Salivary gland infections', id: 'n-salivary' },
+      { label: 'Otitis / Mastoiditis', id: 'n-otitis' },
+      { label: 'Lemierre syndrome', id: 'n-lemierre' },
+      { label: 'Cervical lymphadenopathy', id: 'n-cervical-lymph' },
+      { label: 'Longus colli tendinitis', id: 'n-longus-colli' },
+      { label: 'Angioedema', id: 'n-angioedema' },
       { label: 'Intracranial infections', id: 'n-ic-infections' },
     ]},
     { label: 'Other', first: 'n-dvt', topics: [
@@ -2468,6 +2480,7 @@ const NAV_TREE = {
       { label: 'Urethral injury', id: 'b-urethral' },
       { label: 'Pancreatic injury', id: 'b-panc-injury' },
       { label: 'Bowel injury', id: 'b-bowel-injury' },
+      { label: 'Trauma in pregnancy', id: 'b-preg-trauma' },
     ]},
     { label: 'Other', first: 'b-appendicitis', topics: [
       { label: 'Appendicitis', id: 'b-appendicitis' },
@@ -2556,6 +2569,14 @@ const NAV_TREE = {
       { label: 'DDH', id: 'p-ddh' },
       { label: 'SCFE', id: 'p-scfe' },
       { label: 'Hydronephrosis (SFU)', id: 'p-hydro' },
+    ]},
+    { label: 'Fractures', first: 'p-peds-bone', topics: [
+      { label: 'Pediatric bone basics', id: 'p-peds-bone' },
+      { label: 'Salter-Harris', id: 'p-salter' },
+      { label: 'Elbow fractures', id: 'p-elbow-fx' },
+      { label: 'Forearm & upper extremity', id: 'p-forearm-fx' },
+      { label: 'Lower extremity', id: 'p-lower-fx' },
+      { label: 'Tips & pitfalls', id: 'p-peds-tips' },
     ]},
     { label: 'Other', first: 'p-nat', topics: [
       { label: 'Non-accidental trauma', id: 'p-nat' },
@@ -3698,7 +3719,7 @@ async function _preIndexBackground() {
     if (!sec || sec.dataset.searchIndexed) continue;
     if (sec.dataset.loaded) { _indexSectionContent(id, sec); continue; }
     try {
-      const r = await fetch('sections/' + id + '.html?v=5');
+      const r = await fetch('sections/' + id + '.html?v=6');
       if (!r.ok) continue;
       const tmp = document.createElement('div');
       tmp.innerHTML = await r.text();
