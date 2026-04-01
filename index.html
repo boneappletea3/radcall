@@ -624,7 +624,19 @@
   .checklist-title {
     font-size: 11px; font-weight: 600; text-transform: uppercase;
     letter-spacing: 0.06em; color: var(--amber); margin-bottom: 6px;
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
   }
+  .checklist-title-text { flex: 1; }
+  .macro-dl-btn {
+    font-size: 10px; font-weight: 600; font-family: var(--mono);
+    color: var(--amber); background: transparent;
+    border: 1px solid rgba(245,158,11,0.35); border-radius: 5px;
+    padding: 3px 8px; cursor: pointer; white-space: nowrap;
+    letter-spacing: 0.04em; flex-shrink: 0;
+    transition: background 0.15s, border-color 0.15s;
+    text-transform: none;
+  }
+  .macro-dl-btn:hover { background: var(--amber-bg); border-color: var(--amber); }
   .checklist-box ul { list-style: none; margin: 0; padding: 0; }
   .checklist-box ul li {
     font-size: 13px; color: var(--text2);
@@ -2768,6 +2780,53 @@ async function goToResult(section, topic) {
     el.style.background = 'color-mix(in srgb, var(--accent2) 20%, transparent)';
     setTimeout(() => { el.style.background = ''; }, 1500);
   }, 50);
+}
+
+// ── POWERSCRIBE MACROS ───────────────────────────────────────────────────────
+const _PS_MACROS = {
+  'aortic-dissection': {
+    title: 'Aortic Dissection — CTA Findings',
+    filename: 'RadCall_Macro_Aortic_Dissection.txt',
+    text: `{Stanford Type A | Stanford Type B} aortic dissection.
+
+[IF TYPE A]
+The aortic root and annulus are {involved | not involved}.
+There is {no pericardial effusion | a small pericardial effusion | a moderate pericardial effusion | a large hemopericardium measuring [blank] cm, {without | with} imaging features of tamponade}.
+The coronary ostia are {not involved | the right coronary ostium is involved | the left main ostium is involved | both coronary ostia are involved}.
+[END TYPE A]
+
+[IF TYPE B]
+The dissection originates distal to the left subclavian artery origin. The left subclavian artery {is unaffected | arises at the level of the entry tear | is compromised}.
+[END TYPE B]
+
+An intimal flap is identified with the entry tear most proximally located in the {ascending aorta | aortic arch | proximal descending thoracic aorta at the isthmus | mid descending thoracic aorta | distal descending thoracic aorta}, approximately [blank] cm from the {aortic valve | sinotubular junction | left subclavian artery origin}. The dissection extends {throughout the ascending aorta only | throughout the ascending aorta and arch | throughout the ascending aorta, arch, and descending thoracic aorta | throughout the descending thoracic aorta | from the descending thoracic aorta into the abdominal aorta to the level of the [blank]}.
+
+The {true | false} lumen is the dominant flow lumen. The false lumen is {patent | partially thrombosed at the level of the [blank] | completely thrombosed} and {does not compress | compresses} the true lumen.
+
+The celiac artery {arises from the true lumen and is patent | arises from the false lumen and is patent | straddles the intimal flap | is compromised}. The superior mesenteric artery {arises from the true lumen and is patent | arises from the false lumen and is patent | straddles the intimal flap | is compromised}. The right renal artery {arises from the true lumen and is patent | arises from the false lumen and is patent | is compromised}. The left renal artery {arises from the true lumen and is patent | arises from the false lumen and is patent | is compromised}. The iliac arteries demonstrate {bilateral patent flow | compromise of the right common iliac | compromise of the left common iliac | bilateral compromise}.
+
+The maximum aortic diameter measures [blank] cm at the {aortic root | sinotubular junction | ascending aorta | aortic arch | descending thoracic aorta | abdominal aorta}. The ascending aorta measures [blank] cm, the aortic arch measures [blank] cm, and the descending thoracic aorta measures [blank] cm.
+
+There is {no periaortic hematoma | periaortic hematoma involving the [blank]}. Mediastinal widening is {present | absent}. There is {no pleural effusion | a small left pleural effusion | a moderate left pleural effusion | a large left pleural effusion | bilateral pleural effusions, left greater than right}.
+
+{There is no CT evidence of end-organ malperfusion. | There is imaging evidence of end-organ malperfusion including [blank].}`
+  }
+};
+
+function downloadMacro(macroId) {
+  const macro = _PS_MACROS[macroId];
+  if (!macro) return;
+  // Pro gate — require login
+  if (!window.RadCallAuth || !window.RadCallAuth.getUser()) {
+    window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal();
+    return;
+  }
+  const blob = new Blob([macro.text], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = macro.filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
 }
 
 // ── SEARCH CONTENT INDEXING ──────────────────────────────────────────────────
