@@ -1417,6 +1417,7 @@ body.home-active footer { display: none; }
 }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="supabase-auth.js"></script>
 </head>
 <body>
@@ -1461,6 +1462,7 @@ body.home-active footer { display: none; }
     <div id="hdr-pro-btns" style="display:none;align-items:center;gap:8px;">
       <button class="header-pro-btn" onclick="window.location.href='case-log.html'">Case Log ✦</button>
       <button class="header-pro-btn" onclick="window.location.href='differential.html'" style="background:var(--purple)">Differential Dx ✦</button>
+      <button class="header-pro-btn" onclick="downloadAllMacros()" title="Download all PS360 macros as a zip" style="background:var(--amber,#d97706);color:#000;font-size:11px">⬇ All Macros</button>
     </div>
   </div>
 </header>
@@ -3759,7 +3761,7 @@ Herniation: {none | subfalcine herniation to the {right | left}, measuring [blan
 
 // ── PS360 RTF AUTOTEXT GENERATOR ──────────────────────────────────────────────
 // Builds a PowerScribe 360-compatible .rtf AutoText file from macro text that
-// uses {opt1 | opt2} picklist syntax and [blank] fill-in field markers.
+// uses {opt1 | opt2} picklist syntax and [blank] / [MULTI-SELECT: ...] markers.
 function buildPS360RTF(macroText) {
   // Split options at brace-depth 0 on ' | '
   function splitOpts(inner) {
@@ -3775,12 +3777,28 @@ function buildPS360RTF(macroText) {
     return parts;
   }
 
-  // Flatten nested {a|b|c} inside an option — keep first choice of each nested picklist
-  function flatten(s) {
-    let r = s, p;
-    do { p = r; r = r.replace(/\{([^{}]*)\}/g, (_, inn) => inn.split(' | ')[0]); }
-    while (r !== p);
-    return r.trim();
+  // Cross-product expand nested {a|b|c} inside an option string.
+  // e.g. "present — {HI1 | HI2}" → ["present — HI1", "present — HI2"]
+  // e.g. "{right | left} uncal herniation" → ["right uncal herniation", "left uncal herniation"]
+  function expandOpt(s) {
+    for (let i = 0; i < s.length; i++) {
+      if (s[i] === '{') {
+        let depth = 1, j = i + 1;
+        while (j < s.length && depth > 0) {
+          if (s[j] === '{') depth++;
+          else if (s[j] === '}') depth--;
+          j++;
+        }
+        const inner = s.slice(i + 1, j - 1);
+        const nestedOpts = splitOpts(inner);
+        const out = [];
+        for (const o of nestedOpts) {
+          out.push(...expandOpt(s.slice(0, i) + o + s.slice(j)));
+        }
+        return out;
+      }
+    }
+    return [s.trim()];
   }
 
   // Escape a character for the RTF body
@@ -3809,7 +3827,9 @@ function buildPS360RTF(macroText) {
     return r;
   }
 
-  // ── Parse macro text into segments: text | picklist | blank ──────────────────
+  const MS_PFX = '[MULTI-SELECT:'; // 14 chars
+
+  // ── Parse macro text into segments: text | picklist | blank | multiselect ────
   const text = macroText.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
   const segs = [];
   let i = 0;
@@ -3823,15 +3843,30 @@ function buildPS360RTF(macroText) {
         j++;
       }
       const inner = text.slice(i + 1, j - 1);
-      const opts = splitOpts(inner).map(flatten).filter(o => o.length > 0);
+      // Expand each raw option — cross-products nested picklists
+      const opts = splitOpts(inner).flatMap(expandOpt).filter(o => o.length > 0);
       if (opts.length > 0) segs.push({ type: 'pick', opts });
       i = j;
+    } else if (text.slice(i, i + MS_PFX.length).toUpperCase() === MS_PFX) {
+      // [MULTI-SELECT: opt1 | opt2 | ...] → free-text field (type=1)
+      let j = i + MS_PFX.length;
+      if (j < text.length && text[j] === ' ') j++;   // skip optional space
+      let k = j;
+      while (k < text.length && text[k] !== ']') k++;
+      const opts = text.slice(j, k).split(' | ').map(o => o.trim()).filter(Boolean);
+      segs.push({ type: 'multiselect', opts });
+      i = k + 1; // skip past ']'
     } else if (text.slice(i, i + 7).toLowerCase() === '[blank]') {
       segs.push({ type: 'blank' });
       i += 7;
     } else {
       let j = i;
-      while (j < text.length && text[j] !== '{' && text.slice(j, j+7).toLowerCase() !== '[blank]') j++;
+      while (j < text.length) {
+        if (text[j] === '{') break;
+        if (text.slice(j, j + MS_PFX.length).toUpperCase() === MS_PFX) break;
+        if (text.slice(j, j + 7).toLowerCase() === '[blank]') break;
+        j++;
+      }
       if (j > i) segs.push({ type: 'text', val: text.slice(i, j) });
       i = j;
     }
@@ -3865,12 +3900,20 @@ function buildPS360RTF(macroText) {
       fields.push({ type: 3, start, len: pos - start,
                     name: seg.opts[0].slice(0, 100), def: seg.opts[0], choices: seg.opts });
       tsRanges.push({ type: 3, start, len: defLen });
-    } else { // blank
+    } else if (seg.type === 'blank') {
       blankN++;
       const start = pos;
       toCf2();
       body += '___'; pos += 3;            // placeholder shown in dark red
       fields.push({ type: 1, start, len: 3, name: `blank_${blankN}`, def: '' });
+      tsRanges.push({ type: 1, start, len: 3 });
+    } else { // multiselect — free-text field; options listed in field name as hint
+      blankN++;
+      const start = pos;
+      toCf2();
+      body += '___'; pos += 3;
+      const hint = ('Select: ' + seg.opts.join(', ')).slice(0, 255);
+      fields.push({ type: 1, start, len: 3, name: hint, def: '' });
       tsRanges.push({ type: 1, start, len: 3 });
     }
   }
@@ -3928,6 +3971,29 @@ function downloadMacro(macroId) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url; a.download = macro.filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+
+// Download every macro as a single zip file (requires JSZip CDN)
+async function downloadAllMacros() {
+  if (!window.RadCallAuth || !window.RadCallAuth.getUser()) {
+    window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal();
+    return;
+  }
+  if (typeof JSZip === 'undefined') {
+    alert('JSZip not loaded yet — please try again in a moment.');
+    return;
+  }
+  const zip = new JSZip();
+  for (const [id, macro] of Object.entries(_PS_MACROS)) {
+    const rtf = buildPS360RTF(macro.text);
+    zip.file(macro.filename, rtf);
+  }
+  const blob = await zip.generateAsync({ type: 'blob' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'RadCall_PS360_Macros.zip';
   document.body.appendChild(a); a.click();
   document.body.removeChild(a); URL.revokeObjectURL(url);
 }
