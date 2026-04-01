@@ -1840,7 +1840,7 @@ async function _loadSection(id) {
   // Show spinner
   sec.innerHTML = '<div class="lazy-spinner"><div class="lazy-dot"></div><div class="lazy-dot"></div><div class="lazy-dot"></div></div>';
   try {
-    const r = await fetch('sections/' + id + '.html?v=6');
+    const r = await fetch('sections/' + id + '.html?v=7');
     if (!r.ok) throw new Error('HTTP ' + r.status);
     sec.innerHTML = await r.text();
     sec.dataset.loaded = '1';
@@ -3268,6 +3268,38 @@ Proximal extent of thrombus: [blank].
 Free-floating thrombus: {absent | present — increased PE risk}.`
   },
 
+  'preg-trauma': {
+    title: 'Trauma in Pregnancy — CT Findings',
+    filename: 'RadCall_Macro_Trauma_Pregnancy.txt',
+    text: `There is a {single | multiple-gestation} intrauterine pregnancy. The fetus is in {cephalic | breech | transverse} lie.
+
+PLACENTA:
+Placental enhancement is estimated at {100% — homogeneous (TAPS Grade 0) | >50% with geographic hypoattenuation likely representing normal variants (TAPS Grade 1) | >50% with nongeographic full-thickness hypoattenuation at acute angles with myometrium, increased probability of abruption (TAPS Grade 2a) | 25-50% hypoattenuation, increased probability of abruption (TAPS Grade 2b) | <25% with near-complete devascularization, fetal death frequent (TAPS Grade 3)}.
+Retroplacental hematoma: {absent | present — measuring approximately [blank] cm}.
+Marginal hematoma: {absent | present}.
+
+UTERUS / MYOMETRIUM:
+Uterine wall contour is {intact | disrupted — myometrial defect identified at the {fundus | anterior wall | [blank]}}. {No fetal parts are identified outside the uterine contour. | Fetal parts are identified outside the uterine contour, consistent with uterine rupture.}
+
+AMNIOTIC FLUID:
+{Normal amniotic fluid volume. | Oligohydramnios. | Anhydramnios.} {No fluid identified in the vagina. | Fluid is identified in the vagina, raising concern for premature rupture of membranes.}
+
+FETAL ASSESSMENT:
+Estimated gestational age by biometry: [blank] weeks. {No definite fetal skeletal injury identified on CT. | Fetal skull fracture: {absent | present — {linear nondisplaced | depressed} involving the [blank]}. Fetal intracranial hemorrhage: {absent | present}. Long bone / rib fractures: {absent | present — [blank]}.}
+
+FREE FLUID / HEMOPERITONEUM:
+{No significant intraperitoneal free fluid. | Free fluid is present in the {pelvis | perihepatic space | perisplenic space | [blank]}, with attenuation of approximately [blank] HU, consistent with hemoperitoneum.}
+
+SOLID ORGANS:
+Liver: {no injury | laceration — AAST Grade [blank] | active hemorrhage}. Spleen: {no injury | laceration — AAST Grade [blank] | active hemorrhage}. Kidneys: {no injury | [blank]}.
+
+PELVIC RING:
+{No pelvic ring fracture. | Pelvic ring fracture — [blank]. Proximity to fetal head: {not engaged | fetal head is engaged in the pelvis}.}
+
+BLADDER:
+{Bladder wall intact. No extravasation. | Bladder wall defect identified. Contrast extravasation present on delayed images.}`
+  },
+
   'bladder-rupture': {
     title: 'Bladder Rupture — CT Cystography Findings',
     filename: 'RadCall_Macro_Bladder_Rupture.txt',
@@ -3719,7 +3751,7 @@ async function _preIndexBackground() {
     if (!sec || sec.dataset.searchIndexed) continue;
     if (sec.dataset.loaded) { _indexSectionContent(id, sec); continue; }
     try {
-      const r = await fetch('sections/' + id + '.html?v=6');
+      const r = await fetch('sections/' + id + '.html?v=7');
       if (!r.ok) continue;
       const tmp = document.createElement('div');
       tmp.innerHTML = await r.text();
