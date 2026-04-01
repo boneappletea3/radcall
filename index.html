@@ -1840,7 +1840,7 @@ async function _loadSection(id) {
   // Show spinner
   sec.innerHTML = '<div class="lazy-spinner"><div class="lazy-dot"></div><div class="lazy-dot"></div><div class="lazy-dot"></div></div>';
   try {
-    const r = await fetch('sections/' + id + '.html?v=9');
+    const r = await fetch('sections/' + id + '.html?v=10');
     if (!r.ok) throw new Error('HTTP ' + r.status);
     sec.innerHTML = await r.text();
     sec.dataset.loaded = '1';
@@ -3300,7 +3300,7 @@ BLADDER:
   'liver-injury': {
     title: 'Liver Injury — AAST Grading',
     filename: 'RadCall_Macro_Liver_Injury_AAST.txt',
-    text: `CT of the abdomen demonstrates {right lobe | left lobe | right and left lobe} hepatic injury, AAST Grade {I | II | III | IV | V | VI}.
+    text: `{Right lobe | Left lobe | Right and left lobe} hepatic injury, AAST Grade {I | II | III | IV | V | VI}.
 
 Laceration depth: {absent | <1 cm (Grade I) | 1-3 cm, <10 cm length (Grade II) | >3 cm (Grade III) | 25-75% lobar disruption (Grade IV) | >75% lobar disruption (Grade V) | hepatic avulsion (Grade VI)}.
 Subcapsular hematoma: {absent | <10% surface area (Grade I) | 10-50% surface area (Grade II) | >50% surface area or expanding (Grade III)}.
@@ -3315,7 +3315,7 @@ Biloma / bile leak: {no evidence | suspected — perihepatic low-density collect
   'renal-injury': {
     title: 'Renal Injury — AAST Grading',
     filename: 'RadCall_Macro_Renal_Injury_AAST.txt',
-    text: `CT of the abdomen and pelvis demonstrates {right | left | bilateral} renal injury, AAST Grade {I | II | III | IV | V}.
+    text: `{Right | Left | Bilateral} renal injury, AAST Grade {I | II | III | IV | V}.
 
 Injury: {contusion — no laceration (Grade I) | subcapsular nonexpanding hematoma (Grade I) | nonexpanding perirenal hematoma confined to retroperitoneum (Grade II) | cortical laceration <1 cm without collecting system injury (Grade II) | cortical laceration >1 cm without collecting system injury (Grade III) | full-thickness laceration through cortex, medulla, and collecting system (Grade IV) | shattered kidney (Grade V) | hilar avulsion with devascularization (Grade V)}.
 
@@ -3328,7 +3328,7 @@ Renal vasculature: {intact | main renal artery or vein injury with contained hem
   'splenic-injury': {
     title: 'Splenic Injury — AAST Grading',
     filename: 'RadCall_Macro_Splenic_Injury_AAST.txt',
-    text: `CT of the abdomen demonstrates splenic injury, AAST Grade {I | II | III | IV | V}.
+    text: `Splenic injury, AAST Grade {I | II | III | IV | V}.
 
 Laceration: {absent | <1 cm depth (Grade I) | 1-3 cm depth, not involving trabecular vessels (Grade II) | >3 cm depth or involving trabecular vessels (Grade III) | involving segmental or hilar vessels with >25% devascularization (Grade IV) | shattered spleen (Grade V)}.
 Subcapsular hematoma: {absent | <10% surface area (Grade I) | 10-50% surface area (Grade II) | >50% surface area or expanding (Grade III)}.
@@ -3342,7 +3342,7 @@ Hemoperitoneum: {absent | small | moderate | large}.`
   'panc-injury': {
     title: 'Pancreatic Injury — AAST Grading',
     filename: 'RadCall_Macro_Pancreatic_Injury_AAST.txt',
-    text: `CT of the abdomen demonstrates pancreatic injury involving the {head | neck | body | tail | body and tail | [blank]}, AAST Grade {I | II | III | IV | V}.
+    text: `Pancreatic injury involving the {head | neck | body | tail | body and tail | [blank]}, AAST Grade {I | II | III | IV | V}.
 
 Injury: {minor contusion without duct injury (Grade I) | superficial laceration without duct injury (Grade I) | major contusion without duct injury (Grade II) | major laceration without duct injury (Grade II) | distal transection with probable main duct injury (Grade III) | proximal transection or ampullary involvement (Grade IV) | massive disruption of pancreatic head (Grade V)}.
 
@@ -3804,7 +3804,7 @@ async function _preIndexBackground() {
     if (!sec || sec.dataset.searchIndexed) continue;
     if (sec.dataset.loaded) { _indexSectionContent(id, sec); continue; }
     try {
-      const r = await fetch('sections/' + id + '.html?v=9');
+      const r = await fetch('sections/' + id + '.html?v=10');
       if (!r.ok) continue;
       const tmp = document.createElement('div');
       tmp.innerHTML = await r.text();
