@@ -3866,32 +3866,35 @@ function buildPS360RTF(macroText) {
       toCf1();
       writ(seg.val);
     } else if (seg.type === 'pick') {
-      // If any option has [blank] with a non-empty prefix, LIFT the blank out of the
-      // picklist and emit it as a separate adjacent fill-in field so PS360 can Tab into it.
-      // e.g. {absent | present — [blank] mm}  →  PICKLIST({absent | present —}) + FILL-IN + " mm"
-      // If [blank] is at position 0 in an option (no prefix), fall back to ___ substitution.
-      const co = s => s.replace(/\[blank\]/gi, '___');
+      // If any option contains [blank], strip [blank] and everything after it from each
+      // option (clean trailing connectors), emit a clean qualitative picklist, then emit
+      // ONE tabable fill-in field after the picklist with NO suffix text in the RTF body.
+      // The fill-in's <name> carries the descriptive hint (e.g. "mm, approximately % canal compromise").
+      // Radiologist skips the fill-in when the selected option makes it irrelevant — no stray
+      // text is saved in the report.
       const blankRx = /\[blank\]/i;
-      const hasLiftable = seg.opts.some(o => { const m = blankRx.exec(o); return m && m.index > 0; });
+      const hasEmbeddedBlank = seg.opts.some(o => blankRx.test(o));
 
-      if (hasLiftable) {
-        // Build prefix options (text before the first [blank] in each option)
+      if (hasEmbeddedBlank) {
+        // Strip [blank] + everything after it; clean trailing connectors/whitespace
+        function cleanPfx(s) {
+          return s.replace(/\s*[,—\-–:;]\s*$/, '').trim();
+        }
         const prefixOpts = seg.opts.map(o => {
           const m = blankRx.exec(o);
-          if (!m) return o;           // no blank — keep whole option
-          if (m.index === 0) return co(o); // blank at start — substitute ___
-          return o.slice(0, m.index); // text before first blank (may have trailing space)
+          if (!m) return o;                          // no blank in this option — keep as-is
+          const pfx = cleanPfx(o.slice(0, m.index));
+          return pfx || 'present';                   // blank-at-start → fallback label
         });
 
-        // Use the first liftable option as the template for interstitial text
-        const tmpl = seg.opts.find(o => { const m = blankRx.exec(o); return m && m.index > 0; });
-        // Split template on [blank] → parts[0]=prefix (ignored), parts[1..n]=text after each blank
-        const afterParts = tmpl.split(blankRx).slice(1);
+        // Derive fill-in description from the suffix of the first option that has [blank]
+        const tmpl = seg.opts.find(o => blankRx.test(o)) || '';
+        const afterBlank = tmpl.split(blankRx).slice(1).join('...');
+        const fillDesc = afterBlank.replace(/^[\s,;:—\-–]+/, '').trim();
 
-        // Emit picklist with prefix options
+        // Emit picklist with clean prefix options
         const start = pos;
-        toCf2();
-        writ(prefixOpts[0]);
+        toCf2(); writ(prefixOpts[0]);
         const defLen = prefixOpts[0].length;
         if (prefixOpts.length > 1) {
           toCf1();
@@ -3901,23 +3904,20 @@ function buildPS360RTF(macroText) {
                       name: prefixOpts[0].slice(0, 100), def: prefixOpts[0], choices: prefixOpts });
         tsRanges.push({ type: 3, start, len: defLen });
 
-        // Emit a tabable fill-in + interstitial text for each [blank] in the template
-        for (const after of afterParts) {
-          blankN++;
-          const blkStart = pos;
-          toCf2();
-          body += '___'; pos += 3;
-          fields.push({ type: 1, start: blkStart, len: 3, name: `blank_${blankN}`, def: '' });
-          tsRanges.push({ type: 1, start: blkStart, len: 3 });
-          if (after.length > 0) { toCf1(); writ(after); }
-        }
+        // Emit ONE tabable fill-in — no suffix text emitted to RTF body
+        blankN++;
+        const blkStart = pos;
+        toCf2(); body += '___'; pos += 3;
+        fields.push({ type: 1, start: blkStart, len: 3,
+                      name: (fillDesc || `blank_${blankN}`).slice(0, 255), def: '' });
+        tsRanges.push({ type: 1, start: blkStart, len: 3 });
 
       } else {
-        // No liftable blank — standard picklist with ___ substitution
+        // Standard picklist — no embedded [blank], use ___ substitution only
+        const co = s => s.replace(/\[blank\]/gi, '___');
         const cleanOpts = seg.opts.map(co);
         const start = pos;
-        toCf2();
-        writ(cleanOpts[0]);
+        toCf2(); writ(cleanOpts[0]);
         const defLen = cleanOpts[0].length;
         if (cleanOpts.length > 1) {
           toCf1();
