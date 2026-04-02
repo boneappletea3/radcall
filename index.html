@@ -1842,7 +1842,7 @@ async function _loadSection(id) {
   // Show spinner
   sec.innerHTML = '<div class="lazy-spinner"><div class="lazy-dot"></div><div class="lazy-dot"></div><div class="lazy-dot"></div></div>';
   try {
-    const r = await fetch('sections/' + id + '.html?v=12');
+    const r = await fetch('sections/' + id + '.html?v=13');
     if (!r.ok) throw new Error('HTTP ' + r.status);
     sec.innerHTML = await r.text();
     sec.dataset.loaded = '1';
@@ -2344,6 +2344,8 @@ const searchIndex = [
   { q: 'liver transplant ultrasound hepatic artery thrombosis tardus parvus', section: 'us', label: 'Liver Transplant — Ultrasound' },
   { q: 'ob obstetric first trimester viability ectopic pregnancy pul unknown location', section: 'us', label: 'OB / First Trimester — Ultrasound' },
   { q: 'carotid ica stenosis psv nascet', section: 'us', label: 'Carotid — Ultrasound' },
+  { q: 'scrotal emergency testicular torsion epididymitis orchitis varicocele rupture hematocele trauma penile fracture priapism Fournier acute scrotum appendage', section: 'us', topic: 'u-scrotal', label: 'Scrotal Emergencies — Ultrasound' },
+  { q: 'testicular torsion whirlpool sign spermatic cord doppler flow bell clapper salvage', section: 'us', topic: 'u-torsion-us', label: 'Testicular Torsion — Ultrasound' },
   { q: 'neonate lines tubes uac uvc ett neonatal', section: 'peds', label: 'Lines & Tubes — Pediatrics' },
   { q: 'non accidental trauma nat child abuse fractures posterior rib metaphyseal', section: 'peds', label: 'NAT — Pediatrics' },
   { q: 'salter harris physeal fracture growth plate pediatric', section: 'peds', topic: 'p-salter', label: 'Salter-Harris — Pediatrics' },
@@ -2556,7 +2558,8 @@ const NAV_TREE = {
       { label: 'Retroperitoneal normals', id: 'u-retro2' },
       { label: 'Renal transplant', id: 'u-retro' },
     ]},
-    { label: 'Other', first: 'u-torsion-us', topics: [
+    { label: 'Other', first: 'u-scrotal', topics: [
+      { label: 'Scrotal emergencies', id: 'u-scrotal' },
       { label: 'Testicular torsion', id: 'u-torsion-us' },
     ]},
   ],
@@ -4036,7 +4039,7 @@ async function _preIndexBackground() {
     if (!sec || sec.dataset.searchIndexed) continue;
     if (sec.dataset.loaded) { _indexSectionContent(id, sec); continue; }
     try {
-      const r = await fetch('sections/' + id + '.html?v=12');
+      const r = await fetch('sections/' + id + '.html?v=13');
       if (!r.ok) continue;
       const tmp = document.createElement('div');
       tmp.innerHTML = await r.text();
