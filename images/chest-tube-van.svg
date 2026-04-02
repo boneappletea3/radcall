@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 460" font-family="'IBM Plex Sans', system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </linearGradient>
+  </defs>
+  <rect width="700" height="460" fill="url(#bg)" rx="16"/>
+  <text x="350" y="32" text-anchor="middle" fill="#38bdf8" font-size="15" font-weight="700" letter-spacing="0.06em">CHEST TUBE — INTERCOSTAL VAN ANATOMY</text>
+
+  <!-- ═══ LEFT PANEL: Rib cross-section ═══ -->
+  <text x="200" y="56" text-anchor="middle" fill="#94a3b8" font-size="11">Cross-Section: Chest Wall</text>
+
+  <!-- Background panel -->
+  <rect x="30" y="68" width="345" height="360" rx="14" fill="#0f172a" stroke="#243041" stroke-width="1.5"/>
+
+  <!-- SUPERIOR RIB -->
+  <rect x="48" y="84" width="310" height="58" rx="8" fill="#e2e8f0" opacity="0.12" stroke="#cbd5e1" stroke-width="1.5" stroke-opacity="0.5"/>
+  <text x="205" y="118" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="700" opacity="0.65">SUPERIOR RIB</text>
+
+  <!-- Neurovascular groove (inferior border of superior rib) -->
+  <rect x="48" y="142" width="310" height="36" rx="0" fill="#ef4444" opacity="0.09" stroke="#ef4444" stroke-width="1" stroke-opacity="0.45" stroke-dasharray="5,3"/>
+  <text x="205" y="164" text-anchor="middle" fill="#fca5a5" font-size="9" font-weight="600">⚠ NEUROVASCULAR GROOVE (inferior rib border)</text>
+
+  <!-- VAN circles at inferior border -->
+  <circle cx="110" cy="148" r="12" fill="#1e40af" opacity="0.45" stroke="#38bdf8" stroke-width="2"/>
+  <text x="110" y="153" text-anchor="middle" fill="#93c5fd" font-size="11" font-weight="800">V</text>
+  <text x="110" y="138" text-anchor="middle" fill="#7dd3fc" font-size="9">Vein</text>
+
+  <circle cx="148" cy="148" r="12" fill="#7f1d1d" opacity="0.45" stroke="#ef4444" stroke-width="2"/>
+  <text x="148" y="153" text-anchor="middle" fill="#fca5a5" font-size="11" font-weight="800">A</text>
+  <text x="148" y="138" text-anchor="middle" fill="#fca5a5" font-size="9">Artery</text>
+
+  <circle cx="186" cy="148" r="12" fill="#78350f" opacity="0.45" stroke="#f59e0b" stroke-width="2"/>
+  <text x="186" y="153" text-anchor="middle" fill="#fcd58e" font-size="11" font-weight="800">N</text>
+  <text x="186" y="138" text-anchor="middle" fill="#fcd58e" font-size="9">Nerve</text>
+
+  <!-- Intercostal muscle / space label -->
+  <text x="205" y="210" text-anchor="middle" fill="#475569" font-size="10" font-style="italic">Intercostal muscle + space</text>
+
+  <!-- Pleura line -->
+  <line x1="48" y1="255" x2="355" y2="255" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="8,4"/>
+  <text x="362" y="259" fill="#7dd3fc" font-size="9">Pleura</text>
+
+  <!-- SAFE ZONE above inferior rib -->
+  <rect x="48" y="263" width="310" height="34" rx="0" fill="#22c55e" opacity="0.09" stroke="#22c55e" stroke-width="1" stroke-opacity="0.5" stroke-dasharray="5,3"/>
+  <text x="205" y="284" text-anchor="middle" fill="#86efac" font-size="9" font-weight="700">✓ SAFE ZONE — Enter ABOVE inferior rib</text>
+
+  <!-- INFERIOR RIB -->
+  <rect x="48" y="297" width="310" height="58" rx="8" fill="#e2e8f0" opacity="0.12" stroke="#cbd5e1" stroke-width="1.5" stroke-opacity="0.5"/>
+  <text x="205" y="331" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="700" opacity="0.65">INFERIOR RIB</text>
+
+  <!-- Correct needle (green) — enters from below, stops in safe zone -->
+  <line x1="300" y1="420" x2="300" y2="280" stroke="#22c55e" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+  <polygon points="300,272 292,287 308,287" fill="#22c55e" opacity="0.9"/>
+  <circle cx="300" cy="422" r="5" fill="#22c55e" opacity="0.55"/>
+  <text x="314" y="398" fill="#86efac" font-size="9" font-weight="700">NEEDLE</text>
+  <text x="314" y="410" fill="#86efac" font-size="9" font-weight="700">ENTRY</text>
+
+  <!-- Wrong needle (red dashed) — aimed at VAN zone -->
+  <line x1="255" y1="420" x2="196" y2="164" stroke="#ef4444" stroke-width="2" stroke-linecap="round" opacity="0.5" stroke-dasharray="7,4"/>
+  <text x="182" y="158" fill="#ef4444" font-size="18" font-weight="900" opacity="0.8">✕</text>
+
+  <!-- ═══ RIGHT PANEL ═══ -->
+
+  <!-- VAN Rule summary -->
+  <rect x="393" y="68" width="278" height="178" rx="14" fill="#1e293b" opacity="0.65" stroke="#243041" stroke-width="1.5"/>
+  <text x="532" y="93" text-anchor="middle" fill="#38bdf8" font-size="14" font-weight="700">VAN RULE</text>
+  <text x="532" y="109" text-anchor="middle" fill="#64748b" font-size="10">Runs inferior to each rib in neurovascular groove</text>
+
+  <!-- V -->
+  <circle cx="416" cy="136" r="12" fill="#1e40af" opacity="0.4" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="416" y="141" text-anchor="middle" fill="#93c5fd" font-size="11" font-weight="800">V</text>
+  <text x="436" y="141" fill="#7dd3fc" font-size="11" font-weight="600">— Intercostal Vein</text>
+
+  <!-- A -->
+  <circle cx="416" cy="167" r="12" fill="#7f1d1d" opacity="0.4" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="416" y="172" text-anchor="middle" fill="#fca5a5" font-size="11" font-weight="800">A</text>
+  <text x="436" y="172" fill="#fca5a5" font-size="11" font-weight="600">— Intercostal Artery</text>
+
+  <!-- N -->
+  <circle cx="416" cy="198" r="12" fill="#78350f" opacity="0.4" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="416" y="203" text-anchor="middle" fill="#fcd58e" font-size="11" font-weight="800">N</text>
+  <text x="436" y="203" fill="#fcd58e" font-size="11" font-weight="600">— Intercostal Nerve</text>
+
+  <text x="532" y="234" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">→ Always enter ABOVE lower rib</text>
+
+  <!-- Paravertebral exception -->
+  <rect x="393" y="262" width="278" height="150" rx="14" fill="#1e293b" opacity="0.65" stroke="#f59e0b" stroke-width="1.5" stroke-opacity="0.6"/>
+  <text x="532" y="287" text-anchor="middle" fill="#f59e0b" font-size="12" font-weight="700">⚠ PARAVERTEBRAL EXCEPTION</text>
+  <line x1="406" y1="295" x2="658" y2="295" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.3"/>
+  <text x="406" y="313" fill="#94a3b8" font-size="10">In the paravertebral region, the</text>
+  <text x="406" y="329" fill="#fca5a5" font-size="10" font-weight="700">posterior intercostal artery courses</text>
+  <text x="406" y="345" fill="#fca5a5" font-size="10" font-weight="700">MID-INTERCOSTAL (not sub-rib)</text>
+  <text x="406" y="368" fill="#94a3b8" font-size="10">→ Avoid unguided paravertebral access</text>
+  <text x="406" y="384" fill="#94a3b8" font-size="10">   Use CT/US guidance for posterolateral</text>
+
+  <!-- Bottom rule summary -->
+  <rect x="30" y="438" width="640" height="14" rx="7" fill="#22c55e" opacity="0.06" stroke="#22c55e" stroke-width="1" stroke-opacity="0.3"/>
+  <text x="350" y="449" text-anchor="middle" fill="#64748b" font-size="9">Rule: Insert superior to inferior rib · Exception: paravertebral space (posterior intercostal artery is mid-intercostal)</text>
+</svg>
