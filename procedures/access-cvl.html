@@ -91,6 +91,13 @@
     .step-list { display: grid; gap: 12px; }
     .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
     .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step-img-toggle { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 5px 10px; border-radius: 8px; border: 1px solid rgba(56,189,248,.2); background: rgba(56,189,248,.06); color: var(--accent); font-size: .82rem; font-weight: 600; cursor: pointer; transition: .15s; }
+    .step-img-toggle:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.35); }
+    .step-img-toggle .arrow { transition: transform .2s; font-size: .7rem; }
+    .step-img-toggle.open .arrow { transform: rotate(90deg); }
+    .step-img-panel { display: none; margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
+    .step-img-panel.open { display: block; }
+    .step-img-panel img { width: 100%; display: block; border-radius: 12px; }
     .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
     .muted { color: var(--muted); }
     .problem-grid { display: grid; gap: 12px; }

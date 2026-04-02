@@ -91,6 +91,13 @@
     .step-list { display: grid; gap: 12px; }
     .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
     .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step-img-toggle { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 5px 10px; border-radius: 8px; border: 1px solid rgba(56,189,248,.2); background: rgba(56,189,248,.06); color: var(--accent); font-size: .82rem; font-weight: 600; cursor: pointer; transition: .15s; }
+    .step-img-toggle:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.35); }
+    .step-img-toggle .arrow { transition: transform .2s; font-size: .7rem; }
+    .step-img-toggle.open .arrow { transform: rotate(90deg); }
+    .step-img-panel { display: none; margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
+    .step-img-panel.open { display: block; }
+    .step-img-panel img { width: 100%; display: block; border-radius: 12px; }
     .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
     .muted { color: var(--muted); }
     .problem-grid { display: grid; gap: 12px; }
@@ -312,7 +319,8 @@
                 <div class="step"><div class="step-num">4</div><div><h4>Plan needle path</h4><div class="muted">Shortest straight path. Include normal parenchyma in trajectory. Subcostal preferred. If intercostal, stay above superior rib margin. Visualize full shaft in single plane on US.</div></div></div>
                 <div class="step"><div class="step-num">5</div><div><h4>Local anesthesia</h4><div class="muted">Infiltrate 1% lidocaine from skin to peritoneal lining. Give special attention to the capsule — inject at capsule and let dwell before advancing.</div></div></div>
                 <div class="step"><div class="step-num">6</div><div><h4>Breath-hold before insertion</h4><div class="muted">Ask patient to breath-hold in expiration before inserting the coaxial introducer. This reduces liver excursion and improves targeting accuracy.</div></div></div>
-                <div class="step"><div class="step-num">7</div><div><h4>Advance coaxial introducer</h4><div class="muted">Advance to target under real-time US or stepwise CT guidance. Confirm position just beyond capsule. Ask patient to breathe normally once introducer is parked. Re-confirm position.
+                <div class="step"><div class="step-num">7</div><div><h4>Advance coaxial introducer</h4><div class="muted">Advance to target under real-time US or stepwise CT guidance. Confirm position just beyond capsule. Ask patient to breathe normally once introducer is parked. Re-confirm position.</div></div></div>
+                <div class="step"><div class="step-num">8</div><div><h4>FNA (if being performed) + core biopsy</h4><div class="muted">FNA with 22g Chiba (apply suction, jiggle/rotate) if planned, then core biopsy with 18g device. Obtain 2&ndash;3 cores per target. Target tumor periphery — avoid necrotic center. For mixed solid/cystic lesions: biopsy solid component; aspirate cyst separately.
                   <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')">
                     <span class="arrow">&#9654;</span> View needle positioning
                   </div>
@@ -320,7 +328,6 @@
                     <img src="../images/Non_Target_US_Liver_Biopsy_Needle.jpg" alt="Ultrasound showing biopsy needle positioned in liver target" loading="lazy">
                   </div>
                 </div></div></div>
-                <div class="step"><div class="step-num">8</div><div><h4>FNA (if being performed) + core biopsy</h4><div class="muted">FNA with 22g Chiba (apply suction, jiggle/rotate) if planned, then core biopsy with 18g device. Obtain 2&ndash;3 cores per target. Target tumor periphery — avoid necrotic center. For mixed solid/cystic lesions: biopsy solid component; aspirate cyst separately.</div></div></div>
                 <div class="step"><div class="step-num">9</div><div><h4>Tract embolization and withdrawal</h4><div class="muted">Optional Gelfoam embolization through coaxial sheath on withdrawal — consider in cirrhotic patients or large tracts. Apply sterile dressing. Document number of passes and gross specimen appearance.
                   <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')">
                     <span class="arrow">&#9654;</span> View post-biopsy US
