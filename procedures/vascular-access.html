@@ -6,48 +6,32 @@
   <title>Central Venous Access — RadCall Procedure Guide</title>
   <style>
     :root {
-      --bg: #0d1117;
-      --panel: #111827;
-      --panel-2: #0f172a;
-      --border: #243041;
-      --text: #e5e7eb;
-      --muted: #94a3b8;
-      --accent: #38bdf8;
-      --accent-2: #f59e0b;
-      --success: #22c55e;
-      --danger: #ef4444;
-      --chip: #1e293b;
-      --shadow: 0 18px 40px rgba(0,0,0,.28);
-      --radius: 18px;
-      --radius-sm: 12px;
-      --max: 1200px;
+      --bg: #0d1117; --panel: #111827; --panel-2: #0f172a; --border: #243041;
+      --text: #e5e7eb; --muted: #94a3b8; --accent: #38bdf8; --accent-2: #f59e0b;
+      --success: #22c55e; --danger: #ef4444; --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28); --radius: 18px; --radius-sm: 12px; --max: 1200px;
       --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
-      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
     }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0; font-family: var(--font);
-      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
-      color: var(--text); line-height: 1.5;
-    }
+    * { box-sizing: border-box; } html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: var(--font); background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%); color: var(--text); line-height: 1.5; }
     a { color: inherit; }
     .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
-
-    /* ── Topbar ── */
     .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
     .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
     .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
     .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
     .back-link:hover { color: var(--accent); }
-
-    /* ── Header ── */
     .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
     .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
     h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
     .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
-
-    /* ── Sections ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
     .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
     .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
     .section-header:hover { background: rgba(56,189,248,.03); }
@@ -58,29 +42,18 @@
     .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
     .section-body { padding: 20px; }
     .section.collapsed .section-body { display: none; }
-
-    /* ── Components ── */
     .two-col { display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
     .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
     .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
     .list li { padding-left: 18px; position: relative; }
     .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
-    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
-    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
     .muted { color: var(--muted); }
-    .danger { color: #fecaca; }
-    .success { color: #bbf7d0; }
     .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
-
-    /* ── Fluid table ── */
     .fluid-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
     .fluid-table th, .fluid-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
     .fluid-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
     .fluid-table tr:hover td { background: rgba(56,189,248,.04); }
-
-    /* ── Hub-specific ── */
-    .hub-content { max-width: 900px; margin: 0 auto; display: grid; gap: 18px; }
     .hub-link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 8px; }
     .hub-link-card { text-decoration: none; display: flex; align-items: center; gap: 14px; padding: 18px; border-radius: 16px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); transition: .18s; }
     .hub-link-card:hover { border-color: rgba(56,189,248,.3); background: rgba(56,189,248,.04); }
@@ -90,17 +63,14 @@
     .hub-card-title { font-weight: 700; font-size: 1rem; }
     .hub-card-meta { font-size: .85rem; color: var(--muted); }
     .coming-badge { display: inline-flex; padding: 3px 8px; border-radius: 6px; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; background: rgba(245,158,11,.12); color: #fcd58e; margin-left: 8px; }
-
-    @media (max-width: 760px) { .two-col { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+    @media (max-width: 1080px) { .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .two-col, .hub-link-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
   </style>
 </head>
 <body>
   <div class="shell">
     <div class="topbar">
-      <a class="brand" href="../index.html">
-        <div class="brand-mark">R</div>
-        <div>RadCall Procedure Guide</div>
-      </a>
+      <a class="brand" href="../index.html"><div class="brand-mark">R</div><div>RadCall Procedure Guide</div></a>
       <a class="back-link" href="../index.html" onclick="history.back(); return false;">&larr; Back to RadCall</a>
     </div>
 
@@ -110,201 +80,133 @@
       <p class="subhead">Image-guided placement of central venous catheters for medication delivery, dialysis, hemodynamic monitoring, and long-term vascular access.</p>
     </header>
 
-    <div class="hub-content">
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#shared-principles">1. Shared Principles</a></li>
+          <li><a href="#contraindications">2. Contraindications</a></li>
+          <li><a href="#complications">3. Complications</a></li>
+          <li><a href="#procedures">4. Procedures</a></li>
+        </ul>
+      </aside>
 
-      <!-- 1 ── What Belongs Here ── -->
-      <div class="section" id="what-belongs">
-        <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-          <div class="section-title-wrap">
-            <div class="section-index">1</div>
-            <div><h3>What Belongs Here</h3></div>
+      <main class="content">
+        <!-- 1 ── Shared Principles ── -->
+        <section class="section" id="shared-principles">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Shared Principles</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
           </div>
-          <span class="collapse-arrow">&#9662;</span>
-        </div>
-        <div class="section-body">
-          <p>This family covers all image-guided central venous catheter placements performed by IR. Includes non-tunneled temporary central lines, tunneled dialysis catheters, peripherally inserted central catheters (PICCs), and implantable subcutaneous ports. All share the fundamental principle of US-guided venous access and Seldinger technique, but differ in catheter type, tunnel creation, target vessel, and intended duration of use.</p>
-        </div>
-      </div>
-
-      <!-- 2 ── Shared Principles ── -->
-      <div class="section" id="shared-principles">
-        <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-          <div class="section-title-wrap">
-            <div class="section-index">2</div>
-            <div><h3>Shared Principles</h3></div>
-          </div>
-          <span class="collapse-arrow">&#9662;</span>
-        </div>
-        <div class="section-body">
-          <div class="two-col">
-            <div class="panel">
-              <h4>Venous Access Fundamentals</h4>
-              <ul class="list">
-                <li>US-guided access is standard of care &mdash; dramatically reduces complications vs landmark technique</li>
-                <li>Common access veins: internal jugular (preferred for tunneled catheters, ports), subclavian (ports, some tunneled), femoral (temporary access, emergent), basilic/brachial (PICC)</li>
-                <li>Seldinger technique: needle access &rarr; guidewire &rarr; dilator &rarr; catheter/sheath</li>
-                <li>Tip position: SVC-RA junction for most central catheters; confirm with fluoroscopy or post-procedure CXR</li>
-                <li>Micropuncture access (21G needle + 0.018&Prime; wire) reduces arterial puncture complications</li>
-                <li>Always confirm venous access with US before dilation &mdash; arterial dilation is a serious complication</li>
-              </ul>
-            </div>
-            <div class="panel">
-              <h4>Planning &amp; Safety</h4>
-              <ul class="list">
-                <li>Review prior imaging for venous stenosis/occlusion (especially in patients with prior lines)</li>
-                <li>Avoid placing lines through infected skin or into infected veins</li>
-                <li>Left-sided IJ/subclavian access: avoid if patient may need AV fistula (preserves vasculature)</li>
-                <li>For tunneled catheters: plan tunnel tract, ensure adequate subcutaneous tissue, avoid breast tissue in women</li>
-                <li>For ports: port pocket should be comfortable, accessible, over bony prominence (for needle stabilization)</li>
-                <li>ECG-guided tip positioning is an alternative to fluoroscopy for PICCs</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 3 ── Common Supplies ── -->
-      <div class="section" id="common-supplies">
-        <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-          <div class="section-title-wrap">
-            <div class="section-index">3</div>
-            <div><h3>Common Supplies</h3></div>
-          </div>
-          <span class="collapse-arrow">&#9662;</span>
-        </div>
-        <div class="section-body">
-          <div class="chip-row">
-            <span class="chip">Ultrasound + linear probe</span>
-            <span class="chip">Sterile probe cover</span>
-            <span class="chip">ChloraPrep/Betadine</span>
-            <span class="chip">Sterile drapes/gown/gloves</span>
-            <span class="chip">1% lidocaine</span>
-            <span class="chip">Micropuncture access kit (21G needle + 0.018&Prime; wire)</span>
-            <span class="chip">0.035&Prime; guidewire</span>
-            <span class="chip">Dilators</span>
-            <span class="chip">Fluoroscopy (for tip confirmation)</span>
-            <span class="chip">Suture (silk or nylon)</span>
-            <span class="chip">Sterile dressing (Tegaderm/StatLock)</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 4 ── Contraindications & Bleeding Risk ── -->
-      <div class="section" id="contraindications">
-        <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-          <div class="section-title-wrap">
-            <div class="section-index">4</div>
-            <div><h3>Contraindications &amp; Bleeding Risk</h3></div>
-          </div>
-          <span class="collapse-arrow">&#9662;</span>
-        </div>
-        <div class="section-body">
-          <div class="two-col">
-            <div class="panel">
-              <h4>General Contraindications</h4>
-              <ul class="list">
-                <li><strong>Absolute:</strong> Uncorrectable coagulopathy (for tunneled/port), SVC occlusion (bilateral), overlying skin infection</li>
-                <li><strong>Relative:</strong> Anticoagulation, ipsilateral venous stenosis/thrombosis, prior radiation to access site, contralateral pneumothorax (avoid bilateral subclavian attempts)</li>
-              </ul>
-            </div>
-            <div class="panel">
-              <h4>SIR Bleeding Risk</h4>
-              <table class="fluid-table">
-                <thead>
-                  <tr><th>Procedure</th><th>SIR Category</th><th>INR</th><th>Platelets</th></tr>
-                </thead>
-                <tbody>
-                  <tr><td>Non-tunneled central line</td><td>Cat 2</td><td>&lt;1.5</td><td>&gt;50K</td></tr>
-                  <tr><td>Tunneled dialysis catheter</td><td>Cat 2</td><td>&lt;1.5</td><td>&gt;50K</td></tr>
-                  <tr><td>PICC</td><td>Cat 1</td><td>&lt;3.0</td><td>&gt;20K</td></tr>
-                  <tr><td>Port placement</td><td>Cat 3</td><td>&lt;1.5</td><td>&gt;50K</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 5 ── Shared Complications ── -->
-      <div class="section" id="complications">
-        <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-          <div class="section-title-wrap">
-            <div class="section-index">5</div>
-            <div><h3>Shared Complications</h3></div>
-          </div>
-          <span class="collapse-arrow">&#9662;</span>
-        </div>
-        <div class="section-body">
-          <div class="two-col">
-            <div class="panel">
-              <h4>Immediate</h4>
-              <ul class="list">
-                <li><strong>Arterial puncture</strong> &mdash; most common serious complication; hold pressure; if dilated, may require surgical/endovascular repair</li>
-                <li><strong>Pneumothorax</strong> &mdash; IJ/subclavian access; US guidance reduces risk; obtain CXR post</li>
-                <li><strong>Air embolism</strong> &mdash; keep patient in Trendelenburg; occlude hub when open</li>
-                <li><strong>Arrhythmia</strong> &mdash; wire in right atrium; withdraw wire if sustained</li>
-                <li><strong>Catheter malposition</strong> &mdash; confirm with fluoroscopy; reposition as needed</li>
-              </ul>
-            </div>
-            <div class="panel">
-              <h4>Delayed</h4>
-              <ul class="list">
-                <li><strong>Catheter-related infection / line sepsis</strong> &mdash; most common long-term complication</li>
-                <li><strong>Venous thrombosis / stenosis</strong> &mdash; especially with long-term catheters</li>
-                <li><strong>Catheter fracture / embolization (ports)</strong> &mdash; from pinch-off at costoclavicular space</li>
-                <li><strong>Fibrin sheath formation</strong> &mdash; impairs function; can strip with snare</li>
-                <li><strong>Port pocket infection / erosion</strong></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 6 ── Procedures in This Family ── -->
-      <div class="section" id="procedures">
-        <div class="section-header" style="cursor: default;">
-          <div class="section-title-wrap">
-            <div class="section-index">6</div>
-            <div><h3>Procedures in This Family</h3></div>
-          </div>
-        </div>
-        <div class="section-body">
-          <div class="hub-link-grid">
-            <a class="hub-link-card coming-soon" href="#">
-              <div class="hub-card-icon">&#9651;</div>
-              <div class="hub-card-body">
-                <div class="hub-card-title">Non-Tunneled Central Line <span class="coming-badge">Coming Soon</span></div>
-                <div class="hub-card-meta">US-guided &middot; SIR Cat 2</div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Venous Access Fundamentals</h4>
+                <ul class="list">
+                  <li>US-guided access is standard of care &mdash; dramatically reduces complications vs landmark technique</li>
+                  <li><strong>Common access veins:</strong> Internal jugular (preferred for tunneled catheters, ports), subclavian (ports, some tunneled), femoral (temporary, emergent), basilic/brachial (PICC)</li>
+                  <li><strong>Seldinger technique:</strong> Needle access &rarr; guidewire &rarr; dilator &rarr; catheter/sheath</li>
+                  <li><strong>Tip position:</strong> SVC&ndash;RA junction for most central catheters; confirm with fluoroscopy or post-procedure CXR</li>
+                  <li><strong>Micropuncture access</strong> (21G needle + 0.018&Prime; wire) reduces arterial puncture complications</li>
+                  <li>Always confirm venous access with US before dilation &mdash; arterial dilation is a serious complication</li>
+                </ul>
               </div>
-            </a>
-            <a class="hub-link-card coming-soon" href="#">
-              <div class="hub-card-icon">&#9651;</div>
-              <div class="hub-card-body">
-                <div class="hub-card-title">Tunneled Dialysis Catheter <span class="coming-badge">Coming Soon</span></div>
-                <div class="hub-card-meta">US/fluoro-guided &middot; SIR Cat 2</div>
+              <div class="panel">
+                <h4>Planning &amp; Safety</h4>
+                <ul class="list">
+                  <li>Review prior imaging for venous stenosis/occlusion (especially with prior lines)</li>
+                  <li>Avoid placing lines through infected skin or into infected/thrombosed veins</li>
+                  <li>Left-sided IJ/subclavian: avoid if patient may need AV fistula (preserves vasculature)</li>
+                  <li>For tunneled catheters: plan tunnel tract, ensure adequate subcutaneous tissue, avoid breast tissue</li>
+                  <li>For ports: pocket over bony prominence for needle stabilization; comfortable and accessible</li>
+                  <li>ECG-guided tip positioning is an alternative to fluoroscopy for PICCs</li>
+                </ul>
               </div>
-            </a>
-            <a class="hub-link-card coming-soon" href="#">
-              <div class="hub-card-icon">&#9651;</div>
-              <div class="hub-card-body">
-                <div class="hub-card-title">PICC Placement <span class="coming-badge">Coming Soon</span></div>
-                <div class="hub-card-meta">US-guided &middot; SIR Cat 1</div>
-              </div>
-            </a>
-            <a class="hub-link-card coming-soon" href="#">
-              <div class="hub-card-icon">&#9651;</div>
-              <div class="hub-card-body">
-                <div class="hub-card-title">Port Placement <span class="coming-badge">Coming Soon</span></div>
-                <div class="hub-card-meta">US/fluoro-guided &middot; SIR Cat 3</div>
-              </div>
-            </a>
+            </div>
           </div>
-        </div>
-      </div>
+        </section>
 
-      <p class="footer-note">Ref: SIR Consensus Guidelines 2019 &middot; ACR-SIR Practice Parameters.</p>
+        <!-- 2 ── Contraindications & Bleeding Risk ── -->
+        <section class="section" id="contraindications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Contraindications &amp; Bleeding Risk</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>General Contraindications</h4>
+                <ul class="list">
+                  <li><strong>Absolute:</strong> Uncorrectable coagulopathy (for tunneled/port), SVC occlusion (bilateral), overlying skin infection</li>
+                  <li><strong>Relative:</strong> Anticoagulation, ipsilateral venous stenosis/thrombosis, prior radiation to access site, contralateral pneumothorax (avoid bilateral subclavian attempts)</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>SIR Bleeding Risk</h4>
+                <table class="fluid-table">
+                  <thead><tr><th>Procedure</th><th>SIR Category</th><th>INR</th><th>Platelets</th></tr></thead>
+                  <tbody>
+                    <tr><td>Non-tunneled central line</td><td>Cat 2</td><td>&lt;1.5</td><td>&gt;50K</td></tr>
+                    <tr><td>Tunneled dialysis catheter</td><td>Cat 2</td><td>&lt;1.5</td><td>&gt;50K</td></tr>
+                    <tr><td>PICC</td><td>Cat 1</td><td>&lt;3.0</td><td>&gt;20K</td></tr>
+                    <tr><td>Port placement</td><td>Cat 3</td><td>&lt;1.5</td><td>&gt;50K</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
 
-    </div><!-- /hub-content -->
-  </div><!-- /shell -->
+        <!-- 3 ── Shared Complications ── -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Shared Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Immediate</h4>
+                <ul class="list">
+                  <li><strong>Arterial puncture</strong> &mdash; most common serious complication; hold pressure; if dilated, may require surgical/endovascular repair</li>
+                  <li><strong>Pneumothorax</strong> &mdash; IJ/subclavian access; US guidance reduces risk</li>
+                  <li><strong>Air embolism</strong> &mdash; keep patient in Trendelenburg; occlude hub when open</li>
+                  <li><strong>Arrhythmia</strong> &mdash; wire in right atrium; withdraw if sustained</li>
+                  <li><strong>Catheter malposition</strong> &mdash; confirm with fluoroscopy; reposition as needed</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Delayed</h4>
+                <ul class="list">
+                  <li><strong>Catheter-related infection / line sepsis</strong> &mdash; most common long-term complication</li>
+                  <li><strong>Venous thrombosis / stenosis</strong> &mdash; especially with long-term catheters</li>
+                  <li><strong>Catheter fracture / embolization</strong> (ports) &mdash; from pinch-off at costoclavicular space</li>
+                  <li><strong>Fibrin sheath formation</strong> &mdash; impairs function; can strip with snare</li>
+                  <li><strong>Port pocket infection / erosion</strong></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4 ── Procedures in This Family ── -->
+        <section class="section" id="procedures">
+          <div class="section-header" style="cursor:default;">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>Procedures in This Family</h3></div></div>
+          </div>
+          <div class="section-body">
+            <div class="hub-link-grid">
+              <a class="hub-link-card coming-soon" href="#"><div class="hub-card-icon">&#9651;</div><div class="hub-card-body"><div class="hub-card-title">Non-Tunneled Central Line <span class="coming-badge">Coming Soon</span></div><div class="hub-card-meta">US-guided &middot; SIR Cat 2</div></div></a>
+              <a class="hub-link-card coming-soon" href="#"><div class="hub-card-icon">&#9651;</div><div class="hub-card-body"><div class="hub-card-title">Tunneled Dialysis Catheter <span class="coming-badge">Coming Soon</span></div><div class="hub-card-meta">US/fluoro-guided &middot; SIR Cat 2</div></div></a>
+              <a class="hub-link-card coming-soon" href="#"><div class="hub-card-icon">&#9651;</div><div class="hub-card-body"><div class="hub-card-title">PICC Placement <span class="coming-badge">Coming Soon</span></div><div class="hub-card-meta">US-guided &middot; SIR Cat 1</div></div></a>
+              <a class="hub-link-card coming-soon" href="#"><div class="hub-card-icon">&#9651;</div><div class="hub-card-body"><div class="hub-card-title">Port Placement <span class="coming-badge">Coming Soon</span></div><div class="hub-card-meta">US/fluoro-guided &middot; SIR Cat 3</div></div></a>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Ref: Kandarpa K et al. Handbook of Interventional Radiologic Procedures, 5th ed. &middot; SIR Consensus Guidelines 2019 &middot; ACR-SIR Practice Parameters.</p>
+      </main>
+    </div>
+  </div>
 </body>
 </html>
