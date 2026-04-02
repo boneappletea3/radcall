@@ -1843,7 +1843,7 @@ async function _loadSection(id) {
   // Show spinner
   sec.innerHTML = '<div class="lazy-spinner"><div class="lazy-dot"></div><div class="lazy-dot"></div><div class="lazy-dot"></div></div>';
   try {
-    const r = await fetch('sections/' + id + '.html?v=23');
+    const r = await fetch('sections/' + id + '.html?v=24');
     if (!r.ok) throw new Error('HTTP ' + r.status);
     sec.innerHTML = await r.text();
     sec.dataset.loaded = '1';
@@ -2368,7 +2368,9 @@ const searchIndex = [
   { q: 'lumbar puncture spinal tap LP CSF fluoroscopy opening pressure IIH pseudotumor myelography headache', section: 'ir', topic: 'ir-procedures', label: 'Lumbar Puncture — IR Procedure' },
   { q: 'biopsy image guided core needle FNA lung liver renal bone tissue sampling percutaneous CT US', section: 'ir', topic: 'ir-procedures', label: 'Image-Guided Biopsy — IR Procedure Family' },
   { q: 'central venous access line port PICC tunneled dialysis catheter IJ subclavian Seldinger', section: 'ir', topic: 'ir-procedures', label: 'Central Venous Access — IR Procedure Family' },
+  { q: 'PICC peripherally inserted central catheter basilic brachial cephalic vein upper arm long-term IV access', section: 'ir', topic: 'ir-procedures', label: 'PICC Placement — IR Procedure' },
   { q: 'drainage abscess nephrostomy percutaneous catheter empyema fluid collection pigtail', section: 'ir', topic: 'ir-procedures', label: 'Image-Guided Drainage — IR Procedure Family' },
+  { q: 'chest tube thoracostomy pleural effusion empyema pneumothorax hemothorax pigtail tube thoracostomy pleurodesis water seal', section: 'ir', topic: 'ir-procedures', label: 'Chest Tube Placement — IR Procedure' },
   { q: 'contrast reaction anaphylaxis epinephrine treatment', section: 'contrast', label: 'Contrast Reactions — Contrast & Drugs' },
   { q: 'premedication prednisone methylprednisolone diphenhydramine', section: 'contrast', label: 'Premedication — Contrast & Drugs' },
   { q: 'iodinated contrast renal function egfr pc-aki cin', section: 'contrast', label: 'Renal & Iodinated Contrast — Contrast & Drugs' },
@@ -4056,7 +4058,7 @@ async function _preIndexBackground() {
     if (!sec || sec.dataset.searchIndexed) continue;
     if (sec.dataset.loaded) { _indexSectionContent(id, sec); continue; }
     try {
-      const r = await fetch('sections/' + id + '.html?v=23');
+      const r = await fetch('sections/' + id + '.html?v=24');
       if (!r.ok) continue;
       const tmp = document.createElement('div');
       tmp.innerHTML = await r.text();

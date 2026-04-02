@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Percutaneous Abscess Drainage — RadCall Procedure Guide</title>
+  <title>Image-Guided Percutaneous Abscess Drainage — RadCall Procedure Guide</title>
   <style>
     :root {
       --bg: #0d1117;
@@ -104,12 +104,6 @@
     .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
     .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
 
-    /* ── Drain management table ── */
-    .drain-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
-    .drain-table th, .drain-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
-    .drain-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
-    .drain-table tr:hover td { background: rgba(56,189,248,.04); }
-
     /* ── Cards system ── */
     .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
     .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
@@ -144,16 +138,6 @@
     .btn-secondary:hover { background: rgba(255,255,255,.1); }
     .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
 
-    /* ── Step image dropdown ── */
-    .step-img-toggle { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 5px 10px; border-radius: 8px; border: 1px solid rgba(56,189,248,.2); background: rgba(56,189,248,.06); color: var(--accent); font-size: .82rem; font-weight: 600; cursor: pointer; transition: .15s; }
-    .step-img-toggle:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.35); }
-    .step-img-toggle .arrow { transition: transform .2s; font-size: .7rem; }
-    .step-img-toggle.open .arrow { transform: rotate(90deg); }
-    .step-img-panel { display: none; margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
-    .step-img-panel.open { display: block; }
-    .step-img-panel img { width: 100%; display: block; border-radius: 12px; }
-    .step-img-caption { font-size: .82rem; color: var(--muted); padding: 8px 12px; background: rgba(0,0,0,.3); }
-
     /* ── Export supply button ── */
     .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
     .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
@@ -169,17 +153,17 @@
         <div class="brand-mark">R</div>
         <div>RadCall Procedure Guide</div>
       </a>
-      <a class="back-link" href="drainage.html">&larr; Image-Guided Drainage</a>
+      <a class="back-link" href="../index.html" onclick="history.back(); return false;">&larr; Back to RadCall</a>
     </div>
 
     <header class="header-card" id="top">
       <div class="eyebrow">Procedure Playbook</div>
-      <h1>Image-Guided Percutaneous Abscess / Fluid Collection Drainage</h1>
-      <p class="subhead">CT- or ultrasound-guided catheter drainage of abdominopelvic abscesses and infected fluid collections using Seldinger or trocar technique.</p>
+      <h1>Image-Guided Percutaneous Abscess Drainage</h1>
+      <p class="subhead">CT and ultrasound-guided percutaneous catheter drainage of abdominopelvic fluid collections and abscesses.</p>
       <div class="snapshot-grid">
         <div class="snapshot-card"><span class="snapshot-label">Guidance</span><div class="snapshot-value">CT / Ultrasound</div></div>
-        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--accent-2)">Moderate (SIR Cat 2–3)</div></div>
-        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Sepsis &middot; Fistula &middot; Bleeding</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--accent-2)">Moderate–High (SIR Cat 2–3)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Sepsis · Fistula · Bleeding</div></div>
         <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Broad-spectrum pre-op</div></div>
         <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">Drain output + cultures</div></div>
       </div>
@@ -191,7 +175,7 @@
         <ul class="toc">
           <li><a href="#indications">1. Indications</a></li>
           <li><a href="#preprocedure">2. Pre-Procedure</a></li>
-          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#anatomy">3. Relevant Anatomy</a></li>
           <li><a href="#technique">4. How I Do It</a></li>
           <li><a href="#troubleshooting">5. Troubleshooting</a></li>
           <li><a href="#complications">6. Complications</a></li>
@@ -202,6 +186,7 @@
       </aside>
 
       <main class="content">
+
         <!-- ═══ 1. INDICATIONS ═══ -->
         <section class="section" id="indications">
           <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
@@ -211,36 +196,36 @@
           <div class="section-body">
             <div class="two-col" style="margin-bottom:14px;">
               <div class="panel">
-                <h4>Indications for PCD</h4>
+                <h4>Indications — PCD First-Line</h4>
                 <ul class="list">
-                  <li>Symptomatic abdominopelvic abscesses, particularly &gt;5 cm (PCD provides better results than needle aspiration alone for large collections)</li>
-                  <li>Abscesses with enteric fistulas — first-line treatment; expect extended dwell times and up to 40% failure rate</li>
-                  <li>Postoperative abscesses — 81% clinical success achievable despite loculations</li>
-                  <li>Crohn's abscesses — lower threshold for PCD; bridge to reduce postoperative sepsis; enables primary anastomosis over stoma</li>
-                  <li>Diverticular abscesses — preoperative PCD can reduce postoperative sepsis</li>
-                  <li>Infected cystic tumors unresponsive to antibiotics — sepsis palliation, pain management</li>
-                  <li>Hepatic abscesses (pyogenic; post-ablation or radioembolization)</li>
-                  <li>Splenic abscesses (simple, uniloculated)</li>
+                  <li>Symptomatic abdominopelvic abscesses &gt;5 cm (PCD superior to needle aspiration alone)</li>
+                  <li>Abscesses with enteric fistulas (first-line though expect ~40% failure)</li>
+                  <li>Postoperative abscesses (81% clinical success)</li>
+                  <li>Crohn's abscesses — bridge to reduce postop sepsis, enables primary anastomosis</li>
+                  <li>Diverticular abscesses — preop PCD reduces postoperative sepsis</li>
+                  <li>Infected cystic tumors unresponsive to antibiotics (sepsis and pain palliation)</li>
+                  <li>Hepatic abscesses — pyogenic; post-ablation/radioembolization</li>
+                  <li>Splenic abscesses — simple, uniloculated</li>
                 </ul>
               </div>
               <div class="panel">
-                <h4>When NOT First-Line / Avoid PCD</h4>
-                <ul class="list">
-                  <li><strong>Grossly perforated viscus or free peritonitis</strong> — peritonitis mortality up to 60%; PCD adds risk without benefit</li>
-                  <li><strong>Acute hematoma without liquefaction</strong> — not yet drainable</li>
-                  <li><strong>Abscess without mature wall</strong></li>
-                  <li><strong>Interloop abscesses</strong> — lack safe access; treat with antibiotics ± needle aspiration or open surgery</li>
-                  <li><strong>Suspected malignant cystic mass</strong> — seeding risk; tissue diagnosis first</li>
+                <h4>Avoid / Not First-Line</h4>
+                <ul class="list danger">
+                  <li>Grossly perforated viscus / free peritonitis (mortality up to 60%; PCD adds risk)</li>
+                  <li>Acute hematoma not yet liquefied</li>
+                  <li>Abscess without a mature wall</li>
+                  <li>Interloop abscesses — no safe access; treat with antibiotics ± aspiration or surgery</li>
+                  <li>Suspected malignant cystic mass — seeding risk; tissue diagnosis first</li>
                 </ul>
               </div>
             </div>
             <div class="panel">
-              <h4>When Antibiotics ± Needle Aspiration Are Sufficient</h4>
+              <h4>Antibiotics ± Aspiration Sufficient (no catheter needed)</h4>
               <ul class="list">
-                <li>Abscesses &lt;3–4 cm — &gt;50–60% resolve with antibiotics alone</li>
-                <li>Amebic abscesses — amebicidal agents ± aspiration for refractory/large collections</li>
-                <li>Tubo-ovarian abscesses &lt;5 cm — 2/3 resolve with antibiotics; reserve PCD for complex or ruptured cases</li>
-                <li>Echinococcal cysts — specialized PAIR technique with scolicial agent required</li>
+                <li>Collections &lt;3–4 cm — &gt;50–60% resolve with antibiotics alone</li>
+                <li>Amebic abscesses — amebicidal agents ± aspiration</li>
+                <li>Tubo-ovarian abscesses &lt;5 cm — 2/3 resolve with antibiotics</li>
+                <li>Echinococcal cysts — specialized PAIR technique (not standard PCD)</li>
               </ul>
             </div>
           </div>
@@ -254,18 +239,18 @@
           </div>
           <div class="section-body">
             <div class="checklist">
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Review imaging.</strong> CT preferred for planning — map collection location, size, loculations, relationship to adjacent organs (bowel, vessels, bladder), and safest access route. Identify any fistulae.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Labs.</strong> Platelets &ge;50,000/&micro;L; INR &lt;1.5; Hgb &ge;9.0 g/dL (especially high-risk cases).</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Anticoagulation.</strong> Aspirin need not be held. Thienopyridines (clopidogrel) — hold 5 days. LMWH — hold 2–4 half-lives. Warfarin — hold 5 days. Urgent cases may proceed with blood products.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Antibiotics.</strong> Broad-spectrum IV antibiotics at least 1 hour before procedure. Typical regimens: 2nd/3rd-gen cephalosporin or ampicillin-sulbactam + aminoglycoside. Adjust per known sensitivities.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Ancillary prep for deep pelvic collections.</strong> Foley catheter for bladder decompression. Overnight oral or intraprocedural rectal contrast to opacify bowel and distinguish it from collection.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Sedation planning.</strong> IV access for medications; moderate sedation (midazolam + fentanyl preferred); MAC anesthesia for transrectal/transvaginal approaches; general anesthesia for pediatric patients.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent.</strong> Bleeding, infection/bacteremia/sepsis, injury to adjacent organs (bowel, vessels, bladder), drain dislodgement, fistula formation, incomplete drainage, need for repeat procedure or surgery.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Review imaging.</strong> CT preferred — map collection size, location, loculations, fistulae, relationships to bowel/vessels/bladder. Identify safest access route. US acceptable for superficial/large collections.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Labs (SIR Category 2–3).</strong> Platelets &ge;50K, INR &lt;1.5, Hgb &ge;9.0. Correct coagulopathy prior to procedure.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Anticoagulation holds.</strong> Aspirin — no hold. Clopidogrel — hold 5 days. LMWH — hold 2–4 half-lives. Warfarin — hold 5 days (target INR &lt;1.5). Discuss bridging with referring team for high-thrombotic-risk patients.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>IV antibiotics.</strong> Administer broad-spectrum coverage &ge;1 hour before procedure. 2nd/3rd-generation cephalosporin or ampicillin-sulbactam + aminoglycoside. Adjust per prior cultures/sensitivities if available.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Deep pelvic collections.</strong> Foley catheter for bladder decompression. Overnight oral or intraprocedural rectal contrast to distinguish bowel from collection on CT.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Sedation plan.</strong> IV access + moderate sedation (midazolam + fentanyl) for most cases. MAC for transrectal/transvaginal approaches. General anesthesia for pediatric patients.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent.</strong> Discuss: bleeding, sepsis/bacteremia, adjacent organ injury, fistula formation, drain dislodgement, incomplete drainage, need for repeat procedure or surgery.</div></div>
             </div>
           </div>
         </section>
 
-        <!-- ═══ 3. ANATOMY ═══ -->
+        <!-- ═══ 3. RELEVANT ANATOMY ═══ -->
         <section class="section" id="anatomy">
           <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
             <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
@@ -273,46 +258,29 @@
           </div>
           <div class="section-body">
             <div class="panel" style="margin-bottom:14px;">
-              <h4>Access Approach Principles</h4>
+              <h4>Approach Principles</h4>
               <ul class="list">
-                <li>Safest, most direct, shortest percutaneous route to collection</li>
-                <li>Avoid intervening organs and vital structures (arteries, veins, nerves, bowel)</li>
-                <li>Avoid contamination of sterile spaces — no transcolonic approach; exceptions: transgastric for pancreatic collections, transrectal/transvaginal for deep pelvic collections</li>
-                <li>Place catheter in most <strong>dependent</strong> portion of cavity — gravity drainage is the primary mechanism</li>
-                <li>Use angled approach to facilitate wire coiling and catheter advancement</li>
+                <li>Safest, most direct, shortest percutaneous route</li>
+                <li>Avoid vital structures — vessels, bowel, nerves</li>
+                <li>No transcolonic access (exceptions: transgastric for pancreatic collections; transrectal/transvaginal for deep pelvic)</li>
+                <li>Place catheter in <strong>most dependent portion</strong> of cavity — gravity is the primary drainage mechanism</li>
+                <li>Angled approach facilitates wire coiling and catheter advancement</li>
               </ul>
             </div>
             <div class="two-col">
               <div class="panel">
-                <h4>Subphrenic &amp; Hepatic</h4>
+                <h4>Subphrenic / Hepatic / Splenic</h4>
                 <ul class="list">
-                  <li><strong>Subphrenic:</strong> Angle needle cranially from anterior subcostal (&lt;7th rib) or lateral (&lt;10th rib). Fluoroscopic evaluation during all respiratory phases to avoid pleural transgression — risk of empyema if pleural space traversed.</li>
-                  <li><strong>Hepatic:</strong> Subcostal approach preferred. Include normal liver parenchyma in tract. Avoid gallbladder and major bile ducts. Intercostal approach for dome collections — tilt gantry to avoid pleura.</li>
+                  <li><strong>Subphrenic:</strong> Angle cranially from anterior subcostal (&lt;7th rib) or lateral (&lt;10th rib). Fluoroscopic assessment at all respiratory phases — avoid pleural transgression.</li>
+                  <li><strong>Hepatic:</strong> Subcostal preferred; include normal liver parenchyma in tract; avoid gallbladder and major bile ducts. Intercostal approach for dome collections (gantry tilt).</li>
+                  <li><strong>Splenic:</strong> Lateral/posterolateral approach; include splenic parenchyma in tract; high pneumothorax risk — plan carefully.</li>
                 </ul>
               </div>
               <div class="panel">
-                <h4>Peripancreatic &amp; Splenic</h4>
+                <h4>Peripancreatic / Deep Pelvic</h4>
                 <ul class="list">
-                  <li><strong>Peripancreatic:</strong> CT required. Inferolateral approach posterior to stomach. Avoid transgressing stomach/bowel. Pancreatic duct fistula expected in many cases.</li>
-                  <li><strong>Splenic:</strong> Lateral or posterolateral approach. Include splenic parenchyma in tract. Careful positioning — high risk of pneumothorax.</li>
-                </ul>
-              </div>
-              <div class="panel">
-                <h4>Deep Pelvic Collections</h4>
-                <ul class="list">
-                  <li>Foley catheter + rectal contrast before procedure — decompresses bladder, distinguishes bowel from collection</li>
-                  <li><strong>Transgluteal:</strong> Through greater sciatic foramen. Avoid sciatic nerve (posterolateral to neurovascular bundle).</li>
-                  <li><strong>Transvaginal:</strong> Non-menstruating women with posterior pelvic collection.</li>
-                  <li><strong>Transperineal:</strong> Alternative for presacral/perirectal collections.</li>
-                </ul>
-              </div>
-              <div class="panel">
-                <h4>Danger Structures by Location</h4>
-                <ul class="list">
-                  <li>Subphrenic: pleural space, lung base</li>
-                  <li>Hepatic: hepatic vessels, bile ducts, gallbladder</li>
-                  <li>Pelvic: sciatic nerve (transgluteal), iliac vessels, bladder, rectum</li>
-                  <li>Peripancreatic: pancreatic duct, splenic vein, SMV</li>
+                  <li><strong>Peripancreatic:</strong> CT required. Inferolateral approach posterior to stomach; avoid stomach and bowel. Pancreatic duct fistula expected — plan for prolonged drainage.</li>
+                  <li><strong>Deep pelvic:</strong> Foley + rectal contrast before access. Three approaches: transgluteal (greater sciatic foramen — avoid sciatic nerve); transvaginal (posterior pelvic in non-menstruating women); transperineal.</li>
                 </ul>
               </div>
             </div>
@@ -326,6 +294,7 @@
             <span class="collapse-arrow">&#x25BE;</span>
           </div>
           <div class="section-body">
+
             <!-- Default RadCall card -->
             <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
               <div class="card-meta">
@@ -333,40 +302,39 @@
                 <span class="badge">Default</span>
               </div>
 
-              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#128203; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#11015; Download</button></h4>
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Abscess/Fluid Collection Drainage Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#128203; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#8595; Download</button></h4>
               <div class="chip-row card-supplies">
-                <span class="chip">CT or ultrasound guidance</span>
+                <span class="chip">CT or US guidance system</span>
                 <span class="chip">21–22g micropuncture needle</span>
-                <span class="chip">0.035"–0.038" guidewire (Amplatz/Lunderquist)</span>
-                <span class="chip">Coaxial dilator system (Cope/Neff/AccuStick)</span>
-                <span class="chip">8–14 Fr pigtail locking drainage catheter</span>
-                <span class="chip">Trocar drainage kit (for large superficial collections)</span>
+                <span class="chip">0.035"–0.038" guidewire</span>
+                <span class="chip">Cope/Neff/AccuStick coaxial system</span>
+                <span class="chip">8–14Fr all-purpose drainage catheter (pigtail locking)</span>
+                <span class="chip">Trocar drainage catheter set (large/superficial alternative)</span>
                 <span class="chip">Sterile prep/drape</span>
                 <span class="chip">1% lidocaine</span>
                 <span class="chip">Drainage bag</span>
                 <span class="chip">Culture tubes (aerobic, anaerobic, AFB, fungal)</span>
-                <span class="chip">60 mL syringe</span>
-                <span class="chip">Suture for catheter security</span>
+                <span class="chip">60 mL syringe for irrigation</span>
+                <span class="chip">Moderate sedation medications</span>
               </div>
 
-              <div class="panel" style="margin: 14px 0;">
-                <h4>Seldinger vs. Trocar</h4>
+              <div class="panel" style="margin-bottom:16px;">
+                <h4>Seldinger vs. Trocar — Choose Before You Start</h4>
                 <div class="two-col">
                   <div>
-                    <p style="margin:0 0 6px;font-weight:700;color:var(--accent)">Seldinger (preferred for most)</p>
-                    <ul class="list">
-                      <li>21–22g initial needle &rarr; coaxial wire &rarr; serial dilation &rarr; drainage catheter</li>
-                      <li>Preferred for small, deep, high-risk collections</li>
-                      <li>More controlled; less pain; allows skinny-needle access confirmation before committing large catheter</li>
+                    <p style="margin:0 0 6px;"><strong style="color:var(--accent)">Seldinger</strong> — 21–22g needle &rarr; wire &rarr; serial dilation &rarr; catheter</p>
+                    <ul class="list muted" style="font-size:.93rem;">
+                      <li>Preferred for small, deep, or high-risk collections</li>
+                      <li>Less pain; allows small-needle confirmation before large catheter</li>
+                      <li>Use wire test for viscous collections</li>
                     </ul>
                   </div>
                   <div>
-                    <p style="margin:0 0 6px;font-weight:700;color:var(--accent-2)">Trocar</p>
-                    <ul class="list">
-                      <li>Combined catheter/stiffening cannula/sharp stylet advanced directly after small-gauge confirmation</li>
-                      <li>Preferred for large, superficial, simple collections</li>
-                      <li>Faster; avoids serial dilation leakage; but more painful and direct large-bore injury if misplaced</li>
-                      <li><strong>Do not use for deep pelvic or complex cases</strong></li>
+                    <p style="margin:0 0 6px;"><strong style="color:var(--accent-2)">Trocar</strong> — combined catheter/cannula/stylet advanced directly</p>
+                    <ul class="list muted" style="font-size:.93rem;">
+                      <li>Preferred for large, superficial collections</li>
+                      <li>Faster; more painful</li>
+                      <li><strong class="danger">Do NOT use for deep pelvic or complex access</strong></li>
                     </ul>
                   </div>
                 </div>
@@ -374,13 +342,13 @@
 
               <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps (Seldinger Technique)</h4>
               <div class="step-list">
-                <div class="step"><div class="step-num">1</div><div><h4>Planning scan</h4><div class="muted">CT preferred for deep/complex collections; US real-time guidance for superficial collections. Confirm collection size, location, access window, adjacent structures. Mark access site.</div></div></div>
-                <div class="step"><div class="step-num">2</div><div><h4>Prep, drape, and anesthesia</h4><div class="muted">Sterile prep and drape. Infiltrate 1% lidocaine from skin to collection wall along intended tract. Do not puncture collection wall until access needle is ready.</div></div></div>
-                <div class="step"><div class="step-num">3</div><div><h4>Access needle and fluid confirmation</h4><div class="muted">Advance 21g access needle to collection under CT/US guidance. Aspirate 5 mL — confirm appearance (pus, bile, blood, serous) and send for culture. If too viscous to aspirate: <strong>wire test</strong> — advance wire into cavity; wire assuming cavity shape confirms correct position.</div></div></div>
-                <div class="step"><div class="step-num">4</div><div><h4>Wire placement</h4><div class="muted">Advance 0.038" Amplatz or Lunderquist wire into cavity with generous loop. Remove needle. Skin incision at entry site.</div></div></div>
-                <div class="step"><div class="step-num">5</div><div><h4>Serial dilation and catheter placement</h4><div class="muted">Serially dilate over wire (2–3 Fr steps) to catheter size. Advance drainage catheter into most dependent portion of collection. Release pigtail lock to secure catheter.</div></div></div>
-                <div class="step"><div class="step-num">6</div><div><h4>Confirm position and initial aspiration</h4><div class="muted">Optional: inject 1–2 mL dilute contrast to confirm catheter is within collection, exclude fistulae, and assess collection size. Connect to drainage bag. Aspirate as much fluid as possible initially. Send fluid for culture, Gram stain, cell count, pH, amylase as appropriate.</div></div></div>
-                <div class="step"><div class="step-num">7</div><div><h4>Secure catheter</h4><div class="muted">Suture catheter to skin with loop suture and additional retention suture. Apply sterile dressing. Document drain output and character at time of placement.</div></div></div>
+                <div class="step"><div class="step-num">1</div><div><h4>Planning CT / US</h4><div class="muted">Confirm collection size, location, and access window. Identify adjacent structures. Choose Seldinger vs. trocar approach. Mark skin entry site.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Prep, drape, and local anesthesia</h4><div class="muted">Sterile prep. Mark access site. Track 1% lidocaine from skin to collection wall under CT/US guidance. Do not enter the collection with the anesthesia needle.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Access needle + aspiration</h4><div class="muted">Advance 21g access needle to collection under CT/US. Aspirate 5 mL — note appearance (pus, bile, blood, serous) and send for culture. If too viscous to aspirate: wire test — advance wire into cavity; wire assuming cavity shape confirms correct position.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Wire and dilation</h4><div class="muted">Advance 0.038" Amplatz wire into cavity with a generous loop. Remove needle. Make skin incision. Serially dilate over wire in 2–3Fr steps to desired catheter size.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Catheter placement</h4><div class="muted">Advance drainage catheter to most dependent portion of cavity. Release lock (pigtail). Confirm position with 1–2 mL dilute contrast — confirms catheter in collection, excludes fistulae, and sizes collection.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>Drainage and specimen collection</h4><div class="muted">Connect to drainage bag. Aspirate maximum fluid. Send fluid for: culture/Gram stain, cell count, pH, amylase (if peripancreatic), bilirubin (if biliary). Document fluid character.</div></div></div>
+                <div class="step"><div class="step-num">7</div><div><h4>Secure catheter</h4><div class="muted">Secure catheter with suture and locking loop suture. Apply sterile dressing. Confirm output in drainage bag. Prescribe BID 10 mL NS flush nursing orders before leaving suite.</div></div></div>
               </div>
             </div>
 
@@ -402,38 +370,38 @@
             <div class="problem">
               <div class="problem-label">Problem</div>
               <h4>Can't aspirate despite correct position (viscous pus)</h4>
-              <p class="muted"><strong>Likely cause:</strong> Collection too thick or inspissated to aspirate through small access needle.</p>
-              <p class="success"><strong>Next step:</strong> Perform wire test — advance 0.038" wire into cavity; wire taking the shape of the cavity confirms correct position. Use biliary dilator with multiple side holes to initiate drainage. Consider upsizing catheter.</p>
+              <p class="muted"><strong>Likely cause:</strong> Contents too thick to aspirate through needle. Does not mean wrong position.</p>
+              <p class="success"><strong>Next step:</strong> Wire test — advance wire; cavity shape confirms correct position. Use biliary dilator with side holes to initiate drainage. Upsize catheter if viscous output continues to be problematic.</p>
             </div>
             <div class="problem">
               <div class="problem-label">Problem</div>
               <h4>Collection not fully draining (loculated)</h4>
-              <p class="muted"><strong>Likely cause:</strong> Loculations compartmentalize the collection preventing complete drainage through a single catheter position.</p>
-              <p class="success"><strong>Next step:</strong> Gentle irrigation with normal saline (10–20 mL flush). Inject intracavitary fibrinolytics (tPA 4 mg in 30 mL saline dwell &times; 1h daily &times; 3–5 days) for loculated collections not responding to catheter alone. Consider catheter repositioning or additional catheter for multi-locular disease.</p>
+              <p class="muted"><strong>Likely cause:</strong> Fibrinous septations preventing free drainage between locules.</p>
+              <p class="success"><strong>Next step:</strong> Gentle irrigation 10–20 mL NS BID. Intracavitary tPA (4 mg/30 mL saline, dwell 1h, daily &times;3–5 days) for persistent loculations. Catheter repositioning or additional catheter placement for multilocular disease.</p>
             </div>
             <div class="problem">
               <div class="problem-label">Problem</div>
               <h4>Drain output suddenly stops</h4>
-              <p class="muted"><strong>Likely cause:</strong> Catheter occlusion by debris, kinking, or positional change.</p>
-              <p class="success"><strong>Next step:</strong> Flush catheter with 10 mL saline. If still no output — CT to confirm catheter position and collection status. May need catheter repositioning, upsizing, or additional catheter placement.</p>
+              <p class="muted"><strong>Likely cause:</strong> Catheter kinked, debris/clot in catheter, or collection resolved.</p>
+              <p class="success"><strong>Next step:</strong> Flush 10 mL saline. If still no output — CT to confirm catheter position and collection status. Reposition or upsize catheter as needed. Do not assume collection has resolved without imaging.</p>
             </div>
             <div class="problem">
               <div class="problem-label">Problem</div>
-              <h4>Drain pulling out / dislodgement</h4>
-              <p class="muted"><strong>Likely cause:</strong> Inadequate fixation, patient movement, or tube entanglement.</p>
-              <p class="success"><strong>Next step:</strong> Do not force reinsertion blindly. Obtain CT to confirm whether collection is still present. If needed — IR re-access under imaging guidance.</p>
+              <h4>Drain appears to be pulling out</h4>
+              <p class="muted"><strong>Likely cause:</strong> Suture failure, inadequate initial securing, or patient activity.</p>
+              <p class="success"><strong>Next step:</strong> Do not force reinsertion blindly. CT to confirm collection status and catheter position. IR re-access under imaging if catheter has fully dislodged and collection persists.</p>
             </div>
             <div class="problem">
               <div class="problem-label">Problem</div>
               <h4>Enteric fistula suspected (enteric contents in drain)</h4>
-              <p class="muted"><strong>Likely cause:</strong> Communication between collection and bowel — can be present at time of drainage or develop during treatment.</p>
-              <p class="success"><strong>Next step:</strong> Confirm with contrast injection through drain. Low-output fistula: continue drainage and keep NPO. High-output or persistent fistula: surgical consultation. Set expectations early — drainage dwell time measured in weeks.</p>
+              <p class="muted"><strong>Likely cause:</strong> Adjacent bowel fistula into collection or drainage catheter erosion into bowel.</p>
+              <p class="success"><strong>Next step:</strong> Contrast injection through drain to confirm. Low-output fistula — drainage + NPO/bowel rest; often closes with prolonged drainage. High-output fistula — surgical consult. Set expectations with clinical team: weeks of drainage are normal.</p>
             </div>
             <div class="problem">
               <div class="problem-label">Problem</div>
-              <h4>Patient deteriorates after drainage (sepsis, hemodynamic instability)</h4>
-              <p class="muted"><strong>Likely cause:</strong> Bacteremia from release of bacteria into circulation — expected in 5–10% within hours of drainage.</p>
-              <p class="success"><strong>Next step:</strong> Assess drain patency. Blood cultures. Escalate/broaden antibiotics. IV fluid resuscitation. Ensure drain is patent and draining. Supportive care — usually transient.</p>
+              <h4>Patient deteriorates after drainage</h4>
+              <p class="muted"><strong>Likely cause:</strong> Bacteremia/sepsis from bacterial release during collection decompression (5–10% incidence within hours).</p>
+              <p class="success"><strong>Next step:</strong> Blood cultures. Escalate antibiotics. Ensure drain is patent and draining freely. Supportive care usually sufficient if drain is working.</p>
             </div>
           </div>
         </section>
@@ -446,21 +414,20 @@
           </div>
           <div class="section-body two-col">
             <div class="panel">
-              <h4>Immediate</h4>
+              <h4>Major Complications</h4>
               <ul class="list danger">
-                <li><strong>Hemorrhage</strong> (1–4%) — most common in highly vascular locations (hepatic, splenic); observation for minor; angiography and embolization for active arterial bleed</li>
-                <li><strong>Bacteremia/Sepsis</strong> (5–10%) — release of bacteria into circulation within hours of drainage; prevention: broad-spectrum antibiotics pre-procedure; management: supportive care + antibiotics; usually transient</li>
-                <li><strong>Bowel injury</strong> (&lt;1% with CT/US guidance) — from traversing adjacent bowel; management depends on extent</li>
-                <li><strong>Pleural transgression</strong> — subphrenic collections; empyema or pneumothorax; prevention: careful respiratory phase planning; management: pleural tube if large</li>
+                <li><strong>Hemorrhage 1–4%</strong> (highest hepatic, splenic) — observation for minor; angiography/embolization for active arterial bleed</li>
+                <li><strong>Bacteremia/Sepsis 5–10%</strong> — transient within hours of drainage; prevention with pre-procedure antibiotics + hydration; usually supportive care sufficient</li>
+                <li><strong>Bowel injury &lt;1%</strong> with CT/US guidance — depends on extent; surgical consult if full-thickness</li>
+                <li><strong>Pleural transgression (subphrenic)</strong> — empyema or pneumothorax; careful respiratory-phase planning; pleural tube if large</li>
               </ul>
             </div>
             <div class="panel">
-              <h4>Delayed</h4>
+              <h4>Other Complications</h4>
               <ul class="list">
-                <li><strong>Fistula formation</strong> (10–20% with enteric-adjacent collections) — most resolve with prolonged drainage + bowel rest; surgical repair for persistent/high-output fistulae</li>
-                <li><strong>Drain dislodgement</strong> — common; prevention: secure suture lock; management: reimaging and IR re-access</li>
-                <li><strong>Incomplete drainage / treatment failure</strong> (15–25%) — risk factors: multiloculation, enteric fistula, immunosuppression; management: fibrinolytics, additional catheters, or open surgery</li>
-                <li><strong>Skin/tract infection</strong> — rare with sterile technique; local wound care; systemic antibiotics if cellulitis</li>
+                <li><strong>Fistula formation 10–20%</strong> with enteric-adjacent collections — most resolve with prolonged drainage + bowel rest; surgery for persistent/high-output</li>
+                <li><strong>Drain dislodgement (common)</strong> — prevention with secure suture lock; reimaging and IR re-access</li>
+                <li><strong>Incomplete drainage / treatment failure 15–25%</strong> — risk factors: multiloculation, enteric fistula, immunosuppression; fibrinolytics, additional catheters, or open surgery</li>
               </ul>
             </div>
           </div>
@@ -472,24 +439,33 @@
             <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Post-Procedure Care</h3></div></div>
             <span class="collapse-arrow">&#x25BE;</span>
           </div>
-          <div class="section-body two-col">
-            <div class="panel">
-              <h4>Monitoring and Response Assessment</h4>
-              <ul class="list">
-                <li>Document drain output q8h — volume and character (purulent, serous, bloody, bilious, enteric)</li>
-                <li>Flush drain BID with 10 mL NS to maintain patency (nursing orders)</li>
-                <li>Serial clinical assessment: fever curve, WBC trend, pain</li>
-                <li>Send fluid cultures at placement and at 48h if inadequate clinical response</li>
-                <li>CRP/WBC at 48–72h as objective response marker</li>
-              </ul>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:14px;">
+              <div class="panel">
+                <h4>Monitoring &amp; Labs</h4>
+                <ul class="list">
+                  <li>Document drain output every 8 hours; note character (purulent, serous, bloody, bilious, enteric)</li>
+                  <li>Send fluid cultures at placement and at 48h if inadequate clinical response</li>
+                  <li>Serial clinical assessment: fever curve, WBC trend, abdominal pain</li>
+                  <li>CRP/WBC at 48–72h as response markers</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Drain Patency</h4>
+                <ul class="list">
+                  <li>Flush drain BID with 10 mL NS to maintain patency (nursing orders)</li>
+                  <li>Upsize catheter criteria: output &lt;30 mL/24h with evidence of remaining collection — upgrade 2Fr over wire</li>
+                  <li>Discharge with drain: patient/caregiver education; home nursing setup; follow-up imaging at 2 weeks</li>
+                </ul>
+              </div>
             </div>
             <div class="panel">
-              <h4>Catheter Removal Criteria</h4>
+              <h4>Criteria for Catheter Removal</h4>
               <ul class="list">
-                <li><strong>Remove when:</strong> Output &lt;10 mL/24h &times; 2 consecutive days <em>plus</em> defervescence <em>plus</em> WBC normalizing <em>plus</em> CT confirms resolved collection or residual &lt;2 cm <em>plus</em> no fistula present</li>
-                <li><strong>Upsize when:</strong> Output &lt;30 mL/24h despite clinical evidence of remaining collection — upgrade to next 2 Fr size</li>
-                <li><strong>Do NOT</strong> remove catheter solely because output is low without imaging confirmation — residual cavity may persist despite little drainage</li>
-                <li><strong>Discharge with drain in place:</strong> Patient/caregiver education; home nursing setup; follow-up imaging at 2 weeks</li>
+                <li>Output &lt;10 mL/24h &times;2 consecutive days</li>
+                <li>Imaging confirms resolved collection (or residual &lt;2 cm)</li>
+                <li>No enteric or biliary fistula demonstrated</li>
+                <li><strong class="danger">Do NOT remove based on low output alone — always confirm with imaging before removal</strong></li>
               </ul>
             </div>
           </div>
@@ -502,16 +478,16 @@
             <span class="collapse-arrow">&#x25BE;</span>
           </div>
           <div class="section-body pearls">
-            <div class="pearl"><div class="pearl-mark">&#10086;</div><div><strong>CT for planning, US for real-time guidance:</strong> CT is preferred for planning most abdominal/pelvic abscess drainage — superior visualization of collection anatomy, access windows, and adjacent structures. Use US for real-time guidance of superficial or large collections.</div></div>
-            <div class="pearl"><div class="pearl-mark">&#10086;</div><div><strong>Antibiotics at least 1 hour pre-procedure:</strong> Bacteremia is expected in 5–10% within hours of drainage from sudden bacterial release. Broad-spectrum IV coverage before the procedure reduces but does not eliminate this risk.</div></div>
-            <div class="pearl"><div class="pearl-mark">&#10086;</div><div><strong>Seldinger for deep/high-risk; trocar for large/superficial:</strong> Do not use trocar technique for deep pelvic or complex cases — misplacement of a large-bore catheter in a confined space carries serious risk. Seldinger allows skinny-needle confirmation before committing.</div></div>
-            <div class="pearl"><div class="pearl-mark">&#10086;</div><div><strong>Wire test for viscous collections:</strong> If collection is too thick to aspirate through the access needle, advance the 0.038" wire. If the wire assumes the shape of the cavity, you are correctly positioned. Do not abandon the access — proceed with dilation.</div></div>
-            <div class="pearl"><div class="pearl-mark">&#10086;</div><div><strong>Most dependent placement:</strong> Place the catheter tip in the most dependent portion of the cavity. Gravity is the primary drainage mechanism — an anteriorly positioned catheter in a posterior collection will fail.</div></div>
-            <div class="pearl"><div class="pearl-mark">&#10086;</div><div><strong>Inject 1–2 mL contrast on initial placement:</strong> Confirms intra-cavity position, reveals unsuspected fistulae, and sizes the collection. This small confirmatory step significantly guides subsequent management.</div></div>
-            <div class="pearl"><div class="pearl-mark">&#10086;</div><div><strong>tPA fibrinolytics for loculated collections:</strong> Intracavitary tPA (4 mg in 30 mL saline, dwell &times; 1h daily &times; 3–5 days) for collections not responding after 48h significantly improves drainage and avoids surgery in many cases.</div></div>
-            <div class="pearl"><div class="pearl-mark">&#10086;</div><div><strong>Low daily output does not mean resolved:</strong> Always obtain imaging before removing a drain. Residual cavity can persist despite little external drainage. Premature removal leads to recurrence and repeat procedure.</div></div>
-            <div class="pearl"><div class="pearl-mark">&#10086;</div><div><strong>Enteric fistula extends dwell time significantly:</strong> Set expectations with the clinical team early. Drain dwell times for enteric fistulae are often weeks, not days. Up to 40% will ultimately require surgical management.</div></div>
-            <div class="pearl"><div class="pearl-mark">&#10086;</div><div><strong>Foley + rectal contrast before pelvic drainage:</strong> Bladder decompression and bowel opacification are mandatory before accessing deep pelvic collections. The investment in this preparation prevents organ injury.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2726;</div><div><strong>CT for planning; US for real-time guidance.</strong> CT preferred for most abdominal/pelvic drainage planning — superior visualization of anatomy and relationships. US for real-time guidance of superficial or large collections.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2726;</div><div><strong>Antibiotics &ge;1h before — bacteremia in 5–10% within hours of drainage.</strong> Broad-spectrum coverage is mandatory before manipulating an infected collection. Pre-treat, don't post-treat.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2726;</div><div><strong>Seldinger for deep/high-risk; trocar for large/superficial/simple.</strong> Never use trocar technique for deep pelvic collections — risk of uncontrolled injury to neurovascular structures.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2726;</div><div><strong>Wire test for viscous collections.</strong> If you can't aspirate but the position looks correct — advance a wire. Wire taking the shape of the cavity = correct position. Proceed with dilation and catheter.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2726;</div><div><strong>Catheter in most dependent portion.</strong> Gravity is the primary drainage mechanism. Position matters more than catheter size for adequate drainage of a simple collection.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2726;</div><div><strong>Inject 1–2 mL contrast through catheter after placement.</strong> Confirms intracavitary position, reveals unexpected fistulae to bowel/biliary/urinary tract, and helps size the collection for response assessment.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2726;</div><div><strong>Intracavitary tPA (4 mg dwell) for loculated collections at 48h.</strong> If collection is not resolving at 48h and loculations are suspected, intracavitary fibrinolytics change management and frequently avoid surgery. Don't wait too long to escalate.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2726;</div><div><strong>Low daily output &ne; collection resolved.</strong> Always image before removing catheter. A plugged drain with residual collection is the most common cause of clinical failure.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2726;</div><div><strong>Enteric fistula = prolonged dwell (often weeks).</strong> Set expectations early with the clinical team. Early surgery is rarely indicated. Document output character daily — feculent output is diagnostic.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2726;</div><div><strong>Pelvic collections: Foley + rectal contrast before procedure.</strong> Bladder decompression is essential. Rectal contrast distinguishes sigmoid/rectum from collection — prevents catastrophic misidentification on CT.</div></div>
           </div>
         </section>
 
@@ -522,46 +498,52 @@
             <span class="collapse-arrow">&#x25BE;</span>
           </div>
           <div class="section-body">
-            <div class="panel" style="margin-bottom:14px;">
-              <h4>Daily Assessment Protocol</h4>
-              <ul class="list">
-                <li>Document exact drain output (mL/24h) and character — purulent, serous, bloody, bilious, or enteric</li>
-                <li>Flush drain with 10 mL NS BID unless contraindicated; document flush return vs. net output</li>
-                <li>Assess drainage bag for proper seal; check skin entry site for leak, skin erosion, or local infection</li>
-              </ul>
+            <div class="two-col" style="margin-bottom:14px;">
+              <div class="panel">
+                <h4>Daily Protocol</h4>
+                <ul class="list">
+                  <li>Document exact output (mL/24h) and character: purulent, serous, bloody, bilious, or enteric</li>
+                  <li>Flush 10 mL NS BID; note flush return vs. net output</li>
+                  <li>Check skin entry site — leak, skin erosion, infection, suture integrity</li>
+                  <li>Assess patient clinically: fever curve, WBC trend, pain at drain site</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Output Thresholds</h4>
+                <ul class="list">
+                  <li><strong>&gt;50 mL/day</strong> — draining well; continue; upsize if output is thick or declining despite residual collection</li>
+                  <li><strong>10–50 mL/day</strong> — decreasing output; image at 48–72h to assess residual</li>
+                  <li><strong>&lt;10 mL/day &times;2 days + resolved on imaging</strong> — remove catheter</li>
+                </ul>
+              </div>
             </div>
-
-            <table class="drain-table" style="margin-bottom:14px;">
-              <thead>
-                <tr><th>Output (mL/24h)</th><th>Interpretation</th><th>Action</th></tr>
-              </thead>
-              <tbody>
-                <tr><td><strong>&gt;50 mL/day</strong></td><td>Collection actively draining</td><td>Continue; upsize catheter if output is thick or declining despite residual collection</td></tr>
-                <tr><td><strong>10–50 mL/day</strong></td><td>Decreasing response</td><td>Obtain imaging at ~48–72h to confirm progress; consider upsizing if collection persists</td></tr>
-                <tr><td><strong>&lt;10 mL/day &times; 2 days</strong></td><td>Potential resolution</td><td><em>Image first.</em> Remove catheter only if CT confirms resolved collection or residual &lt;2 cm with clinical improvement</td></tr>
-                <tr><td><strong>Sudden increase</strong></td><td>New fistula or cavity expansion</td><td>Assess character: bloody &rarr; rule out vessel erosion; feculent &rarr; bowel fistula; bilious &rarr; biliary fistula. Contrast injection through drain to confirm.</td></tr>
-              </tbody>
-            </table>
-
-            <div class="two-col">
+            <div class="two-col" style="margin-bottom:14px;">
+              <div class="panel">
+                <h4>Sudden Output Change — Investigate</h4>
+                <ul class="list danger">
+                  <li><strong>Sudden increase</strong> — new fistula? Bilious = biliary; feculent = bowel; cloudy = new infection</li>
+                  <li><strong>Bloody output</strong> — vessel erosion; hold flushes; CT angiography if active bleed suspected</li>
+                  <li><strong>Complete stop</strong> — catheter obstruction or malposition; flush then CT</li>
+                </ul>
+              </div>
               <div class="panel">
                 <h4>Catheter Exchange / Upsizing</h4>
                 <ul class="list">
-                  <li>Perform over wire via fluoroscopy</li>
-                  <li>Do not pull old catheter until new catheter is in place over the wire</li>
-                  <li>Upsize by 2 Fr steps</li>
-                  <li>Inject contrast after exchange to confirm position and re-assess collection</li>
+                  <li>Exchange over wire via fluoroscopy — never pull old catheter until new one is in position</li>
+                  <li>Upsize in 2Fr steps (e.g., 10Fr &rarr; 12Fr)</li>
+                  <li>Consider exchange when: inadequate drainage of known residual collection, persistent thick/viscous output, suspected catheter malposition</li>
                 </ul>
               </div>
-              <div class="panel">
-                <h4>Intracavitary Fibrinolytics (tPA)</h4>
-                <ul class="list">
-                  <li><strong>Indication:</strong> Loculated collection with inadequate drainage after 48h</li>
-                  <li><strong>Regimen:</strong> tPA 4 mg in 30 mL saline; instill through catheter; clamp &times; 1h; then release to gravity drainage</li>
-                  <li><strong>Duration:</strong> Daily &times; 3–5 days</li>
-                  <li>Significantly improves drainage in multi-loculated disease and reduces need for surgery</li>
-                </ul>
-              </div>
+            </div>
+            <div class="panel">
+              <h4>Intracavitary Fibrinolytics (tPA Protocol)</h4>
+              <ul class="list">
+                <li><strong>Indication:</strong> Loculated or non-resolving collections at 48h with catheter in good position</li>
+                <li><strong>Protocol:</strong> tPA 4 mg/30 mL normal saline; instill into collection, clamp 1 hour, then open to drain</li>
+                <li><strong>Frequency:</strong> Daily &times;3–5 days</li>
+                <li>Expect increased output volume and change in character after treatment</li>
+                <li>Repeat CT after 3–5 days to assess response before continuing or escalating</li>
+              </ul>
             </div>
           </div>
         </section>
@@ -578,10 +560,10 @@
       <label>Card Title</label>
       <input type="text" id="card-title" placeholder="e.g. My Abscess Drainage Approach" />
       <label>Supplies</label>
-      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;21g micropuncture needle&#10;10 Fr pigtail catheter&#10;Culture tubes"></textarea>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;21g micropuncture needle&#10;10Fr drainage catheter&#10;Amplatz wire"></textarea>
       <div class="help-text">One item per line. These will display as tags.</div>
       <label>Steps</label>
-      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;Planning CT scan&#10;Mark access site&#10;Seldinger technique"></textarea>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;Planning CT to confirm access window&#10;Seldinger access with 21g needle&#10;Serial dilation to 10Fr"></textarea>
       <div class="help-text">One step per line. These will be auto-numbered.</div>
       <label>Pearls (optional)</label>
       <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
@@ -622,6 +604,7 @@
       _cards = data;
       try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
     } else {
+      // Try localStorage fallback
       try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
     }
     renderCards();
@@ -698,10 +681,12 @@
     const displayName = (profile && profile.display_name) || user.email || 'Anonymous';
 
     if (editId) {
+      // Update
       _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, updated_at: new Date().toISOString() } : c);
       renderCards(); closeCardModal();
       await sb.from('procedure_cards').update({ title, supplies, steps, pearls, updated_at: new Date().toISOString() }).eq('id', editId);
     } else {
+      // Insert
       const tmpId = 'tmp-' + Date.now();
       const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, created_at: new Date().toISOString() };
       _cards.unshift(newCard);
@@ -740,7 +725,7 @@
   function exportSupplyList() {
     const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
     const supplies = Array.from(chips).map(c => c.textContent.trim());
-    const text = 'Abscess Drainage Supply List\n' + '═'.repeat(30) + '\n' + supplies.map(s => `☐ ${s}`).join('\n') + '\n';
+    const text = 'Abscess/Fluid Collection Drainage Supply List\n' + '\u2550'.repeat(46) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
     } else {
@@ -755,11 +740,11 @@
   function downloadSupplyList() {
     const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
     const supplies = Array.from(chips).map(c => c.textContent.trim());
-    const text = 'Abscess Drainage Supply List\n' + '═'.repeat(30) + '\n' + supplies.map(s => `☐ ${s}`).join('\n') + '\n';
+    const text = 'Abscess/Fluid Collection Drainage Supply List\n' + '\u2550'.repeat(46) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
     const blob = new Blob([text], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url; a.download = 'abscess-drainage-supplies.txt'; a.click();
+    a.href = url; a.download = 'drainage-abscess-supplies.txt'; a.click();
     URL.revokeObjectURL(url);
     showExportToast('Supply list downloaded');
   }

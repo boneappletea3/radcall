@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Subcutaneous Port Placement — RadCall Procedure Guide</title>
+  <title>Percutaneous Chest Tube Placement — RadCall Procedure Guide</title>
   <style>
     :root {
       --bg: #0d1117;
@@ -158,14 +158,14 @@
 
     <header class="header-card" id="top">
       <div class="eyebrow">Procedure Playbook</div>
-      <h1>Subcutaneous Port Placement</h1>
-      <p class="subhead">Image-guided placement of implantable venous access ports for long-term intermittent chemotherapy and IV medications.</p>
+      <h1>Percutaneous Chest Tube Placement</h1>
+      <p class="subhead">Image-guided tube thoracostomy for drainage of pleural effusion, empyema, pneumothorax, and hemothorax using Seldinger technique.</p>
       <div class="snapshot-grid">
-        <div class="snapshot-card"><span class="snapshot-label">Guidance</span><div class="snapshot-value">US + Fluoroscopy</div></div>
-        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--danger)">High (SIR Cat 3)</div></div>
-        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Pocket hematoma · Infection</div></div>
-        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Cefazolin 1g pre-op</div></div>
-        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">CXR for tip position</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">Moderate IV sedation</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--success)">Low (SIR Cat 1)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Malposition · REPE · Intercostal artery injury</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Empyema only (broad-spectrum)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">CXR immediately post-procedure</div></div>
       </div>
     </header>
 
@@ -175,13 +175,13 @@
         <ul class="toc">
           <li><a href="#indications">1. Indications</a></li>
           <li><a href="#preprocedure">2. Pre-Procedure</a></li>
-          <li><a href="#anatomy">3. Relevant Anatomy</a></li>
+          <li><a href="#anatomy">3. Anatomy</a></li>
           <li><a href="#technique">4. How I Do It</a></li>
           <li><a href="#troubleshooting">5. Troubleshooting</a></li>
           <li><a href="#complications">6. Complications</a></li>
           <li><a href="#postprocedure">7. Post-Procedure</a></li>
           <li><a href="#pearls">8. Critical Pearls</a></li>
-          <li><a href="#portcare">9. Port Access and Care</a></li>
+          <li><a href="#drainage">9. Drainage System &amp; Pleurodesis</a></li>
         </ul>
       </aside>
 
@@ -196,38 +196,22 @@
             <div class="panel">
               <h4>Indications</h4>
               <ul class="list">
-                <li><strong>Long-term intermittent chemotherapy</strong> — most common indication</li>
-                <li>Long-term IV antibiotics or medications</li>
-                <li>Frequent blood transfusions or blood draws</li>
-                <li>Best for patients needing central access intermittently over months to years</li>
-                <li><strong>Port types — discuss with referring:</strong>
-                  <ul class="list" style="margin-top:8px;">
-                    <li>Single lumen — standard; most chemotherapy regimens</li>
-                    <li>Double lumen — simultaneous incompatible infusions (lymphoma, TPN + chemo)</li>
-                    <li><strong>Power-injectable</strong> — strongly preferred; future contrast CT universal in oncology; standard ports cannot power inject</li>
-                    <li>Size: larger for large patients (easier access); smallest for thin patients (prevents erosion)</li>
-                  </ul>
-                </li>
-                <li>Chest port preferred over arm port — lower infection and thrombosis rates</li>
+                <li><strong>Empyema</strong> — purulent pleural fluid (pus or positive Gram stain); 3 stages: exudative → fibrinopurulent → organized. Early drainage essential; delay increases loculation and surgical risk. Mortality reported with delayed drainage.</li>
+                <li><strong>Complicated parapneumonic effusion</strong> — pH &lt;7.20, glucose &lt;60 mg/dL, LDH &gt;3× upper limit normal, or recurrent after thoracentesis.</li>
+                <li><strong>Pneumothorax</strong> — large (&gt;25% or apex-to-cupula &gt;3 cm) primary spontaneous PTX; any secondary spontaneous PTX; tension PTX after needle decompression; ventilated patients; traumatic; persistent/recurrent.</li>
+                <li><strong>Hemothorax</strong> — to guide management: surgical threshold &gt;1000–1500 mL total, &gt;300–500 mL first hour, or &gt;100 mL/h × 3h.</li>
+                <li><strong>Malignant pleural effusion</strong> — recurrent symptomatic effusion after thoracentesis; may proceed to pleurodesis or tunneled PleurX catheter.</li>
+                <li><strong>Chylothorax</strong> — thoracic duct injury; drainage guides timing of thoracic duct ligation or lymphatic embolization.</li>
+                <li><strong>Postoperative</strong> — cardiothoracic and esophageal surgery drainage.</li>
               </ul>
             </div>
             <div class="panel">
               <h4>Contraindications</h4>
               <ul class="list">
-                <li><strong>Absolute:</strong>
-                  <ul class="list" style="margin-top:8px;">
-                    <li>INR &gt;1.5 OR platelets &lt;75,000 — stricter than CVL</li>
-                    <li>Systemic infection</li>
-                    <li>Bevacizumab (Avastin) within 14 days — wound dehiscence risk</li>
-                  </ul>
-                </li>
-                <li><strong>Relative:</strong>
-                  <ul class="list" style="margin-top:8px;">
-                    <li>Prior radiation at access or pocket site (consider contralateral side)</li>
-                    <li>Known central vein occlusion</li>
-                    <li>Ipsilateral cardiac device</li>
-                  </ul>
-                </li>
+                <li><strong>Absolute:</strong> Lung completely adherent to chest wall throughout hemithorax (negated in hemodynamically unstable patient).</li>
+                <li><strong>Relative:</strong> SIR Category 1 — can safely proceed with INR &lt;3.0, PLT ≥20,000; most anticoagulants do NOT need to be held.</li>
+                <li>Overlying cellulitis or Herpes zoster infection at insertion site (choose alternate site).</li>
+                <li><strong>Avoid chest tube</strong> (prefer alternate therapy) for: CHF effusion (diuresis); hepatic hydrothorax (thoracentesis, TIPS, transplant); pneumothorax ex vacuo (conservative); trapped lung with effusion (decortication or IPC for palliation); endobronchial obstruction + effusion (treat obstruction); mediastinal emphysema (increase O₂, vent changes).</li>
               </ul>
             </div>
           </div>
@@ -241,15 +225,13 @@
           </div>
           <div class="section-body">
             <div class="checklist">
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Confirm device type with referring.</strong> Single vs. double lumen; power-injectable (strongly preferred); appropriate port size for patient body habitus.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Review prior imaging.</strong> Large apical lung mass &#x2192; contralateral side. Identify prior radiation fields. Assess for central vein occlusion or ipsilateral cardiac device.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Labs (SIR Category 3 — high risk).</strong> INR &lt;1.5 required. Platelets &gt;75,000 required. Stricter thresholds than routine CVL placement.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Anticoagulation hold (SIR Cat 3).</strong> Warfarin: hold 5 days. LMWH: hold 24 hours. DOACs: hold 24–48 hours. Verify bridging plan with referring team.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Bevacizumab window — mandatory 14-day hold.</strong> Confirm last dose date with oncology before scheduling. Wound dehiscence and poor healing are significant risks within this window. Hard stop.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Antibiotics.</strong> Cefazolin 1g IV within 60 min of incision. Vancomycin 1g IV if PCN/cephalosporin allergy. Ceftizoxime 1g as alternative.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Sedation plan.</strong> Optional conscious sedation (midazolam + fentanyl); most patients tolerate local anesthesia alone with generous lidocaine + epinephrine.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Pre-procedure US survey.</strong> Neck and upper chest vessels bilaterally. Confirm IJV patency. Identify carotid position relative to IJV.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Sterile setup.</strong> Full surgical scrub. Sterile gown, gloves, cap, mask — ALL personnel wear masks. Double chlorhexidine scrub of neck and upper chest. Large sterile drape. Port soaked in neomycin solution. Flush all supplies with saline before starting.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Review imaging.</strong> CT chest to characterize collection (free-flowing vs. loculated, position relative to diaphragm and fissures), identify complex/multifocal collections requiring multiple tubes, assess lung for trapped lung (contraindication to pleurodesis).</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Labs (SIR Category 1).</strong> INR &lt;3.0, PLT ≥20,000. Anticoagulants generally do NOT need to be held — meta-analysis of 5,000+ patients confirmed low bleeding risk without correction.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Pleural fluid characterization.</strong> Send for pH, glucose, LDH, protein, cell count + differential, Gram stain + culture, cytology if malignancy suspected. Light's criteria: exudate if: fluid:serum protein &gt;0.5 OR fluid:serum LDH &gt;0.6 OR fluid LDH &gt;2/3 upper limit of serum LDH.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Antibiotics.</strong> Not routine for simple drainage. For empyema: start broad-spectrum IV antibiotics covering anaerobes, S. aureus, S. pneumoniae, H. influenzae, K. pneumoniae, E. coli before or concurrent with drainage.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Equipment.</strong> Select catheter size based on indication — 10–12 Fr for simple PTX or serous effusion; 14–18 Fr for empyema/hemothorax; 12–16 Fr pigtail for small loculated collections.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Sedation.</strong> Moderate sedation recommended. Parietal pleura is most pain-sensitive structure — ensure adequate lidocaine to parietal pleura. Post-insertion: bupivacaine 0.25% for extended pain relief.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent.</strong> Malposition (~30% in critically ill), intercostal artery injury, pneumothorax, reexpansion pulmonary edema (REPE), infection/empyema (from tube), tube dislodgement.</div></div>
             </div>
           </div>
         </section>
@@ -261,33 +243,24 @@
             <span class="collapse-arrow">&#x25BE;</span>
           </div>
           <div class="section-body">
-            <div class="three-col">
+            <div class="two-col">
               <div class="panel">
-                <h4>Venous Access</h4>
+                <h4>Intercostal Anatomy</h4>
                 <ul class="list">
-                  <li><strong>Right or left IJV strongly preferred</strong> — subclavian approach: 5–10% thrombosis vs. &lt;1% for IJV; avoid subclavian for ports</li>
-                  <li>Puncture approximately 1 cm above the clavicle</li>
-                  <li>Too high &#x2192; catheter kinking at the IJV–subclavian junction</li>
-                  <li>Too low &#x2192; unnecessary difficulty and increased complication risk</li>
+                  <li><strong>VAN</strong> (from superior to inferior along inferior rib border): VEIN → ARTERY → NERVE — neurovascular bundle lies in costal groove along INFERIOR surface of rib.</li>
+                  <li>Enter <strong>SUPERIOR to rib</strong> to avoid VAN.</li>
+                  <li><strong>CRITICAL EXCEPTION:</strong> Paravertebral/posterior intercostal space — posterior intercostal artery does NOT follow the costal groove near spine; it courses in the MID-INTERCOSTAL space. Older patients with tortuous vessels especially at risk.</li>
+                  <li>Posterior paravertebral access = higher bleeding risk even with "superior rib" approach.</li>
+                  <li><strong>Internal thoracic artery/vein:</strong> Run 1–2 cm lateral to sternum; avoid anterior entries within 2 cm of sternal border.</li>
                 </ul>
               </div>
               <div class="panel">
-                <h4>Pocket Site</h4>
+                <h4>Tube Positioning by Pathology</h4>
                 <ul class="list">
-                  <li>Infraclavicular space midway between sternal notch and humeral head</li>
-                  <li>8–12 cm from puncture site</li>
-                  <li>Depth ~1 cm subcutaneous — <strong>not sub-pectoral</strong> (too deep impairs palpation and needle access)</li>
-                  <li>Just large enough for the port — tight fit reduces migration</li>
-                  <li>Stay lateral to the midclavicular line to avoid pneumothorax during pocket creation</li>
-                </ul>
-              </div>
-              <div class="panel">
-                <h4>Tunnel and Tip Position</h4>
-                <ul class="list">
-                  <li>Catheter tunneled subcutaneously from pocket to IJV puncture site</li>
-                  <li>Catheter cut to SVC–RA junction (cavoatrial junction) length</li>
-                  <li>Optimal tip: SVC–RA junction — too high &#x2192; thrombosis; too low &#x2192; arrhythmia</li>
-                  <li>Verify tip position fluoroscopically before closing pocket</li>
+                  <li><strong>Pleural fluid (gravity-dependent):</strong> Enter posterolateral at 4th–5th ICS posterior axillary line; orient tube posteroinferiorly. In supine patient, fluid collects posteriorly. Guide tip toward spine on AP fluoro, confirm stays close to spine on oblique view.</li>
+                  <li><strong>Pneumothorax (non-dependent):</strong> Enter anteriorly at 2nd ICS midclavicular line OR anterior axillary line; orient tube toward apex. In supine patient, air collects anteriorly. Left anterior placement: confirm cardiac position on imaging first.</li>
+                  <li><strong>Fissure/fissural loculation:</strong> CT guidance required; pigtail catheter often more appropriate than straight tube.</li>
+                  <li><strong>Scapula:</strong> Avoid entry adjacent to inferior scapula — catheter will be displaced when patient adducts arm. Use entry point inferior or lateral to scapula.</li>
                 </ul>
               </div>
             </div>
@@ -308,39 +281,34 @@
                 <span class="badge">Default</span>
               </div>
 
-              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Port Placement <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#x1F4CB; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#x2B07; Download</button></h4>
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">📋 Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">⬇ Download</button></h4>
               <div class="chip-row card-supplies">
-                <span class="chip">Sterile US probe cover</span>
-                <span class="chip">21g micropuncture kit</span>
-                <span class="chip">Peel-away sheath (size per catheter)</span>
-                <span class="chip">Amplatz superstiff 0.035" wire</span>
-                <span class="chip">Chosen port + catheter</span>
-                <span class="chip">Tunneling device</span>
-                <span class="chip">1% lidocaine WITH epinephrine</span>
-                <span class="chip">#11 and #15 scalpels</span>
-                <span class="chip">Bovie electrocautery</span>
-                <span class="chip">Kelly hemostat</span>
-                <span class="chip">Weitlaner retractor</span>
-                <span class="chip">0-gauge nonabsorbable suture (port anchoring)</span>
-                <span class="chip">2-0 Vicryl (deep closure)</span>
-                <span class="chip">4-0 Monocryl or staples (skin)</span>
-                <span class="chip">60cc neomycin solution</span>
-                <span class="chip">Non-coring Huber needle for final access</span>
+                <span class="chip">Ultrasound + sterile probe cover</span>
+                <span class="chip">ChloraPrep</span>
+                <span class="chip">Sterile drape</span>
+                <span class="chip">1% lidocaine (anesthesia)</span>
+                <span class="chip">0.25% bupivacaine (post-insertion)</span>
+                <span class="chip">18g access needle</span>
+                <span class="chip">0.035" J-wire</span>
+                <span class="chip">Serial dilators</span>
+                <span class="chip">Pigtail chest tube (10–16 Fr)</span>
+                <span class="chip">#11 blade</span>
+                <span class="chip">0 silk suture × 2</span>
+                <span class="chip">Sterile dressing</span>
+                <span class="chip">Chest drainage system (Pleur-evac or equivalent)</span>
+                <span class="chip">Suction tubing</span>
               </div>
 
               <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
               <div class="step-list">
-                <div class="step"><div class="step-num">1</div><div><h4>US survey and marking</h4><div class="muted">US survey of the neck and upper chest. Mark the IJV. Confirm patency and identify carotid position relative to IJV. Mark pocket site and puncture site. Estimate catheter length externally: pocket &#x2192; jugular notch &#x2192; SVC–RA junction.</div></div></div>
-                <div class="step"><div class="step-num">2</div><div><h4>Positioning and prep</h4><div class="muted">Patient supine, head turned away from access side. Slight Trendelenburg. Double chlorhexidine scrub bilateral neck and chest. Apply large sterile drape covering bilateral upper chest and neck.</div></div></div>
-                <div class="step"><div class="step-num">3</div><div><h4>Pocket creation</h4><div class="muted">Generous lidocaine + epinephrine to pocket site (skin, subcutaneous tissue, and margins). Transverse incision slightly wider than the port. Bovie hemostasis throughout — meticulous. Sharp then blunt digital dissection to pocket size. Trial-fit port: skin edges should approximate without tension. Irrigate with 60cc neomycin solution (3 &times; 20cc). Leave neomycin in pocket while establishing venous access.</div></div></div>
-                <div class="step"><div class="step-num">4</div><div><h4>IJV access</h4><div class="muted">Longitudinal US probe orientation. Advance 21g micropuncture needle into the center of the IJV under real-time US visualization. Advance 0.018" wire into the vein. Place 5Fr micropuncture sheath. Advance wire to RA/IVC under fluoroscopy. Confirm position.</div></div></div>
-                <div class="step"><div class="step-num">5</div><div><h4>Catheter length measurement</h4><div class="muted">Clamp catheter at skin level. Subtract the peel-away sheath length from the external landmark measurement (pocket &#x2192; jugular notch &#x2192; SVC–RA junction). This is the final cut length. Record before proceeding — the most common error is not accounting for sheath overhang.</div></div></div>
-                <div class="step"><div class="step-num">6</div><div><h4>Wire exchange and peel-away sheath placement</h4><div class="muted">Blunt dissection at puncture site. Exchange 0.018" wire for 0.035" Amplatz superstiff wire through micropuncture sheath, advancing tip to IVC. Exchange micropuncture sheath for peel-away sheath over Amplatz wire. Confirm wire tip is in IVC — not RA — before advancing sheath (prevents SVC laceration).</div></div></div>
-                <div class="step"><div class="step-num">7</div><div><h4>Tunneling</h4><div class="muted">Attach catheter to tunneling rod. Tunnel subcutaneously from pocket to puncture site — stay superficial to pectoralis fascia. Pull catheter through tunnel. Remove tunneling rod. Cut catheter to measured length. Flush with saline.</div></div></div>
-                <div class="step"><div class="step-num">8</div><div><h4>Catheter insertion through peel-away sheath</h4><div class="muted">Advance catheter through the peel-away sheath, holding the catheter firmly at the hub while splitting the sheath apart — do not release catheter during split to prevent air embolism. Advance catheter to SVC–RA junction under fluoroscopy. Confirm tip position.</div></div></div>
-                <div class="step"><div class="step-num">9</div><div><h4>Connect and confirm</h4><div class="muted">Connect catheter to port reservoir. Flush. Confirm backflow. Access port with non-coring Huber needle. Confirm free flow and aspiration of blood. Flush 10mL saline.</div></div></div>
-                <div class="step"><div class="step-num">10</div><div><h4>Port anchoring and pocket closure</h4><div class="muted">Anchor port with 0-gauge nonabsorbable suture through BOTH suture holes — prevents rotation and flip. Irrigate pocket again with remaining neomycin. Close in layers: 0-Vicryl deep fascia, 2-0 Vicryl subcutaneous, 4-0 Monocryl or staples for skin.</div></div></div>
-                <div class="step"><div class="step-num">11</div><div><h4>Lock and dressing</h4><div class="muted">Lock port with heparinized saline (300–500 units/mL, 5mL). Apply sterile dressing over incision and Huber needle. Obtain post-procedure CXR for tip position and pneumothorax.</div></div></div>
+                <div class="step"><div class="step-num">1</div><div><h4>Position and planning</h4><div class="muted">Position patient supine; abduct ipsilateral arm to displace scapula superiorly. For posterolateral access, mild contralateral tilt improves workspace. Use CT or CXR to plan trajectory. US survey to confirm collection, assess depth, identify diaphragm. Count ribs from angle of Louis (manubriosternal junction = 2nd rib). For fluid: plan entry posterior axillary line 4th–5th ICS. For PTX: plan entry anterior axillary or midclavicular 2nd ICS.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Prep, drape, and anesthesia</h4><div class="muted">ChloraPrep prep. Sterile drape. Moderate IV sedation. Anesthetize skin to parietal pleura with 1% lidocaine using 22g needle. Generously anesthetize parietal pleura (most pain-sensitive layer) — inject while confirming fluid or air return. Post-insertion: instill 5–10 mL bupivacaine 0.25% via catheter for extended pain control.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Access</h4><div class="muted">Attach 18g needle to syringe with gentle negative pressure. Advance SUPERIOR to rib with real-time US guidance. Confirm fluid or air return. For equivocal location: cone beam CT may clarify guidewire position in pleural space vs. lung parenchyma vs. extrapleural.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Guidewire placement</h4><div class="muted">Remove syringe; insert 0.035" J-wire. Advance under fluoroscopy. Wire should move freely through pleural space (low resistance). Limited wire mobility = loculated space or lung parenchyma → choose different access site. Confirm wire position under fluoro (should parallel chest wall, not course into lung).</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Serial dilation</h4><div class="muted">Serial dilate over wire through intercostal space. Firm, rotating motion. Small 3–5 mm skin nick if resistance. Do NOT over-dilate — only enough for catheter.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>Catheter placement</h4><div class="muted">Thread pigtail catheter over wire. For fluid: advance tip posteriorly and inferiorly. For PTX: direct apically. Remove wire; pigtail locks in place (or straight tube secured with suture). Connect to drainage system.</div></div></div>
+                <div class="step"><div class="step-num">7</div><div><h4>Connect and confirm</h4><div class="muted">Connect to 3-chamber water seal device (Pleur-evac). Apply -20 cm H₂O suction in most patients (dry valve: up to -40 cmH₂O; wet column: up to -25 cmH₂O). Fluid should flow freely; PTX should show bubbling. If only aspiratable with syringe (not free flow), reposition. Suture with 0 silk × 2. Transparent dressing. Secure tubing with omental tape or FLEXI-TRAK.</div></div></div>
+                <div class="step"><div class="step-num">8</div><div><h4>Post-placement CXR</h4><div class="muted">Obtain immediately. Confirm tube within pleural space. Intrafissural, intraparenchymal, mediastinal, or extrapleural placement = malposition → reposition. All drainage holes must be within pleural space (radiopaque marker at most proximal hole).</div></div></div>
               </div>
             </div>
 
@@ -361,39 +329,39 @@
           <div class="section-body problem-grid">
             <div class="problem">
               <div class="problem-label">Problem</div>
-              <h4>Wire won't advance past clavicle</h4>
-              <p class="muted"><strong>Likely cause:</strong> Needle tip outside vein lumen, anatomic narrowing, or difficult IJV–subclavian angle.</p>
-              <p class="success"><strong>Next step:</strong> Confirm needle tip is intraluminal with US. Try a hydrophilic wire for tight anatomy. Use fluoroscopic guidance to steer the wire. Gentle counter-clockwise rotation can help navigate the junction angle.</p>
+              <h4>No fluid drainage after placement</h4>
+              <p class="muted"><strong>Cause:</strong> Tube in fissure, kink, loculation, evacuated collection.</p>
+              <p class="success"><strong>Fix:</strong> Confirm with CXR; check for tube kink (visual inspection); flush with 10 mL NS; exchange for larger tube or repositioning under fluoro; CT to assess residual collection.</p>
             </div>
             <div class="problem">
               <div class="problem-label">Problem</div>
-              <h4>Peel-away sheath won't advance</h4>
-              <p class="muted"><strong>Likely cause:</strong> Amplatz wire tip is in the RA rather than IVC, or insufficient dilation of the subcutaneous tract.</p>
-              <p class="success"><strong>Next step:</strong> Confirm Amplatz wire tip is in the IVC — not the RA — under fluoroscopy before advancing the sheath. Dilate incrementally. Apply smooth forward pressure without torquing. Never force the sheath with the wire in the RA.</p>
+              <h4>No tidal fluctuation in water seal</h4>
+              <p class="muted"><strong>Cause:</strong> Tube kinked/occluded, complete lung expansion (normal), tube displaced.</p>
+              <p class="success"><strong>Fix:</strong> Confirm kink with CXR; ask patient to cough — if bubbling, air leak present. If no fluctuation + no lung expansion on CXR: obstruction. Flush with saline; if tube blocked → exchange.</p>
             </div>
             <div class="problem">
               <div class="problem-label">Problem</div>
-              <h4>Pocket hematoma developing</h4>
-              <p class="muted"><strong>Likely cause:</strong> Insufficient electrocautery hemostasis during pocket dissection.</p>
-              <p class="success"><strong>Next step:</strong> Use Bovie throughout pocket creation. Do not close over a hematoma — explore and irrigate until completely dry. Compression alone is inadequate for an expanding pocket hematoma.</p>
+              <h4>Persistent air leak (&gt;5–7 days)</h4>
+              <p class="muted"><strong>Cause:</strong> Bronchopleural fistula (communication between airways and pleural space).</p>
+              <p class="success"><strong>Fix:</strong> Increase suction to improve pleural apposition. If suction is perpetuating fistula (aggressive drainage keeping it open): trial water seal. Persistent BPF → thoracic surgery consultation. Blood patch or intrabronchial valve may be attempted.</p>
             </div>
             <div class="problem">
               <div class="problem-label">Problem</div>
-              <h4>Catheter length is off after cutting</h4>
-              <p class="muted"><strong>Likely cause:</strong> Measurement error — most commonly failing to account for the peel-away sheath overhang length.</p>
-              <p class="success"><strong>Next step:</strong> Recheck measurement technique. The peel-away sheath extends a fixed distance beyond the skin — this must be subtracted from the external landmark measurement. If cut too short, a new catheter will be needed.</p>
+              <h4>Loculated empyema not draining</h4>
+              <p class="muted"><strong>Cause:</strong> Fibrin septations preventing drainage through single catheter.</p>
+              <p class="success"><strong>Fix:</strong> tPA + DNase combination therapy (tPA 4–6 mg + DNase 5 mg in 50 mL NS instilled q12h, clamp 2h, × 3 days = 6 doses total; stop if bleeding from tube). Two chest tubes for large multiloculated collections. VATS if tPA/DNase fails.</p>
             </div>
             <div class="problem">
               <div class="problem-label">Problem</div>
-              <h4>Catheter pinch-off sign on post-procedure CXR</h4>
-              <p class="muted"><strong>Likely cause:</strong> Subclavian approach with compression of catheter between the clavicle and first rib (costoclavicular space).</p>
-              <p class="success"><strong>Next step:</strong> Prevent by using IJV approach. On follow-up imaging, monitor for medial catheter indentation. Significant pinch-off requires image-guided catheter exchange. IJV access essentially eliminates this complication.</p>
+              <h4>Reexpansion pulmonary edema (REPE)</h4>
+              <p class="muted"><strong>Cause:</strong> Rapid drainage of large chronic effusion; especially long-standing collapse &gt;3 days. <strong>Recognition:</strong> Cough, chest tightness, hypoxemia, frothy secretions within 1–2h of drainage; CXR shows unilateral pulmonary edema.</p>
+              <p class="success"><strong>Fix:</strong> STOP drainage; clamp tube. Supportive care: supplemental O₂, positive pressure ventilation if severe. Limit initial drainage to 1000–1500 mL; clamp for 1–2h before resuming.</p>
             </div>
             <div class="problem">
               <div class="problem-label">Problem</div>
-              <h4>Difficulty tunneling</h4>
-              <p class="muted"><strong>Likely cause:</strong> Tunneling rod too deep (entering pectoralis), or insufficient local anesthesia along tunnel route.</p>
-              <p class="success"><strong>Next step:</strong> Ensure tunneling rod stays superficial to pectoralis fascia throughout. Infiltrate generous local anesthetic along the full tunnel route before tunneling. Blunt finger dissection at the exit site facilitates emergence of the rod.</p>
+              <h4>Subcutaneous emphysema</h4>
+              <p class="muted"><strong>Cause:</strong> Side holes of tube outside pleural space; large PTX not fully evacuated.</p>
+              <p class="success"><strong>Fix:</strong> CXR to confirm tube position; if side holes outside pleura → reposition/exchange. Consider larger caliber tube or second tube for large PTX.</p>
             </div>
           </div>
         </section>
@@ -406,24 +374,22 @@
           </div>
           <div class="section-body two-col">
             <div class="panel">
-              <h4>Early Complications</h4>
+              <h4>Immediate</h4>
               <ul class="list danger">
-                <li><strong>Pocket hematoma</strong> (most common early) — prevention: Bovie throughout; management: compression; drainage if large or infected</li>
-                <li><strong>Wound dehiscence / necrosis</strong> — risk with bevacizumab or pocket too superficial or tight; management: wound care ± port removal</li>
-                <li><strong>Pneumothorax</strong> (1–3%) — higher with subclavian approach; post-procedure CXR mandatory</li>
-                <li><strong>Air embolism</strong> — prevention: always occlude peel-away hub; never release catheter during sheath splitting</li>
-                <li><strong>Port flip / rotation</strong> — prevention: anchor through BOTH suture holes</li>
+                <li><strong>Malposition</strong> (up to 30% in critically ill, most common with non-image guided): intrafissural (impairs drainage), intraparenchymal (risk of abscess, hemothorax), extrapleural (subcutaneous emphysema), mediastinal (surgical consult before repositioning).</li>
+                <li><strong>Intercostal artery injury</strong> (&lt;1% with IR-guided): can cause hemothorax requiring TAE; recognized by unexpected hemothorax post-insertion; CE-CT to localize; TAE as primary treatment.</li>
+                <li><strong>Organ laceration:</strong> spleen (left), liver (right), diaphragm (low entry) — rare with image guidance.</li>
+                <li><strong>Pneumothorax from tube insertion into effusion:</strong> usually small; managed with existing tube.</li>
               </ul>
             </div>
             <div class="panel">
-              <h4>Late Complications</h4>
+              <h4>Delayed</h4>
               <ul class="list">
-                <li><strong>Infection</strong> — IV antibiotics + port removal required for most port infections; antibiotic lock salvage rarely successful for ports (unlike tunneled catheters)</li>
-                <li><strong>Catheter pinch-off</strong> — subclavian approach; prevention: IJV or lateral clavicle approach</li>
-                <li><strong>Catheter fracture / embolism</strong> — rare; management: endovascular retrieval with snare</li>
-                <li><strong>Port erosion through skin</strong> — port too superficial or too large for thin patient</li>
-                <li><strong>Venous thrombosis</strong> — subclavian 5–10%; IJV &lt;1%</li>
-                <li><strong>Thrombotic occlusion</strong> — TPA dwell; if fails, image-guided catheter exchange</li>
+                <li><strong>Reexpansion pulmonary edema (REPE)</strong> (&lt;1% but life-threatening): rapid drainage of large chronic effusion; limit to 1000–1500 mL initially.</li>
+                <li><strong>Empyema (tube-related):</strong> rare with sterile technique (~0.2% with IR-guided).</li>
+                <li><strong>Bronchopleural fistula:</strong> persistent air leak suggesting epithelialization of pleural-airway communication; thoracic surgery referral if persistent &gt;5–7 days.</li>
+                <li><strong>Tube dislodgement:</strong> anchor securely; remove pigtail retention string for easier bedside removal if non-IR team removing.</li>
+                <li><strong>Tube obstruction:</strong> kink or clot; flush with NS daily; exchange if persistent.</li>
               </ul>
             </div>
           </div>
@@ -432,27 +398,25 @@
         <!-- ═══ 7. POST-PROCEDURE ═══ -->
         <section class="section" id="postprocedure">
           <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Post-Procedure Care</h3></div></div>
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Post-Procedure</h3></div></div>
             <span class="collapse-arrow">&#x25BE;</span>
           </div>
           <div class="section-body two-col">
             <div class="panel">
-              <h4>Immediate</h4>
+              <h4>Daily Assessment</h4>
               <ul class="list">
-                <li>CXR for tip position and pneumothorax before patient leaves</li>
-                <li>Access port with 22g non-coring Huber needle; confirm aspiration and free flow</li>
-                <li>Lock: 10mL saline + 5mL heparinized saline (300–500 units/mL)</li>
-                <li>Sterile dressing over incision and Huber needle; change at 7 days</li>
+                <li>Vital signs + oximetry daily; chest tube output volume and appearance q8h.</li>
+                <li>Water seal chamber: confirm tidal fluctuation with respiration (indicates patent tube in pleural space). No fluctuation = complete drainage OR obstruction.</li>
+                <li>Ask patient to cough: bubbling in water seal = active air leak (bronchopleural fistula). Do NOT remove tube if air leak present.</li>
+                <li>Auscultation: breath sounds; palpate for subcutaneous emphysema. Inspect exit site for infection, dressing integrity, tube kinking.</li>
               </ul>
             </div>
             <div class="panel">
-              <h4>Follow-up and Patient Instructions</h4>
+              <h4>Removal Criteria</h4>
               <ul class="list">
-                <li>Sutures or staples removed 10–14 days post-procedure</li>
-                <li>First oncology use: typically 7–14 days (allow wound healing)</li>
-                <li>Patient education: non-coring Huber needle only — regular needles core the septum and destroy port integrity</li>
-                <li>Teach incision care and infection warning signs (redness, swelling, fever, drainage)</li>
-                <li>Routine maintenance flush every 4–6 weeks between uses (institutional variation)</li>
+                <li><strong>Pleural effusion/empyema:</strong> Output &lt;200 mL/day; serous-appearing drainage; CXR shows complete drainage; CT confirms if equivocal. Higher thresholds (up to 500 mL/day) used by some; lower threshold (200 mL/day) reduces readmission rate.</li>
+                <li><strong>Pneumothorax:</strong> No air leak for 24h; no pneumothorax on water seal trial (transition from suction → water seal → observe 4–6h). Brief water seal trial preferred; clamping trial NOT recommended (unnecessary risk of tension PTX). Removal on suction acceptable if criteria met.</li>
+                <li><strong>Removal technique:</strong> IV narcotic 5–10 min before removal. Remove during end-expiration/Valsalva (minimizes atmospheric pressure gradient). Rapidly cover site with petroleum gauze. Suture closure rarely needed unless large incision.</li>
               </ul>
             </div>
           </div>
@@ -465,56 +429,57 @@
             <span class="collapse-arrow">&#x25BE;</span>
           </div>
           <div class="section-body pearls">
-            <div class="pearl"><div class="pearl-mark">&#x2746;</div><div><strong>Confirm bevacizumab timing.</strong> Mandatory 14-day hold before port placement. This is a hard stop — wound dehiscence and poor healing are significant risks within this window.</div></div>
-            <div class="pearl"><div class="pearl-mark">&#x2746;</div><div><strong>Power-injectable port almost always preferred.</strong> Confirm with oncology before ordering. Oncology patients will universally need contrast CTs; standard ports cannot be used for power injection.</div></div>
-            <div class="pearl"><div class="pearl-mark">&#x2746;</div><div><strong>Bovie throughout pocket creation.</strong> Meticulous electrocautery hemostasis is the single most important step to prevent pocket hematoma. Do not close over any active bleeding.</div></div>
-            <div class="pearl"><div class="pearl-mark">&#x2746;</div><div><strong>Neomycin pocket irrigation.</strong> 60cc irrigation (3 &times; 20cc) significantly reduces early port infection rates. Soak port in neomycin before implantation as well.</div></div>
-            <div class="pearl"><div class="pearl-mark">&#x2746;</div><div><strong>IJV over subclavian.</strong> Internal jugular vein access gives &lt;1% venous thrombosis vs. 5–10% with subclavian approach. The difference is clinically significant over a port's lifespan.</div></div>
-            <div class="pearl"><div class="pearl-mark">&#x2746;</div><div><strong>Longitudinal US for IJV access.</strong> Visualize needle tip in the center of the vein lumen in long-axis view before advancing the wire. Reduces posterior wall puncture and inadvertent carotid access.</div></div>
-            <div class="pearl"><div class="pearl-mark">&#x2746;</div><div><strong>Amplatz wire tip in IVC before advancing peel-away sheath.</strong> If the wire tip is in the RA, advancing the stiff sheath risks SVC laceration. Confirm IVC position fluoroscopically every time.</div></div>
-            <div class="pearl"><div class="pearl-mark">&#x2746;</div><div><strong>Small port for thin patients.</strong> Use the smallest available port and ensure ~1 cm depth. Superficial or oversized ports in thin patients will erode through the skin over time.</div></div>
-            <div class="pearl"><div class="pearl-mark">&#x2746;</div><div><strong>Anchor through BOTH suture holes.</strong> Single-point fixation allows the port to rotate or flip, making Huber needle access difficult or impossible. Always use both anchoring holes.</div></div>
-            <div class="pearl"><div class="pearl-mark">&#x2746;</div><div><strong>Communicate with oncology before placement.</strong> Confirm device type, laterality, and timing relative to chemotherapy and bevacizumab. Prevent avoidable returns to the OR for wrong-device placements.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Enter SUPERIOR to rib</strong> — VAN bundle runs in costal groove at inferior rib surface. EXCEPTION: paravertebral access — posterior intercostal artery runs mid-intercostal space near spine in older patients.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>1000–1500 mL initial drainage limit</strong> — prevent reexpansion pulmonary edema (REPE); clamp tube for 1–2h before resuming. Patient coughing or chest tightness = stop draining.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>For PTX: anterior; for fluid: posterior</strong> — air collects anteriorly in supine patients; fluid collects posteriorly. Wrong positioning = tube fails to drain.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Avoid major fissure placement</strong> — intrafissural tube impairs both air and fluid drainage; use CT guidance for any fissure-adjacent collection.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>tPA + DNase (not tPA alone)</strong> — MIST2 trial: combination tPA 4–6 mg + DNase 5 mg q12h × 3d dramatically improves loculated empyema outcomes; tPA or DNase alone is ineffective.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Trapped lung ≠ treat with chest tube</strong> — inability to expand because of visceral peel; chest tube will just create a chronic air leak. Consider decortication or IPC for palliation.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Don't remove tube with active air leak</strong> — even without visible PTX on CXR; bubbling in water seal during cough = bronchopleural fistula still present; removing tube risks tension PTX.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Subclavian space is shared with phrenic nerve</strong> — high subclavian entries risk phrenic nerve injury; aim for 4th–6th ICS range.</div></div>
           </div>
         </section>
 
-        <!-- ═══ 9. PORT ACCESS AND CARE ═══ -->
-        <section class="section" id="portcare">
+        <!-- ═══ 9. DRAINAGE SYSTEM & PLEURODESIS ═══ -->
+        <section class="section" id="drainage">
           <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>Port Access and Care</h3></div></div>
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>Drainage System &amp; Pleurodesis</h3></div></div>
             <span class="collapse-arrow">&#x25BE;</span>
           </div>
           <div class="section-body">
-            <div class="two-col">
+            <div class="three-col">
               <div class="panel">
-                <h4>Accessing the Port</h4>
+                <h4>Three-Chamber Water Seal System</h4>
                 <ul class="list">
-                  <li>Palpate the port to confirm orientation and position</li>
-                  <li>Topical anesthetic: EMLA cream 60 min prior if not urgent</li>
-                  <li>Sterile prep of access site</li>
-                  <li><strong>Use ONLY non-coring Huber needle</strong> — regular needles core the septum and destroy port integrity over time</li>
-                  <li>Insert Huber needle perpendicular to the septum until firm backstop felt against the port base</li>
-                  <li>Confirm by aspirating blood before infusing</li>
-                  <li>Flush 10mL saline; if resistance encountered do not force — remove needle and reaccess</li>
-                  <li><strong>Common gauges:</strong> 20–22g Huber; 22g for blood draws; 19–20g for power injection of contrast (confirm port is power-injectable before use)</li>
+                  <li><strong>Collection chamber:</strong> collects drained fluid; graduated for output measurement. Mark level q8h.</li>
+                  <li><strong>Water seal chamber:</strong> one-way valve preventing air re-entry to pleural space. Should contain 2 cm water. Tidal fluctuation with breathing = patent tube. Bubbling = active air leak.</li>
+                  <li><strong>Suction control chamber:</strong> wet column (H₂O, up to -25 cmH₂O) or dry valve (up to -40 cmH₂O). Wall suction must be kept at ≥-80 mmHg (&gt;108 cmH₂O) to deliver desired suction. Typical setting: -20 cmH₂O.</li>
+                  <li><strong>Heimlich valve:</strong> portable one-way flutter valve; enables ambulation; suctionless passive drainage only; for small PTX in ambulatory patients.</li>
                 </ul>
               </div>
               <div class="panel">
-                <h4>Routine Maintenance and Troubleshooting</h4>
+                <h4>Troubleshooting the Drainage System</h4>
                 <ul class="list">
-                  <li><strong>After each use:</strong> Flush 10mL NS; lock with 5mL heparinized saline (300–500 units/mL)</li>
-                  <li><strong>Maintenance flush:</strong> Every 4–6 weeks between uses (institutional variation)</li>
-                  <li><strong>Thrombotic occlusion:</strong> TPA (2mg/2mL) dwell &times; 30 min &times; 2 attempts; if fails &#x2192; image-guided catheter exchange</li>
-                  <li><strong>Port access failure:</strong> Check patient position (raise arm, rotate head); fluoroscopy for tip position and catheter course; TPA dwell for fibrin sheath</li>
-                  <li><strong>Catheter fracture:</strong> Endovascular retrieval with snare — refer to IR urgently</li>
-                  <li><strong>Port infection:</strong> Blood cultures &times; 2 (peripheral and through port); antibiotics; most require port removal for cure</li>
+                  <li><strong>Collection chamber full:</strong> fluid stops draining → change CTDS immediately.</li>
+                  <li><strong>Chest tube wrapped/twisted by ambulatory patient:</strong> untwist tubing before troubleshooting tube position.</li>
+                  <li><strong>Air bubbling stops:</strong> lung reexpanded (check CXR) OR tube/system disconnected (inspect all connections) OR tube occluded.</li>
+                  <li><strong>Subcutaneous emphysema increasing:</strong> side holes outside pleura OR air not adequately evacuated → exchange/reposition.</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Chemical Pleurodesis (Talc Slurry)</h4>
+                <ul class="list">
+                  <li><strong>Indications:</strong> Recurrent malignant effusion, secondary spontaneous PTX, recurrent primary PTX.</li>
+                  <li><strong>Prerequisites:</strong> Complete lung expansion on CXR (trapped lung = pleurodesis failure); pH &gt;7.2 (low pH predicts failure); no active infection.</li>
+                  <li><strong>Technique:</strong> Conscious sedation + 20 mL bupivacaine 0.25% instilled intrapleurally to anesthetize pleura. Instill well-agitated suspension of 5 g talc in 100 mL sterile NS. Clamp tube 1–2h. Rotate patient positions (some advocate). Unclamp and return to suction. Follow removal criteria.</li>
+                  <li><strong>Expected:</strong> Chest pain and fever for 24–48h (pleural inflammation = desired effect). Monitor for ARDS (rare, dose-dependent with fine-particle talc). Talc success rate 70–100%.</li>
                 </ul>
               </div>
             </div>
           </div>
         </section>
 
-        <p class="footer-note">Gonda SJ, Li R. Tech Vasc Interv Radiol. 2011;14:198&ndash;203 &middot; Funaki B. Semin Interv Radiol. 2005;22:242&ndash;244 &middot; Kandarpa K et al. Handbook of Interventional Radiologic Procedures, 5th ed.</p>
+        <p class="footer-note">Ref: Kandarpa K et al. Handbook of Interventional Radiologic Procedures, 5th ed. · SIR Consensus Guidelines for Periprocedural Management · Rahman NM et al. MIST2 Trial. NEJM 2011.</p>
       </main>
     </div>
   </div>
@@ -524,12 +489,12 @@
     <div class="modal">
       <h2 id="modal-title">Create My Card</h2>
       <label>Card Title</label>
-      <input type="text" id="card-title" placeholder="e.g. My Port Placement Approach" />
+      <input type="text" id="card-title" placeholder="e.g. My Chest Tube Approach" />
       <label>Supplies</label>
-      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;21g micropuncture needle&#10;Peel-away sheath&#10;Amplatz wire"></textarea>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;18G needle&#10;Pigtail catheter&#10;Pleur-evac"></textarea>
       <div class="help-text">One item per line. These will display as tags.</div>
       <label>Steps</label>
-      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;US survey IJV&#10;Mark pocket and puncture sites&#10;Double chlorhexidine scrub"></textarea>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;Position patient supine&#10;US survey to confirm collection&#10;Prep and drape"></textarea>
       <div class="help-text">One step per line. These will be auto-numbered.</div>
       <label>Pearls (optional)</label>
       <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
@@ -545,7 +510,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../supabase-auth.js"></script>
   <script>
-  const PROCEDURE_SLUG = 'access-port';
+  const PROCEDURE_SLUG = 'drainage-chest-tube';
   const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
   let _cards = [];
   let _currentUser = null;
@@ -570,7 +535,6 @@
       _cards = data;
       try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
     } else {
-      // Try localStorage fallback
       try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
     }
     renderCards();
@@ -647,12 +611,10 @@
     const displayName = (profile && profile.display_name) || user.email || 'Anonymous';
 
     if (editId) {
-      // Update
       _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, updated_at: new Date().toISOString() } : c);
       renderCards(); closeCardModal();
       await sb.from('procedure_cards').update({ title, supplies, steps, pearls, updated_at: new Date().toISOString() }).eq('id', editId);
     } else {
-      // Insert
       const tmpId = 'tmp-' + Date.now();
       const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, created_at: new Date().toISOString() };
       _cards.unshift(newCard);
@@ -691,7 +653,7 @@
   function exportSupplyList() {
     const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
     const supplies = Array.from(chips).map(c => c.textContent.trim());
-    const text = 'Port Placement Supply List\n' + '\u2550'.repeat(30) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    const text = 'Percutaneous Chest Tube Placement Supply List\n' + '═'.repeat(46) + '\n' + supplies.map(s => `☐ ${s}`).join('\n') + '\n';
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
     } else {
@@ -706,11 +668,11 @@
   function downloadSupplyList() {
     const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
     const supplies = Array.from(chips).map(c => c.textContent.trim());
-    const text = 'Port Placement Supply List\n' + '\u2550'.repeat(30) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    const text = 'Percutaneous Chest Tube Placement Supply List\n' + '═'.repeat(46) + '\n' + supplies.map(s => `☐ ${s}`).join('\n') + '\n';
     const blob = new Blob([text], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url; a.download = 'access-port-supplies.txt'; a.click();
+    a.href = url; a.download = 'chest-tube-supplies.txt'; a.click();
     URL.revokeObjectURL(url);
     showExportToast('Supply list downloaded');
   }

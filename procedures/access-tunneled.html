@@ -104,12 +104,6 @@
     .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
     .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
 
-    /* ── Fluid analysis table ── */
-    .fluid-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
-    .fluid-table th, .fluid-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
-    .fluid-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
-    .fluid-table tr:hover td { background: rgba(56,189,248,.04); }
-
     /* ── Cards system ── */
     .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
     .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
@@ -144,16 +138,6 @@
     .btn-secondary:hover { background: rgba(255,255,255,.1); }
     .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
 
-    /* ── Step image dropdown ── */
-    .step-img-toggle { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 5px 10px; border-radius: 8px; border: 1px solid rgba(56,189,248,.2); background: rgba(56,189,248,.06); color: var(--accent); font-size: .82rem; font-weight: 600; cursor: pointer; transition: .15s; }
-    .step-img-toggle:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.35); }
-    .step-img-toggle .arrow { transition: transform .2s; font-size: .7rem; }
-    .step-img-toggle.open .arrow { transform: rotate(90deg); }
-    .step-img-panel { display: none; margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
-    .step-img-panel.open { display: block; }
-    .step-img-panel img { width: 100%; display: block; border-radius: 12px; }
-    .step-img-caption { font-size: .82rem; color: var(--muted); padding: 8px 12px; background: rgba(0,0,0,.3); }
-
     /* ── Export supply button ── */
     .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
     .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
@@ -169,17 +153,17 @@
         <div class="brand-mark">R</div>
         <div>RadCall Procedure Guide</div>
       </a>
-      <a class="back-link" href="vascular-access.html">&larr; Central Venous Access</a>
+      <a class="back-link" href="../index.html" onclick="history.back(); return false;">&larr; Back to RadCall</a>
     </div>
 
     <header class="header-card" id="top">
       <div class="eyebrow">Procedure Playbook</div>
       <h1>Tunneled Dialysis Catheter Placement</h1>
-      <p class="subhead">Fluoroscopy- and ultrasound-guided placement of tunneled cuffed venous catheters (TCVC) for hemodialysis and long-term vascular access.</p>
+      <p class="subhead">Image-guided placement of tunneled cuffed venous catheters for hemodialysis and long-term central venous access.</p>
       <div class="snapshot-grid">
         <div class="snapshot-card"><span class="snapshot-label">Guidance</span><div class="snapshot-value">US + Fluoroscopy</div></div>
         <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--accent-2)">Moderate (SIR Cat 2)</div></div>
-        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Pneumothorax &middot; Kinking</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Pneumothorax · Kinking</div></div>
         <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Cefazolin 1g pre-op</div></div>
         <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">CXR + flow check</div></div>
       </div>
@@ -191,63 +175,42 @@
         <ul class="toc">
           <li><a href="#indications">1. Indications</a></li>
           <li><a href="#preprocedure">2. Pre-Procedure</a></li>
-          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#anatomy">3. Relevant Anatomy</a></li>
           <li><a href="#technique">4. How I Do It</a></li>
           <li><a href="#troubleshooting">5. Troubleshooting</a></li>
           <li><a href="#complications">6. Complications</a></li>
           <li><a href="#postprocedure">7. Post-Procedure</a></li>
           <li><a href="#pearls">8. Critical Pearls</a></li>
-          <li><a href="#catheter-management">9. Catheter Management</a></li>
+          <li><a href="#management">9. Catheter Management</a></li>
         </ul>
       </aside>
 
       <main class="content">
-
         <!-- ═══ 1. INDICATIONS ═══ -->
         <section class="section" id="indications">
           <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
             <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications / Contraindications</h3></div></div>
             <span class="collapse-arrow">&#x25BE;</span>
           </div>
-          <div class="section-body">
-            <div class="two-col" style="margin-bottom:14px;">
-              <div class="panel">
-                <h4>Dialysis Indications</h4>
-                <ul class="list">
-                  <li>New dialysis patients requiring access before AV fistula (maturation &ge;1 month) or AV graft (&ge;3 weeks) is ready</li>
-                  <li>Established dialysis patients with failed or maturing permanent access (bridge)</li>
-                  <li>Patients with exhausted all fistula and graft options</li>
-                  <li>Per NKF-K/DOQI: tunneled cuffed catheter (TCVC) indicated when access needed for &gt;3 weeks</li>
-                  <li>Fewer than 10% of chronic HD patients should rely on catheter as permanent access</li>
-                </ul>
-              </div>
-              <div class="panel">
-                <h4>Non-Dialysis Indications</h4>
-                <ul class="list">
-                  <li>Long-term chemotherapy (Hickman, Broviac, Groshong)</li>
-                  <li>Long-term parenteral nutrition</li>
-                  <li>Apheresis</li>
-                </ul>
-              </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Indications</h4>
+              <ul class="list">
+                <li><strong>New dialysis patients:</strong> Bridge before AV fistula maturation (≥1 month) or AV graft (≥3 weeks)</li>
+                <li><strong>Established HD patients:</strong> Failed or maturing permanent access</li>
+                <li><strong>Exhausted AV access options:</strong> Catheter as long-term or permanent access</li>
+                <li><strong>NKF-K/DOQI guideline:</strong> TCVC indicated when access needed &gt;3 weeks</li>
+                <li><strong>Non-dialysis indications:</strong> Long-term chemotherapy (Hickman/Broviac/Groshong), parenteral nutrition, apheresis</li>
+                <li><strong>Note:</strong> Fewer than 10% of chronic HD patients should rely on catheter as permanent access</li>
+              </ul>
             </div>
-            <div class="two-col">
-              <div class="panel">
-                <h4>Contraindications — Absolute</h4>
-                <ul class="list danger">
-                  <li><strong>Coagulopathy:</strong> INR &gt;1.5, platelets &lt;50,000</li>
-                  <li><strong>Active septicemia</strong> — patient must be afebrile on organism-specific antibiotics with negative blood cultures &times;48h before tunneled placement; non-tunneled catheter acceptable acutely</li>
-                </ul>
-              </div>
-              <div class="panel">
-                <h4>Contraindications — Relative</h4>
-                <ul class="list">
-                  <li>Central venous stenosis/occlusion (may need venoplasty first)</li>
-                  <li>Cardiac device on ipsilateral side</li>
-                  <li>Chest wall radiation</li>
-                  <li>Prior failed catheter at that site</li>
-                  <li><strong>Note:</strong> Studies show INR up to 2.0 did not increase bleeding rates with large-bore dialysis catheters</li>
-                </ul>
-              </div>
+            <div class="panel">
+              <h4>Contraindications</h4>
+              <ul class="list">
+                <li><strong>Absolute:</strong> Coagulopathy (INR &gt;1.5, platelets &lt;50K); active septicemia — must have negative blood cultures ×48h on organism-specific antibiotics before tunneled placement (place non-tunneled acutely then convert)</li>
+                <li><strong>Relative:</strong> Central venous stenosis/occlusion (venoplasty first); cardiac device ipsilateral side; prior radiation</li>
+                <li><strong class="danger">NEVER use subclavian vein in dialysis patients</strong> — irreversibly compromises future AV access</li>
+              </ul>
             </div>
           </div>
         </section>
@@ -260,53 +223,41 @@
           </div>
           <div class="section-body">
             <div class="checklist">
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>US survey of proposed access vein.</strong> Confirm patency, caliber, and absence of thrombus. Sweep from IJ to brachiocephalic to detect central stenosis. Attenuated IJ with collaterals suggests central occlusion.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Labs (SIR Category 2 — moderate risk).</strong> INR goal &lt;1.5–2.0; platelets goal &gt;50K.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Anticoagulation.</strong> LMWH hold 1 dose; aspirin/Plavix no hold required for moderate risk.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Active infection exclusion.</strong> Negative blood cultures &times;48h; afebrile; on organism-specific antibiotics.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>IV access + sedation.</strong> Required for procedure; moderate sedation (midazolam + fentanyl) or MAC for anxious patients.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Antibiotic prophylaxis.</strong> Cefazolin 1g IV pre-op; vancomycin 1g if penicillin/cephalosporin allergy.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Confirm catheter size and type with nephrology.</strong> Typical dialysis catheter 14.5Fr split-tip or 13.5Fr step-tip; non-dialysis: Hickman/Broviac per infusion requirements.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Confirm exit site.</strong> Right chest preferred (near nipple line, approximately 8–12 cm from puncture site).</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent.</strong> Arterial puncture, pneumothorax, hematoma, catheter malfunction/kinking, infection, thrombosis, inability to meet target flow rates.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>US survey.</strong> Confirm IJV patency. Sweep IJ to brachiocephalic for central stenosis — attenuated IJ + collaterals = central occlusion.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Labs.</strong> INR &lt;1.5–2.0, platelets &gt;50K. Confirm afebrile. Negative blood cultures ×48h on organism-specific antibiotics before tunneled placement.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Antibiotics.</strong> Broad-spectrum prophylaxis: cefazolin 1g IV within 1 hour pre-procedure.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Catheter selection.</strong> Confirm catheter type with nephrology — 14.5Fr split-tip for dialysis (e.g., Palindrome, HemoStar, Ash split-tip).</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Exit site planning.</strong> Mark exit site on anterior chest, 8–12 cm from planned puncture. Low puncture near clavicle creates smooth infraclavicular curve preventing kinking.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Moderate sedation.</strong> Obtain consent — discuss pneumothorax, arterial puncture, infection, catheter malfunction, central venous thrombosis, air embolism.</div></div>
             </div>
           </div>
         </section>
 
-        <!-- ═══ 3. ANATOMY ═══ -->
+        <!-- ═══ 3. RELEVANT ANATOMY ═══ -->
         <section class="section" id="anatomy">
           <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
             <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
             <span class="collapse-arrow">&#x25BE;</span>
           </div>
           <div class="section-body">
-            <div class="two-col" style="margin-bottom:14px;">
+            <div class="two-col">
               <div class="panel">
-                <h4>Access Site Anatomy</h4>
+                <h4>Venous Access Sites</h4>
                 <ul class="list">
-                  <li><strong>Right IJV:</strong> First-line access — straight path to SVC, best flow rates, lowest complication risk; preserves right subclavian for future AV access</li>
-                  <li><strong>Left IJV:</strong> Acceptable; involves two ~90&deg; turns (IJ-brachiocephalic + brachiocephalic-SVC); stiff wire required; may have slightly lower flow rates and higher stenosis rates</li>
-                  <li><strong>External jugular vein:</strong> Viable when both IJVs occluded; preferable to subclavian</li>
-                  <li><strong>Subclavian: AVOID</strong> — associated with high central venous stenosis, thrombosis, irreversible compromise of upper extremity AV access; critical in dialysis patients with 15–20 year life expectancy requiring multiple sequential accesses</li>
-                  <li><strong>Femoral/translumbar IVC:</strong> Last resort; higher infection rates</li>
+                  <li><strong>Right IJV (first-line):</strong> Straight path to SVC, minimal angulation, preserves subclavian for future AV access</li>
+                  <li><strong>Left IJV:</strong> Two 90° turns; stiff hydrophilic wire required; higher kink risk</li>
+                  <li><strong>External jugular:</strong> Viable when both IJVs occluded</li>
+                  <li><strong class="danger">Subclavian: NEVER use in dialysis patients</strong> — irreversible AV access compromise</li>
                 </ul>
               </div>
               <div class="panel">
-                <h4>Tunnel Anatomy</h4>
+                <h4>Tunnel and Tip Anatomy</h4>
                 <ul class="list">
-                  <li>Low puncture close to clavicle creates smooth infraclavicular curve — prevents kinking at subcutaneous tunnel-to-intravascular transition</li>
-                  <li>Tunnel runs subcutaneously from puncture site to exit site on anterior chest wall (right chest, ~8–12 cm from puncture)</li>
-                  <li>Dacron cuff positioned 2–3 cm from exit site — allows tissue ingrowth for anchoring and infection barrier</li>
-                  <li>Cuff &ge;3 cm from exit site for dialysis catheters: too close &rarr; infection risk; too far &rarr; kink risk</li>
+                  <li><strong>Tunnel:</strong> From puncture site to anterior chest exit site; low puncture near clavicle creates smooth infraclavicular curve preventing kinking</li>
+                  <li><strong>Dacron cuff:</strong> Position 2–3 cm from exit site; takes 2–4 weeks to incorporate into subcutaneous tissue</li>
+                  <li><strong>Tip position:</strong> Right atrium for optimal flow (target 400–600 mL/min); too high in SVC = inadequate flow</li>
                 </ul>
               </div>
-            </div>
-            <div class="panel">
-              <h4>Tip Positions</h4>
-              <ul class="list">
-                <li><strong>Dialysis catheters:</strong> Right atrium or SVC-RA junction for optimal flow (target 400–600 mL/min)</li>
-                <li><strong>Non-dialysis (Hickman/Broviac):</strong> SVC-RA junction preferred</li>
-              </ul>
             </div>
           </div>
         </section>
@@ -325,36 +276,35 @@
                 <span class="badge">Default</span>
               </div>
 
-              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#128203; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#8595; Download</button></h4>
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Tunneled Dialysis Catheter <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">📋 Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">⬇ Download</button></h4>
               <div class="chip-row card-supplies">
                 <span class="chip">Sterile US probe cover</span>
                 <span class="chip">21G micropuncture kit</span>
-                <span class="chip">0.018" microwire</span>
-                <span class="chip">Peel-away sheath set (16Fr for 14.5Fr catheter)</span>
-                <span class="chip">Stiff 0.035" Amplatz wire</span>
-                <span class="chip">Tunneled dialysis catheter (Palindrome / HemoStar / Ash split-tip)</span>
-                <span class="chip">Tunneling rod/device</span>
+                <span class="chip">Peel-away sheath (16Fr for 14.5Fr cath)</span>
+                <span class="chip">Amplatz superstiff 0.035" wire</span>
+                <span class="chip">Tunneled dialysis catheter (Palindrome/HemoStar/Ash split-tip)</span>
+                <span class="chip">Tunneling rod</span>
                 <span class="chip">1% lidocaine with epinephrine</span>
-                <span class="chip">#11 and #15 scalpels</span>
-                <span class="chip">Mosquito and Kelly hemostats</span>
+                <span class="chip">#11/#15 scalpel</span>
+                <span class="chip">Kelly hemostat</span>
                 <span class="chip">2-0 nonabsorbable suture</span>
-                <span class="chip">Heparinized saline (5000 units/mL)</span>
+                <span class="chip">Heparinized saline lock (5000 units/mL)</span>
               </div>
 
               <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
               <div class="step-list">
-                <div class="step"><div class="step-num">1</div><div><h4>US survey of right IJV</h4><div class="muted">Confirm patency; identify carotid; note caliber and depth; sweep to brachiocephalic. Look for attenuated lumen or collaterals suggesting central stenosis.</div></div></div>
-                <div class="step"><div class="step-num">2</div><div><h4>Patient positioning</h4><div class="muted">Supine, head turned left; Trendelenburg &times;10–15&deg;. Distends the IJ and reduces air embolism risk.</div></div></div>
-                <div class="step"><div class="step-num">3</div><div><h4>Sterile prep + drape</h4><div class="muted">Full anterior chest (both sides), neck and upper abdomen; large sterile drape. Mark exit site on anterior chest wall, below and medial to nipple, ~8–12 cm from planned IJ puncture site.</div></div></div>
-                <div class="step"><div class="step-num">4</div><div><h4>Infiltrate exit site + incision</h4><div class="muted">Infiltrate exit site with 1% lidocaine with epinephrine (skin + subcutaneous). Make small transverse incision at exit site.</div></div></div>
-                <div class="step"><div class="step-num">5</div><div><h4>Create subcutaneous tunnel</h4><div class="muted">Advance tunneling rod from exit site toward planned IJ puncture site through subcutaneous tissue, staying superficial to pectoralis fascia. Thread catheter onto tunneling rod; pull catheter through tunnel so it exits at the puncture site with appropriate length for IJ entry and tip at right atrium.</div></div></div>
-                <div class="step"><div class="step-num">6</div><div><h4>US-guided IJ access</h4><div class="muted">Micropuncture of right IJV low in neck near clavicle; single-wall puncture. Advance 0.018" microwire under fluoroscopy to IVC (beyond existing catheters if present); confirm wire position in right atrium/IVC on fluoroscopy.</div></div></div>
-                <div class="step"><div class="step-num">7</div><div><h4>Upsize to stiff wire</h4><div class="muted">Skin incision at puncture site; blunt dissection. Advance coaxial micropuncture system; exchange inner dilator for 0.035" stiff wire (Amplatz or Rosen). Confirm wire tip in IVC — NOT curled in RA — before advancing sheath.</div></div></div>
-                <div class="step"><div class="step-num">8</div><div><h4>Advance peel-away sheath</h4><div class="muted">Advance peel-away sheath over stiff wire with smooth, controlled motion. Keep wire straight in IVC to prevent buckling and central vein laceration. Withdraw inner dilator and wire; occlude hub immediately with thumb.</div></div></div>
-                <div class="step"><div class="step-num">9</div><div><h4>Advance catheter through sheath</h4><div class="muted">Advance catheter through peel-away sheath while splitting sheath. Maintain catheter position under fluoroscopy. Target tip: right atrium or SVC-RA junction for dialysis catheters.</div></div></div>
-                <div class="step"><div class="step-num">10</div><div><h4>Confirm position + cuff placement</h4><div class="muted">Verify both lumens aspirate freely. Confirm Dacron cuff positioned 2–3 cm from exit site; if cuff is too far from exit site after insertion, pull catheter back to reposition cuff correctly.</div></div></div>
-                <div class="step"><div class="step-num">11</div><div><h4>Secure + lock</h4><div class="muted">Suture catheter at exit site; sterile dressing. Lock lumens with heparinized saline per volumes printed on catheter hub (arterial: 1.3 mL; venous: 1.7 mL — confirm on hub label). Do not exceed lock volume.</div></div></div>
-                <div class="step"><div class="step-num">12</div><div><h4>Post-procedure CXR</h4><div class="muted">Confirm tip position (right atrium) and exclude pneumothorax before patient leaves suite.</div></div></div>
+                <div class="step"><div class="step-num">1</div><div><h4>US survey</h4><div class="muted">US survey right IJV — confirm patency, caliber, carotid position. Sweep IJ to brachiocephalic junction to exclude central stenosis. Identify level of lowest IJV access near clavicle.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Position</h4><div class="muted">Patient supine, head turned left, Trendelenburg 10–15° to distend IJV and reduce air embolism risk.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Sterile prep + drape</h4><div class="muted">Sterile prep full anterior chest and neck. Large sterile drape covering entire field. Apply sterile cover to US probe.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Mark exit site + local anesthesia</h4><div class="muted">Mark exit site anterior chest (below/medial to nipple, 8–12 cm from planned puncture). Infiltrate with lidocaine + epinephrine. Create small transverse incision at exit site.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Create tunnel</h4><div class="muted">Advance tunneling rod from exit site to planned puncture site through subcutaneous tissue. Thread catheter through the tunneling rod. Pull catheter through tunnel (exit→puncture direction) so tip exits at puncture site.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>US-guided micropuncture right IJV</h4><div class="muted">Low puncture near clavicle — single wall puncture under real-time US guidance. Advance 0.018" wire under fluoroscopy to IVC. Confirm position under fluoroscopy.</div></div></div>
+                <div class="step"><div class="step-num">7</div><div><h4>Wire exchange</h4><div class="muted">Skin incision at puncture site. Blunt dissection. Advance micropuncture sheath over 0.018" wire. Exchange to 0.035" Amplatz superstiff wire with tip in IVC.</div></div></div>
+                <div class="step"><div class="step-num">8</div><div><h4>Advance peel-away sheath</h4><div class="muted"><strong>Critical step:</strong> Amplatz wire tip must be in IVC — not RA. Advance peel-away sheath over Amplatz wire. Withdraw inner dilator immediately and occlude hub to prevent air embolism.</div></div></div>
+                <div class="step"><div class="step-num">9</div><div><h4>Advance catheter + split sheath</h4><div class="muted">Advance catheter through peel-away sheath while simultaneously splitting sheath under fluoroscopy. Maintain catheter tip position during sheath removal.</div></div></div>
+                <div class="step"><div class="step-num">10</div><div><h4>Confirm tip position + cuff</h4><div class="muted">Confirm tip at right atrium under fluoroscopy. Aspirate both lumens freely. Position Dacron cuff 2–3 cm from exit site — not too close (infection conduit) and not too far (kink risk).</div></div></div>
+                <div class="step"><div class="step-num">11</div><div><h4>Secure + lock</h4><div class="muted">Secure catheter with suture at exit site. Lock lumens with heparinized saline — use exact volumes printed on hub. Do not exceed lock volume.</div></div></div>
+                <div class="step"><div class="step-num">12</div><div><h4>CXR</h4><div class="muted">Post-procedure CXR to confirm tip position and exclude pneumothorax. Notify dialysis team — ready for next scheduled session.</div></div></div>
               </div>
             </div>
 
@@ -375,39 +325,33 @@
           <div class="section-body problem-grid">
             <div class="problem">
               <div class="problem-label">Problem</div>
-              <h4>Wire won't advance beyond IJ-brachiocephalic junction (left-sided access)</h4>
-              <p class="muted"><strong>Likely cause:</strong> Sharp angle at left brachiocephalic-SVC junction; wire buckling against wall.</p>
-              <p class="success"><strong>Next step:</strong> Use hydrophilic stiff wire; rotate patient's head toward ipsilateral shoulder; careful fluoroscopic guidance through turn.</p>
+              <h4>Wire won't advance past IJ-brachiocephalic junction (left side)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Acute angulation at left brachiocephalic vein — left IJV requires two 90° turns.</p>
+              <p class="success"><strong>Next step:</strong> Use stiff hydrophilic wire. Rotate patient's head ipsilateral to straighten angle. Use fluoroscopic guidance through the turns. Consider right IJV access if left side fails.</p>
             </div>
             <div class="problem">
               <div class="problem-label">Problem</div>
-              <h4>Catheter kinked at infraclavicular region</h4>
-              <p class="muted"><strong>Likely cause:</strong> IJ puncture site too high, creating a sharp angle where catheter transitions from subcutaneous tunnel to vein.</p>
-              <p class="success"><strong>Next step:</strong> Ensure puncture site is LOW near clavicle. Revise tunnel trajectory to reduce angle at transition point.</p>
+              <h4>Catheter kinked infraclavicularly</h4>
+              <p class="muted"><strong>Likely cause:</strong> Puncture site too high; acute infraclavicular angle creating kink point at clavicle.</p>
+              <p class="success"><strong>Next step:</strong> Ensure low puncture near clavicle. Revise tunnel angle. May require catheter exchange with lower access site.</p>
             </div>
             <div class="problem">
               <div class="problem-label">Problem</div>
-              <h4>Unable to pass peel-away sheath smoothly</h4>
-              <p class="muted"><strong>Likely cause:</strong> Wire tip curled in right atrium (buckling risk); underdilated tract; wire kinked.</p>
-              <p class="success"><strong>Next step:</strong> Confirm Amplatz wire tip is in IVC (not curled in RA). Dilate tract incrementally. Apply smooth controlled forward pressure — do not force. If resistance persists, confirm wire position fluoroscopically before reattempting.</p>
+              <h4>Peel-away sheath won't advance</h4>
+              <p class="muted"><strong>Likely cause:</strong> Amplatz wire tip in RA instead of IVC — wire buckles and prevents sheath advancement.</p>
+              <p class="success"><strong>Next step:</strong> Reconfirm wire tip in IVC under fluoroscopy. Dilate incrementally. Apply smooth forward pressure while rotating — do not force.</p>
             </div>
             <div class="problem">
               <div class="problem-label">Problem</div>
-              <h4>Inadequate flow rates (dialysis catheter)</h4>
-              <p class="muted"><strong>Likely cause:</strong> Tip malposition in SVC; fibrin sheath; kinking; thrombosis.</p>
-              <p class="success"><strong>Next step:</strong> Fluoroscopy to confirm tip position (should be in RA, not SVC). Check for fibrin sheath. Try reversing lumens (temporary fix). TPA lock for fibrin sheath. If persistent — stripping or catheter exchange.</p>
+              <h4>Inadequate dialysis flow at first use</h4>
+              <p class="muted"><strong>Likely cause:</strong> Tip not in RA (too high in SVC), fibrin sheath, kinking, or thrombosis.</p>
+              <p class="success"><strong>Next step:</strong> Confirm tip position fluoroscopically — advance to RA if in SVC. Check for kink. TPA lock (1 mg/mL, 30 min dwell × 2). If persistent → catheter exchange over wire.</p>
             </div>
             <div class="problem">
               <div class="problem-label">Problem</div>
-              <h4>Cuff excessively far from exit site</h4>
-              <p class="muted"><strong>Likely cause:</strong> Catheter advanced too far before confirming cuff position; measured incorrectly pre-tunnel.</p>
-              <p class="success"><strong>Next step:</strong> Pull catheter back at exit site to reposition cuff 2–3 cm from exit site; re-suture.</p>
-            </div>
-            <div class="problem">
-              <div class="problem-label">Problem</div>
-              <h4>Air embolism</h4>
-              <p class="muted"><strong>Likely cause:</strong> Open port during sheath manipulation; inadequate Trendelenburg positioning.</p>
-              <p class="success"><strong>Next step:</strong> Immediately left lateral decubitus + Trendelenburg. Occlude all open ports. 100% O&sup2;. Aspirate air through catheter if feasible.</p>
+              <h4>Cuff too far from exit site</h4>
+              <p class="muted"><strong>Likely cause:</strong> Tunnel geometry — cuff migrated inward during tunneling.</p>
+              <p class="success"><strong>Next step:</strong> Pull catheter back at exit site to reposition cuff to 2–3 cm from exit. Secure with suture. Target: cuff close enough to anchor but not so close it acts as infection conduit.</p>
             </div>
           </div>
         </section>
@@ -420,21 +364,20 @@
           </div>
           <div class="section-body two-col">
             <div class="panel">
-              <h4>Immediate</h4>
+              <h4>Periprocedural</h4>
               <ul class="list danger">
-                <li><strong>Pneumothorax</strong> (1–3% IJ approach) — small stable: O&sup2; &plusmn; serial CXR; large/growing: small-bore chest tube</li>
-                <li><strong>Arterial puncture</strong> (1–3%) — remove needle, firm pressure; if large sheath in carotid: vascular surgery emergency</li>
-                <li><strong>Hematoma</strong> (1–3%) — usually self-limited with compression</li>
-                <li><strong>Air embolism</strong> (&lt;1%) — left lateral decubitus + Trendelenburg; 100% O&sup2;</li>
+                <li><strong>Pneumothorax</strong> (1–3%) — post-procedure CXR mandatory; small = observe; large = chest tube</li>
+                <li><strong>Arterial puncture</strong> (1–3%) — <strong>Do NOT dilate carotid</strong>; remove needle, hold pressure; if dilated → vascular surgery emergency</li>
+                <li><strong>Hematoma</strong> (1–3%) — most resolve with compression; expanding = urgent imaging</li>
+                <li><strong>Air embolism</strong> (&lt;1%) — prevent with Trendelenburg + immediate hub occlusion after dilator removal</li>
               </ul>
             </div>
             <div class="panel">
-              <h4>Delayed</h4>
+              <h4>Long-term</h4>
               <ul class="list">
-                <li><strong>Catheter malfunction / inadequate flow</strong> — most common long-term complication; fibrin sheath, tip malposition, kinking, thrombosis; TPA instillation or fluoroscopic catheter exchange</li>
-                <li><strong>CLABSI</strong> — 1–3 per 1000 catheter-days; Staph aureus or fungal: remove catheter; antibiotic lock therapy for selected organisms (CoNS, gram-negatives)</li>
-                <li><strong>Central venous thrombosis</strong> — catheter removal + anticoagulation</li>
-                <li><strong>Subcutaneous hematoma along tunnel</strong> — usually self-limited; delayed cuff incorporation if large</li>
+                <li><strong>Catheter malfunction</strong> (most common) — fibrin sheath, tip malposition, kinking, thrombosis → TPA lock or catheter exchange</li>
+                <li><strong>CLABSI</strong> (1–3 per 1000 catheter-days) — remove for Staph aureus/fungal/tunnel infection; antibiotic lock salvage for coag-neg Staph/gram-negatives in selected cases</li>
+                <li><strong>Central venous thrombosis</strong> — anticoagulation; may require catheter relocation</li>
               </ul>
             </div>
           </div>
@@ -450,18 +393,20 @@
             <div class="panel">
               <h4>Immediate</h4>
               <ul class="list">
-                <li>Fluoroscopic confirmation of tip at right atrium before leaving suite</li>
-                <li>CXR post-placement: tip position and pneumothorax exclusion</li>
-                <li>Lock lumens with heparinized saline per volume printed on catheter hub — do not exceed</li>
-                <li>Dialysis team notified: catheter ready for use at next dialysis session; document flow rates at first use (target 400–600 mL/min)</li>
+                <li>Fluoroscopic tip confirmation in RA before leaving suite</li>
+                <li>CXR to exclude pneumothorax and confirm tip position</li>
+                <li>Lock lumens with heparinized saline per hub volume — do not exceed printed lock volume</li>
+                <li>Notify dialysis team — ready for next scheduled session</li>
+                <li>Exit site dressing: chlorhexidine-impregnated sponge</li>
               </ul>
             </div>
             <div class="panel">
-              <h4>Discharge Instructions</h4>
+              <h4>Follow-up</h4>
               <ul class="list">
-                <li>Exit site dressing: sterile gauze first 24h; then chlorhexidine-impregnated dressing per institutional protocol</li>
-                <li>Sutures removed at 2–3 weeks once cuff has incorporated</li>
-                <li>Patient education: site care; no submerging in water; keep dressing dry; signs of infection (redness, warmth, discharge, fever)</li>
+                <li>Document flow rates at first dialysis use — target 400–600 mL/min</li>
+                <li>Sutures removed 2–3 weeks (after Dacron cuff incorporates)</li>
+                <li>Patient education: keep exit site dry, signs of infection (redness, drainage, fever)</li>
+                <li>Reinforce: this is a bridge — AV access creation/maturation remains the goal</li>
               </ul>
             </div>
           </div>
@@ -474,72 +419,66 @@
             <span class="collapse-arrow">&#x25BE;</span>
           </div>
           <div class="section-body pearls">
-            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Right IJV is always preferred:</strong> Straight line to SVC; preserves left subclavian for future AV access. Never use subclavian in dialysis patients — subclavian stenosis is irreversible and can exhaust future access options.</div></div>
-            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Low neck puncture prevents kinking:</strong> Puncture site near clavicle creates smooth infraclavicular curve — prevents kinking at the critical point where catheter transitions from subcutaneous tunnel to intravascular segment.</div></div>
-            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Peel-away sheath requires stiff wire in IVC:</strong> The wire tip MUST be in the IVC — not curled in the RA — before advancing the sheath. If the wire buckles in the right heart, the sheath can lacerate the SVC.</div></div>
-            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Cuff position is critical:</strong> 2–3 cm from exit site for proper tissue ingrowth. Too close &rarr; infection route directly to bloodstream. Too far &rarr; kink risk at infraclavicular curve.</div></div>
-            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Active septicemia = absolute contraindication to tunneled placement:</strong> Place non-tunneled catheter first; exchange to tunneled once bacteremia clears (confirmed negative cultures &times;48h on appropriate antibiotics).</div></div>
-            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Dacron cuff incorporation takes 2–4 weeks:</strong> Securing sutures should remain in place until then. Do not remove early — premature suture removal before cuff incorporation can allow catheter migration.</div></div>
-            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Target flow rates 400–600 mL/min:</strong> Confirm at first dialysis use. Inadequate flow &rarr; fibrin sheath is the most common cause. TPA lock or catheter exchange are first-line management.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Right IJV ALWAYS preferred:</strong> Preserve subclavian vein for future AV access. NEVER use subclavian in dialysis patients — this is irreversible.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Low neck puncture = no kinking:</strong> Puncture near clavicle creates a smooth infraclavicular curve. High puncture = acute angulation = catheter kink at clavicle.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Peel-away sheath safety:</strong> Wire tip must be in IVC — not RA. RA wire → buckling → sheath won't advance → SVC laceration risk if forced. Confirm under fluoroscopy before every sheath advance.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Cuff position is critical:</strong> 2–3 cm from exit site. Too close = infection conduit (bacteria track along cuff). Too far = kink risk. Adjust at exit site before securing.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Active septicemia = absolute contraindication:</strong> Place non-tunneled catheter acutely. Convert to tunneled only after 48h negative cultures on organism-specific antibiotics.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Dacron cuff anchoring:</strong> Takes 2–4 weeks to incorporate into subcutaneous tissue. Sutures stay in until then — removing early risks catheter dislodgement.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Target 400–600 mL/min:</strong> Document flow at first dialysis use. If inadequate on first run, check tip position and fibrin sheath before attributing to catheter malfunction.</div></div>
           </div>
         </section>
 
         <!-- ═══ 9. CATHETER MANAGEMENT ═══ -->
-        <section class="section" id="catheter-management">
+        <section class="section" id="management">
           <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
             <div class="section-title-wrap"><div class="section-index">9</div><div><h3>Catheter Management</h3></div></div>
             <span class="collapse-arrow">&#x25BE;</span>
           </div>
           <div class="section-body">
-            <div class="two-col" style="margin-bottom:14px;">
-              <div class="panel">
-                <h4>Flushing + Locking</h4>
-                <ul class="list">
-                  <li>Flush each lumen with heparinized saline after each use</li>
-                  <li>Use lock volumes printed on hub — never exceed (can push heparin into circulation)</li>
-                  <li>Typical volumes: arterial lumen 1.3 mL; venous lumen 1.7 mL (confirm on hub)</li>
-                </ul>
-              </div>
-              <div class="panel">
-                <h4>Dressing Changes</h4>
-                <ul class="list">
-                  <li>Chlorhexidine-impregnated sponge + transparent dressing q7d</li>
-                  <li>Change more frequently if soiled or wet</li>
-                  <li>Strict sterile technique at every dressing change</li>
-                </ul>
-              </div>
-            </div>
             <div class="two-col">
+              <div class="panel">
+                <h4>Routine Care</h4>
+                <ul class="list">
+                  <li><strong>Flushing:</strong> Heparinized saline lock after each use; never exceed lock volume printed on hub</li>
+                  <li><strong>Dressing changes:</strong> Chlorhexidine-impregnated sponge every 7 days or when soiled/wet; strict sterile technique</li>
+                  <li><strong>Exit site inspection:</strong> Each dialysis session — erythema, drainage, tenderness, tunnel track assessment</li>
+                </ul>
+              </div>
               <div class="panel">
                 <h4>Fibrin Sheath (Most Common Cause of Inadequate Flow)</h4>
                 <ul class="list">
-                  <li>TPA (1 mg/mL) instillation; dwell &times;30 min; aspirate; repeat &times;2 if needed</li>
-                  <li>If TPA fails &rarr; fluoroscopic catheter exchange with fibrin sheath disruption, or stripping via femoral approach</li>
-                </ul>
-              </div>
-              <div class="panel">
-                <h4>Thrombotic Occlusion (Can't Aspirate)</h4>
-                <ul class="list">
-                  <li>TPA lock per protocol</li>
-                  <li>If fails &rarr; image-guided exchange; check for fibrin sheath vs intraluminal thrombus vs kink</li>
+                  <li>TPA 1 mg/mL dwell × 30 min × 2 attempts; aspirate before reconnecting</li>
+                  <li>If TPA fails → fluoroscopic exchange over wire with fibrin sheath disruption, or femoral stripping</li>
+                  <li>Rule out kink on fluoroscopy before assuming fibrin sheath</li>
                 </ul>
               </div>
             </div>
-            <div style="margin-top:14px;">
-              <div class="panel">
-                <h4>Catheter-Related Bloodstream Infection (CLABSI)</h4>
-                <ul class="list">
-                  <li>Obtain blood cultures from catheter AND peripheral simultaneously</li>
-                  <li><strong>Remove catheter for:</strong> Staph aureus, fungal, or tunnel/exit-site infection</li>
-                  <li><strong>Antibiotic lock therapy for salvage</strong> in selected organisms: coagulase-negative Staph, gram-negatives — only if no tunnel infection and catheter is functioning</li>
-                  <li><strong>Catheter exchange:</strong> Over wire under fluoroscopy at same site if no tunnel infection; new site and new tunnel if infected</li>
-                </ul>
+            <div style="margin-top: 14px;">
+              <div class="two-col">
+                <div class="panel">
+                  <h4>CLABSI Management</h4>
+                  <ul class="list">
+                    <li>Blood cultures from catheter AND peripheral site simultaneously</li>
+                    <li><strong>Remove catheter:</strong> Staph aureus, fungal, tunnel infection — no salvage attempt</li>
+                    <li><strong>Antibiotic lock salvage:</strong> Coag-neg Staph, gram-negatives in selected stable patients</li>
+                    <li>New tunneled catheter placement only after repeat negative cultures</li>
+                  </ul>
+                </div>
+                <div class="panel">
+                  <h4>Thrombotic Occlusion</h4>
+                  <ul class="list">
+                    <li>TPA lock — dwell per protocol; aspirate; do not flush clot into circulation</li>
+                    <li>If TPA fails → image-guided exchange; rule out kink first</li>
+                    <li>Consider systemic anticoagulation if central venous thrombosis on imaging</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <p class="footer-note">Siegel JB. Tech Vasc Interv Radiol. 2008;11:181&ndash;185 &middot; Heberlein W. Tech Vasc Interv Radiol. 2011;14:192&ndash;197 &middot; Wahl SI, Cynamon J. Tech Vasc Interv Radiol. 1999;2:221&ndash;227 &middot; Kandarpa K et al. Handbook of Interventional Radiologic Procedures, 5th ed.</p>
+        <p class="footer-note">Siegel JB. Tech Vasc Interv Radiol. 2008;11:181–185 · Heberlein W. Tech Vasc Interv Radiol. 2011;14:192–197 · Wahl SI, Cynamon J. Tech Vasc Interv Radiol. 1999;2:221–227 · Kandarpa K et al. Handbook of Interventional Radiologic Procedures, 5th ed.</p>
       </main>
     </div>
   </div>
@@ -551,10 +490,10 @@
       <label>Card Title</label>
       <input type="text" id="card-title" placeholder="e.g. My Tunneled Catheter Approach" />
       <label>Supplies</label>
-      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;21G micropuncture kit&#10;Palindrome catheter&#10;Amplatz wire"></textarea>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;21G micropuncture kit&#10;14.5Fr split-tip catheter&#10;Amplatz superstiff wire"></textarea>
       <div class="help-text">One item per line. These will display as tags.</div>
       <label>Steps</label>
-      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;US survey of right IJV&#10;Create subcutaneous tunnel&#10;Micropuncture access"></textarea>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;US survey right IJV&#10;Position Trendelenburg&#10;Micropuncture access"></textarea>
       <div class="help-text">One step per line. These will be auto-numbered.</div>
       <label>Pearls (optional)</label>
       <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
@@ -595,6 +534,7 @@
       _cards = data;
       try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
     } else {
+      // Try localStorage fallback
       try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
     }
     renderCards();
@@ -671,10 +611,12 @@
     const displayName = (profile && profile.display_name) || user.email || 'Anonymous';
 
     if (editId) {
+      // Update
       _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, updated_at: new Date().toISOString() } : c);
       renderCards(); closeCardModal();
       await sb.from('procedure_cards').update({ title, supplies, steps, pearls, updated_at: new Date().toISOString() }).eq('id', editId);
     } else {
+      // Insert
       const tmpId = 'tmp-' + Date.now();
       const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, created_at: new Date().toISOString() };
       _cards.unshift(newCard);
@@ -713,7 +655,7 @@
   function exportSupplyList() {
     const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
     const supplies = Array.from(chips).map(c => c.textContent.trim());
-    const text = 'Tunneled Dialysis Catheter Supply List\n' + '═'.repeat(40) + '\n' + supplies.map(s => `☐ ${s}`).join('\n') + '\n';
+    const text = 'Tunneled Dialysis Catheter Supply List\n' + '═'.repeat(38) + '\n' + supplies.map((s, i) => `☐ ${s}`).join('\n') + '\n';
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
     } else {
@@ -728,11 +670,11 @@
   function downloadSupplyList() {
     const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
     const supplies = Array.from(chips).map(c => c.textContent.trim());
-    const text = 'Tunneled Dialysis Catheter Supply List\n' + '═'.repeat(40) + '\n' + supplies.map(s => `☐ ${s}`).join('\n') + '\n';
+    const text = 'Tunneled Dialysis Catheter Supply List\n' + '═'.repeat(38) + '\n' + supplies.map((s, i) => `☐ ${s}`).join('\n') + '\n';
     const blob = new Blob([text], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url; a.download = 'tunneled-catheter-supplies.txt'; a.click();
+    a.href = url; a.download = 'access-tunneled-supplies.txt'; a.click();
     URL.revokeObjectURL(url);
     showExportToast('Supply list downloaded');
   }
