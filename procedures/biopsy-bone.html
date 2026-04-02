@@ -98,6 +98,12 @@
     .step-img-panel { display: none; margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
     .step-img-panel.open { display: block; }
     .step-img-panel img { width: 100%; display: block; border-radius: 12px; }
+    .img-zoomable { cursor: zoom-in; }
+    .lightbox-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.88); z-index: 9999; align-items: center; justify-content: center; padding: 24px; }
+    .lightbox-overlay.open { display: flex; }
+    .lightbox-overlay img { max-width: 100%; max-height: 90vh; border-radius: 16px; box-shadow: 0 0 60px rgba(0,0,0,.6); }
+    .lightbox-close { position: absolute; top: 20px; right: 24px; color: #fff; font-size: 1.8rem; cursor: pointer; opacity: .7; line-height: 1; }
+    .lightbox-close:hover { opacity: 1; }
     .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
     .muted { color: var(--muted); }
     .problem-grid { display: grid; gap: 12px; }
@@ -354,7 +360,7 @@
                     <span class="arrow">&#9654;</span> View CT bone biopsy
                   </div>
                   <div class="step-img-panel">
-                    <img src="../images/CT_Bone_Biopsy.jpg" alt="CT showing bone biopsy needle advanced through cortex into lesion" loading="lazy">
+                    <img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/CT_Bone_Biopsy.jpg" alt="CT showing bone biopsy needle advanced through cortex into lesion" loading="lazy">
                   </div>
                 </div></div></div>
                 <div class="step"><div class="step-num">5A</div><div><h4>Lytic lesions (with soft tissue component)</h4><div class="muted">Advance 14–18g core needle through cortical defect into lesion. Obtain multiple cores from the <strong>periphery</strong> — avoid central necrosis. Target metabolically active region per PET/CT. Minimum 2–3 adequate cores.</div></div></div>
@@ -761,6 +767,17 @@
     window.RadCallAuth.onAuth(() => loadCards());
     setTimeout(loadCards, 500);
   }
+  </script>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+    function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('open'); }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
   </script>
 </body>
 </html>

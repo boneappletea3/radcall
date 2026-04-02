@@ -152,6 +152,12 @@
     .step-img-panel { display: none; margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
     .step-img-panel.open { display: block; }
     .step-img-panel img { width: 100%; display: block; border-radius: 12px; }
+    .img-zoomable { cursor: zoom-in; }
+    .lightbox-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.88); z-index: 9999; align-items: center; justify-content: center; padding: 24px; }
+    .lightbox-overlay.open { display: flex; }
+    .lightbox-overlay img { max-width: 100%; max-height: 90vh; border-radius: 16px; box-shadow: 0 0 60px rgba(0,0,0,.6); }
+    .lightbox-close { position: absolute; top: 20px; right: 24px; color: #fff; font-size: 1.8rem; cursor: pointer; opacity: .7; line-height: 1; }
+    .lightbox-close:hover { opacity: 1; }
     .step-img-caption { font-size: .82rem; color: var(--muted); padding: 8px 12px; background: rgba(0,0,0,.3); }
     .step-img-panel img + .step-img-caption + img { border-top: 1px solid rgba(255,255,255,.06); }
 
@@ -318,8 +324,8 @@
                 <div class="step"><div class="step-num">1</div><div><h4>Position + US survey</h4><div class="muted">Patient seated upright, leaning forward over bedside table. US survey to identify largest fluid pocket. Confirm diaphragm position at end-expiration. Measure skin-to-fluid depth. Evaluate for septations, loculations, and nearby lung. Color Doppler to exclude aberrant intercostal vessels at planned access site.</div>
                   <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> US survey — effusion + pre/post</div>
                   <div class="step-img-panel">
-                    <img src="../images/thora-pre.jpg" alt="Pre-procedure ultrasound showing right pleural effusion" loading="lazy">
-                    <img src="../images/thora-xr-pre.jpg" alt="Pre-procedure CXR showing large left pleural effusion" loading="lazy" style="margin-top:8px;">
+                    <img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/thora-pre.jpg" alt="Pre-procedure ultrasound showing right pleural effusion" loading="lazy">
+                    <img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/thora-xr-pre.jpg" alt="Pre-procedure CXR showing large left pleural effusion" loading="lazy" style="margin-top:8px;">
                   </div>
                 </div></div>
                 <div class="step"><div class="step-num">2</div><div><h4>Prep + drape</h4><div class="muted">Mark optimal access site on skin. Sterile prep with ChloraPrep (allow to dry). Drape access site. Apply sterile cover to US probe. Patient should not move or change position after marking.</div></div></div>
@@ -327,7 +333,7 @@
                 <div class="step"><div class="step-num">4</div><div><h4>Access</h4><div class="muted">Insert thoracentesis needle/catheter along the anesthetized tract under real-time US guidance, advancing just above the rib. Aspirate as you advance. Once fluid returns, advance the outer catheter sheath and remove the inner stylet. Connect to 3-way stopcock.</div>
                   <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> Catheter placement under US</div>
                   <div class="step-img-panel">
-                    <img src="../images/thora.jpg" alt="Ultrasound during thoracentesis showing catheter in right pleural effusion" loading="lazy">
+                    <img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/thora.jpg" alt="Ultrasound during thoracentesis showing catheter in right pleural effusion" loading="lazy">
                   </div>
                 </div></div>
                 <div class="step"><div class="step-num">5</div><div><h4>Diagnostic sample</h4><div class="muted">Aspirate 25–50 mL for diagnostic labs via the stopcock side port using a 60 mL syringe. For cytology, collect at least 60–200 mL for adequate cellularity. Inoculate blood culture bottles at bedside if infection suspected. Send: cell count/diff, protein, LDH, pH, glucose, gram stain + culture.</div></div></div>
@@ -335,8 +341,8 @@
                 <div class="step"><div class="step-num">7</div><div><h4>Completion</h4><div class="muted">Clamp tubing, remove catheter at end-expiration. Apply sterile occlusive dressing. Document fluid color, volume, and appearance. Perform post-procedure US at bedside to confirm lung sliding (rules out pneumothorax). Routine CXR not required if uncomplicated — obtain only if symptomatic or clinical concern.</div>
                   <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> Post-procedure imaging</div>
                   <div class="step-img-panel">
-                    <img src="../images/thora-post.jpg" alt="Post-procedure ultrasound showing reduced right pleural effusion" loading="lazy">
-                    <img src="../images/thora-xr-post.jpg" alt="Post-procedure CXR showing interval improvement after thoracentesis" loading="lazy" style="margin-top:8px;">
+                    <img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/thora-post.jpg" alt="Post-procedure ultrasound showing reduced right pleural effusion" loading="lazy">
+                    <img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/thora-xr-post.jpg" alt="Post-procedure CXR showing interval improvement after thoracentesis" loading="lazy" style="margin-top:8px;">
                   </div>
                 </div></div>
               </div>
@@ -734,6 +740,17 @@
     window.RadCallAuth.onAuth(() => loadCards());
     setTimeout(loadCards, 500);
   }
+  </script>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+    function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('open'); }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
   </script>
 </body>
 </html>

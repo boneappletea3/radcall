@@ -152,6 +152,12 @@
     .step-img-panel { display: none; margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
     .step-img-panel.open { display: block; }
     .step-img-panel img { width: 100%; display: block; border-radius: 12px; }
+    .img-zoomable { cursor: zoom-in; }
+    .lightbox-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.88); z-index: 9999; align-items: center; justify-content: center; padding: 24px; }
+    .lightbox-overlay.open { display: flex; }
+    .lightbox-overlay img { max-width: 100%; max-height: 90vh; border-radius: 16px; box-shadow: 0 0 60px rgba(0,0,0,.6); }
+    .lightbox-close { position: absolute; top: 20px; right: 24px; color: #fff; font-size: 1.8rem; cursor: pointer; opacity: .7; line-height: 1; }
+    .lightbox-close:hover { opacity: 1; }
     .step-img-caption { font-size: .82rem; color: var(--muted); padding: 8px 12px; background: rgba(0,0,0,.3); }
     .step-img-panel img + .step-img-caption + img { border-top: 1px solid rgba(255,255,255,.06); }
 
@@ -311,27 +317,27 @@
               <div class="step-list">
                 <div class="step"><div class="step-num">1</div><div><h4>Position + US survey</h4><div class="muted">Patient supine. Perform US survey to identify largest accessible fluid pocket. Confirm no bowel or vessels in intended path. Mark skin entry site. Measure depth to fluid.</div>
                   <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> Access site landmark</div>
-                  <div class="step-img-panel"><img src="../images/para-access-site.svg" alt="Paracentesis access site: 3 cm medial and 3 cm superior to ASIS, lateral to rectus sheath" loading="lazy"><div class="step-img-caption">Ideal access: 3 cm medial and 3 cm superior to the ASIS. Lateral to the rectus sheath to avoid the inferior epigastric artery.</div></div>
+                  <div class="step-img-panel"><img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/para-access-site.svg" alt="Paracentesis access site: 3 cm medial and 3 cm superior to ASIS, lateral to rectus sheath" loading="lazy"><div class="step-img-caption">Ideal access: 3 cm medial and 3 cm superior to the ASIS. Lateral to the rectus sheath to avoid the inferior epigastric artery.</div></div>
                   <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> US survey — LLQ fluid pocket + Doppler</div>
                   <div class="step-img-panel">
-                    <img src="../images/Para-us-doppler.jpg" alt="Color Doppler US of LLQ showing vessel check at planned paracentesis access site" loading="lazy">
-                    <img src="../images/Para-us-measures.jpg" alt="B-mode US measuring distance from skin to ascitic fluid pocket in LLQ" loading="lazy" style="margin-top:8px;">
-                    <img src="../images/Para-us-non-doppler.jpg" alt="B-mode US confirming no vessels along needle trajectory in LLQ" loading="lazy" style="margin-top:8px;">
+                    <img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/Para-us-doppler.jpg" alt="Color Doppler US of LLQ showing vessel check at planned paracentesis access site" loading="lazy">
+                    <img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/Para-us-measures.jpg" alt="B-mode US measuring distance from skin to ascitic fluid pocket in LLQ" loading="lazy" style="margin-top:8px;">
+                    <img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/Para-us-non-doppler.jpg" alt="B-mode US confirming no vessels along needle trajectory in LLQ" loading="lazy" style="margin-top:8px;">
                   </div>
                 </div></div>
                 <div class="step"><div class="step-num">2</div><div><h4>Prep + drape</h4><div class="muted">Sterile prep with ChloraPrep. Drape access site. Apply sterile cover to US probe.</div></div></div>
                 <div class="step"><div class="step-num">3</div><div><h4>Local anesthesia</h4><div class="muted">Anesthetize skin to peritoneum with 1% lidocaine using 22G needle under US guidance. Do not puncture peritoneum — infiltrate up to it and withdraw.</div>
                   <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> Z-track technique</div>
-                  <div class="step-img-panel"><img src="../images/para-ztrack.svg" alt="Z-track needle insertion technique for paracentesis" loading="lazy"><div class="step-img-caption">Z-track: Pull skin 2 cm caudally before inserting needle. Release skin after withdrawing needle — creates an oblique tract that self-seals, reducing post-procedure ascites leak.</div></div>
+                  <div class="step-img-panel"><img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/para-ztrack.svg" alt="Z-track needle insertion technique for paracentesis" loading="lazy"><div class="step-img-caption">Z-track: Pull skin 2 cm caudally before inserting needle. Release skin after withdrawing needle — creates an oblique tract that self-seals, reducing post-procedure ascites leak.</div></div>
                 </div></div>
                 <div class="step"><div class="step-num">4</div><div><h4>Access</h4><div class="muted">Create 3–5 mm skin nick. Advance sheathed paracentesis needle into peritoneal cavity under real-time US guidance. Aspirate to confirm free-flowing fluid.</div>
                   <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> US-guided needle insertion</div>
-                  <div class="step-img-panel"><img src="../images/para-us-guided.svg" alt="Ultrasound-guided needle insertion for paracentesis showing needle tip in anechoic fluid" loading="lazy"><div class="step-img-caption">Real-time US guidance: keep the needle in the plane of the beam. Visualize the bright echogenic needle tip entering the anechoic fluid pocket. Confirm ≥3 cm fluid depth and absence of bowel before advancing.</div></div>
+                  <div class="step-img-panel"><img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/para-us-guided.svg" alt="Ultrasound-guided needle insertion for paracentesis showing needle tip in anechoic fluid" loading="lazy"><div class="step-img-caption">Real-time US guidance: keep the needle in the plane of the beam. Visualize the bright echogenic needle tip entering the anechoic fluid pocket. Confirm ≥3 cm fluid depth and absence of bowel before advancing.</div></div>
                 </div></div>
                 <div class="step"><div class="step-num">5</div><div><h4>Sample collection</h4><div class="muted">Aspirate 60 mL for diagnostic labs. For cytology, collect ≥200 mL for adequate cellularity. Send: cell count/diff, albumin, total protein, gram stain + culture (inoculate blood culture bottles at bedside).</div></div></div>
                 <div class="step"><div class="step-num">6</div><div><h4>Therapeutic drainage</h4><div class="muted">Remove inner needle, connect sheath to vacuum bottles via valved tubing. Reposition patient as needed. Apply gentle contralateral abdominal pressure to facilitate complete drainage.</div>
                   <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> Drainage setup</div>
-                  <div class="step-img-panel"><img src="../images/para-drainage-setup.svg" alt="Paracentesis therapeutic drainage setup with vacuum bottles and specimen collection" loading="lazy"><div class="step-img-caption">Connect catheter hub → stopcock → vacuum bottles (1 L each, placed below patient). Use the stopcock side port with a 60 mL syringe for diagnostic specimen collection. Remember albumin replacement (6–8 g/L) if >5 L removed in cirrhotic patients.</div></div>
+                  <div class="step-img-panel"><img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/para-drainage-setup.svg" alt="Paracentesis therapeutic drainage setup with vacuum bottles and specimen collection" loading="lazy"><div class="step-img-caption">Connect catheter hub → stopcock → vacuum bottles (1 L each, placed below patient). Use the stopcock side port with a 60 mL syringe for diagnostic specimen collection. Remember albumin replacement (6–8 g/L) if >5 L removed in cirrhotic patients.</div></div>
                 </div></div>
                 <div class="step"><div class="step-num">7</div><div><h4>Completion</h4><div class="muted">Remove catheter. Apply dry sterile dressing or Dermabond if leak concern. Document fluid color, volume, and appearance. For &gt;5 L: begin albumin infusion (6–8 g per L removed).</div></div></div>
               </div>
@@ -708,6 +714,17 @@
     window.RadCallAuth.onAuth(() => loadCards());
     setTimeout(loadCards, 500);
   }
+  </script>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+    function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('open'); }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
   </script>
 </body>
 </html>

@@ -152,6 +152,12 @@
     .step-img-panel { display: none; margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
     .step-img-panel.open { display: block; }
     .step-img-panel img { width: 100%; display: block; border-radius: 12px; }
+    .img-zoomable { cursor: zoom-in; }
+    .lightbox-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.88); z-index: 9999; align-items: center; justify-content: center; padding: 24px; }
+    .lightbox-overlay.open { display: flex; }
+    .lightbox-overlay img { max-width: 100%; max-height: 90vh; border-radius: 16px; box-shadow: 0 0 60px rgba(0,0,0,.6); }
+    .lightbox-close { position: absolute; top: 20px; right: 24px; color: #fff; font-size: 1.8rem; cursor: pointer; opacity: .7; line-height: 1; }
+    .lightbox-close:hover { opacity: 1; }
     .step-img-caption { font-size: .82rem; color: var(--muted); padding: 8px 12px; background: rgba(0,0,0,.3); }
     .step-img-panel img + .step-img-caption + img { border-top: 1px solid rgba(255,255,255,.06); }
 
@@ -275,7 +281,7 @@
             <div style="margin-top: 14px;">
               <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> View lumbar puncture anatomy diagram</div>
               <div class="step-img-panel">
-                <img src="../images/lp-anatomy.svg" alt="Lumbar puncture anatomy diagram showing needle trajectory through tissue layers into the subarachnoid space" loading="lazy">
+                <img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/lp-anatomy.svg" alt="Lumbar puncture anatomy diagram showing needle trajectory through tissue layers into the subarachnoid space" loading="lazy">
                 <div class="step-img-caption">Cross-sectional anatomy of the lumbar spine at the puncture site. The needle traverses skin, subcutaneous tissue, supraspinous and interspinous ligaments, ligamentum flavum, epidural space, dura, and arachnoid to reach the CSF-filled subarachnoid space.</div>
               </div>
             </div>
@@ -316,9 +322,9 @@
                 <div class="step"><div class="step-num">1</div><div><h4>Position + fluoro survey</h4><div class="muted">Place patient prone or prone oblique on the fluoroscopy table. Position a pillow under the abdomen to reverse lumbar lordosis and widen the interlaminar spaces. Identify the target interspace (L2&ndash;L3 or L3&ndash;L4) on fluoroscopy. For oblique positioning, the top leg is bent with arms by the side. Mark the skin entry point under fluoroscopic guidance.</div>
                   <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> Fluoroscopic approach views</div>
                   <div class="step-img-panel">
-                    <img src="../images/LP-PA-Approach.jpg" alt="AP fluoroscopic view showing midline approach for lumbar puncture" loading="lazy">
-                    <img src="../images/LP-prone-oblique.jpg" alt="Prone oblique fluoroscopic view showing paramedian approach for lumbar puncture" loading="lazy" style="margin-top:8px;">
-                    <img src="../images/LP-Prone-Oblique-2.jpg" alt="Second prone oblique view showing needle trajectory for lumbar puncture" loading="lazy" style="margin-top:8px;">
+                    <img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/LP-PA-Approach.jpg" alt="AP fluoroscopic view showing midline approach for lumbar puncture" loading="lazy">
+                    <img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/LP-prone-oblique.jpg" alt="Prone oblique fluoroscopic view showing paramedian approach for lumbar puncture" loading="lazy" style="margin-top:8px;">
+                    <img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/LP-Prone-Oblique-2.jpg" alt="Second prone oblique view showing needle trajectory for lumbar puncture" loading="lazy" style="margin-top:8px;">
                   </div>
                 </div></div>
                 <div class="step"><div class="step-num">2</div><div><h4>Prep + drape</h4><div class="muted">Sterile prep with ChloraPrep or Betadine at the planned access site. Allow to dry completely. Apply sterile drapes around the access site.</div></div></div>
@@ -687,6 +693,17 @@
     window.RadCallAuth.onAuth(() => loadCards());
     setTimeout(loadCards, 500);
   }
+  </script>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+    function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('open'); }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
   </script>
 </body>
 </html>

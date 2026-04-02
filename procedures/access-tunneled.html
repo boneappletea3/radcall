@@ -98,6 +98,12 @@
     .step-img-panel { display: none; margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
     .step-img-panel.open { display: block; }
     .step-img-panel img { width: 100%; display: block; border-radius: 12px; }
+    .img-zoomable { cursor: zoom-in; }
+    .lightbox-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.88); z-index: 9999; align-items: center; justify-content: center; padding: 24px; }
+    .lightbox-overlay.open { display: flex; }
+    .lightbox-overlay img { max-width: 100%; max-height: 90vh; border-radius: 16px; box-shadow: 0 0 60px rgba(0,0,0,.6); }
+    .lightbox-close { position: absolute; top: 20px; right: 24px; color: #fff; font-size: 1.8rem; cursor: pointer; opacity: .7; line-height: 1; }
+    .lightbox-close:hover { opacity: 1; }
     .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
     .muted { color: var(--muted); }
     .problem-grid { display: grid; gap: 12px; }
@@ -309,7 +315,7 @@
                     <span class="arrow">&#9654;</span> View wire in IVC
                   </div>
                   <div class="step-img-panel">
-                    <img src="../images/TDC_Picture_Wire_IVC.jpg" alt="Fluoroscopy showing 0.018 wire looping in IVC confirming venous access" loading="lazy">
+                    <img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/TDC_Picture_Wire_IVC.jpg" alt="Fluoroscopy showing 0.018 wire looping in IVC confirming venous access" loading="lazy">
                   </div>
                 </div></div></div>
                 <div class="step"><div class="step-num">6</div><div><h4>Measure Intravascular Length and Exchange Wire</h4><div class="muted">Pull the 0.018" wire back to the ideal tip position (superior cavoatrial junction). Clamp wire at the micropuncture hub and remove en bloc with inner dilator. Cover open hub immediately. Place 0.035" Amplatz superstiff wire through the transitional dilator to the IVC.
@@ -332,7 +338,7 @@
                     <span class="arrow">&#9654;</span> View final catheter position
                   </div>
                   <div class="step-img-panel">
-                    <img src="../images/TDC_Post.jpg" alt="Fluoroscopy showing tunneled dialysis catheter with tip in right atrium" loading="lazy">
+                    <img class="img-zoomable" onclick="openLightbox(this.src)" src="../images/TDC_Post.jpg" alt="Fluoroscopy showing tunneled dialysis catheter with tip in right atrium" loading="lazy">
                   </div>
                 </div></div></div>
                 <div class="step"><div class="step-num">11</div><div><h4>Secure + lock</h4><div class="muted">Secure catheter with suture at exit site. Lock lumens with heparinized saline — use exact volumes printed on hub. Do not exceed lock volume.</div></div></div>
@@ -724,6 +730,17 @@
     window.RadCallAuth.onAuth(() => loadCards());
     setTimeout(loadCards, 500);
   }
+  </script>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+    function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('open'); }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
   </script>
 </body>
 </html>
