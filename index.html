@@ -4949,5 +4949,20 @@ const EditMode = (() => {
   </div>
 </div>
 
+<!-- Global lightbox for section-injected images (e.g. arthrogram) -->
+<div id="fluoro-lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;padding:24px;cursor:zoom-out" onclick="if(event.target===this)this.style.display='none'">
+  <span onclick="document.getElementById('fluoro-lightbox').style.display='none'" style="position:absolute;top:20px;right:24px;color:#fff;font-size:1.8rem;cursor:pointer;opacity:.7;line-height:1">&times;</span>
+  <img id="fluoro-lb-img" src="" alt="" style="width:min(90vw,1400px);max-height:90vh;object-fit:contain;border-radius:16px;box-shadow:0 0 60px rgba(0,0,0,.6)">
+</div>
+<script>
+  function openFluoroLightbox(src) {
+    var lb = document.getElementById('fluoro-lightbox');
+    document.getElementById('fluoro-lb-img').src = src;
+    lb.style.display = 'flex';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') document.getElementById('fluoro-lightbox').style.display = 'none';
+  });
+</script>
 </body>
 </html>

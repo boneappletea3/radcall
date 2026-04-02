@@ -1232,28 +1232,4 @@
     <div class="dictation-box">Fluoroscopically-guided nasoenteric feeding tube placement was performed. The tube was advanced nasally under fluoroscopic guidance through the oropharynx and esophagus into the stomach. With patient positioning and gentle tube manipulation, the tube tip was advanced through the pylorus and the duodenal C-loop. Final tube tip position is at the [duodenal bulb / third portion of duodenum / ligament of Treitz / proximal jejunum] as confirmed by fluoroscopic spot imaging. The tube is in satisfactory post-pyloric position suitable for enteral feeding.</div>
   </div>
 
-<!-- Arthrogram image lightbox (self-bootstrapping for section context) -->
-<script>
-(function() {
-  function ensureLightbox() {
-    if (document.getElementById('fluoro-lightbox')) return;
-    var style = document.createElement('style');
-    style.textContent = '.fluoro-lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}.fluoro-lb.open{display:flex}.fluoro-lb img{width:min(90vw,1400px);max-height:90vh;object-fit:contain;border-radius:16px;box-shadow:0 0 60px rgba(0,0,0,.6)}.fluoro-lb-close{position:absolute;top:20px;right:24px;color:#fff;font-size:1.8rem;cursor:pointer;opacity:.7;line-height:1}.fluoro-lb-close:hover{opacity:1}';
-    document.head.appendChild(style);
-    var lb = document.createElement('div');
-    lb.id = 'fluoro-lightbox';
-    lb.className = 'fluoro-lb';
-    lb.innerHTML = '<span class="fluoro-lb-close" onclick="document.getElementById(\'fluoro-lightbox\').classList.remove(\'open\')">&times;</span><img id="fluoro-lb-img" src="" alt="">';
-    lb.addEventListener('click', function(e) { if (e.target === lb) lb.classList.remove('open'); });
-    document.body.appendChild(lb);
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') lb.classList.remove('open'); });
-  }
-  function openFluoroLightbox(src) {
-    ensureLightbox();
-    document.getElementById('fluoro-lb-img').src = src;
-    document.getElementById('fluoro-lightbox').classList.add('open');
-  }
-  window.openFluoroLightbox = openFluoroLightbox;
-})();
-</script>
 <!-- END fluoro.html -->
