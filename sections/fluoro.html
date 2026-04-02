@@ -1014,27 +1014,27 @@
   <div class="arthr-img-grid">
     <div class="arthr-img-block">
       <div class="arthr-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span>Shoulder</span><span class="arthr-arrow">&#9654;</span></div>
-      <div class="arthr-img-pair"><img src="images/Shoulder_Arthrogram_Needle_Placement.jpg" loading="lazy"><img src="images/Shoulder_Arthrogram_Post_Injection.jpg" loading="lazy"></div>
+      <div class="arthr-img-pair"><img src="images/Shoulder_Arthrogram_Needle_Placement.jpg" loading="lazy" style="cursor:zoom-in" onclick="openFluoroLightbox(this.src)"><img src="images/Shoulder_Arthrogram_Post_Injection.jpg" loading="lazy" style="cursor:zoom-in" onclick="openFluoroLightbox(this.src)"></div>
     </div>
     <div class="arthr-img-block">
       <div class="arthr-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span>Hip</span><span class="arthr-arrow">&#9654;</span></div>
-      <div class="arthr-img-pair"><img src="images/Hip_Arthrogram_Needle_Placement.jpg" loading="lazy"><img src="images/Hip_Arthrogram_Post_Injection.jpg" loading="lazy"></div>
+      <div class="arthr-img-pair"><img src="images/Hip_Arthrogram_Needle_Placement.jpg" loading="lazy" style="cursor:zoom-in" onclick="openFluoroLightbox(this.src)"><img src="images/Hip_Arthrogram_Post_Injection.jpg" loading="lazy" style="cursor:zoom-in" onclick="openFluoroLightbox(this.src)"></div>
     </div>
     <div class="arthr-img-block">
       <div class="arthr-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span>Wrist</span><span class="arthr-arrow">&#9654;</span></div>
-      <div class="arthr-img-pair"><img src="images/Wrist_Arthrogram_Needle_Placement.jpg" loading="lazy"><img src="images/Wrist_Arthrogram_Post_Injection.jpg" loading="lazy"></div>
+      <div class="arthr-img-pair"><img src="images/Wrist_Arthrogram_Needle_Placement.jpg" loading="lazy" style="cursor:zoom-in" onclick="openFluoroLightbox(this.src)"><img src="images/Wrist_Arthrogram_Post_Injection.jpg" loading="lazy" style="cursor:zoom-in" onclick="openFluoroLightbox(this.src)"></div>
     </div>
     <div class="arthr-img-block">
       <div class="arthr-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span>Ankle</span><span class="arthr-arrow">&#9654;</span></div>
-      <div class="arthr-img-pair"><img src="images/Ankle_Arthrogram_Needle_Placement.jpg" loading="lazy"><img src="images/Ankle_Arthrogram_Post_Injection.jpg" loading="lazy"></div>
+      <div class="arthr-img-pair"><img src="images/Ankle_Arthrogram_Needle_Placement.jpg" loading="lazy" style="cursor:zoom-in" onclick="openFluoroLightbox(this.src)"><img src="images/Ankle_Arthrogram_Post_Injection.jpg" loading="lazy" style="cursor:zoom-in" onclick="openFluoroLightbox(this.src)"></div>
     </div>
     <div class="arthr-img-block">
       <div class="arthr-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span>Elbow</span><span class="arthr-arrow">&#9654;</span></div>
-      <div class="arthr-img-pair"><img src="images/Elbow_Arthrogram_Needle_Placement.jpg" loading="lazy"><img src="images/Elbow_Arthrogram_Post_Injection.jpg" loading="lazy"></div>
+      <div class="arthr-img-pair"><img src="images/Elbow_Arthrogram_Needle_Placement.jpg" loading="lazy" style="cursor:zoom-in" onclick="openFluoroLightbox(this.src)"><img src="images/Elbow_Arthrogram_Post_Injection.jpg" loading="lazy" style="cursor:zoom-in" onclick="openFluoroLightbox(this.src)"></div>
     </div>
     <div class="arthr-img-block">
       <div class="arthr-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span>Knee</span><span class="arthr-arrow">&#9654;</span></div>
-      <div class="arthr-img-pair"><img src="images/Knee_Arthrogram_Needle_Placement.jpg" loading="lazy"><img src="images/Knee_Arthrogram_Post_Injection.jpg" loading="lazy"></div>
+      <div class="arthr-img-pair"><img src="images/Knee_Arthrogram_Needle_Placement.jpg" loading="lazy" style="cursor:zoom-in" onclick="openFluoroLightbox(this.src)"><img src="images/Knee_Arthrogram_Post_Injection.jpg" loading="lazy" style="cursor:zoom-in" onclick="openFluoroLightbox(this.src)"></div>
     </div>
   </div>
 
@@ -1238,7 +1238,7 @@
   function ensureLightbox() {
     if (document.getElementById('fluoro-lightbox')) return;
     var style = document.createElement('style');
-    style.textContent = '.fluoro-lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}.fluoro-lb.open{display:flex}.fluoro-lb img{max-width:100%;max-height:90vh;border-radius:16px;box-shadow:0 0 60px rgba(0,0,0,.6)}.fluoro-lb-close{position:absolute;top:20px;right:24px;color:#fff;font-size:1.8rem;cursor:pointer;opacity:.7;line-height:1}.fluoro-lb-close:hover{opacity:1}';
+    style.textContent = '.fluoro-lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}.fluoro-lb.open{display:flex}.fluoro-lb img{width:min(90vw,1400px);max-height:90vh;object-fit:contain;border-radius:16px;box-shadow:0 0 60px rgba(0,0,0,.6)}.fluoro-lb-close{position:absolute;top:20px;right:24px;color:#fff;font-size:1.8rem;cursor:pointer;opacity:.7;line-height:1}.fluoro-lb-close:hover{opacity:1}';
     document.head.appendChild(style);
     var lb = document.createElement('div');
     lb.id = 'fluoro-lightbox';
@@ -1254,21 +1254,6 @@
     document.getElementById('fluoro-lightbox').classList.add('open');
   }
   window.openFluoroLightbox = openFluoroLightbox;
-  // Wire up arthrogram images once they exist in DOM
-  function wireImages() {
-    document.querySelectorAll('.arthr-img-pair img').forEach(function(img) {
-      if (img.dataset.lbWired) return;
-      img.style.cursor = 'zoom-in';
-      img.addEventListener('click', function() { openFluoroLightbox(this.src); });
-      img.dataset.lbWired = '1';
-    });
-  }
-  // Run on toggle open so images are in DOM when wired
-  document.addEventListener('click', function(e) {
-    if (e.target.closest && e.target.closest('.arthr-img-toggle')) {
-      setTimeout(wireImages, 50);
-    }
-  });
 })();
 </script>
 <!-- END fluoro.html -->
