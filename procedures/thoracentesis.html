@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thoracentesis — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Fluid analysis table ── */
+    .fluid-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .fluid-table th, .fluid-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .fluid-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .fluid-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    /* ── Step image dropdown ── */
+    .step-img-toggle { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 5px 10px; border-radius: 8px; border: 1px solid rgba(56,189,248,.2); background: rgba(56,189,248,.06); color: var(--accent); font-size: .82rem; font-weight: 600; cursor: pointer; transition: .15s; }
+    .step-img-toggle:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.35); }
+    .step-img-toggle .arrow { transition: transform .2s; font-size: .7rem; }
+    .step-img-toggle.open .arrow { transform: rotate(90deg); }
+    .step-img-panel { display: none; margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
+    .step-img-panel.open { display: block; }
+    .step-img-panel img { width: 100%; display: block; border-radius: 12px; }
+    .step-img-caption { font-size: .82rem; color: var(--muted); padding: 8px 12px; background: rgba(0,0,0,.3); }
+    .step-img-panel img + .step-img-caption + img { border-top: 1px solid rgba(255,255,255,.06); }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html" onclick="history.back(); return false;">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Playbook</div>
+      <h1>Ultrasound-Guided Thoracentesis</h1>
+      <p class="subhead">Diagnostic and therapeutic drainage of pleural effusions under real-time ultrasound guidance.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">Local anesthesia</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--success)">Low (SIR Cat 2)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Pneumothorax · RPE</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Not routine</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">CXR if symptomatic</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#troubleshooting">5. Troubleshooting</a></li>
+          <li><a href="#complications">6. Complications</a></li>
+          <li><a href="#postprocedure">7. Post-Procedure</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#fluid">9. Fluid Analysis</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications / Contraindications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Indications</h4>
+              <ul class="list">
+                <li><strong>Diagnostic:</strong> New unilateral effusion of unclear etiology — fluid analysis to differentiate transudate vs. exudate (Light's criteria)</li>
+                <li><strong>Therapeutic:</strong> Symptomatic large effusion causing dyspnea — remove up to 1–1.5 L for relief</li>
+                <li>Suspected empyema or complicated parapneumonic effusion — obtain pH, glucose, cell count, culture</li>
+                <li>Suspected malignant effusion — cytology (sensitivity ~60–75% with adequate volume)</li>
+                <li>New effusion in cirrhotic patient — rule out spontaneous bacterial empyema</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Contraindications</h4>
+              <ul class="list">
+                <li><strong>Absolute:</strong> No safe access window on US · Patient unable to cooperate or be positioned</li>
+                <li><strong>Relative:</strong> Overlying cellulitis/herpes zoster · Coagulopathy (INR &gt;3.0 or platelets &lt;20K per SIR) · Anticoagulation (hold DOACs 24–48h) · Mechanical ventilation (increased pneumothorax risk — use real-time US) · Single functioning lung on contralateral side</li>
+                <li><strong>Note:</strong> Per BTS guidelines, the only absolute contraindication is patient refusal. Coagulopathy and anticoagulation are relative and should be weighed against clinical need</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Review imaging.</strong> Confirm effusion on CXR or CT. Estimate volume. Note loculations, underlying lung disease, or elevated hemidiaphragm. Check for contralateral lung pathology.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Labs (SIR Category 2).</strong> INR &lt;3.0, platelets &gt;20K per SIR 2019 guidelines. More conservative thresholds (INR &lt;1.5, platelets &gt;50K) may be used for higher-risk patients.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Anticoagulation.</strong> DOACs: hold 24–48h. Warfarin: hold 5d. LMWH: hold 24h. Heparin: hold 4–6h. Antiplatelets (except aspirin): hold per SIR guidelines.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Positioning plan.</strong> Patient seated upright, leaning forward over a bedside table — opens posterior intercostal spaces. If unable to sit: lateral decubitus (affected side up) or supine with head of bed elevated 30–45°.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent.</strong> Discuss: pneumothorax (2–6%), bleeding/hemothorax (&lt;1%), reexpansion pulmonary edema (rare but potentially fatal), organ injury (liver/spleen), infection, pain.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Fluid analysis plan.</strong> Decide which tests to send: cell count/diff, protein, LDH (for Light's criteria), pH, glucose, gram stain/culture, +/- cytology, amylase, triglycerides, hematocrit.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Access Site</h4>
+                <ul class="list">
+                  <li><strong>Ideal location:</strong> Posterior chest wall, between the posterior axillary line and midscapular line, 1–2 interspaces below the effusion level</li>
+                  <li>Patient seated upright — insert needle in the intercostal space just above the superior margin of the lower rib (avoids neurovascular bundle)</li>
+                  <li>Never below the 8th intercostal space posteriorly to avoid subdiaphragmatic organs (liver R, spleen L)</li>
+                  <li>Lateral approach (mid-axillary line) is an alternative if posterior approach unavailable</li>
+                  <li>Always confirm with US — the landmark guides initial probe placement, but final access is determined by the largest safe fluid pocket</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Danger Structures</h4>
+                <ul class="list">
+                  <li><strong>Intercostal neurovascular bundle:</strong> Runs along the inferior margin of each rib (vein, artery, nerve). Always access above the rib, not below</li>
+                  <li><strong>Aberrant intercostal arteries:</strong> In elderly patients, vessels can course more medially in the intercostal space — use Color Doppler to map before access</li>
+                  <li><strong>Diaphragm:</strong> Mark the apex at end-expiration with US. Never puncture below this level</li>
+                  <li><strong>Subdiaphragmatic organs:</strong> Liver (R), spleen (L) — confirm with US sweep below diaphragm</li>
+                  <li><strong>Lung parenchyma:</strong> Identify atelectatic lung floating in fluid — do not advance needle into reexpanding lung</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. HOW I DO IT ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">Default RadCall approach + community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <!-- Default RadCall card -->
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">📋 Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">⬇ Download</button></h4>
+              <div class="chip-row card-supplies">
+                <span class="chip">Ultrasound + curvilinear probe</span>
+                <span class="chip">Sterile probe cover + gel</span>
+                <span class="chip">ChloraPrep or Betadine</span>
+                <span class="chip">Sterile drape + towels</span>
+                <span class="chip">1–2% lidocaine</span>
+                <span class="chip">25G needle (skin wheal)</span>
+                <span class="chip">22G spinal needle (deep anesthesia)</span>
+                <span class="chip">Thoracentesis needle/catheter kit</span>
+                <span class="chip">60 mL syringe</span>
+                <span class="chip">3-way stopcock</span>
+                <span class="chip">Vacuum bottles + tubing</span>
+                <span class="chip">Specimen tubes</span>
+                <span class="chip">Blood culture bottles</span>
+                <span class="chip">Sterile dressing</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Position + US survey</h4><div class="muted">Patient seated upright, leaning forward over bedside table. US survey to identify largest fluid pocket. Confirm diaphragm position at end-expiration. Measure skin-to-fluid depth. Evaluate for septations, loculations, and nearby lung. Color Doppler to exclude aberrant intercostal vessels at planned access site.</div>
+                  <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> US survey — effusion + pre/post</div>
+                  <div class="step-img-panel">
+                    <img src="../images/thora-pre.jpg" alt="Pre-procedure ultrasound showing right pleural effusion" loading="lazy">
+                    <div class="step-img-caption">Pre-procedure US (RT): Anechoic pleural effusion visible above the diaphragm. Identify the "V-sign" — the apex where collapsed lung and diaphragm meet — this is the optimal access point for maximum fluid depth.</div>
+                    <img src="../images/thora-xr-pre.jpg" alt="Pre-procedure CXR showing large left pleural effusion" loading="lazy" style="margin-top:8px;">
+                    <div class="step-img-caption">Pre-procedure CXR: Large effusion with meniscus sign and opacification. Correlate CXR laterality and volume estimate with US findings before access.</div>
+                  </div>
+                </div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Prep + drape</h4><div class="muted">Mark optimal access site on skin. Sterile prep with ChloraPrep (allow to dry). Drape access site. Apply sterile cover to US probe. Patient should not move or change position after marking.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Local anesthesia</h4><div class="muted">Raise skin wheal with 25G needle. Switch to 22G spinal needle — anesthetize tract from skin down to parietal pleura, advancing just above the superior rib margin. Aspirate as you advance — flash of pleural fluid confirms you've reached the pleural space. Note the depth. Inject lidocaine at the pleura (richly innervated).</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Access</h4><div class="muted">Insert thoracentesis needle/catheter along the anesthetized tract under real-time US guidance, advancing just above the rib. Aspirate as you advance. Once fluid returns, advance the outer catheter sheath and remove the inner stylet. Connect to 3-way stopcock.</div>
+                  <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> Catheter placement under US</div>
+                  <div class="step-img-panel">
+                    <img src="../images/thora.jpg" alt="Ultrasound during thoracentesis showing catheter in right pleural effusion" loading="lazy">
+                    <div class="step-img-caption">Real-time US during catheter placement (RT CATH): Needle/catheter tip visible in the anechoic pleural fluid. Keep the needle in the US beam plane throughout insertion. Avoid advancing into reexpanding lung.</div>
+                  </div>
+                </div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Diagnostic sample</h4><div class="muted">Aspirate 25–50 mL for diagnostic labs via the stopcock side port using a 60 mL syringe. For cytology, collect at least 60–200 mL for adequate cellularity. Inoculate blood culture bottles at bedside if infection suspected. Send: cell count/diff, protein, LDH, pH, glucose, gram stain + culture.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>Therapeutic drainage</h4><div class="muted">Connect catheter to vacuum bottles via 3-way stopcock and tubing. Drain by gravity or gentle suction. Monitor patient for cough, chest tightness, or dyspnea — stop if symptomatic. Limit to 1–1.5 L for first-time thoracentesis to reduce reexpansion pulmonary edema risk. Use low negative pressure (&lt;−20 cm H₂O).</div></div></div>
+                <div class="step"><div class="step-num">7</div><div><h4>Completion</h4><div class="muted">Clamp tubing, remove catheter at end-expiration. Apply sterile occlusive dressing. Document fluid color, volume, and appearance. Perform post-procedure US at bedside to confirm lung sliding (rules out pneumothorax). Routine CXR not required if uncomplicated — obtain only if symptomatic or clinical concern.</div>
+                  <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> Post-procedure imaging</div>
+                  <div class="step-img-panel">
+                    <img src="../images/thora-post.jpg" alt="Post-procedure ultrasound showing reduced right pleural effusion" loading="lazy">
+                    <div class="step-img-caption">Post-procedure US (RT POST): Marked interval decrease in effusion. Confirm lung sliding at the anterior chest to exclude pneumothorax — presence of lung sliding or B-lines effectively rules it out.</div>
+                    <img src="../images/thora-xr-post.jpg" alt="Post-procedure CXR showing interval improvement after thoracentesis" loading="lazy" style="margin-top:8px;">
+                    <div class="step-img-caption">Post-procedure CXR: Interval decrease in effusion with improved lung aeration. No pneumothorax. Routine CXR is not required after uncomplicated thoracentesis but may be obtained if clinical concern.</div>
+                  </div>
+                </div></div>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>No fluid return / dry tap</h4>
+              <p class="muted"><strong>Likely cause:</strong> Needle not deep enough, loculated effusion, or patient repositioned since marking.</p>
+              <p class="success"><strong>Next step:</strong> Re-image with US in real-time. Confirm pocket is still present at the access site. Adjust depth or angle. If loculated, select a different pocket or consider IR-guided drainage with CT.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Bloody aspirate</h4>
+              <p class="muted"><strong>Likely cause:</strong> Traumatic tap (intercostal vessel laceration), hemorrhagic effusion (malignancy, PE, trauma), or hemothorax.</p>
+              <p class="success"><strong>Next step:</strong> Send fluid hematocrit. If aspirate Hct is &gt;50% of serum Hct, consider hemothorax — stop procedure and consult surgery. If &lt;1% of serum Hct, likely traumatic. Bloody fluid that does not clot suggests long-standing hemorrhagic effusion (malignancy).</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Patient develops cough or chest tightness during drainage</h4>
+              <p class="muted"><strong>Likely cause:</strong> Lung reexpansion stimulating pleural receptors, or early reexpansion pulmonary edema.</p>
+              <p class="success"><strong>Next step:</strong> Stop drainage immediately. This is the most important indicator to terminate the procedure. Monitor vitals and oxygen saturation. Perform bedside US to check for pneumothorax. If cough resolves and patient is stable, may cautiously resume with slower drainage rate.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Loculated effusion — unable to drain completely</h4>
+              <p class="muted"><strong>Likely cause:</strong> Fibrinous septations within pleural space (parapneumonic, empyema, malignancy).</p>
+              <p class="success"><strong>Next step:</strong> Consider chest tube placement with intrapleural fibrinolytic therapy (tPA 10 mg + DNase 5 mg BID × 3 days). Alternatively, CT-guided access for loculated pockets. VATS may be needed for organized collections.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Immediate</h4>
+              <ul class="list danger">
+                <li><strong>Pneumothorax</strong> (2–6%) — most common complication; US-guided rate ~3% vs. ~18% blind; usually pneumothorax ex vacuo (non-expandable lung), not air leak</li>
+                <li><strong>Bleeding / hemothorax</strong> (&lt;1%) — intercostal vessel laceration; may require embolization of intercostal artery</li>
+                <li><strong>Pain</strong> — at insertion site or pleuritic; ensure adequate local anesthesia at parietal pleura</li>
+                <li><strong>Vasovagal reaction</strong> — especially in seated patients; have patient lie down if symptomatic</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Delayed</h4>
+              <ul class="list">
+                <li><strong>Reexpansion pulmonary edema (RPE)</strong> — rare but potentially fatal; risk increases with &gt;1.5 L drainage, rapid removal, or use of high negative pressure. Can occur 12–72h post. Presents with cough, dyspnea, frothy sputum, ipsilateral pulmonary edema on CXR</li>
+                <li><strong>Organ injury</strong> — liver (R), spleen (L), diaphragm perforation if access too low</li>
+                <li><strong>Infection / empyema</strong> — rare with sterile technique</li>
+                <li><strong>Pneumothorax ex vacuo</strong> — trapped lung fails to reexpand; creates negative intrapleural pressure; self-limited, usually does not require chest tube</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. POST-PROCEDURE ═══ -->
+        <section class="section" id="postprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Post-Procedure Care</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Monitoring</h4>
+              <ul class="list">
+                <li>Monitor vitals and oxygen saturation for 1–2 hours</li>
+                <li>Post-procedure US at bedside: confirm lung sliding to rule out pneumothorax</li>
+                <li>Routine post-procedure CXR is NOT required for uncomplicated thoracentesis — obtain only if symptomatic (new dyspnea, chest pain, desaturation)</li>
+                <li>Document fluid color, clarity, and total volume removed</li>
+                <li>Monitor for RPE signs: cough, dyspnea, desaturation up to 24–72h post</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Reexpansion Pulmonary Edema Prevention</h4>
+              <ul class="list">
+                <li><strong>Limit drainage:</strong> No more than 1–1.5 L in first-time/naive patients</li>
+                <li><strong>Stop if symptomatic:</strong> Cough, chest tightness, or dyspnea = stop immediately</li>
+                <li><strong>Low negative pressure:</strong> Use &lt;−20 cm H₂O during drainage</li>
+                <li><strong>Slow drainage:</strong> Favor gradual removal over rapid high-volume aspiration</li>
+                <li><strong>Anticoagulation:</strong> Resume 24 hours post-procedure (earlier if high thrombotic risk)</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Above the rib, never below:</strong> The intercostal neurovascular bundle (vein, artery, nerve) runs along the inferior margin of each rib. Always direct your needle just above the superior edge of the lower rib to avoid these structures.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>US reduces pneumothorax from ~18% to ~3%:</strong> Real-time US guidance dramatically reduces pneumothorax compared to blind thoracentesis. Always use US — even for large effusions.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Most post-thoracentesis pneumothorax is ex vacuo, not air leak:</strong> In US-guided procedures, pneumothorax is most commonly from non-expandable (trapped) lung — not from traumatic needle injury. These are generally self-limited and do not require chest tube.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Cough = stop:</strong> New cough or chest tightness during drainage is the single most important signal to stop. This may indicate early reexpansion pulmonary edema or pleural irritation from lung contact with the needle.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Blood culture bottles at bedside:</strong> For suspected empyema or parapneumonic effusion, inoculate aerobic and anaerobic blood culture bottles directly with pleural fluid at the bedside — dramatically increases culture yield over standard lab tubes.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Lung sliding = no pneumothorax:</strong> Post-procedure, check for lung sliding at the anterior chest. Presence of sliding or B-lines effectively rules out pneumothorax. Absence of sliding + "lung point" = pneumothorax. This is faster and more sensitive than CXR.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Color Doppler before you stick:</strong> In elderly patients, intercostal arteries can be tortuous and course medially into the intercostal space. A quick Color Doppler sweep at the planned access site can prevent a life-threatening hemorrhage.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. FLUID ANALYSIS ═══ -->
+        <section class="section" id="fluid">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>Fluid Analysis Reference</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="panel" style="margin-bottom: 16px;">
+              <h4>Light's Criteria — Exudate if ANY one met</h4>
+              <ul class="list">
+                <li><strong>Pleural fluid protein / serum protein &gt; 0.5</strong></li>
+                <li><strong>Pleural fluid LDH / serum LDH &gt; 0.6</strong></li>
+                <li><strong>Pleural fluid LDH &gt; ⅔ the upper normal limit of serum LDH</strong></li>
+              </ul>
+            </div>
+            <table class="fluid-table">
+              <thead><tr><th>Test</th><th>Transudate</th><th>Exudate</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Appearance</strong></td><td>Serous, clear</td><td>Cloudy, turbid, bloody, or purulent</td></tr>
+                <tr><td><strong>Leukocyte count</strong></td><td>&lt;10,000/mm³</td><td>&gt;50,000/mm³ (empyema)</td></tr>
+                <tr><td><strong>pH</strong></td><td>&gt;7.4</td><td>&lt;7.2 = high risk CPPE/empyema → consider drain</td></tr>
+                <tr><td><strong>Protein</strong></td><td>&lt;3.0 g/dL</td><td>&gt;3.0 g/dL</td></tr>
+                <tr><td><strong>LDH</strong></td><td>&lt;200 IU/L</td><td>&gt;200 IU/L (↑ with infection, malignancy)</td></tr>
+                <tr><td><strong>Glucose</strong></td><td>≥60 mg/dL</td><td>&lt;60 mg/dL (infection, RA, malignancy); &lt;40 = empyema</td></tr>
+                <tr><td><strong>Amylase</strong></td><td>Normal</td><td>Elevated: esophageal rupture, pancreatitis, malignancy</td></tr>
+                <tr><td><strong>Triglycerides</strong></td><td>—</td><td>&gt;110 mg/dL = chylothorax (lymphatic disruption)</td></tr>
+                <tr><td><strong>Hematocrit</strong></td><td>—</td><td>Pleural Hct &gt;50% serum = hemothorax</td></tr>
+                <tr><td><strong>Cytology</strong></td><td>—</td><td>Malignant cells; sensitivity ~60–75% (improves with volume &gt;60 mL)</td></tr>
+                <tr><td><strong>Gram stain / culture</strong></td><td>—</td><td>Inoculate blood culture bottles at bedside for best yield</td></tr>
+              </tbody>
+            </table>
+            <div style="margin-top: 14px;">
+              <div class="panel">
+                <h4>Common Etiologies</h4>
+                <div class="two-col">
+                  <div>
+                    <p style="margin: 0 0 6px; color: var(--accent); font-weight: 700; font-size: .85rem; text-transform: uppercase;">Transudative</p>
+                    <ul class="list">
+                      <li>Congestive heart failure (most common)</li>
+                      <li>Cirrhosis / hepatic hydrothorax</li>
+                      <li>Nephrotic syndrome</li>
+                      <li>Hypoalbuminemia</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p style="margin: 0 0 6px; color: var(--accent-2); font-weight: 700; font-size: .85rem; text-transform: uppercase;">Exudative</p>
+                    <ul class="list">
+                      <li>Pneumonia / parapneumonic</li>
+                      <li>Malignancy (lung, breast, lymphoma)</li>
+                      <li>Pulmonary embolism</li>
+                      <li>TB / autoimmune (RA, lupus)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Ref: Anand K et al. Semin Intervent Radiol 2022;39:348–354 · Boccatonda A et al. Diagnostics 2024;14:1124 · Yu H. Semin Intervent Radiol 2011;28:75–86 · SIR Consensus Guidelines 2019.</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My Thoracentesis Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;18G needle&#10;5 Fr catheter&#10;Vacuum bottles"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;Position patient seated&#10;US survey for largest pocket&#10;Prep and drape"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'thoracentesis';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  // ── Load cards ──
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!_cards.length) {
+      loading.textContent = 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = _cards.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            ${isOwn ? `<div class="card-actions">
+              <button onclick="editCard('${c.id}')">Edit</button>
+              <button class="delete-btn" onclick="deleteCard('${c.id}')">Delete</button>
+            </div>` : ''}
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  // ── Card CRUD ──
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user || !sb) return;
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const profile = await window.RadCallAuth.getProfile();
+    const displayName = (profile && profile.display_name) || user.email || 'Anonymous';
+
+    if (editId) {
+      _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, updated_at: new Date().toISOString() } : c);
+      renderCards(); closeCardModal();
+      await sb.from('procedure_cards').update({ title, supplies, steps, pearls, updated_at: new Date().toISOString() }).eq('id', editId);
+    } else {
+      const tmpId = 'tmp-' + Date.now();
+      const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, created_at: new Date().toISOString() };
+      _cards.unshift(newCard);
+      renderCards(); closeCardModal();
+      const { data, error } = await sb.from('procedure_cards')
+        .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName })
+        .select().single();
+      if (!error && data) { _cards = _cards.map(c => c.id === tmpId ? data : c); }
+    }
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  // ── Helpers ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Thoracentesis Supply List\n' + '═'.repeat(30) + '\n' + supplies.map((s, i) => `☐ ${s}`).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Thoracentesis Supply List\n' + '═'.repeat(30) + '\n' + supplies.map((s, i) => `☐ ${s}`).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'thoracentesis-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  // ── Init ──
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+</body>
+</html>
