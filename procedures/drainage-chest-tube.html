@@ -98,6 +98,13 @@
     .step-img-panel { display: none; margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
     .step-img-panel.open { display: block; }
     .step-img-panel img { width: 100%; display: block; border-radius: 12px; }
+    .img-zoomable { cursor: zoom-in; }
+    .lightbox-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.88); z-index: 9999; align-items: center; justify-content: center; padding: 24px; }
+    .lightbox-overlay.open { display: flex; }
+    .lightbox-overlay img { max-width: 100%; max-height: 90vh; border-radius: 16px; box-shadow: 0 0 60px rgba(0,0,0,.6); }
+    .lightbox-close { position: absolute; top: 20px; right: 24px; color: #fff; font-size: 1.8rem; cursor: pointer; opacity: .7; line-height: 1; }
+    .lightbox-close:hover { opacity: 1; }
+    .enlarge-hint { display: block; text-align: center; font-size: .75rem; color: var(--muted); padding: 6px 0 2px; letter-spacing: .02em; }
     .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
     .muted { color: var(--muted); }
     .problem-grid { display: grid; gap: 12px; }
@@ -318,11 +325,17 @@
                 <div class="step"><div class="step-num">1</div><div><h4>Position and planning</h4><div class="muted">Position patient supine; abduct ipsilateral arm to displace scapula superiorly. For posterolateral access, mild contralateral tilt improves workspace. Use CT or CXR to plan trajectory. US survey to confirm collection, assess depth, identify diaphragm. Count ribs from angle of Louis (manubriosternal junction = 2nd rib). For fluid: plan entry posterior axillary line 4th–5th ICS. For PTX: plan entry anterior axillary or midclavicular 2nd ICS.</div></div></div>
                 <div class="step"><div class="step-num">2</div><div><h4>Prep, drape, and anesthesia</h4><div class="muted">ChloraPrep prep. Sterile drape. Moderate IV sedation. Anesthetize skin to parietal pleura with 1% lidocaine using 22g needle. Generously anesthetize parietal pleura (most pain-sensitive layer) — inject while confirming fluid or air return. Post-insertion: instill 5–10 mL bupivacaine 0.25% via catheter for extended pain control.</div></div></div>
                 <div class="step"><div class="step-num">3</div><div><h4>Access</h4><div class="muted">Attach 18g needle to syringe with gentle negative pressure. Advance SUPERIOR to rib with real-time US guidance. Confirm fluid or air return. For equivocal location: cone beam CT may clarify guidewire position in pleural space vs. lung parenchyma vs. extrapleural.</div></div></div>
-                <div class="step"><div class="step-num">4</div><div><h4>Guidewire placement</h4><div class="muted">Remove syringe; insert 0.035" J-wire. Advance under fluoroscopy. Wire should move freely through pleural space (low resistance). Limited wire mobility = loculated space or lung parenchyma → choose different access site. Confirm wire position under fluoro (should parallel chest wall, not course into lung).</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Guidewire placement</h4><div class="muted">Remove syringe; insert 0.035" J-wire. Advance under fluoroscopy. Wire should move freely through pleural space (low resistance). Limited wire mobility = loculated space or lung parenchyma → choose different access site. Confirm wire position under fluoro (should parallel chest wall, not course into lung).
+                  <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> View guidewire in pleural space</div>
+                  <div class="step-img-panel"><img src="../images/Chest_Tube_Wire.jpg" loading="lazy"></div>
+                </div></div></div>
                 <div class="step"><div class="step-num">5</div><div><h4>Serial dilation</h4><div class="muted">Serial dilate over wire through intercostal space. Firm, rotating motion. Small 3–5 mm skin nick if resistance. Do NOT over-dilate — only enough for catheter.</div></div></div>
                 <div class="step"><div class="step-num">6</div><div><h4>Catheter placement</h4><div class="muted">Thread pigtail catheter over wire. For fluid: advance tip posteriorly and inferiorly. For PTX: direct apically. Remove wire; pigtail locks in place (or straight tube secured with suture). Connect to drainage system.</div></div></div>
                 <div class="step"><div class="step-num">7</div><div><h4>Connect and confirm</h4><div class="muted">Connect to 3-chamber water seal device (Pleur-evac). Apply -20 cm H₂O suction in most patients (dry valve: up to -40 cmH₂O; wet column: up to -25 cmH₂O). Fluid should flow freely; PTX should show bubbling. If only aspiratable with syringe (not free flow), reposition. Suture with 0 silk × 2. Transparent dressing. Secure tubing with omental tape or FLEXI-TRAK.</div></div></div>
-                <div class="step"><div class="step-num">8</div><div><h4>Post-placement CXR</h4><div class="muted">Obtain immediately. Confirm tube within pleural space. Intrafissural, intraparenchymal, mediastinal, or extrapleural placement = malposition → reposition. All drainage holes must be within pleural space (radiopaque marker at most proximal hole).</div></div></div>
+                <div class="step"><div class="step-num">8</div><div><h4>Post-placement CXR</h4><div class="muted">Obtain immediately. Confirm tube within pleural space. Intrafissural, intraparenchymal, mediastinal, or extrapleural placement = malposition → reposition. All drainage holes must be within pleural space (radiopaque marker at most proximal hole).
+                  <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> View post-placement CXR</div>
+                  <div class="step-img-panel"><img src="../images/Chest_Tube_Placed.jpg" loading="lazy"></div>
+                </div></div></div>
               </div>
             </div>
 
@@ -471,7 +484,7 @@
                   <li><strong>Heimlich valve:</strong> portable one-way flutter valve; enables ambulation; suctionless passive drainage only; for small PTX in ambulatory patients.</li>
                 </ul>
                 <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> View water seal system diagram</div>
-                <div class="step-img-panel"><img src="../images/chest-tube-atrium.svg" loading="lazy"><div class="step-img-caption">Three-chamber water seal system (Atrium-type). ① Collection — graduated fluid measurement. ② Water seal — 2 cm H₂O one-way valve; tidal fluctuation indicates patent tube. ③ Suction control — 20 cm H₂O standard; gentle bubbling confirms active suction.</div></div>
+                <div class="step-img-panel"><img src="../images/chest-tube-atrium.svg" loading="lazy" class="img-zoomable" onclick="openLightbox(this.src)"><span class="enlarge-hint">Click image to enlarge</span><div class="step-img-caption">Three-chamber water seal system (Atrium-type). ① Collection — graduated fluid measurement. ② Water seal — 2 cm H₂O one-way valve; tidal fluctuation indicates patent tube. ③ Suction control — 20 cm H₂O standard; gentle bubbling confirms active suction.</div></div>
               </div>
               <div class="panel">
                 <h4>Troubleshooting the Drainage System</h4>
@@ -711,6 +724,17 @@
     window.RadCallAuth.onAuth(() => loadCards());
     setTimeout(loadCards, 500);
   }
+  </script>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+    function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('open'); }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
   </script>
 </body>
 </html>
