@@ -306,6 +306,46 @@ body {
   font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s;
 }
 .refine-btn:hover { background: var(--teal-light); }
+.save-deck-btn {
+  margin-top: 14px; padding: 10px 22px; border: 1.5px solid var(--teal);
+  border-radius: 8px; background: var(--teal-light); color: var(--teal);
+  font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: all 0.15s; width: 100%;
+}
+.save-deck-btn:hover { background: rgba(20,184,166,0.18); }
+/* Case Deck Modal */
+.cd-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.72);
+  z-index: 9000; align-items: center; justify-content: center; padding: 20px;
+}
+.cd-overlay.open { display: flex; }
+.cd-modal {
+  background: #141b26; border: 1px solid var(--border-strong); border-radius: 14px;
+  padding: 28px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto;
+  position: relative;
+}
+.cd-modal h3 { font-size: 16px; font-weight: 700; color: var(--slate); margin-bottom: 20px; }
+.cd-field { margin-bottom: 14px; }
+.cd-field label { display: block; font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 5px; }
+.cd-field input, .cd-field select, .cd-field textarea {
+  width: 100%; padding: 9px 11px; background: var(--cream); border: 1.5px solid var(--border-strong);
+  border-radius: 8px; color: var(--slate); font-family: inherit; font-size: 13px; outline: none;
+  transition: border-color .15s;
+}
+.cd-field input:focus, .cd-field select:focus, .cd-field textarea:focus { border-color: var(--teal); }
+.cd-field textarea { resize: vertical; min-height: 72px; }
+.cd-img-preview { max-width: 100%; max-height: 180px; object-fit: contain; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border); }
+.cd-tags-preview { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.cd-tag { font-size: 11px; padding: 2px 8px; background: rgba(20,184,166,.12); border: 1px solid rgba(20,184,166,.25); border-radius: 20px; color: var(--teal); }
+.cd-actions { display: flex; gap: 10px; margin-top: 20px; }
+.cd-save-btn { flex: 1; padding: 10px; background: var(--teal); color: #fff; border: none; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity .15s; }
+.cd-save-btn:hover { opacity: .88; }
+.cd-cancel-btn { padding: 10px 18px; background: transparent; color: var(--muted); border: 1px solid var(--border-strong); border-radius: 8px; font-family: inherit; font-size: 14px; cursor: pointer; }
+.cd-cancel-btn:hover { color: var(--slate); }
+.cd-close { position: absolute; top: 14px; right: 16px; background: none; border: none; color: var(--muted); font-size: 1.4rem; cursor: pointer; line-height: 1; }
+.cd-close:hover { color: var(--slate); }
+.cd-success { position: fixed; bottom: 28px; right: 28px; background: #14b8a6; color: #fff; padding: 12px 20px; border-radius: 10px; font-weight: 600; font-size: 14px; z-index: 9999; opacity: 0; transition: opacity .3s; pointer-events: none; }
+.cd-success.show { opacity: 1; }
 
 /* Error */
 .error-card {
@@ -390,9 +430,6 @@ body {
   </a>
 </nav>
 
-<div class="disclaimer-bar">
-  ⚠️ <span><strong>For educational and reference purposes only.</strong> AI-generated differentials must not replace clinical judgement, direct patient evaluation, or formal radiologist interpretation. Always correlate with clinical context.</span>
-</div>
 
 <div class="layout">
   <!-- INPUT PANEL -->
@@ -633,7 +670,9 @@ async function generateDifferential(extraFindings) {
 }
 
 // ── Render Results ──
+let _lastDiffData = null;
 function renderResults(data) {
+  _lastDiffData = data;
   const panel = document.getElementById('resultsPanel');
 
   if (data.raw) {
@@ -687,6 +726,7 @@ function renderResults(data) {
       <input type="text" class="refine-input" id="refineInput" placeholder="Add more findings to narrow the differential...">
       <button class="refine-btn" onclick="refine()">Refine</button>
     </div>
+    <button class="save-deck-btn" onclick="openCaseDeckSave()">+ Save to Case Deck</button>
   </div>`;
 
   panel.innerHTML = html;
@@ -753,6 +793,111 @@ function toggleHistory() {
 
 // ── Init ──
 initApp();
+
+// ── Case Deck ──
+function autoTagsFromText(text) {
+  const stop = new Set(['the','a','an','and','or','of','to','in','for','with','is','are','was','were','it','this','that','on','at','by','from','as','be','has','had','have','will','may','can','should','not','no','vs','per','via','the','findings','finding']);
+  const words = (text || '').toLowerCase().match(/[a-z][a-z\-]{2,}/g) || [];
+  const freq = {};
+  for (const w of words) { if (!stop.has(w)) freq[w] = (freq[w]||0) + 1; }
+  return Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,8).map(e=>e[0]);
+}
+
+function openCaseDeckSave() {
+  const topDx = _lastDiffData?.differentials?.[0]?.diagnosis || '';
+  document.getElementById('cdTitle').value = topDx;
+  document.getElementById('cdDiagnosis').value = topDx;
+  document.getElementById('cdNotes').value = lastFindings ? lastFindings : '';
+  document.getElementById('cdAccession').value = '';
+  document.getElementById('cdCategory').value = document.getElementById('bodyRegion')?.value || '';
+  const preview = document.getElementById('cdImgPreview');
+  if (imageBase64) {
+    preview.src = `data:${imageMimeType};base64,${imageBase64}`;
+    preview.style.display = 'block';
+  } else {
+    preview.style.display = 'none';
+  }
+  updateCdTags();
+  document.getElementById('caseDeckModal').classList.add('open');
+}
+
+function updateCdTags() {
+  const text = [
+    document.getElementById('cdTitle')?.value,
+    document.getElementById('cdDiagnosis')?.value,
+    document.getElementById('cdNotes')?.value
+  ].join(' ');
+  const tags = autoTagsFromText(text);
+  const el = document.getElementById('cdTagsPreview');
+  el.innerHTML = tags.map(t => `<span class="cd-tag">${t}</span>`).join('');
+}
+
+async function saveCaseDeck() {
+  const btn = document.getElementById('cdSaveBtn');
+  const title = document.getElementById('cdTitle').value.trim();
+  if (!title) { alert('Title is required.'); return; }
+  let user = null;
+  try { user = RadCallAuth.getUser(); } catch(e) {}
+  if (!user) { alert('Please sign in to save cases.'); return; }
+  btn.textContent = 'Saving…'; btn.disabled = true;
+  const images = imageBase64 ? [{ data: imageBase64, mimeType: imageMimeType }] : [];
+  const tags = autoTagsFromText([title, document.getElementById('cdDiagnosis').value, document.getElementById('cdNotes').value].join(' '));
+  const { error } = await RadCallAuth.supabase.from('case_deck').insert({
+    user_id: user.id,
+    title,
+    accession: document.getElementById('cdAccession').value.trim(),
+    category: document.getElementById('cdCategory').value.trim(),
+    diagnosis: document.getElementById('cdDiagnosis').value.trim(),
+    notes: document.getElementById('cdNotes').value.trim(),
+    tags,
+    images,
+    source: 'ddx'
+  });
+  btn.textContent = 'Save'; btn.disabled = false;
+  if (error) { alert('Save failed: ' + error.message); return; }
+  document.getElementById('caseDeckModal').classList.remove('open');
+  const toast = document.getElementById('cdSuccessToast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2800);
+}
 </script>
+
+<!-- Case Deck Modal -->
+<div class="cd-overlay" id="caseDeckModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="cd-modal">
+    <button class="cd-close" onclick="document.getElementById('caseDeckModal').classList.remove('open')">&times;</button>
+    <h3>Save to Case Deck</h3>
+    <img class="cd-img-preview" id="cdImgPreview" src="" alt="" style="display:none">
+    <div class="cd-field">
+      <label>Title *</label>
+      <input type="text" id="cdTitle" placeholder="e.g. Right upper lobe mass with spiculation" oninput="updateCdTags()">
+    </div>
+    <div class="cd-field">
+      <label>Diagnosis</label>
+      <input type="text" id="cdDiagnosis" placeholder="e.g. Primary lung adenocarcinoma" oninput="updateCdTags()">
+    </div>
+    <div class="cd-field">
+      <label>Accession #</label>
+      <input type="text" id="cdAccession" placeholder="Optional">
+    </div>
+    <div class="cd-field">
+      <label>Category</label>
+      <input type="text" id="cdCategory" placeholder="e.g. Chest, MSK, Neuro">
+    </div>
+    <div class="cd-field">
+      <label>Notes</label>
+      <textarea id="cdNotes" placeholder="Teaching points, key findings, follow-up..." oninput="updateCdTags()"></textarea>
+    </div>
+    <div class="cd-field">
+      <label>Auto-tags</label>
+      <div class="cd-tags-preview" id="cdTagsPreview"></div>
+    </div>
+    <div class="cd-actions">
+      <button class="cd-cancel-btn" onclick="document.getElementById('caseDeckModal').classList.remove('open')">Cancel</button>
+      <button class="cd-save-btn" id="cdSaveBtn" onclick="saveCaseDeck()">Save to Case Deck</button>
+    </div>
+  </div>
+</div>
+<div class="cd-success" id="cdSuccessToast">Saved to Case Deck</div>
 </body>
 </html>

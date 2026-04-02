@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Case Dashboard — RadCall</title>
+<title>Procedure Dashboard — RadCall</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -238,13 +238,13 @@ body {
 
 <nav class="topnav">
   <a class="logo" href="index.html">
-    <div class="logo-icon">CL</div>
-    <div><div class="logo-text">Case Log</div></div>
+    <div class="logo-icon">PL</div>
+    <div><div class="logo-text">Procedure Log</div></div>
   </a>
   <div class="nav-links">
-    <a href="case-log.html" class="nav-link">Case Log</a>
-    <a href="procedure-averages.html" class="nav-link active">Case Dashboard</a>
-    <a href="differential.html" class="nav-link">Differential Dx</a>
+    <a href="case-log.html" class="nav-link">Procedure Log</a>
+    <a href="procedure-averages.html" class="nav-link active">Procedure Dashboard</a>
+    <a href="case-deck.html" class="nav-link">Case Deck</a>
   </div>
   <div id="dashUserNav" style="display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0"></div>
   <a href="index.html" class="nav-back-btn" title="Back to RadCall">
@@ -578,7 +578,7 @@ function renderOverview() {
   el.innerHTML = `
 <div class="detail-header">
   <div class="detail-cat">Overview</div>
-  <div class="detail-title">Case Dashboard</div>
+  <div class="detail-title">Procedure Dashboard</div>
   <div class="detail-meta">Aggregate statistics from your case log</div>
 </div>
 
@@ -610,17 +610,17 @@ function renderOverview() {
 
   <!-- DONUT CHART -->
   <div class="card" style="display:flex;flex-direction:column;align-items:center;padding:20px">
-    <div class="card-label" style="align-self:flex-start"><div class="label-dot" style="background:var(--teal)"></div>Case Distribution by Category</div>
+    <div class="card-label" style="align-self:flex-start"><div class="label-dot" style="background:var(--teal)"></div>Procedure Distribution by Category</div>
     <div style="position:relative;width:220px;height:220px;margin:12px 0 8px">
       <canvas id="overviewDonut" width="220" height="220"></canvas>
     </div>
     <div style="width:100%;max-height:160px;overflow-y:auto;font-size:11px">
-      ${catEntries.slice(0,12).map((e,i)=>`
+      ${(() => { const lt = catEntries.slice(0,12).reduce((s,e)=>s+e[1],0)||1; return catEntries.slice(0,12).map((e,i)=>`
         <div style="display:flex;align-items:center;gap:6px;padding:2px 0">
           <div style="width:8px;height:8px;border-radius:2px;flex-shrink:0;background:${CHART_COLORS[i%CHART_COLORS.length]}"></div>
           <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--slate-light)">${esc(e[0])}</span>
-          <span style="color:var(--muted)">${e[1]}</span>
-        </div>`).join('')}
+          <span style="color:var(--muted)">${e[1]} <span style="opacity:.55">${Math.round(e[1]/lt*100)}%</span></span>
+        </div>`).join(''); })()}
     </div>
   </div>
 
@@ -736,7 +736,7 @@ function renderOverview() {
             font: { weight: 'bold', size: 11 },
             formatter: (value) => {
               const pct = Math.round(value / chartTotal * 100);
-              return pct >= 5 ? pct + '%' : '';
+              return pct >= 12 ? pct + '%' : '';
             },
             textShadowBlur: 4,
             textShadowColor: 'rgba(0,0,0,0.6)',

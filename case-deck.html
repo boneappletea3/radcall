@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Deck — RadCall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #0b0f14;
+  --warm-white: #111620;
+  --slate: #e2e8f0;
+  --slate-mid: #94a3b8;
+  --slate-light: #cbd5e1;
+  --muted: #64748b;
+  --border: #1e2737;
+  --border-strong: #2a3444;
+  --teal: #14b8a6;
+  --teal-light: rgba(20,184,166,0.1);
+  --teal-mid: #2dd4bf;
+  --amber: #f59e0b;
+  --amber-light: rgba(245,158,11,0.1);
+  --red: #ef4444;
+  --red-light: rgba(239,68,68,0.08);
+  --green: #22c55e;
+  --purple: #a855f7;
+  --purple-light: rgba(168,85,247,0.1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body { font-family: 'IBM Plex Sans', system-ui, sans-serif; background: var(--cream); color: var(--slate); font-size: 14px; line-height: 1.5; }
+
+/* ── TOP NAV ── */
+.topnav {
+  background: var(--warm-white); border-bottom: 1px solid var(--border);
+  padding: 0 24px; height: 56px; display: flex; align-items: center; gap: 16px;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+.logo-icon { width: 32px; height: 32px; background: var(--teal); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; letter-spacing: 0.02em; }
+.logo-text { font-weight: 600; font-size: 15px; color: var(--slate); }
+.logo-sub { font-size: 11px; color: var(--muted); font-weight: 400; }
+.nav-links { display: flex; gap: 4px; flex-shrink: 0; }
+.nav-link { padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; transition: background 0.15s, color 0.15s; }
+.nav-link:hover { background: var(--teal-light); color: var(--teal); }
+.nav-link.active { background: var(--teal-light); color: var(--teal); }
+.nav-spacer { flex: 1; }
+.nav-user { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 10px; }
+
+/* ── LAYOUT ── */
+.layout { padding-top: 56px; min-height: 100vh; display: flex; flex-direction: column; }
+
+/* ── TOOLBAR ── */
+.toolbar {
+  background: var(--warm-white); border-bottom: 1px solid var(--border);
+  padding: 12px 24px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+.search-box {
+  flex: 1; min-width: 200px; max-width: 400px; position: relative;
+}
+.search-box svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+.search-box input {
+  width: 100%; padding: 8px 12px 8px 34px; background: var(--cream);
+  border: 1.5px solid var(--border-strong); border-radius: 8px; color: var(--slate);
+  font-family: inherit; font-size: 13px; outline: none; transition: border-color .15s;
+}
+.search-box input:focus { border-color: var(--teal); }
+.search-box input::placeholder { color: var(--muted); }
+.filter-chips { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.chip {
+  padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; cursor: pointer;
+  border: 1px solid var(--border-strong); color: var(--muted); background: transparent;
+  transition: all .15s; font-family: inherit;
+}
+.chip:hover { border-color: var(--teal); color: var(--teal); }
+.chip.active { background: var(--teal-light); border-color: var(--teal); color: var(--teal); }
+.add-btn {
+  padding: 8px 18px; background: var(--teal); color: #fff; border: none; border-radius: 8px;
+  font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity .15s;
+  margin-left: auto; flex-shrink: 0;
+}
+.add-btn:hover { opacity: .88; }
+
+/* ── CARD GRID ── */
+.deck-grid {
+  padding: 20px 24px; display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;
+}
+.deck-card {
+  background: var(--warm-white); border: 1px solid var(--border); border-radius: 12px;
+  padding: 16px; display: flex; flex-direction: column; gap: 10px;
+  transition: border-color .15s, box-shadow .15s; position: relative;
+}
+.deck-card:hover { border-color: var(--border-strong); box-shadow: 0 4px 16px rgba(0,0,0,0.35); }
+.deck-card-img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; cursor: zoom-in; }
+.deck-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.deck-card-title { font-size: 14px; font-weight: 600; color: var(--slate); line-height: 1.35; flex: 1; }
+.star-btn { background: none; border: none; cursor: pointer; font-size: 16px; line-height: 1; padding: 2px; flex-shrink: 0; opacity: .5; transition: opacity .15s, color .15s; }
+.star-btn:hover, .star-btn.active { opacity: 1; }
+.star-btn.active { color: var(--amber); }
+.cat-chip { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 20px; background: rgba(20,184,166,.12); border: 1px solid rgba(20,184,166,.25); color: var(--teal); }
+.deck-diagnosis { font-size: 13px; color: var(--slate-light); }
+.deck-notes { font-size: 12px; color: var(--muted); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.deck-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.deck-tag { font-size: 11px; padding: 2px 7px; background: rgba(148,163,184,.08); border: 1px solid var(--border-strong); border-radius: 20px; color: var(--muted); }
+.deck-actions { display: flex; gap: 6px; margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border); }
+.deck-act-btn { flex: 1; padding: 6px; border-radius: 6px; border: 1px solid var(--border-strong); background: transparent; color: var(--muted); font-family: inherit; font-size: 12px; font-weight: 500; cursor: pointer; transition: all .15s; }
+.deck-act-btn:hover { color: var(--teal); border-color: var(--teal); background: var(--teal-light); }
+.deck-act-btn.danger:hover { color: var(--red); border-color: var(--red); background: var(--red-light); }
+
+/* ── EMPTY STATE ── */
+.empty-state { text-align: center; padding: 80px 24px; color: var(--muted); }
+.empty-icon { font-size: 48px; margin-bottom: 16px; opacity: .5; }
+.empty-state h3 { font-size: 18px; font-weight: 600; color: var(--slate-mid); margin-bottom: 8px; }
+.empty-state p { font-size: 14px; max-width: 380px; margin: 0 auto 20px; }
+
+/* ── MODALS ── */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.75);
+  z-index: 9000; align-items: center; justify-content: center; padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: #141b26; border: 1px solid var(--border-strong); border-radius: 14px;
+  width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; position: relative;
+}
+.modal-header { padding: 24px 24px 0; display: flex; align-items: center; justify-content: space-between; }
+.modal-title { font-size: 16px; font-weight: 700; }
+.modal-close { background: none; border: none; color: var(--muted); font-size: 1.5rem; cursor: pointer; line-height: 1; }
+.modal-close:hover { color: var(--slate); }
+.modal-body { padding: 20px 24px 24px; display: flex; flex-direction: column; gap: 14px; }
+.field label { display: block; font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 5px; }
+.field input, .field select, .field textarea {
+  width: 100%; padding: 9px 11px; background: var(--cream); border: 1.5px solid var(--border-strong);
+  border-radius: 8px; color: var(--slate); font-family: inherit; font-size: 13px; outline: none; transition: border-color .15s;
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--teal); }
+.field textarea { resize: vertical; min-height: 80px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.img-upload-zone {
+  border: 2px dashed var(--border-strong); border-radius: 10px; padding: 20px;
+  text-align: center; cursor: pointer; transition: border-color .15s, background .15s;
+  color: var(--muted); font-size: 13px;
+}
+.img-upload-zone:hover, .img-upload-zone.dragover { border-color: var(--teal); background: var(--teal-light); color: var(--teal); }
+.img-preview-strip { display: flex; gap: 8px; flex-wrap: wrap; }
+.img-thumb-wrap { position: relative; }
+.img-thumb { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; cursor: zoom-in; border: 1px solid var(--border); }
+.img-thumb-rm { position: absolute; top: -6px; right: -6px; width: 18px; height: 18px; border-radius: 50%; background: var(--red); color: white; font-size: 10px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 700; line-height: 1; }
+.tags-preview { display: flex; flex-wrap: wrap; gap: 6px; min-height: 24px; }
+.tag-pill { font-size: 11px; padding: 3px 9px; background: rgba(20,184,166,.12); border: 1px solid rgba(20,184,166,.25); border-radius: 20px; color: var(--teal); }
+.modal-footer { padding: 0 24px 24px; display: flex; gap: 10px; }
+.btn-primary { flex: 1; padding: 11px; background: var(--teal); color: white; border: none; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity .15s; }
+.btn-primary:hover { opacity: .88; }
+.btn-primary:disabled { opacity: .5; cursor: default; }
+.btn-secondary { padding: 11px 20px; background: transparent; color: var(--muted); border: 1px solid var(--border-strong); border-radius: 8px; font-family: inherit; font-size: 14px; cursor: pointer; }
+.btn-secondary:hover { color: var(--slate); }
+
+/* ── VIEW MODAL ── */
+.view-modal { max-width: 600px; }
+.view-img-strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.view-img { height: 180px; border-radius: 8px; object-fit: cover; cursor: zoom-in; flex-shrink: 0; }
+.view-field-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 3px; }
+.view-field-val { font-size: 14px; color: var(--slate-light); }
+.similar-list { display: flex; flex-direction: column; gap: 8px; }
+.similar-card { padding: 10px 12px; background: var(--cream); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: border-color .15s; }
+.similar-card:hover { border-color: var(--teal); }
+.similar-title { font-size: 13px; font-weight: 600; color: var(--slate); }
+.similar-tags { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* ── LIGHTBOX ── */
+.lb-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.9); z-index: 9999; align-items: center; justify-content: center; cursor: zoom-out; }
+.lb-overlay.open { display: flex; }
+.lb-overlay img { width: min(90vw, 1400px); max-height: 90vh; object-fit: contain; border-radius: 12px; }
+.lb-close { position: absolute; top: 16px; right: 20px; color: white; font-size: 2rem; cursor: pointer; background: none; border: none; opacity: .7; line-height: 1; }
+.lb-close:hover { opacity: 1; }
+
+/* ── TOAST ── */
+.toast { position: fixed; bottom: 28px; right: 28px; background: var(--teal); color: white; padding: 12px 20px; border-radius: 10px; font-weight: 600; font-size: 14px; z-index: 9999; opacity: 0; transition: opacity .3s; pointer-events: none; }
+.toast.show { opacity: 1; }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <a href="index.html" class="logo">
+    <div class="logo-icon">PL</div>
+    <div><div class="logo-text">Procedure Log</div></div>
+  </a>
+  <div class="nav-links">
+    <a href="case-log.html" class="nav-link">Procedure Log</a>
+    <a href="procedure-averages.html" class="nav-link">Procedure Dashboard</a>
+    <a href="case-deck.html" class="nav-link active">Case Deck</a>
+  </div>
+  <div class="nav-spacer"></div>
+  <div class="nav-user" id="userNav"></div>
+</nav>
+
+<div class="layout">
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="search-box">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="searchInput" placeholder="Search title, diagnosis, tags…" oninput="filterCards()">
+    </div>
+    <div class="filter-chips" id="filterChips">
+      <button class="chip active" data-filter="all" onclick="setFilter('all', this)">All</button>
+      <button class="chip" data-filter="star" onclick="setFilter('star', this)">⭐ Favorites</button>
+    </div>
+    <button class="add-btn" onclick="openAddModal()">+ Add Case</button>
+  </div>
+
+  <!-- GRID -->
+  <div class="deck-grid" id="deckGrid">
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">🗂️</div>
+      <h3>Your Case Deck is empty</h3>
+      <p>Save interesting cases to build your personal teaching file. Add images, diagnoses, and notes in under a minute.</p>
+      <button class="add-btn" onclick="openAddModal()">+ Add First Case</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── ADD / EDIT MODAL ── -->
+<div class="modal-overlay" id="editModal" onclick="if(event.target===this)closeEditModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="editModalTitle">Add Case</div>
+      <button class="modal-close" onclick="closeEditModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <!-- Image upload -->
+      <div>
+        <label style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px">Images</label>
+        <div class="img-upload-zone" id="uploadZone" onclick="document.getElementById('imgInput').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="handleDrop(event)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:6px;opacity:.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <div>Click or drag to upload screenshots</div>
+          <div style="font-size:11px;margin-top:3px;opacity:.6">JPEG, PNG — up to 5 images</div>
+        </div>
+        <input type="file" id="imgInput" accept="image/*" multiple style="display:none" onchange="handleFiles(this.files)">
+        <div class="img-preview-strip" id="imgPreviewStrip" style="margin-top:10px"></div>
+      </div>
+      <!-- Fields -->
+      <div class="field">
+        <label>Title *</label>
+        <input type="text" id="eTitle" placeholder="e.g. Right upper lobe spiculated mass" oninput="refreshTags()">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Diagnosis</label>
+          <input type="text" id="eDiagnosis" placeholder="e.g. Lung adenocarcinoma" oninput="refreshTags()">
+        </div>
+        <div class="field">
+          <label>Category</label>
+          <input type="text" id="eCategory" placeholder="e.g. Chest, MSK" list="catList">
+          <datalist id="catList"></datalist>
+        </div>
+      </div>
+      <div class="field">
+        <label>Accession #</label>
+        <input type="text" id="eAccession" placeholder="Optional">
+      </div>
+      <div class="field">
+        <label>Notes</label>
+        <textarea id="eNotes" placeholder="Key findings, teaching points, follow-up…" oninput="refreshTags()"></textarea>
+      </div>
+      <div class="field">
+        <label>Auto-tags</label>
+        <div class="tags-preview" id="editTagsPreview"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeEditModal()">Cancel</button>
+      <button class="btn-primary" id="editSaveBtn" onclick="saveCase()">Save Case</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── VIEW MODAL ── -->
+<div class="modal-overlay" id="viewModal" onclick="if(event.target===this)closeViewModal()">
+  <div class="modal view-modal">
+    <div class="modal-header">
+      <div class="modal-title" id="viewTitle">Case</div>
+      <button class="modal-close" onclick="closeViewModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="viewBody"></div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeViewModal()">Close</button>
+      <button class="btn-primary" id="viewEditBtn" onclick="openEditFromView()">Edit</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── LIGHTBOX ── -->
+<div class="lb-overlay" id="lbOverlay" onclick="closeLb()">
+  <button class="lb-close" onclick="closeLb()">&times;</button>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-auth.js"></script>
+<script>
+let _sb = null;
+let _user = null;
+let _allCases = [];
+let _editId = null;        // null = new, uuid = editing
+let _viewId = null;
+let _editImages = [];      // [{data: base64, mimeType: '...'}]
+let _currentFilter = 'all';
+let _catSet = new Set();
+
+async function initApp() {
+  if (window.RadCallAuth && !RadCallAuth._notConfigured && RadCallAuth.supabase) {
+    _sb = RadCallAuth.supabase;
+    try { await RadCallAuth.requireAuth(); } catch(e) {}
+    _user = RadCallAuth.getUser?.() || null;
+  }
+  if (_user) {
+    const nav = document.getElementById('userNav');
+    nav.innerHTML = `<span style="font-size:12px;color:#94a3b8">${_user.email}</span>
+      <button onclick="RadCallAuth.signOut().then(()=>location.reload())" style="padding:5px 12px;border-radius:6px;border:1px solid #2a3444;background:transparent;color:#94a3b8;font-size:12px;font-family:inherit;cursor:pointer">Logout</button>`;
+  }
+  await loadCases();
+}
+
+// ── Data ──
+async function loadCases() {
+  if (!_sb || !_user) { renderGrid([]); return; }
+  const { data, error } = await _sb.from('case_deck')
+    .select('*')
+    .eq('user_id', _user.id)
+    .order('created_at', { ascending: false });
+  if (error) { console.error(error); renderGrid([]); return; }
+  _allCases = data || [];
+  _catSet = new Set(_allCases.filter(c=>c.category).map(c=>c.category));
+  buildCatChips();
+  filterCards();
+}
+
+function buildCatChips() {
+  const chips = document.getElementById('filterChips');
+  const existing = Array.from(chips.querySelectorAll('[data-filter]')).map(el=>el.dataset.filter);
+  for (const cat of _catSet) {
+    if (!existing.includes(cat)) {
+      const btn = document.createElement('button');
+      btn.className = 'chip'; btn.dataset.filter = cat; btn.textContent = cat;
+      btn.onclick = () => setFilter(cat, btn);
+      chips.appendChild(btn);
+    }
+  }
+  // Update datalist
+  const dl = document.getElementById('catList');
+  dl.innerHTML = Array.from(_catSet).map(c=>`<option value="${esc(c)}">`).join('');
+}
+
+function setFilter(f, el) {
+  _currentFilter = f;
+  document.querySelectorAll('#filterChips .chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  filterCards();
+}
+
+function filterCards() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  let cases = _allCases;
+  if (_currentFilter === 'star') cases = cases.filter(c=>c.is_favorite);
+  else if (_currentFilter !== 'all') cases = cases.filter(c=>c.category===_currentFilter);
+  if (q) {
+    cases = cases.filter(c => {
+      const hay = [c.title, c.diagnosis, c.notes, ...(c.tags||[]), c.category, c.accession].join(' ').toLowerCase();
+      return hay.includes(q);
+    });
+  }
+  renderGrid(cases);
+}
+
+function renderGrid(cases) {
+  const grid = document.getElementById('deckGrid');
+  const empty = document.getElementById('emptyState');
+  if (!cases.length) {
+    grid.innerHTML = '';
+    grid.appendChild(empty);
+    empty.style.display = 'block';
+    return;
+  }
+  const fragment = document.createDocumentFragment();
+  for (const c of cases) {
+    const card = document.createElement('div');
+    card.className = 'deck-card';
+    const imgHtml = c.images?.length ? `<img class="deck-card-img" src="data:${c.images[0].mimeType};base64,${c.images[0].data}" alt="" onclick="openLb(this.src)" loading="lazy">` : '';
+    const tagsHtml = (c.tags||[]).slice(0,5).map(t=>`<span class="deck-tag">${esc(t)}</span>`).join('');
+    card.innerHTML = `
+      ${imgHtml}
+      <div class="deck-card-top">
+        <div class="deck-card-title">${esc(c.title)}</div>
+        <button class="star-btn ${c.is_favorite?'active':''}" onclick="toggleStar('${c.id}', this)" title="${c.is_favorite?'Unfavorite':'Favorite'}">${c.is_favorite?'★':'☆'}</button>
+      </div>
+      ${c.category ? `<span class="cat-chip">${esc(c.category)}</span>` : ''}
+      ${c.diagnosis ? `<div class="deck-diagnosis">${esc(c.diagnosis)}</div>` : ''}
+      ${c.notes ? `<div class="deck-notes">${esc(c.notes)}</div>` : ''}
+      ${tagsHtml ? `<div class="deck-tags">${tagsHtml}</div>` : ''}
+      <div class="deck-actions">
+        <button class="deck-act-btn" onclick="openViewModal('${c.id}')">View</button>
+        <button class="deck-act-btn" onclick="openEditModal('${c.id}')">Edit</button>
+        <button class="deck-act-btn danger" onclick="deleteCase('${c.id}')">Delete</button>
+      </div>`;
+    fragment.appendChild(card);
+  }
+  grid.innerHTML = '';
+  grid.appendChild(fragment);
+}
+
+// ── Star ──
+async function toggleStar(id, btn) {
+  const c = _allCases.find(x=>x.id===id);
+  if (!c || !_sb) return;
+  const newVal = !c.is_favorite;
+  c.is_favorite = newVal;
+  btn.className = `star-btn ${newVal?'active':''}`;
+  btn.textContent = newVal ? '★' : '☆';
+  await _sb.from('case_deck').update({ is_favorite: newVal, updated_at: new Date().toISOString() }).eq('id', id);
+  if (_currentFilter === 'star') filterCards();
+}
+
+// ── Delete ──
+async function deleteCase(id) {
+  if (!confirm('Delete this case? This cannot be undone.')) return;
+  if (!_sb) return;
+  await _sb.from('case_deck').delete().eq('id', id);
+  _allCases = _allCases.filter(c=>c.id!==id);
+  filterCards();
+  showToast('Case deleted');
+}
+
+// ── Add/Edit Modal ──
+function openAddModal() {
+  _editId = null;
+  _editImages = [];
+  document.getElementById('editModalTitle').textContent = 'Add Case';
+  document.getElementById('eTitle').value = '';
+  document.getElementById('eDiagnosis').value = '';
+  document.getElementById('eCategory').value = '';
+  document.getElementById('eAccession').value = '';
+  document.getElementById('eNotes').value = '';
+  document.getElementById('imgPreviewStrip').innerHTML = '';
+  document.getElementById('editTagsPreview').innerHTML = '';
+  document.getElementById('editModal').classList.add('open');
+}
+
+function openEditModal(id) {
+  const c = _allCases.find(x=>x.id===id);
+  if (!c) return;
+  _editId = id;
+  _editImages = JSON.parse(JSON.stringify(c.images || []));
+  document.getElementById('editModalTitle').textContent = 'Edit Case';
+  document.getElementById('eTitle').value = c.title || '';
+  document.getElementById('eDiagnosis').value = c.diagnosis || '';
+  document.getElementById('eCategory').value = c.category || '';
+  document.getElementById('eAccession').value = c.accession || '';
+  document.getElementById('eNotes').value = c.notes || '';
+  renderImgStrip();
+  refreshTags();
+  document.getElementById('editModal').classList.add('open');
+}
+
+function openEditFromView() {
+  closeViewModal();
+  if (_viewId) openEditModal(_viewId);
+}
+
+function closeEditModal() {
+  document.getElementById('editModal').classList.remove('open');
+}
+
+// ── Image Handling ──
+function handleFiles(files) {
+  if (!files) return;
+  const remaining = 5 - _editImages.length;
+  const toProcess = Array.from(files).slice(0, remaining);
+  let done = 0;
+  for (const file of toProcess) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      compressImage(e.target.result, file.type, (compressed, mime) => {
+        _editImages.push({ data: compressed, mimeType: mime });
+        done++;
+        if (done === toProcess.length) renderImgStrip();
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('uploadZone').classList.remove('dragover');
+  handleFiles(e.dataTransfer.files);
+}
+
+function compressImage(dataUrl, mimeType, cb) {
+  const img = new Image();
+  img.onload = () => {
+    const MAX = 1200;
+    let w = img.width, h = img.height;
+    if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+    const out = canvas.toDataURL('image/jpeg', 0.7);
+    cb(out.split(',')[1], 'image/jpeg');
+  };
+  img.src = dataUrl;
+}
+
+function renderImgStrip() {
+  const strip = document.getElementById('imgPreviewStrip');
+  strip.innerHTML = _editImages.map((img, i) => `
+    <div class="img-thumb-wrap">
+      <img class="img-thumb" src="data:${img.mimeType};base64,${img.data}" alt="" onclick="openLb(this.src)">
+      <button class="img-thumb-rm" onclick="removeImg(${i})">&times;</button>
+    </div>`).join('');
+}
+
+function removeImg(i) {
+  _editImages.splice(i, 1);
+  renderImgStrip();
+}
+
+// ── Tags ──
+function autoTags(text) {
+  const stop = new Set(['the','a','an','and','or','of','to','in','for','with','is','are','was','were','it','this','that','on','at','by','from','as','be','has','had','have','will','may','can','should','not','no','vs','per','via','findings','finding','right','left','bilateral','noted','seen','showing']);
+  const words = (text || '').toLowerCase().match(/[a-z][a-z\-]{2,}/g) || [];
+  const freq = {};
+  for (const w of words) { if (!stop.has(w)) freq[w] = (freq[w]||0) + 1; }
+  return Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,8).map(e=>e[0]);
+}
+
+function refreshTags() {
+  const text = [
+    document.getElementById('eTitle')?.value,
+    document.getElementById('eDiagnosis')?.value,
+    document.getElementById('eNotes')?.value
+  ].join(' ');
+  const tags = autoTags(text);
+  document.getElementById('editTagsPreview').innerHTML = tags.map(t=>`<span class="tag-pill">${t}</span>`).join('');
+}
+
+// ── Save ──
+async function saveCase() {
+  const title = document.getElementById('eTitle').value.trim();
+  if (!title) { alert('Title is required.'); return; }
+  if (!_sb || !_user) { alert('Not signed in.'); return; }
+  const btn = document.getElementById('editSaveBtn');
+  btn.textContent = 'Saving…'; btn.disabled = true;
+  const tags = autoTags([
+    document.getElementById('eTitle').value,
+    document.getElementById('eDiagnosis').value,
+    document.getElementById('eNotes').value
+  ].join(' '));
+  const payload = {
+    user_id: _user.id,
+    title,
+    diagnosis: document.getElementById('eDiagnosis').value.trim(),
+    category: document.getElementById('eCategory').value.trim(),
+    accession: document.getElementById('eAccession').value.trim(),
+    notes: document.getElementById('eNotes').value.trim(),
+    tags,
+    images: _editImages,
+    updated_at: new Date().toISOString()
+  };
+  let error;
+  if (_editId) {
+    ({ error } = await _sb.from('case_deck').update(payload).eq('id', _editId));
+  } else {
+    ({ error } = await _sb.from('case_deck').insert(payload));
+  }
+  btn.textContent = 'Save Case'; btn.disabled = false;
+  if (error) { alert('Save failed: ' + error.message); return; }
+  closeEditModal();
+  await loadCases();
+  showToast(_editId ? 'Case updated' : 'Case saved');
+}
+
+// ── View Modal ──
+function openViewModal(id) {
+  const c = _allCases.find(x=>x.id===id);
+  if (!c) return;
+  _viewId = id;
+  document.getElementById('viewTitle').textContent = c.title;
+  const similar = findSimilar(c);
+  const body = document.getElementById('viewBody');
+  body.innerHTML = `
+    ${c.images?.length ? `<div class="view-img-strip">${c.images.map(img=>`<img class="view-img" src="data:${img.mimeType};base64,${img.data}" alt="" onclick="openLb(this.src)">`).join('')}</div>` : ''}
+    ${c.category ? `<div><div class="view-field-label">Category</div><div class="view-field-val">${esc(c.category)}</div></div>` : ''}
+    ${c.diagnosis ? `<div><div class="view-field-label">Diagnosis</div><div class="view-field-val">${esc(c.diagnosis)}</div></div>` : ''}
+    ${c.accession ? `<div><div class="view-field-label">Accession</div><div class="view-field-val" style="font-family:IBM Plex Mono,monospace">${esc(c.accession)}</div></div>` : ''}
+    ${c.notes ? `<div><div class="view-field-label">Notes</div><div class="view-field-val" style="white-space:pre-wrap">${esc(c.notes)}</div></div>` : ''}
+    ${c.tags?.length ? `<div><div class="view-field-label">Tags</div><div class="tags-preview">${c.tags.map(t=>`<span class="tag-pill">${esc(t)}</span>`).join('')}</div></div>` : ''}
+    ${c.source === 'ddx' ? `<div style="font-size:11px;color:var(--muted);margin-top:4px">Saved from Differential Generator</div>` : ''}
+    ${similar.length ? `
+      <div>
+        <div class="view-field-label" style="margin-bottom:8px">Similar Cases</div>
+        <div class="similar-list">${similar.map(s=>`
+          <div class="similar-card" onclick="switchView('${s.id}')">
+            <div class="similar-title">${esc(s.title)}</div>
+            <div class="similar-tags">${(s.tags||[]).slice(0,4).join(' · ')}</div>
+          </div>`).join('')}</div>
+      </div>` : ''}
+  `;
+  document.getElementById('viewModal').classList.add('open');
+}
+
+function switchView(id) { openViewModal(id); }
+function closeViewModal() { document.getElementById('viewModal').classList.remove('open'); _viewId = null; }
+
+function findSimilar(c) {
+  const myTags = new Set(c.tags || []);
+  if (!myTags.size) return [];
+  return _allCases
+    .filter(x => x.id !== c.id)
+    .map(x => ({ ...x, overlap: (x.tags||[]).filter(t=>myTags.has(t)).length }))
+    .filter(x => x.overlap > 0)
+    .sort((a,b) => b.overlap - a.overlap)
+    .slice(0, 4);
+}
+
+// ── Lightbox ──
+function openLb(src) {
+  document.getElementById('lbImg').src = src;
+  document.getElementById('lbOverlay').classList.add('open');
+}
+function closeLb() { document.getElementById('lbOverlay').classList.remove('open'); }
+document.addEventListener('keydown', e => { if (e.key==='Escape') { closeLb(); closeEditModal(); closeViewModal(); } });
+
+// ── Toast ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+// ── Escape ──
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Init ──
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
+</script>
+</body>
+</html>
