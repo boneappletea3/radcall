@@ -1459,11 +1459,6 @@ body.home-active footer { display: none; }
     <div id="hdr-user-nav" style="display:none;align-items:center;gap:8px;flex-shrink:0"></div>
     <button class="header-pro-btn lp-cta-pro" id="hdr-explore-btn" onclick="showLanding('lp-features')">Explore Pro ✦</button>
     <button class="header-pro-btn" id="hdr-signin-btn" onclick="window.RadCallAuth&&window.RadCallAuth.showAuthModal&&window.RadCallAuth.showAuthModal()" style="display:none">Sign in →</button>
-    <div id="hdr-pro-btns" style="display:none;align-items:center;gap:8px;">
-      <button class="header-pro-btn" onclick="window.location.href='case-log.html'">Procedure Log ✦</button>
-      <button class="header-pro-btn" onclick="window.location.href='differential.html'" style="background:var(--purple)">Differential Dx ✦</button>
-      <button class="header-pro-btn" onclick="downloadAllMacros()" title="Download all PS360 macros as a zip" style="background:var(--amber,#d97706);color:#000;font-size:11px">⬇ All Macros</button>
-    </div>
   </div>
 </header>
 
@@ -1472,6 +1467,15 @@ body.home-active footer { display: none; }
 
 <!-- SIDEBAR NAV -->
 <nav id="sidebar">
+  <!-- PRO TOOLS — shown only when signed in -->
+  <div class="nav-section" id="nav-pro-section" style="display:none">
+    <div class="nav-group-label" style="color:var(--teal)">Pro Tools</div>
+    <div class="nav-item" onclick="window.location.href='case-log.html'"><span class="nav-dot" style="background:var(--green)"></span>Procedure Log</div>
+    <div class="nav-item" onclick="window.location.href='differential.html'"><span class="nav-dot" style="background:var(--purple)"></span>Differential Dx</div>
+    <div class="nav-item" onclick="window.location.href='case-deck.html'"><span class="nav-dot" style="background:var(--teal)"></span>Case Deck</div>
+    <div class="nav-item" onclick="downloadAllMacros()"><span class="nav-dot" style="background:var(--amber)"></span>Download All Macros</div>
+  </div>
+
   <div class="nav-section">
     <div class="nav-group-label">Home</div>
     <div class="nav-item active" onclick="showSection('home')"><span class="nav-dot"></span>Overview</div>
@@ -4320,10 +4324,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const userNav   = document.getElementById('hdr-user-nav');
     const explorBtn = document.getElementById('hdr-explore-btn');
     const signinBtn = document.getElementById('hdr-signin-btn');
-    const probtns   = document.getElementById('hdr-pro-btns');
+    const proSection = document.getElementById('nav-pro-section');
     function _applyHeaderAuth(user) {
       if (user) {
-        // Logged in: show email + logout, show pro nav buttons
+        // Logged in: show email + logout, show sidebar pro tools
         if (userNav) {
           userNav.style.display = 'flex';
           userNav.innerHTML = `
@@ -4331,15 +4335,15 @@ document.addEventListener('DOMContentLoaded', () => {
             <button onclick="window.RadCallAuth.signOut().then(()=>location.reload())" style="padding:4px 10px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--text3);font-size:12px;font-family:var(--font);cursor:pointer;transition:all 0.15s" onmouseover="this.style.color='var(--text)';this.style.borderColor='var(--border2)'" onmouseout="this.style.color='var(--text3)'">Logout</button>
           `;
         }
-        if (explorBtn) explorBtn.style.display = 'none';
-        if (signinBtn) signinBtn.style.display = 'none';
-        if (probtns)   probtns.style.display = 'flex';
+        if (explorBtn)  explorBtn.style.display = 'none';
+        if (signinBtn)  signinBtn.style.display = 'none';
+        if (proSection) proSection.style.display = '';
       } else {
-        // Logged out: show explore pro + sign in
-        if (userNav)   { userNav.style.display = 'none'; userNav.innerHTML = ''; }
-        if (explorBtn) explorBtn.style.display = '';
-        if (signinBtn) signinBtn.style.display = '';
-        if (probtns)   probtns.style.display = 'none';
+        // Logged out: show explore pro + sign in, hide pro tools
+        if (userNav)    { userNav.style.display = 'none'; userNav.innerHTML = ''; }
+        if (explorBtn)  explorBtn.style.display = '';
+        if (signinBtn)  signinBtn.style.display = '';
+        if (proSection) proSection.style.display = 'none';
       }
     }
     _applyHeaderAuth(window.RadCallAuth ? window.RadCallAuth.getUser() : null);
