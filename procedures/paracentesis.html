@@ -144,6 +144,20 @@
     .btn-secondary:hover { background: rgba(255,255,255,.1); }
     .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
 
+    /* ── Step image dropdown ── */
+    .step-img-toggle { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 5px 10px; border-radius: 8px; border: 1px solid rgba(56,189,248,.2); background: rgba(56,189,248,.06); color: var(--accent); font-size: .82rem; font-weight: 600; cursor: pointer; transition: .15s; }
+    .step-img-toggle:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.35); }
+    .step-img-toggle .arrow { transition: transform .2s; font-size: .7rem; }
+    .step-img-toggle.open .arrow { transform: rotate(90deg); }
+    .step-img-panel { display: none; margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
+    .step-img-panel.open { display: block; }
+    .step-img-panel img { width: 100%; display: block; border-radius: 12px; }
+    .step-img-caption { font-size: .82rem; color: var(--muted); padding: 8px 12px; background: rgba(0,0,0,.3); }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
     @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
     @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
   </style>
@@ -244,10 +258,11 @@
               <div class="panel">
                 <h4>Access Site</h4>
                 <ul class="list">
-                  <li><strong>Preferred:</strong> Left or right lower quadrant, lateral to the rectus sheath (linea semilunaris)</li>
-                  <li>Avoids the inferior epigastric artery (runs deep to rectus abdominis in the rectus sheath)</li>
+                  <li><strong>Ideal landmark:</strong> 3 cm medial and 3 cm superior to the ASIS — lateral to the rectus sheath (linea semilunaris), in the LLQ or RLQ</li>
+                  <li>Avoids the inferior epigastric artery (runs deep to rectus abdominis within the rectus sheath)</li>
                   <li>LLQ often preferred — sigmoid colon tends to float; cecum in RLQ may be more fixed</li>
                   <li>Midline infraumbilical approach is an alternative if lateral approach unavailable (avascular linea alba)</li>
+                  <li>Always confirm with US — the landmark guides initial probe placement, but final access site is determined by the largest safe fluid pocket</li>
                 </ul>
               </div>
               <div class="panel">
@@ -277,7 +292,7 @@
                 <span class="badge">Default</span>
               </div>
 
-              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies</h4>
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">📋 Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">⬇ Download</button></h4>
               <div class="chip-row card-supplies">
                 <span class="chip">Ultrasound + sterile probe cover</span>
                 <span class="chip">ChloraPrep</span>
@@ -293,12 +308,24 @@
 
               <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
               <div class="step-list">
-                <div class="step"><div class="step-num">1</div><div><h4>Position + US survey</h4><div class="muted">Patient supine. Perform US survey to identify largest accessible fluid pocket. Confirm no bowel or vessels in intended path. Mark skin entry site. Measure depth to fluid.</div></div></div>
+                <div class="step"><div class="step-num">1</div><div><h4>Position + US survey</h4><div class="muted">Patient supine. Perform US survey to identify largest accessible fluid pocket. Confirm no bowel or vessels in intended path. Mark skin entry site. Measure depth to fluid.</div>
+                  <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> Access site landmark</div>
+                  <div class="step-img-panel"><img src="../images/para-access-site.svg" alt="Paracentesis access site: 3 cm medial and 3 cm superior to ASIS, lateral to rectus sheath" loading="lazy"><div class="step-img-caption">Ideal access: 3 cm medial and 3 cm superior to the ASIS. Lateral to the rectus sheath to avoid the inferior epigastric artery. Confirm pocket depth and absence of bowel with US before proceeding.</div></div>
+                </div></div>
                 <div class="step"><div class="step-num">2</div><div><h4>Prep + drape</h4><div class="muted">Sterile prep with ChloraPrep. Drape access site. Apply sterile cover to US probe.</div></div></div>
-                <div class="step"><div class="step-num">3</div><div><h4>Local anesthesia</h4><div class="muted">Anesthetize skin to peritoneum with 1% lidocaine using 22G needle under US guidance. Do not puncture peritoneum — infiltrate up to it and withdraw.</div></div></div>
-                <div class="step"><div class="step-num">4</div><div><h4>Access</h4><div class="muted">Create 3–5 mm skin nick. Advance sheathed paracentesis needle into peritoneal cavity under real-time US guidance. Aspirate to confirm free-flowing fluid.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Local anesthesia</h4><div class="muted">Anesthetize skin to peritoneum with 1% lidocaine using 22G needle under US guidance. Do not puncture peritoneum — infiltrate up to it and withdraw.</div>
+                  <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> Z-track technique</div>
+                  <div class="step-img-panel"><img src="../images/para-ztrack.svg" alt="Z-track needle insertion technique for paracentesis" loading="lazy"><div class="step-img-caption">Z-track: Pull skin 2 cm caudally before inserting needle. Release skin after withdrawing needle — creates an oblique tract that self-seals, reducing post-procedure ascites leak.</div></div>
+                </div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Access</h4><div class="muted">Create 3–5 mm skin nick. Advance sheathed paracentesis needle into peritoneal cavity under real-time US guidance. Aspirate to confirm free-flowing fluid.</div>
+                  <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> US-guided needle insertion</div>
+                  <div class="step-img-panel"><img src="../images/para-us-guided.svg" alt="Ultrasound-guided needle insertion for paracentesis showing needle tip in anechoic fluid" loading="lazy"><div class="step-img-caption">Real-time US guidance: keep the needle in the plane of the beam. Visualize the bright echogenic needle tip entering the anechoic fluid pocket. Confirm ≥3 cm fluid depth and absence of bowel before advancing.</div></div>
+                </div></div>
                 <div class="step"><div class="step-num">5</div><div><h4>Sample collection</h4><div class="muted">Aspirate 60 mL for diagnostic labs. For cytology, collect ≥200 mL for adequate cellularity. Send: cell count/diff, albumin, total protein, gram stain + culture (inoculate blood culture bottles at bedside).</div></div></div>
-                <div class="step"><div class="step-num">6</div><div><h4>Therapeutic drainage</h4><div class="muted">Remove inner needle, connect sheath to vacuum bottles via valved tubing. Reposition patient as needed. Apply gentle contralateral abdominal pressure to facilitate complete drainage.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>Therapeutic drainage</h4><div class="muted">Remove inner needle, connect sheath to vacuum bottles via valved tubing. Reposition patient as needed. Apply gentle contralateral abdominal pressure to facilitate complete drainage.</div>
+                  <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> Drainage setup</div>
+                  <div class="step-img-panel"><img src="../images/para-drainage-setup.svg" alt="Paracentesis therapeutic drainage setup with vacuum bottles and specimen collection" loading="lazy"><div class="step-img-caption">Connect catheter hub → stopcock → vacuum bottles (1 L each, placed below patient). Use the stopcock side port with a 60 mL syringe for diagnostic specimen collection. Remember albumin replacement (6–8 g/L) if >5 L removed in cirrhotic patients.</div></div>
+                </div></div>
                 <div class="step"><div class="step-num">7</div><div><h4>Completion</h4><div class="muted">Remove catheter. Apply dry sterile dressing or Dermabond if leak concern. Document fluid color, volume, and appearance. For &gt;5 L: begin albumin infusion (6–8 g per L removed).</div></div></div>
               </div>
             </div>
@@ -625,6 +652,48 @@
     if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
     if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
     return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Paracentesis Supply List\n' + '═'.repeat(30) + '\n' + supplies.map((s, i) => `☐ ${s}`).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      // Fallback
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Paracentesis Supply List\n' + '═'.repeat(30) + '\n' + supplies.map((s, i) => `☐ ${s}`).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'paracentesis-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
   }
 
   // ── Init ──
