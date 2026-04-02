@@ -4401,41 +4401,17 @@ document.addEventListener('keydown', function(e) {
 </script>
 
 <!-- FOOTER -->
-<footer style="
-  border-top: 1px solid var(--border);
-  background: var(--bg2);
-  padding: 28px 40px;
-  margin-top: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-  font-size: 12px;
-  color: var(--text3);
-">
-  <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-    <span style="display:flex;align-items:center;gap:6px;font-weight:600;color:var(--text2);">
-      <svg width="16" height="16" viewBox="0 0 26 26" fill="none">
-        <defs><linearGradient id="fgGrad" x1="0" y1="0" x2="26" y2="26" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#818cf8"/></linearGradient></defs>
-        <circle cx="13" cy="13" r="11.5" stroke="url(#fgGrad)" stroke-width="1.5"/>
-        <circle cx="13" cy="13" r="4.5" stroke="url(#fgGrad)" stroke-width="1" opacity="0.6"/>
-        <circle cx="13" cy="13" r="1.8" fill="url(#fgGrad)"/>
-      </svg>
-      rad·call
-    </span>
-    <span>Lite · Free to use · For educational purposes only</span>
+<footer style="border-top:1px solid var(--border);background:var(--bg2);padding:24px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--text3);">
+  <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+    <span style="font-weight:700;color:var(--text2);font-size:13px">RadCall</span>
+    <span>Made with ❤️ in ATL</span>
     <span style="color:var(--border2)">|</span>
-    <span>Not a substitute for clinical judgment or institutional protocols</span>
+    <span>For educational purposes only · Not a substitute for clinical judgment</span>
   </div>
   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-    <a href="https://rad-call.com" target="_blank" style="color:var(--accent);text-decoration:none;">rad-call.com</a>
+    <a href="tos.html" style="color:var(--text3);text-decoration:none;transition:color .15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text3)'">Terms of Use</a>
     <span style="color:var(--border2)">|</span>
-    <span style="font-family:var(--mono);color:var(--text3)">v2.0 · 2025</span>
-    <button onclick="alert('Pro plan coming soon — advanced references, custom protocols, and team features. Sign up at rad-call.com')"
-      style="font-size:11px;font-weight:600;color:var(--bg);background:linear-gradient(135deg,var(--accent2),#818cf8);border:none;padding:4px 10px;border-radius:5px;cursor:pointer;">
-      Pro ✦ Coming Soon
-    </button>
+    <span style="font-family:var(--mono)">v2.0 · 2026</span>
   </div>
 </footer>
 
@@ -4967,6 +4943,35 @@ const EditMode = (() => {
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') document.getElementById('fluoro-lightbox').style.display = 'none';
   });
+</script>
+<!-- TOS Modal — shown once on first visit -->
+<div id="tos-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:99999;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity .2s">
+  <div style="background:#111620;border:1px solid #2a3444;border-radius:16px;padding:36px;max-width:480px;width:100%">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+      <div style="width:36px;height:36px;background:#14b8a6;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0">RC</div>
+      <div style="font-size:18px;font-weight:700;color:#e2e8f0">RadCall</div>
+    </div>
+    <h3 style="font-size:16px;font-weight:700;color:#e2e8f0;margin:0 0 14px">Terms of Use</h3>
+    <p style="font-size:13px;color:#94a3b8;line-height:1.6;margin:0 0 12px">RadCall is intended for educational and informational purposes only. All content, tools, and outputs — including differentials and procedure guides — are not medical advice and must not replace independent clinical judgment.</p>
+    <p style="font-size:13px;color:#94a3b8;line-height:1.6;margin:0 0 12px">While efforts are made to ensure accuracy, RadCall makes no guarantees regarding completeness or correctness. Users are solely responsible for all clinical decisions and patient care.</p>
+    <p style="font-size:13px;color:#94a3b8;line-height:1.6;margin:0 0 20px">By continuing, you agree to use RadCall at your own risk.</p>
+    <a href="tos.html" target="_blank" style="font-size:12px;color:#14b8a6;text-decoration:none;display:block;margin-bottom:18px">Read full Terms of Use →</a>
+    <button onclick="acceptTos()" style="width:100%;padding:13px;background:#14b8a6;color:white;border:none;border-radius:10px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .15s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">I Agree &amp; Continue</button>
+  </div>
+</div>
+<script>
+function acceptTos() {
+  try { localStorage.setItem('radcall_tos_v1','1'); } catch(e) {}
+  const m = document.getElementById('tos-modal');
+  m.style.opacity = '0';
+  setTimeout(() => { m.style.display = 'none'; }, 220);
+}
+(function() {
+  try { if (localStorage.getItem('radcall_tos_v1')) return; } catch(e) { return; }
+  const m = document.getElementById('tos-modal');
+  m.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => { m.style.opacity = '1'; }));
+})();
 </script>
 </body>
 </html>

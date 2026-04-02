@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Procedure Community Library — RadCall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0f14; --bg2: #111620; --bg3: #141b26;
+  --border: #1e2737; --border2: #2a3444;
+  --text: #e2e8f0; --text2: #cbd5e1; --text3: #94a3b8; --muted: #64748b;
+  --teal: #14b8a6; --teal-light: rgba(20,184,166,.1);
+  --green: #22c55e; --red: #ef4444;
+  --amber: #f59e0b;
+  --font: 'IBM Plex Sans', system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; }
+
+/* NAV */
+.topnav { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0 24px; height: 56px; display: flex; align-items: center; gap: 14px; position: sticky; top: 0; z-index: 100; }
+.logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 15px; color: var(--text); }
+.logo-icon { width: 30px; height: 30px; background: var(--teal); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: white; }
+.nav-spacer { flex: 1; }
+.nav-back { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border2); color: var(--text3); text-decoration: none; font-size: 12px; font-weight: 500; transition: all .15s; }
+.nav-back:hover { color: var(--teal); border-color: var(--teal); background: var(--teal-light); }
+.nav-user { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text3); }
+
+/* TOOLBAR */
+.toolbar { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 12px 24px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 440px; }
+.search-wrap svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+.search-wrap input { width: 100%; padding: 8px 12px 8px 34px; background: var(--bg); border: 1.5px solid var(--border2); border-radius: 8px; color: var(--text); font-family: var(--font); font-size: 13px; outline: none; transition: border-color .15s; }
+.search-wrap input:focus { border-color: var(--teal); }
+.search-wrap input::placeholder { color: var(--muted); }
+.filter-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip { padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid var(--border2); color: var(--text3); background: transparent; transition: all .15s; font-family: var(--font); }
+.chip:hover { border-color: var(--teal); color: var(--teal); }
+.chip.active { background: var(--teal-light); border-color: var(--teal); color: var(--teal); }
+
+/* CONTENT */
+.content { max-width: 1100px; margin: 0 auto; padding: 24px; }
+.proc-section { margin-bottom: 36px; }
+.proc-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.proc-heading h2 { font-size: 15px; font-weight: 600; color: var(--text2); }
+.proc-heading a { font-size: 12px; color: var(--teal); text-decoration: none; margin-left: auto; }
+.proc-heading a:hover { text-decoration: underline; }
+.proc-count { font-size: 11px; color: var(--muted); }
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+
+/* CARDS */
+.lib-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px; transition: border-color .15s; }
+.lib-card:hover { border-color: var(--border2); }
+.lib-card-header { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 10px; }
+.lib-card-title { font-weight: 600; font-size: 14px; color: var(--text); flex: 1; }
+.lib-card-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.lib-badge { font-size: 11px; padding: 2px 7px; border-radius: 4px; background: rgba(255,255,255,.06); color: var(--text3); }
+.chip-row { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+.tag { font-size: 11px; padding: 3px 8px; background: rgba(20,184,166,.1); border: 1px solid rgba(20,184,166,.2); border-radius: 20px; color: var(--teal); }
+.card-steps-preview { font-size: 12px; color: var(--text3); margin: 0; padding-left: 16px; }
+.card-steps-preview li { margin-bottom: 2px; }
+.card-footer { display: flex; align-items: center; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); }
+.vote-btn { background: none; border: 1px solid var(--border2); border-radius: 6px; padding: 3px 9px; font-size: 12px; cursor: pointer; color: var(--text3); font-family: var(--font); transition: all .15s; }
+.vote-btn:hover { border-color: var(--teal); color: var(--teal); }
+.vote-btn.up-active { border-color: var(--green); color: var(--green); }
+.vote-btn.down-active { border-color: var(--red); color: var(--red); }
+.fav-btn { background: none; border: none; cursor: pointer; font-size: 16px; color: var(--muted); transition: color .15s; padding: 2px 4px; }
+.fav-btn:hover, .fav-btn.active { color: var(--amber); }
+.view-btn { margin-left: auto; font-size: 12px; color: var(--teal); text-decoration: none; }
+.view-btn:hover { text-decoration: underline; }
+
+/* EMPTY */
+.empty { text-align: center; padding: 60px 20px; color: var(--muted); }
+.empty h3 { font-size: 16px; color: var(--text3); margin-bottom: 8px; }
+
+/* LOADING */
+.loading-state { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 14px; }
+
+::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="../index.html" class="logo">
+    <div class="logo-icon">RC</div>
+    RadCall
+  </a>
+  <span style="color:var(--border2);font-size:18px">/</span>
+  <span style="color:var(--text3);font-size:14px">Community Library</span>
+  <div class="nav-spacer"></div>
+  <div class="nav-user" id="userNav"></div>
+  <a href="../index.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    RadCall
+  </a>
+</nav>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="libSearch" placeholder="Search cards by title, steps, pearls…" oninput="filterLib()">
+  </div>
+  <div class="filter-chips" id="filterChips">
+    <button class="chip active" data-slug="all" onclick="setSlugFilter('all',this)">All Procedures</button>
+    <button class="chip" data-slug="fav" onclick="setSlugFilter('fav',this)">⭐ Favorites</button>
+  </div>
+</div>
+
+<div class="content" id="libContent">
+  <div class="loading-state" id="loadingState">Loading community cards…</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../supabase-auth.js"></script>
+<script>
+const PROC_META = {
+  'paracentesis':      { name: 'US-Guided Paracentesis',          href: 'paracentesis.html' },
+  'thoracentesis':     { name: 'US-Guided Thoracentesis',         href: 'thoracentesis.html' },
+  'lumbar-puncture':   { name: 'Fluoroscopy-Guided LP',           href: 'lumbar-puncture.html' },
+  'biopsy-bone':       { name: 'CT-Guided Bone Biopsy',           href: 'biopsy-bone.html' },
+  'biopsy-liver':      { name: 'CT-Guided Liver Biopsy',          href: 'biopsy-liver.html' },
+  'biopsy-lung':       { name: 'CT-Guided Lung Biopsy',           href: 'biopsy-lung.html' },
+  'biopsy-renal':      { name: 'CT-Guided Renal Biopsy',          href: 'biopsy-renal.html' },
+  'access-cvl':        { name: 'Non-Tunneled Central Line',        href: 'access-cvl.html' },
+  'access-picc':       { name: 'PICC Placement',                  href: 'access-picc.html' },
+  'access-port':       { name: 'Port Access',                     href: 'access-port.html' },
+  'access-tunneled':   { name: 'Tunneled Dialysis Catheter',      href: 'access-tunneled.html' },
+  'drainage-abscess':  { name: 'Abscess Drainage',                href: 'drainage-abscess.html' },
+  'drainage-chest-tube':{ name: 'Chest Tube Placement',           href: 'drainage-chest-tube.html' },
+};
+
+let _allCards = [];
+let _myVotes = {};
+let _myFavs = new Set(JSON.parse(localStorage.getItem('rc_lib_favs') || '[]'));
+let _slugFilter = 'all';
+let _sb = null;
+let _user = null;
+
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function timeAgo(iso) {
+  const d = new Date(iso), now = Date.now(), diff = now - d;
+  if (diff < 60000) return 'just now';
+  if (diff < 3600000) return Math.floor(diff/60000) + 'm ago';
+  if (diff < 86400000) return Math.floor(diff/3600000) + 'h ago';
+  if (diff < 2592000000) return Math.floor(diff/86400000) + 'd ago';
+  return d.toLocaleDateString();
+}
+
+async function initLib() {
+  if (window.RadCallAuth && !RadCallAuth._notConfigured && RadCallAuth.supabase) {
+    _sb = RadCallAuth.supabase;
+    try { await RadCallAuth.requireAuth(); } catch(e) {}
+    _user = RadCallAuth.getUser?.() || null;
+  }
+  if (_user) {
+    const nav = document.getElementById('userNav');
+    nav.innerHTML = `<span style="font-size:12px;color:#94a3b8">${_user.email}</span>
+      <button onclick="RadCallAuth.signOut().then(()=>location.reload())" style="padding:4px 10px;border-radius:6px;border:1px solid #2a3444;background:transparent;color:#94a3b8;font-size:12px;font-family:inherit;cursor:pointer">Logout</button>`;
+  }
+  await loadAll();
+}
+
+async function loadAll() {
+  if (!_sb || !_user) {
+    document.getElementById('loadingState').textContent = 'Sign in to view community cards.';
+    return;
+  }
+  const [cardsRes, votesRes] = await Promise.all([
+    _sb.from('procedure_cards').select('*').order('net_votes', { ascending: false }).order('created_at', { ascending: false }),
+    _sb.from('procedure_card_votes').select('card_id,vote').eq('user_id', _user.id)
+  ]);
+  _allCards = cardsRes.data || [];
+  _myVotes = {};
+  if (votesRes.data) for (const v of votesRes.data) _myVotes[v.card_id] = v.vote;
+  buildSlugChips();
+  renderLib();
+}
+
+function buildSlugChips() {
+  const slugs = [...new Set(_allCards.map(c => c.procedure_slug).filter(Boolean))];
+  const chips = document.getElementById('filterChips');
+  const existing = new Set(Array.from(chips.querySelectorAll('[data-slug]')).map(el => el.dataset.slug));
+  for (const slug of slugs) {
+    if (!existing.has(slug)) {
+      const meta = PROC_META[slug];
+      const label = meta ? meta.name : slug;
+      const btn = document.createElement('button');
+      btn.className = 'chip'; btn.dataset.slug = slug;
+      btn.textContent = label;
+      btn.onclick = () => setSlugFilter(slug, btn);
+      chips.appendChild(btn);
+    }
+  }
+}
+
+function setSlugFilter(slug, el) {
+  _slugFilter = slug;
+  document.querySelectorAll('#filterChips .chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderLib();
+}
+
+function filterLib() { renderLib(); }
+
+function renderLib() {
+  const q = document.getElementById('libSearch').value.toLowerCase().trim();
+  let cards = _allCards;
+  if (_slugFilter === 'fav') cards = cards.filter(c => _myFavs.has(c.id));
+  else if (_slugFilter !== 'all') cards = cards.filter(c => c.procedure_slug === _slugFilter);
+  if (q) {
+    cards = cards.filter(c => [c.title||'',c.display_name||'',...(c.supplies||[]),...(c.steps||[]),...(c.pearls||[])].join(' ').toLowerCase().includes(q));
+  }
+  const content = document.getElementById('libContent');
+  document.getElementById('loadingState')?.remove();
+  if (!cards.length) {
+    content.innerHTML = `<div class="empty"><h3>No cards found</h3><p>Try a different search or filter.</p></div>`;
+    return;
+  }
+  // Group by slug
+  const groups = {};
+  for (const c of cards) {
+    const slug = c.procedure_slug || 'other';
+    if (!groups[slug]) groups[slug] = [];
+    groups[slug].push(c);
+  }
+  content.innerHTML = Object.entries(groups).map(([slug, grpCards]) => {
+    const meta = PROC_META[slug];
+    const name = meta ? meta.name : slug;
+    const href = meta ? meta.href : '#';
+    return `
+      <div class="proc-section">
+        <div class="proc-heading">
+          <h2>${esc(name)}</h2>
+          <span class="proc-count">${grpCards.length} card${grpCards.length!==1?'s':''}</span>
+          <a href="${href}">Open procedure →</a>
+        </div>
+        <div class="cards-grid">
+          ${grpCards.map(c => renderCard(c)).join('')}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderCard(c) {
+  const myVote = _myVotes[c.id];
+  const votes = c.net_votes || 0;
+  const isFav = _myFavs.has(c.id);
+  const supplies = (c.supplies || []).slice(0,6);
+  const steps = (c.steps || []).slice(0,3);
+  return `
+    <div class="lib-card" id="lc-${c.id}">
+      <div class="lib-card-header">
+        <div class="lib-card-title">${esc(c.title)}</div>
+      </div>
+      <div class="lib-card-meta">
+        <span class="lib-badge">${esc(c.display_name || 'Anonymous')}</span>
+        <span class="lib-badge">${timeAgo(c.created_at)}</span>
+      </div>
+      ${supplies.length ? `<div class="chip-row">${supplies.map(s=>`<span class="tag">${esc(s)}</span>`).join('')}</div>` : ''}
+      ${steps.length ? `<ol class="card-steps-preview">${steps.map(s=>`<li>${esc(s)}</li>`).join('')}${(c.steps||[]).length>3?'<li style="color:var(--muted)">…</li>':''}</ol>` : ''}
+      <div class="card-footer">
+        <button class="vote-btn ${myVote==='up'?'up-active':''}" onclick="libVote('${c.id}','up')">${myVote==='up'?'▲':'△'}${votes>0?' '+votes:''}</button>
+        <button class="vote-btn ${myVote==='down'?'down-active':''}" onclick="libVote('${c.id}','down')">${myVote==='down'?'▼':'▽'}</button>
+        <button class="fav-btn ${isFav?'active':''}" onclick="toggleFav('${c.id}')" title="${isFav?'Unfavorite':'Favorite'}">${isFav?'★':'☆'}</button>
+        <a class="view-btn" href="${(PROC_META[c.procedure_slug]||{}).href||'#'}">View procedure →</a>
+      </div>
+    </div>`;
+}
+
+async function libVote(cardId, dir) {
+  if (!_user || !_sb) { RadCallAuth.showAuthModal?.(); return; }
+  const existing = _myVotes[cardId];
+  const card = _allCards.find(c => c.id === cardId);
+  if (!card) return;
+  if (existing === dir) {
+    await _sb.from('procedure_card_votes').delete().match({ user_id: _user.id, card_id: cardId });
+    delete _myVotes[cardId];
+    card.net_votes = (card.net_votes || 0) + (dir === 'up' ? -1 : 1);
+  } else {
+    await _sb.from('procedure_card_votes').upsert({ user_id: _user.id, card_id: cardId, vote: dir }, { onConflict: 'user_id,card_id' });
+    const prev = existing ? (existing === 'up' ? -1 : 1) : 0;
+    card.net_votes = (card.net_votes || 0) + prev + (dir === 'up' ? 1 : -1);
+    _myVotes[cardId] = dir;
+  }
+  await _sb.from('procedure_cards').update({ net_votes: card.net_votes }).eq('id', cardId);
+  renderLib();
+}
+
+function toggleFav(cardId) {
+  if (_myFavs.has(cardId)) _myFavs.delete(cardId);
+  else _myFavs.add(cardId);
+  try { localStorage.setItem('rc_lib_favs', JSON.stringify([..._myFavs])); } catch(e) {}
+  renderLib();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initLib);
+} else {
+  initLib();
+}
+</script>
+</body>
+</html>
