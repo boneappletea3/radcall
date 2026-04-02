@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>US-Guided Renal Biopsy — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    /* ── Step image dropdown ── */
+    .step-img-toggle { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 5px 10px; border-radius: 8px; border: 1px solid rgba(56,189,248,.2); background: rgba(56,189,248,.06); color: var(--accent); font-size: .82rem; font-weight: 600; cursor: pointer; transition: .15s; }
+    .step-img-toggle:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.35); }
+    .step-img-toggle .arrow { transition: transform .2s; font-size: .7rem; }
+    .step-img-toggle.open .arrow { transform: rotate(90deg); }
+    .step-img-panel { display: none; margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
+    .step-img-panel.open { display: block; }
+    .step-img-panel img { width: 100%; display: block; border-radius: 12px; }
+    .step-img-caption { font-size: .82rem; color: var(--muted); padding: 8px 12px; background: rgba(0,0,0,.3); }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html" onclick="history.back(); return false;">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Playbook</div>
+      <h1>US-Guided Renal Biopsy</h1>
+      <p class="subhead">Percutaneous renal biopsy under real-time ultrasound guidance for native kidney, renal transplant, and focal renal mass histologic diagnosis.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Guidance</span><div class="snapshot-value">Ultrasound</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--danger)">High (SIR Cat 3)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Hematoma · AV fistula</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Anticoag</span><div class="snapshot-value">Hold per SIR</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">4–6h obs + repeat UA</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#troubleshooting">5. Troubleshooting</a></li>
+          <li><a href="#complications">6. Complications</a></li>
+          <li><a href="#postprocedure">7. Post-Procedure</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#specimen">9. Specimen Handling</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications / Contraindications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom: 14px;">
+              <div class="panel">
+                <h4>Native Kidney Indications</h4>
+                <ul class="list">
+                  <li>Unexplained progressive renal failure / AKI</li>
+                  <li>Nephrotic syndrome</li>
+                  <li>Significant nonnephrotic proteinuria (&gt;1 g/day)</li>
+                  <li>Glomerular hematuria / microscopic hematuria</li>
+                  <li>Systemic diseases with renal involvement: vasculitis, lupus (SLE), amyloid, HIV nephropathy, diabetic nephropathy with atypical features</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Transplant Kidney Indications</h4>
+                <ul class="list">
+                  <li>Rejection evaluation (de novo or follow-up)</li>
+                  <li>Subclinical rejection (protocol biopsy — histologic rejection may precede clinical signs)</li>
+                  <li>Rule out recurrent or de novo glomerular disease</li>
+                  <li>Lupus: interval biopsy post-treatment (clinical remission may overestimate histologic remission)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="two-col">
+              <div class="panel">
+                <h4>Focal / Mass Biopsy Indications</h4>
+                <ul class="list">
+                  <li>Indeterminate solid renal mass before surgical or ablative treatment</li>
+                  <li>Bosniak category III cystic lesions (up to 39% can be benign)</li>
+                  <li>Required before percutaneous ablation per AUA guidelines</li>
+                  <li>~37% of solid masses referred for ablation turn out benign on biopsy</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Contraindications</h4>
+                <ul class="list">
+                  <li><strong>Absolute:</strong> Active pyelonephritis or overlying skin/soft tissue infection along biopsy trajectory</li>
+                  <li><strong>Relative:</strong> Coagulopathy (INR &gt;1.5–1.8, platelets &lt;50×10⁹/L); uncontrolled hypertension (SBP &gt;140–160 mmHg — 10× increased bleeding risk; 23× if SBP &gt;170 mmHg); hydronephrosis; atrophic kidneys; multiple cysts obscuring access</li>
+                  <li><strong>No longer contraindications:</strong> Solitary kidney, horseshoe kidney (given improving safety profiles)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Review imaging.</strong> Prior cross-sectional imaging; for native biopsy — target lower pole (avoid hilum, collecting system); for focal mass — confirm location and plan approach.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Labs.</strong> CBC with platelets; PT/INR and PTT; type and screen; serum creatinine/eGFR.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Coagulation thresholds.</strong> INR &lt;1.5 (standard); platelets &gt;50×10⁹/L (&gt;120×10⁹/L for higher-risk patients); cirrhotic patients — individualize.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Blood pressure control — critical.</strong> Target BP &lt;140/90 mmHg before proceeding. 10× increased bleeding with SBP &gt;140; 23× if &gt;170; OR 75.6 if SBP &gt;180/DBP &gt;95. Note: calcium channel blockers, clonidine, hydralazine may impair hemostasis after vessel trauma.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Anticoagulation.</strong> Warfarin hold 5 days; LMWH hold 24h; DOACs hold 24–48h. Aspirin — nuanced: two large studies (n=5,832 and meta-analysis n&gt;9,000) showed no significant increase in clinically relevant bleeding with continued aspirin; individualize in CKD patients (3× higher CV event risk with discontinuation).</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>DDAVP consideration.</strong> 0.3 mcg/kg IV over 20 min × 1h pre-biopsy in patients with eGFR &lt;30 (mixed evidence; not used at all centers).</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>IV access + sedation plan.</strong> IV access required; moderate sedation (midazolam + fentanyl) or local anesthesia alone; anesthesiology for complex patients. NPO 8h prior for conscious sedation.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent.</strong> Perirenal hematoma (most common), gross hematuria, AV fistula, arterial pseudoaneurysm, urinary obstruction, infection, need for transfusion/embolization, loss of kidney function, death (rare).</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Native Kidney</h4>
+                <ul class="list">
+                  <li><strong>Lower pole target (preferred):</strong> Farthest from hilum and collecting system; approach from posterolateral flank</li>
+                  <li>Avoid medial hilum (renal artery, vein, ureter), collecting system, and renal pelvis</li>
+                  <li><strong>Target cortex, not medulla:</strong> Cortical cores contain glomeruli; target posterior cortex just inside the renal capsule; medullary cores have few glomeruli and high bleeding risk</li>
+                  <li>Cortex is hypoechoic rim on US; medulla is echogenic pyramids — use this to guide needle depth</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Transplant Kidney</h4>
+                <ul class="list">
+                  <li>Superficial and easily accessible in the iliac fossa; approach from anterolateral</li>
+                  <li>Lower pole preferred; avoid upper pole (near iliac vessels)</li>
+                  <li>Careful — transplant is superficial and easy to reach but also close to iliac vessels</li>
+                </ul>
+                <h4 style="margin-top: 14px;">Danger Structures</h4>
+                <ul class="list">
+                  <li>Renal artery and vein (hilum), ureter, segmental vessels</li>
+                  <li>Adrenal gland (superior pole), adjacent bowel (must confirm on US)</li>
+                  <li>Measure skin-to-capsule distance before choosing needle length</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. HOW I DO IT ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">Default RadCall approach + community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <!-- Default RadCall card -->
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">📋 Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">⬇ Download</button></h4>
+              <div class="chip-row card-supplies">
+                <span class="chip">Ultrasound + sterile probe cover</span>
+                <span class="chip">18g spring-loaded core biopsy device</span>
+                <span class="chip">16g core biopsy device (optional, larger cores)</span>
+                <span class="chip">Sterile prep/drape</span>
+                <span class="chip">1% lidocaine</span>
+                <span class="chip">25g needle (skin wheal)</span>
+                <span class="chip">22g needle (deep anesthesia to capsule)</span>
+                <span class="chip">Scalpel (small skin incision)</span>
+                <span class="chip">Formalin jar (light microscopy)</span>
+                <span class="chip">Glutaraldehyde (electron microscopy)</span>
+                <span class="chip">Normal saline or Michel's media (immunofluorescence)</span>
+                <span class="chip">Dissecting microscope (glomeruli count)</span>
+                <span class="chip">Moderate sedation (midazolam + fentanyl)</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Position</h4><div class="muted">Prone (native biopsy); supine (transplant). Ensure patient comfort — they must remain still and follow breath-hold instructions.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Pre-procedure US survey</h4><div class="muted">Confirm kidney position, size, lower pole location. Measure skin-to-capsule distance. Check for cysts or obstructions. Use color Doppler to confirm safe trajectory — no large vessels in path. Mark skin entry site at lower pole.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Sterile prep and drape</h4><div class="muted">Standard sterile prep. Apply sterile probe cover. Drape access site.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Local anesthesia</h4><div class="muted">25g skin wheal; then 22g needle to kidney capsule under US guidance. Inject 5–10 cc lidocaine tracking from skin to capsule. Peritoneal/capsular injection is essential — most pain comes from capsule penetration. Do not puncture capsule with the anesthesia needle.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Skin incision</h4><div class="muted">Small skin incision (3–5 mm) at entry site to allow core biopsy device to pass without resistance.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>Advance core biopsy device to capsule</h4><div class="muted">Advance 18g spring-loaded core biopsy device under real-time US to renal capsule. Confirm tip at capsule. Verify no vessels in needle path with Doppler before firing.</div></div></div>
+                <div class="step"><div class="step-num">7</div><div><h4>Breath-hold and fire</h4><div class="muted">Ask patient to hold breath in expiration. Advance needle through capsule 1–2 cm into cortex. Fire device. Withdraw immediately.</div></div></div>
+                <div class="step"><div class="step-num">8</div><div><h4>Immediate US check</h4><div class="muted">Re-confirm with US for hematoma after each pass before proceeding. Do not fire the next pass without surveying.</div></div></div>
+                <div class="step"><div class="step-num">9</div><div><h4>Repeat passes + core inspection</h4><div class="muted">Obtain 2–3 cores (minimum). If a dissecting microscope is available, examine cores — target ≥10–12 glomeruli per core for adequate yield. Transplant protocol: 2 cores for adequate Banff criteria.</div></div></div>
+                <div class="step"><div class="step-num">10</div><div><h4>Completion</h4><div class="muted">Apply pressure. Comprehensive US survey after final pass to rule out expanding hematoma. Document total passes, estimated core quality, and any immediate complications.</div></div></div>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Insufficient glomeruli on core inspection</h4>
+              <p class="muted"><strong>Likely cause:</strong> Needle tip in medulla rather than cortex, or fired too shallow.</p>
+              <p class="success"><strong>Next step:</strong> Advance needle 1–2 mm more into cortex before firing on next pass. Confirm cortical position on US — cortex is hypoechoic rim; medulla is echogenic pyramids.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Needle visible but tip unclear on US</h4>
+              <p class="muted"><strong>Likely cause:</strong> Poor angle of insonation; needle not in beam plane.</p>
+              <p class="success"><strong>Next step:</strong> Use tissue harmonics. Ensure needle is perpendicular to the ultrasound beam. Gently jiggle the stylet to generate motion artifact at the tip for localization.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Patient unable to cooperate with breath-hold</h4>
+              <p class="muted"><strong>Likely cause:</strong> Pain, anxiety, or inability to follow commands.</p>
+              <p class="success"><strong>Next step:</strong> Coordinate with anesthesia for brief apnea during firing. Use real-time US to track kidney movement and time the firing to the correct respiratory phase.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Significant hematoma during procedure</h4>
+              <p class="muted"><strong>Likely cause:</strong> Vessel injury; uncontrolled hypertension; coagulopathy.</p>
+              <p class="success"><strong>Next step:</strong> Stop immediately. Apply pressure. Reassess with US serially. Extend observation period. Call urology/vascular surgery if expanding. Prepare for angiography/embolization if active bleeding.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Difficulty accessing lower pole (patient habitus)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Obesity, deep kidney, difficult positioning.</p>
+              <p class="success"><strong>Next step:</strong> Try slight kidney rotation with US probe pressure. Adjust probe position. Consider deeper approach or a longer needle. Consider CT guidance for morbidly obese patients.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Common / Major</h4>
+              <ul class="list danger">
+                <li><strong>Perirenal hematoma</strong> — most common; ~90% minor (asymptomatic on imaging only); ~1–2% clinically significant. Management: observation + vitals; transfuse for symptomatic anemia; angiography/embolization for active bleeding</li>
+                <li><strong>Gross hematuria</strong> (~3–5%) — usually self-limited (clears within 48–72h); serious if clot retention occurs. Management: hydration, Foley catheter for retention; cystoscopy/embolization for persistent bleeding</li>
+                <li><strong>AV fistula</strong> (~10–17% on Doppler within 2 weeks, most small and clinically silent); 0.3–2% hemodynamically significant. Management: angiography and coil/plug embolization</li>
+                <li><strong>Arterial pseudoaneurysm</strong> — rare. Management: angiography and embolization</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Rare / Specific</h4>
+              <ul class="list">
+                <li><strong>Page kidney</strong> — perirenal hematoma causing renovascular hypertension by extrinsic compression (rare). Diagnosis by renin measurement. Management: surgical or percutaneous drainage</li>
+                <li><strong>Death</strong> — extremely rare (&lt;0.1%)</li>
+                <li><strong>Transplant-specific:</strong> Ureteral injury (rare), lymphocele, graft loss from uncontrolled hemorrhage</li>
+                <li><strong>Infection</strong> — rare with sterile technique; increased risk if active urinary infection present (absolute contraindication)</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. POST-PROCEDURE ═══ -->
+        <section class="section" id="postprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Post-Procedure Care</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Monitoring</h4>
+              <ul class="list">
+                <li>4–6h observation (some centers admit overnight for high-risk cases)</li>
+                <li>Vitals q30 min × 2h then q1h × 2h</li>
+                <li>Urine color monitoring — document gross hematuria; serial urinalysis</li>
+                <li>CBC at 4–6h; critical drop in Hgb → CT for hematoma evaluation</li>
+                <li>BP control post-procedure: hypertension post-biopsy significantly increases bleeding risk</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Discharge + Instructions</h4>
+              <ul class="list">
+                <li><strong>Discharge criteria:</strong> Stable vitals, no gross hematuria, tolerating PO, Hgb stable</li>
+                <li>Bed rest × 24h</li>
+                <li>Avoid strenuous activity × 1–2 weeks</li>
+                <li>Drink extra fluids</li>
+                <li><strong>Return immediately for:</strong> Flank pain, bright red urine, hypotension, dizziness</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>BP is the single most modifiable risk factor:</strong> 10× increased bleeding at SBP &gt;140 mmHg; 23× at SBP &gt;170; OR 75.6 at SBP &gt;180/DBP &gt;95. Do not proceed with uncontrolled hypertension.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Target the posterior cortex of the lower pole:</strong> Farthest from hilar vessels and collecting system, richest in glomeruli. Cortex is the hypoechoic rim; medulla is the echogenic pyramids — learn to distinguish these on US.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Doppler before every pass:</strong> Confirm no large vessel in the direct needle path. Re-check after each pass before firing again.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>DDAVP in eGFR &lt;30:</strong> 0.3 mcg/kg IV over 20 min approximately 1h pre-biopsy. May reduce hematoma size even if overall major complication rates are unchanged. Mixed evidence; not universal — confirm with your center.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Transplant approach nuance:</strong> Anterolateral approach, lower pole. Transplant kidney is superficial and easy to reach, but it sits close to iliac vessels — confirm with Doppler every time.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Focal mass biopsy changes management:</strong> ~37% of small solid masses sent for ablation are benign. Biopsy before ablation can prevent unnecessary treatment. Per AUA guidelines, biopsy is required before percutaneous ablation.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Aspirin nuance:</strong> Two large studies (n=5,832 and meta-analysis n&gt;9,000) showed no significant increase in bleeding complications with continued aspirin. Weigh against 3× increased CV event risk with discontinuation in CKD patients — individualize.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Brief US survey after every pass:</strong> Check for expanding hematoma before the next pass. This is the single most important real-time safety check.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. SPECIMEN HANDLING ═══ -->
+        <section class="section" id="specimen">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>Specimen Handling</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="three-col" style="margin-bottom: 14px;">
+              <div class="panel" style="border-color: rgba(56,189,248,.18);">
+                <h4 style="color: var(--accent);">Container 1 — Formalin (10%)</h4>
+                <ul class="list">
+                  <li>Light microscopy and immunohistochemistry (IHC)</li>
+                  <li>Standard hematoxylin &amp; eosin, PAS, silver, trichrome stains</li>
+                  <li>Largest core (most glomeruli)</li>
+                  <li><strong>Do NOT use formalin for EM</strong></li>
+                </ul>
+              </div>
+              <div class="panel" style="border-color: rgba(245,158,11,.18);">
+                <h4 style="color: #fcd58e;">Container 2 — Glutaraldehyde</h4>
+                <ul class="list">
+                  <li>Electron microscopy (EM)</li>
+                  <li>Use a 1 mm³ sample — a tiny sliver of tissue, NOT an entire core</li>
+                  <li>Must be placed in glutaraldehyde immediately — formalin irreversibly destroys ultrastructure</li>
+                </ul>
+              </div>
+              <div class="panel" style="border-color: rgba(34,197,94,.18);">
+                <h4 style="color: #bbf7d0;">Container 3 — Saline / Michel's Media</h4>
+                <ul class="list">
+                  <li>Immunofluorescence (IF) — IgG, IgA, IgM, C3, C1q, fibrinogen</li>
+                  <li>Normal saline or Michel's transport media (if delayed processing)</li>
+                  <li>Do NOT use formalin</li>
+                </ul>
+              </div>
+            </div>
+            <div class="two-col">
+              <div class="panel">
+                <h4>Core Adequacy</h4>
+                <ul class="list">
+                  <li>Examine cores under dissecting microscope if available — target ≥10–12 glomeruli per core</li>
+                  <li>For transplant protocol: minimum 2 adequate cores; follow Banff criteria</li>
+                  <li>For culture (suspected infection/pyelonephritis): place in sterile saline (not formalin)</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Labeling + Logistics</h4>
+                <ul class="list">
+                  <li>Label each container immediately with patient name, MR, date, site, pass number</li>
+                  <li>Call pathology in advance for special handling instructions</li>
+                  <li><strong>Confirm ALL three containers are ready and available before starting the procedure</strong></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Quencer KB, Anand K. Tech Vasc Interv Radiol. 2021;24:100775 · Uppot RN et al. AJR. 2010;194:1443–1449 · Kumari D. Semin Interv Radiol. 2024;41:486–493 · Kandarpa K et al. Handbook of Interventional Radiologic Procedures, 5th ed.</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My Renal Biopsy Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;18G core biopsy device&#10;Formalin jar&#10;Glutaraldehyde"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;Position patient prone&#10;US survey lower pole&#10;Prep and drape"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'biopsy-renal';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  // ── Load cards ──
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      // Try localStorage fallback
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!_cards.length) {
+      loading.textContent = 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = _cards.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            ${isOwn ? `<div class="card-actions">
+              <button onclick="editCard('${c.id}')">Edit</button>
+              <button class="delete-btn" onclick="deleteCard('${c.id}')">Delete</button>
+            </div>` : ''}
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  // ── Card CRUD ──
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user || !sb) return;
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const profile = await window.RadCallAuth.getProfile();
+    const displayName = (profile && profile.display_name) || user.email || 'Anonymous';
+
+    if (editId) {
+      // Update
+      _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, updated_at: new Date().toISOString() } : c);
+      renderCards(); closeCardModal();
+      await sb.from('procedure_cards').update({ title, supplies, steps, pearls, updated_at: new Date().toISOString() }).eq('id', editId);
+    } else {
+      // Insert
+      const tmpId = 'tmp-' + Date.now();
+      const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, created_at: new Date().toISOString() };
+      _cards.unshift(newCard);
+      renderCards(); closeCardModal();
+      const { data, error } = await sb.from('procedure_cards')
+        .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName })
+        .select().single();
+      if (!error && data) { _cards = _cards.map(c => c.id === tmpId ? data : c); }
+    }
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  // ── Helpers ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'US-Guided Renal Biopsy Supply List\n' + '═'.repeat(36) + '\n' + supplies.map((s) => `☐ ${s}`).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'US-Guided Renal Biopsy Supply List\n' + '═'.repeat(36) + '\n' + supplies.map((s) => `☐ ${s}`).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'biopsy-renal-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  // ── Init ──
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+</body>
+</html>

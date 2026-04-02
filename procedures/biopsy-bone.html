@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CT-Guided Bone Biopsy — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Alert banner ── */
+    .alert-banner { display: flex; gap: 14px; align-items: flex-start; padding: 16px 18px; border-radius: 14px; border: 1px solid rgba(239,68,68,.3); background: linear-gradient(180deg, rgba(239,68,68,.1), rgba(239,68,68,.05)); margin-bottom: 16px; }
+    .alert-icon { font-size: 1.1rem; flex: 0 0 auto; margin-top: 1px; }
+    .alert-banner p { margin: 0; font-size: .95rem; }
+
+    /* ── Specimen table ── */
+    .specimen-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .specimen-table th, .specimen-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .specimen-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .specimen-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="biopsy.html">&larr; Back to Image-Guided Biopsy</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Playbook</div>
+      <h1>CT-Guided Bone Biopsy</h1>
+      <p class="subhead">Percutaneous CT-guided tissue sampling of osseous lesions for diagnosis, culture, and molecular characterization.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Guidance</span><div class="snapshot-value">CT (primary)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:#fca5a5">High (SIR Cat 3)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Non-diagnostic sample &middot; Seeding</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">Moderate/MAC</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">2h obs &middot; MDT review</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#troubleshooting">5. Troubleshooting</a></li>
+          <li><a href="#complications">6. Complications</a></li>
+          <li><a href="#postprocedure">7. Post-Procedure</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#specimen">9. Specimen Handling</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications / Contraindications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom: 16px;">
+              <div class="panel">
+                <h4>Oncologic Indications</h4>
+                <ul class="list">
+                  <li>Diagnosis and grading of primary bone tumor with nonspecific or aggressive imaging features</li>
+                  <li>Confirmation or exclusion of bone metastasis in known primary malignancy</li>
+                  <li>Characterization when patient has multiple potential primary tumors</li>
+                  <li>Assessment of tumor recurrence / post-treatment change</li>
+                  <li>Characterization of pathologic fracture (benign vs. malignant), especially vertebral bodies</li>
+                  <li>Molecular receptor characterization, biomarker testing, NGS for personalized oncologic therapy</li>
+                  <li>Quantification of treatment response</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Non-Oncologic Indications</h4>
+                <ul class="list">
+                  <li><strong>Infectious:</strong> Osteomyelitis / spondylodiscitis confirmation and culture/sensitivity</li>
+                  <li><strong>Metabolic/Hematologic:</strong> Bone marrow examination for hematologic disease; metabolic conditions</li>
+                </ul>
+                <h4 style="margin-top: 16px;">Relative Contraindications</h4>
+                <ul class="list">
+                  <li>Coagulopathy (correct first)</li>
+                  <li>Pregnancy (multidisciplinary discussion; delay post-partum if possible)</li>
+                  <li>Highly vascular spinal tumors (consider pre-embolization)</li>
+                  <li>Unstable patient</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel" style="margin-bottom: 16px;">
+              <h4>Absolute Contraindications</h4>
+              <ul class="list">
+                <li>Infection along planned biopsy route (overlying skin/soft tissue that would contaminate target)</li>
+                <li>Incomplete pre-biopsy imaging; no safe biopsy path</li>
+                <li>Incomplete information regarding surgical excision route when limb-salvage surgery is planned</li>
+                <li>Uncorrectable bleeding diathesis; INR &gt;1.5–1.8, platelets &lt;50,000 (threshold before proceeding)</li>
+                <li>Unwilling / unable-to-consent patient</li>
+              </ul>
+            </div>
+            <div class="alert-banner">
+              <div class="alert-icon">&#9888;</div>
+              <p><strong>CRITICAL — Primary Bone Sarcoma:</strong> For any suspected primary bone sarcoma, <strong>mandatory pre-procedure consultation with orthopedic oncology surgeon</strong> to plan the biopsy tract <em>within the planned surgical excision field</em>. An incorrectly placed tract can contaminate compartments and convert a limb-salvage case into an amputation.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Review ALL imaging.</strong> Radiographs (matrix, margins, periosteal reaction — identify "do-not-touch" lesions), CT (cortical anatomy, compartment assessment), MRI (bone marrow/soft tissue extension, joint involvement), PET/CT (viable vs. necrotic tissue), bone scan (adjunct).</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Surgical/pathology coordination.</strong> For suspected primary bone sarcoma — orthopedic oncology consultation before biopsy. Confirm biopsy tract location with surgical team.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Call pathology.</strong> Required containers, needle gauge, number of cores, special handling: saline for culture, saline/RPMI for flow cytometry if lymphoma suspected, formalin for histology.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Labs.</strong> Coagulation studies (INR/PT, aPTT) and platelet count. Anticoagulant reconciliation. Blood products if needed.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>ASA status and comorbidity review.</strong> Anesthesiology consultation for high ASA or difficult airway.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>NPO / IV access.</strong> NPO 4–6h prior if sedation planned. IV access (18–20g) established.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Antibiotic prophylaxis.</strong> Not routine; administer when clinically indicated (e.g., suspected infection, immunocompromised patient).</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent.</strong> Discuss: non-diagnostic sample, infection, bleeding, fracture (sclerotic/lytic lesions), injury to adjacent structures, tumor seeding along tract (reason biopsy tract must be within surgical excision field).</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. RELEVANT ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="panel" style="margin-bottom: 14px;">
+              <h4>CT Guidance — Why It Is Preferred</h4>
+              <p style="margin: 0; color: var(--muted);">CT provides superb visualization of cortical and medullary anatomy, compartmental boundaries, and adjacent neurovascular structures. Confirms instrument position within bone in real time. Best modality for most bone biopsies.</p>
+            </div>
+            <div class="two-col">
+              <div class="panel">
+                <h4>Target Selection Principles</h4>
+                <ul class="list">
+                  <li>Target <strong>viable, metabolically active tissue</strong> (not necrotic center) — PET/CT most useful for co-registration</li>
+                  <li><strong>Lytic lesions with soft tissue component:</strong> approach through bone into soft tissue component (higher yield)</li>
+                  <li><strong>Sclerotic lesions:</strong> drill technique required; approach through thin cortical region when possible</li>
+                  <li><strong>Vertebral lesions:</strong> transpedicular approach (standard) or parapedicular; avoid disk space (infection risk)</li>
+                  <li><strong>Extremity lesions:</strong> approach MUST be within the planned surgical excision field — consult orthopedic oncology first</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Danger Structures</h4>
+                <ul class="list">
+                  <li><strong>Neurovascular bundles</strong> — adjacent to long bone lesions</li>
+                  <li><strong>Spinal cord and nerve roots</strong> — vertebral biopsies; careful trajectory planning essential</li>
+                  <li><strong>Lung/pleura</strong> — rib and thoracic vertebral biopsies</li>
+                  <li><strong>Major vessels</strong> — pelvic lesions</li>
+                  <li><strong>Adjacent joints</strong> — contamination risk for primary sarcomas; keep needle out of joint space</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. TECHNIQUE ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">Default RadCall approach + community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <!-- Default RadCall card -->
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#x1F4CB; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#x2B07; Download</button></h4>
+              <div class="chip-row card-supplies">
+                <span class="chip">CT scanner</span>
+                <span class="chip">Coaxial bone biopsy system</span>
+                <span class="chip">Powered drill (OnControl / T-lok)</span>
+                <span class="chip">11–13g diamond-tip drill</span>
+                <span class="chip">11–14g manual trephine</span>
+                <span class="chip">14–18g core needle</span>
+                <span class="chip">1% lidocaine (generous)</span>
+                <span class="chip">ChloraPrep</span>
+                <span class="chip">Sterile drape</span>
+                <span class="chip">Bone wax / Gelfoam</span>
+                <span class="chip">Formalin jar (histology)</span>
+                <span class="chip">Sterile saline (culture)</span>
+                <span class="chip">RPMI (flow cytometry)</span>
+                <span class="chip">Sterile dressing</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Planning CT + positioning</h4><div class="muted">Position patient for CT access to lesion. Acquire planning scan (5 mm → 2.5 mm slices). Review in bone and soft tissue windows. Confirm approach is within planned surgical excision field (extremity lesions — consult orthopedic oncology first).</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Mark access site, sterile prep</h4><div class="muted">Determine skin entry point and needle trajectory on CT. Mark skin. Sterile prep with ChloraPrep. Apply sterile drape. Confirm final trajectory avoids neurovascular structures, joints, and pleura.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Local anesthesia — periosteum first</h4><div class="muted">Anesthetize skin, subcutaneous tissue, and muscle with 1% lidocaine. <strong>Periosteal injection is the most painful part</strong> — inject generously with 1% lidocaine using a long needle directly onto the periosteum. Long-acting local anesthetic (0.5% bupivacaine) can be mixed in when available.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Skin incision, advance to cortex</h4><div class="muted">Make small skin incision (3–5 mm) with a scalpel. Advance coaxial introducer/trocar to bone cortex. Confirm on CT intermittently.</div></div></div>
+                <div class="step"><div class="step-num">5A</div><div><h4>Lytic lesions (with soft tissue component)</h4><div class="muted">Advance 14–18g core needle through cortical defect into lesion. Obtain multiple cores from the <strong>periphery</strong> — avoid central necrosis. Target metabolically active region per PET/CT. Minimum 2–3 adequate cores.</div></div></div>
+                <div class="step"><div class="step-num">5B</div><div><h4>Sclerotic lesions</h4><div class="muted">Use <strong>powered drill</strong> (OnControl / T-lok) or manual trephine to penetrate cortex. Drill 1–2 cm into lesion. Rotate and withdraw to obtain core. Repeat 2–3 times. Powered drill significantly improves cortical penetration and reduces procedure time.</div></div></div>
+                <div class="step"><div class="step-num">5C</div><div><h4>Vertebral lesions (transpedicular)</h4><div class="muted">Approach through the <strong>pedicle on the ipsilateral side</strong> — the safest corridor to the vertebral body. Advance under CT guidance; confirm needle tip within pedicle before advancing to vertebral body. Avoid disk space (infection risk).</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>Specimen confirmation</h4><div class="muted">Examine cores under dissecting microscope if available to confirm bone/tumor tissue before dismissing patient. Submit separate containers for histology (formalin) and culture (sterile saline) if infection is possible.</div></div></div>
+                <div class="step"><div class="step-num">7</div><div><h4>Post-biopsy CT + hemostasis</h4><div class="muted">Acquire post-biopsy CT to confirm: no hematoma, no pneumothorax (rib/chest), no vascular injury. Apply bone wax or Gelfoam to entry site if significant bleeding. Consider Gelfoam embolization through coaxial sheath on withdrawal for hypervascular lesions.</div></div></div>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Unable to penetrate cortex</h4>
+              <p class="muted"><strong>Likely cause:</strong> Dense sclerotic cortex, insufficient force, or inadequate needle gauge.</p>
+              <p class="success"><strong>Next step:</strong> Switch to powered drill (OnControl). Try approach through existing cortical defect or periosteal reaction area. Upgrade to larger diamond-tip needle if needed.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Non-diagnostic sample (necrosis)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Sampling central necrotic region of tumor; common in large aggressive tumors or post-treatment lesions.</p>
+              <p class="success"><strong>Next step:</strong> Reposition needle to periphery of lesion. Use PET/CT co-registration to identify and target viable/metabolically active tissue. Consider obtaining additional passes.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Specimen fragmentation</h4>
+              <p class="muted"><strong>Likely cause:</strong> Excessive suction, rapid withdrawal, or mismatch between needle gauge and lesion consistency.</p>
+              <p class="success"><strong>Next step:</strong> Reduce suction force. Use slower, more controlled coring technique. Ensure correct needle gauge is selected for lesion type (larger bore for soft lytic lesions).</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Lesion not visible on CT</h4>
+              <p class="muted"><strong>Likely cause:</strong> Incorrect CT window settings; purely medullary extent not visible on bone window; subtle sclerotic lesion.</p>
+              <p class="success"><strong>Next step:</strong> Review in bone window for sclerotic lesions and soft tissue window for lytic lesions. Compare to MRI for medullary extent. Consider PET/CT guidance for metabolically active but CT-occult lesions.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Profuse bleeding from lytic vascular lesion</h4>
+              <p class="muted"><strong>Likely cause:</strong> Hypervascular metastasis (renal cell carcinoma, thyroid, plasmacytoma). Always anticipate before starting.</p>
+              <p class="success"><strong>Next step:</strong> Be prepared before starting — consider pre-embolization for hypervascular spinal lesions. Gelfoam embolization through coaxial sheath on withdrawal. Hemostatic gauze at entry site. Keep coaxial sheath in place until bleeding controlled.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Fracture risk / impending fracture</h4>
+              <p class="muted"><strong>Likely cause:</strong> Large lytic lesion in weight-bearing bone (femoral neck, acetabulum, vertebral body) with cortical breach.</p>
+              <p class="success"><strong>Next step:</strong> Discuss with orthopedic surgery before proceeding. May require prophylactic fixation before or concurrent with biopsy. Do not biopsy through weight-bearing cortex if fracture risk is high without surgical backup plan.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Procedure-Related</h4>
+              <ul class="list danger">
+                <li><strong>Non-diagnostic biopsy</strong> (5–20% depending on lesion type and size; highest for small sclerotic lesions) — management: rebiopsy if clinical suspicion remains; consider open surgical biopsy</li>
+                <li><strong>Bleeding/hematoma</strong> — generally low for bone procedures; higher for hypervascular lesions (RCC metastasis, thyroid, plasmacytoma) — local hemostasis, observation; rarely embolization</li>
+                <li><strong>Fracture</strong> — risk with large lytic lesions in weight-bearing bones — prophylactic fixation pre-procedure for impending fracture</li>
+                <li><strong>Pneumothorax</strong> (rib/thoracic vertebra biopsies) — small: observation; large: chest tube</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Serious / Delayed</h4>
+              <ul class="list">
+                <li><strong>Tumor seeding along biopsy tract</strong> — incidence &lt;1% with proper planning but can lead to local recurrence if tract is not excised; key reason biopsy tract must be within planned surgical excision field</li>
+                <li><strong>Neurological injury</strong> (vertebral procedures) — rare with proper trajectory and careful CT guidance; management: immediate neurosurgical consultation</li>
+                <li><strong>Infection</strong> (&lt;1% overall; higher for vertebral procedures) — antibiotics; interventional drainage if abscess forms</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. POST-PROCEDURE ═══ -->
+        <section class="section" id="postprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Post-Procedure Care</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Monitoring</h4>
+              <ul class="list">
+                <li>2h observation post-procedure; longer for vertebral/pelvic procedures</li>
+                <li>Neurological assessment after vertebral biopsies (q30 min &times; 2h)</li>
+                <li>Pain assessment and management — bone biopsies are more painful than soft tissue procedures; anticipate and treat proactively</li>
+                <li>Weight-bearing restriction 24–48h if lower extremity lesion or impending fracture risk</li>
+                <li>Discharge criteria: stable vitals, pain controlled, neurological status intact (vertebral cases)</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Results Planning</h4>
+              <ul class="list">
+                <li>Pathology typically 2–5 days (molecular/NGS may take 1–2 weeks)</li>
+                <li>Discuss timeline and expectations with patient at discharge</li>
+                <li>Plan MDT review with oncology, surgery, and radiation oncology before determining next step</li>
+                <li>Ensure clear point of contact for results communication — do not leave patient without a follow-up plan</li>
+                <li>Document biopsy tract location in report — critical information for surgical planning</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Sarcoma first rule:</strong> For any suspected primary bone sarcoma, consult orthopedic oncology <em>before placing a single needle</em>. A poorly placed biopsy tract can convert a limb-salvage surgery to amputation.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>CT is the preferred guidance modality:</strong> Superb cortical and compartmental visualization; confirms instrument is within bone and not in adjacent soft tissue or neurovascular bundle.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Target viable tissue:</strong> Use PET/CT co-registration for post-treatment or heterogeneous lesions. Avoid the necrotic center — sample the metabolically active periphery for highest diagnostic yield.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Periosteal anesthesia:</strong> The most painful part of the procedure. Inject generously with 1% lidocaine (or mix with 0.5% bupivacaine) directly onto the periosteum. Do not rush past this step.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Powered drill for sclerotic lesions:</strong> The OnControl or T-lok powered drill significantly improves cortical penetration for dense lesions and reduces procedure time compared to manual trephines.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Two containers when infection is possible:</strong> Submit one core in formalin (histology/IHC) and one core in sterile saline (culture). Never put a culture specimen in formalin — it kills organisms.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Gelfoam on withdrawal:</strong> For hypervascular lesions (RCC metastasis, thyroid, plasmacytoma), consider Gelfoam embolization through the coaxial sheath as the needle is withdrawn to reduce post-procedure bleeding.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>MDT before the needle:</strong> Always confirm with surgical and oncologic teams before the procedure — the biopsy approach, containers needed, and surgical planning must all be aligned in advance.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Radiograph review first:</strong> Identifies "do-not-touch" lesions (bone island, fibrous cortical defect, non-ossifying fibroma, Paget disease) that have pathognomonic appearances and should <em>not</em> be biopsied.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. SPECIMEN HANDLING ═══ -->
+        <section class="section" id="specimen">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>Specimen Handling</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <table class="specimen-table" style="margin-bottom: 16px;">
+              <thead><tr><th>Purpose</th><th>Container / Medium</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Standard histology</strong> (H&amp;E, IHC, molecular testing)</td><td>10% formalin</td><td>Light microscopy, immunohistochemistry, FISH, most molecular tests</td></tr>
+                <tr><td><strong>Culture</strong> (bacterial, fungal, mycobacterial)</td><td>Sterile saline or culture media</td><td><strong>Never formalin</strong> — kills organisms. Separate needle pass or fresh core.</td></tr>
+                <tr><td><strong>Flow cytometry</strong> (suspected lymphoma / myeloma)</td><td>Fresh saline or RPMI</td><td>Must reach lab fresh — call pathology for pickup protocol</td></tr>
+                <tr><td><strong>Electron microscopy</strong> (if needed)</td><td>Glutaraldehyde</td><td>Rare; usually for small round cell tumors requiring ultrastructure</td></tr>
+                <tr><td><strong>Fresh frozen / NGS</strong> (sarcoma centers)</td><td>Dry snap-frozen or RPMI</td><td>For molecular profiling; confirm protocol with pathology before procedure</td></tr>
+              </tbody>
+            </table>
+            <div class="two-col">
+              <div class="panel">
+                <h4>Intraoperative Quality Check</h4>
+                <ul class="list">
+                  <li>Examine cores under dissecting microscope to confirm bone/tumor tissue <strong>before dismissing patient</strong></li>
+                  <li>Sarcoma centers: frozen section may be performed intraoperatively to confirm adequate cellularity</li>
+                  <li>Obtain minimum 2–3 adequate cores; more for heterogeneous lesions</li>
+                  <li>If cores appear necrotic/acellular: reposition to periphery and obtain additional passes</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Labeling Protocol</h4>
+                <ul class="list">
+                  <li>Label <strong>every container immediately</strong> with: patient name, MRN, date, site, pass number, depth</li>
+                  <li>Call pathology before the procedure — confirm containers, gauge, quantity, and special requirements</li>
+                  <li>Some NGS/molecular profiling requires fresh frozen tissue — coordinate logistics before starting</li>
+                  <li>Document which container holds which pass in the procedure note</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Masood S et al. Tech Vasc Intervent Rad. 2022;25:100800 &middot; Williams AE et al. Semin Intervent Radiol. 2024;41:444&ndash;454 &middot; Filippiadis DK et al. Semin Intervent Radiol. 2018;35:215&ndash;220 &middot; Kandarpa K et al. Handbook of Interventional Radiologic Procedures, 5th ed.</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My Bone Biopsy Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;OnControl drill&#10;11g coaxial trocar&#10;Formalin jar"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;Planning CT with bone and soft tissue windows&#10;Mark access site&#10;Periosteal anesthesia"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'biopsy-bone';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  // ── Load cards ──
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      // Try localStorage fallback
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!_cards.length) {
+      loading.textContent = 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = _cards.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            ${isOwn ? `<div class="card-actions">
+              <button onclick="editCard('${c.id}')">Edit</button>
+              <button class="delete-btn" onclick="deleteCard('${c.id}')">Delete</button>
+            </div>` : ''}
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  // ── Card CRUD ──
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user || !sb) return;
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const profile = await window.RadCallAuth.getProfile();
+    const displayName = (profile && profile.display_name) || user.email || 'Anonymous';
+
+    if (editId) {
+      // Update
+      _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, updated_at: new Date().toISOString() } : c);
+      renderCards(); closeCardModal();
+      await sb.from('procedure_cards').update({ title, supplies, steps, pearls, updated_at: new Date().toISOString() }).eq('id', editId);
+    } else {
+      // Insert
+      const tmpId = 'tmp-' + Date.now();
+      const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, created_at: new Date().toISOString() };
+      _cards.unshift(newCard);
+      renderCards(); closeCardModal();
+      const { data, error } = await sb.from('procedure_cards')
+        .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName })
+        .select().single();
+      if (!error && data) { _cards = _cards.map(c => c.id === tmpId ? data : c); }
+    }
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  // ── Helpers ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'CT-Guided Bone Biopsy Supply List\n' + '═'.repeat(36) + '\n' + supplies.map(s => `☐ ${s}`).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'CT-Guided Bone Biopsy Supply List\n' + '═'.repeat(36) + '\n' + supplies.map(s => `☐ ${s}`).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'biopsy-bone-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  // ── Init ──
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+</body>
+</html>

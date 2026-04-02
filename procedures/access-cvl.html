@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Non-Tunneled CVL — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Site selection table ── */
+    .site-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .site-table th, .site-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); vertical-align: top; }
+    .site-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .site-table tr:hover td { background: rgba(56,189,248,.04); }
+    .site-tag { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 999px; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+    .site-tag.preferred { background: rgba(34,197,94,.15); color: #86efac; border: 1px solid rgba(34,197,94,.25); }
+    .site-tag.acceptable { background: rgba(56,189,248,.12); color: #7dd3fc; border: 1px solid rgba(56,189,248,.2); }
+    .site-tag.caution { background: rgba(245,158,11,.12); color: #fcd58e; border: 1px solid rgba(245,158,11,.2); }
+    .site-tag.last-resort { background: rgba(239,68,68,.12); color: #fca5a5; border: 1px solid rgba(239,68,68,.2); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } .site-table { font-size: .82rem; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html" onclick="history.back(); return false;">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Playbook</div>
+      <h1>US-Guided Non-Tunneled Central Venous Line</h1>
+      <p class="subhead">Ultrasound- and fluoroscopy-guided placement of a non-tunneled central venous catheter via internal jugular, subclavian, or femoral access.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Guidance</span><div class="snapshot-value">Ultrasound + Fluoro</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--accent-2)">Moderate (SIR Cat 2)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Pneumothorax &middot; Art. puncture</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Biopatch only</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">CXR for tip position</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#troubleshooting">5. Troubleshooting</a></li>
+          <li><a href="#complications">6. Complications</a></li>
+          <li><a href="#postprocedure">7. Post-Procedure</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#siteselection">9. Site Selection</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications / Contraindications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Indications</h4>
+              <ul class="list">
+                <li>Inability to achieve adequate peripheral venous access</li>
+                <li>Medications unsafe via peripheral IV: TPN, vasopressors, chemotherapy, hypertonic solutions</li>
+                <li>Frequent blood draws; central venous pressure monitoring</li>
+                <li>Hemodialysis (acute); plasmapheresis</li>
+                <li>Rapid volume resuscitation (large-bore access)</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Contraindications</h4>
+              <ul class="list">
+                <li><strong>Absolute:</strong> Combative/uncooperative patient; no safe access site</li>
+                <li><strong>Relative:</strong> Coagulopathy (SIR: INR &le;2.0, platelets &ge;50K); active sepsis at proposed access site; prior radiation therapy traversing access site; suspected vein occlusion (confirm patency with US pre-procedure)</li>
+                <li><strong>Anticoagulation:</strong> Aspirin and Plavix do NOT need to be held. LMWH: hold 1 dose if feasible.</li>
+                <li><strong>Note:</strong> Clinical urgency frequently overrides ability to correct coagulopathy.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Review imaging.</strong> Review available imaging at proposed access site; avoid sites within prior radiation fields.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Pre-procedure US survey.</strong> Confirm target vein patency; identify variant anatomy; assess for existing thrombus; measure vein caliber.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Labs.</strong> INR &le;2.0 preferred (not strict); platelets &ge;50K; clinical judgment prevails for urgent cases.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Anticoagulation.</strong> Aspirin/Plavix — no hold required; LMWH — hold 1 dose if feasible; urgent clinical situations override.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Preview with 25g needle.</strong> Consider pre-procedure 25g local needle under US to preview angles and depths before committing to larger access needle.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Sterile preparation.</strong> Full surgical scrub; sterile gown, gloves, cap, mask; 20&times;20 cm sterile prep and drape.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent.</strong> Arterial puncture, pneumothorax, hematoma, infection, air embolism, thrombosis, catheter malposition.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Site-Specific Anatomy</h4>
+                <ul class="list">
+                  <li>See <a href="#siteselection" style="color:var(--accent)">Section 9 (Site Selection)</a> for detailed site-by-site guide.</li>
+                  <li><strong>IJ vein:</strong> Anterior-lateral to carotid artery; compressible on US; distends with Valsalva; right IJ provides direct path to SVC and right atrium</li>
+                  <li><strong>Subclavian vein:</strong> Superficial to subclavian artery; distends with Valsalva; compressed under clavicle medially</li>
+                  <li><strong>Femoral vein:</strong> Medial to femoral artery in femoral triangle; compressible; thrombosis risk ~20%</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Target Tip Position</h4>
+                <ul class="list">
+                  <li><strong>IJ / Subclavian catheters:</strong> SVC–right atrial junction or upper right atrium (confirmed fluoroscopically)</li>
+                  <li><strong>Femoral catheters:</strong> Tip at IVC–right atrial border</li>
+                  <li>Tip position must be confirmed fluoroscopically before line use</li>
+                  <li>Malposition into ipsilateral IJ, azygos vein, or contralateral brachiocephalic should prompt repositioning over wire</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. HOW I DO IT ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">Default RadCall approach + community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <!-- Default RadCall card -->
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#128203; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#8595; Download</button></h4>
+              <div class="chip-row card-supplies">
+                <span class="chip">Sterile US probe cover</span>
+                <span class="chip">21g micropuncture kit (needle + 0.018" wire + coaxial sheath)</span>
+                <span class="chip">0.035" J-wire</span>
+                <span class="chip">Dilator</span>
+                <span class="chip">Triple-lumen 7Fr catheter</span>
+                <span class="chip">10 mL slip-tip syringe</span>
+                <span class="chip">1% lidocaine</span>
+                <span class="chip">25g + 21g needles (local anesthesia)</span>
+                <span class="chip">Sterile drape + ChloraPrep</span>
+                <span class="chip">#11 scalpel</span>
+                <span class="chip">Mosquito hemostat</span>
+                <span class="chip">2-0 nonabsorbable suture</span>
+                <span class="chip">Biopatch</span>
+                <span class="chip">Heparinized saline flush</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>US survey</h4><div class="muted">Confirm IJ patency. Sweep from IJ to brachiocephalic to rule out central stenosis or occlusion (attenuated IJ with collaterals suggests central occlusion). Identify carotid artery.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Positioning</h4><div class="muted">Supine, head turned away from access side. Trendelenburg to dilate IJ. Right IJ preferred.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Sterile prep + local anesthesia</h4><div class="muted">Full sterile prep and drape. Local anesthesia with 25g needle under US observation — previews angles and depths before committing to the micropuncture needle.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Single-wall venipuncture</h4><div class="muted">Advance 21g micropuncture needle under REAL-TIME US. Orient probe parallel/cephalad to clavicle; aim for lateral wall of IJ. Proximal vein wall "tents" as needle approaches; apply minimal impulse to "pop" through. Needle tip should be echogenic within lumen.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Microwire placement</h4><div class="muted">Advance 0.018" microwire under fluoroscopy — direct tip caudally toward SVC. If resistance: check fluoro (wire deflecting superiorly = likely extravascular). Do NOT pull wire back through needle (shearing risk) — withdraw needle and wire as a UNIT if problem.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>Skin incision + blunt dissection</h4><div class="muted">Skin incision along needle (blade directed away from carotid). Blunt dissection with mosquito hemostat — too small = resistance and kinking.</div></div></div>
+                <div class="step"><div class="step-num">7</div><div><h4>Exchange to 0.035" system</h4><div class="muted">Remove micropuncture needle; advance coaxial sheath; withdraw inner sheath and microwire. Keep finger over hub to minimize bleeding and air embolus.</div></div></div>
+                <div class="step"><div class="step-num">8</div><div><h4>Catheter placement</h4><div class="muted">Advance 0.035" J-wire into SVC under fluoroscopy. Advance catheter over wire to target position (SVC-RA junction).</div></div></div>
+                <div class="step"><div class="step-num">9</div><div><h4>Confirm + secure</h4><div class="muted">Confirm tip position fluoroscopically. Aspirate all lumens; flush with heparinized saline. Suture with 2-0 nonabsorbable (×2 sites). Biopatch at skin entry in immunocompromised/oncology patients.</div></div></div>
+                <div class="step"><div class="step-num">10</div><div><h4>Post-placement CXR</h4><div class="muted">Confirm tip position and exclude pneumothorax before line use.</div></div></div>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Wire deflects superiorly (into IJ / not heading to SVC)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Needle tip not in SVC; wire following extravascular or wrong track; needle angled too superiorly.</p>
+              <p class="success"><strong>Next step:</strong> Withdraw needle and wire as a unit. Reattempt with needle directed more caudally. Advance wire under fluoroscopy to confirm trajectory toward SVC before exchanging sheath.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Wire kinks on exit through skin</h4>
+              <p class="muted"><strong>Likely cause:</strong> Skin incision too small; subcutaneous tract not adequately blunt dissected.</p>
+              <p class="success"><strong>Next step:</strong> Replace with new wire. Ensure skin incision is adequate and bluntly dissect the tract with mosquito hemostat before re-exchanging.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Cannot compress vein / suspected thrombosis</h4>
+              <p class="muted"><strong>Likely cause:</strong> Acute or chronic DVT at target site.</p>
+              <p class="success"><strong>Next step:</strong> Perform full US survey; confirm with power Doppler. Do NOT puncture thrombosed vein. Switch to alternative site.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Inadvertent carotid / arterial puncture</h4>
+              <p class="muted"><strong>Likely cause:</strong> Medial needle trajectory; excessive pulsatile flow on aspiration; bright red blood.</p>
+              <p class="success"><strong>Next step:</strong> Remove needle; apply gentle pressure &times; 5–10 min. Abandon this access level; reassess and attempt IJ at different level or opposite side. If large sheath already placed in carotid — do NOT remove at bedside (risk of massive hematoma) — vascular surgery emergency.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>No blood return</h4>
+              <p class="muted"><strong>Likely cause:</strong> Needle not deep enough; posterior wall puncture; needle outside lumen.</p>
+              <p class="success"><strong>Next step:</strong> Advance needle slightly under US; rotate bevel; try repuncture. Needle may have passed through posterior wall — withdraw slowly under US while aspirating.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Catheter kinking at skin</h4>
+              <p class="muted"><strong>Likely cause:</strong> Skin incision too small; subcutaneous tract underdissected.</p>
+              <p class="success"><strong>Next step:</strong> Pull back catheter; enlarge incision with hemostat; re-advance catheter.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Air embolism (sudden hemodynamic collapse, "mill-wheel" murmur)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Air entrainment during sheath exchange or catheter placement; hub left open.</p>
+              <p class="success"><strong>Next step:</strong> Immediately left lateral decubitus + Trendelenburg; 100% O2; aspirate through catheter; hyperbaric O2 if available.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Procedural</h4>
+              <ul class="list danger">
+                <li><strong>Arterial puncture</strong> (1–3%): Remove needle, firm pressure &times;10 min. Do not dilate or place catheter in artery. If large sheath placed in carotid — do NOT remove at bedside — vascular surgery emergency.</li>
+                <li><strong>Pneumothorax</strong> (1–3%, IJ/subclavian): Uncommon with US guidance. Small/stable &rarr; supplemental O2 &plusmn; serial CXR. Large/symptomatic &rarr; small-bore chest tube.</li>
+                <li><strong>Hematoma</strong> (1–3%): Compression; usually self-limited.</li>
+                <li><strong>Air embolism</strong> (&lt;1%): See troubleshooting above.</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Delayed</h4>
+              <ul class="list">
+                <li><strong>CLABSI</strong> (1–3%): Remove non-tunneled line; blood cultures; IV antibiotics; place new line if still needed.</li>
+                <li><strong>Venous thrombosis:</strong> IJ/subclavian ~4%; femoral ~20%. Anticoagulation; remove catheter when no longer needed.</li>
+                <li><strong>Catheter malposition:</strong> Detected on CXR; requires repositioning over wire under fluoroscopy.</li>
+                <li>Overall major complication rate with image guidance: ~3%; technical success &gt;99% with US guidance.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. POST-PROCEDURE ═══ -->
+        <section class="section" id="postprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Post-Procedure Care</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Confirmation + Securing</h4>
+              <ul class="list">
+                <li>Fluoroscopic confirmation of tip at SVC-RA junction required before use</li>
+                <li>CXR post-placement: confirm tip position and exclude pneumothorax</li>
+                <li>Line secured with 2-0 nonabsorbable suture &times;2 sites; Biopatch at skin in oncology/immunocompromised</li>
+                <li>All lumens flushed with heparinized saline; volume per lumen marked on catheter</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Ongoing Line Care</h4>
+              <ul class="list">
+                <li>Daily assessment of line necessity — remove as soon as no longer needed (reduces CLABSI risk)</li>
+                <li>Dressing change per institutional protocol (usually q7d with chlorhexidine-impregnated dressing)</li>
+                <li><strong>Suspected CLABSI:</strong> Draw blood cultures from line AND peripheral; consider catheter removal</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>Right IJ is preferred first access:</strong> Largest caliber, most direct path to SVC, fewest turns. Puncture low in the neck (near clavicle): more comfortable, less catheter protrudes, and facilitates future tunneling for dialysis conversion if needed.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>NEVER pull the guidewire back through the needle:</strong> Shearing risk. Always withdraw needle and wire as a unit if repositioning is needed.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>Adequate skin incision and blunt dissection:</strong> A too-small skin incision causes wire kinking and loss of tactile feedback. Bluntly dissect with mosquito hemostat until resistance is gone before advancing catheter.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>Preserve subclavian veins:</strong> In any patient who may ever need hemodialysis (AV fistula/graft outflow), avoid subclavian access — subclavian stenosis can permanently compromise upper extremity AV access.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>Femoral access is last resort:</strong> ~20% thrombosis rate, highest infection risk. Reserve for emergencies or when upper body access is exhausted.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>25g needle preview:</strong> The 25g local anesthetic needle under US previews angles and depths before you commit to the micropuncture needle — use this every time.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>Watch for wire balling or looping under fluoroscopy:</strong> This suggests extravascular position. Do not dilate. Withdraw wire and needle as a unit and reattempt.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>IVC filter caution:</strong> If wire loops into IVC filter — do not advance wire through filter; redirect under fluoroscopy.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>Left subclavian preferred over right:</strong> Less acute brachiocephalic-SVC angle makes wire/catheter navigation easier from the left subclavian approach.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. SITE SELECTION ═══ -->
+        <section class="section" id="siteselection">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>Site Selection</h3><p class="section-subtitle">Site-by-site anatomy, technique, and tradeoffs</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <table class="site-table">
+              <thead>
+                <tr>
+                  <th>Site</th>
+                  <th>Status</th>
+                  <th>Anatomy &amp; Technique</th>
+                  <th>Advantages</th>
+                  <th>Avoid When</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Right IJ</strong></td>
+                  <td><span class="site-tag preferred">Preferred</span></td>
+                  <td>Anterior-lateral to carotid; larger caliber than left IJ; direct straight path to SVC and RA. US probe parallel/cephalad to clavicle; target lateral wall of IJ; puncture low (near clavicle); keep carotid visible on US at all times.</td>
+                  <td>Least complication risk; easiest tunneling if conversion to tunneled dialysis catheter needed.</td>
+                  <td>Right neck lymphadenopathy, prior radiation, or ipsilateral AV fistula planned.</td>
+                </tr>
+                <tr>
+                  <td><strong>Left IJ</strong></td>
+                  <td><span class="site-tag acceptable">Acceptable</span></td>
+                  <td>Two ~90&deg; turns at IJ-brachiocephalic junction and brachiocephalic-SVC junction. Use stiff hydrophilic wire to navigate turns; advance wire under fluoroscopy.</td>
+                  <td>Acceptable alternative when right IJ unavailable.</td>
+                  <td>Slightly higher catheter kink and malposition rate vs. right IJ. Avoid if right IJ is accessible.</td>
+                </tr>
+                <tr>
+                  <td><strong>Subclavian</strong></td>
+                  <td><span class="site-tag caution">Caution</span></td>
+                  <td>Access via lateral half of clavicle (avoids "pinch-off" at medial clavicle-rib compression). Transducer perpendicular to clavicle — simultaneously visualize subclavian vein, artery, and pleura. Left subclavian preferred over right (less acute angle into SVC).</td>
+                  <td>Acceptable when IJ sites unavailable. Lower infection rate than femoral.</td>
+                  <td>Any patient who may ever need hemodialysis (AV fistula/graft outflow). Associated with higher rates of subclavian stenosis, thrombosis, and irreversible compromise of upper extremity AV access. Pneumothorax risk 1–3%.</td>
+                </tr>
+                <tr>
+                  <td><strong>Femoral</strong></td>
+                  <td><span class="site-tag last-resort">Last Resort</span></td>
+                  <td>Femoral vein is medial to femoral artery; access ideally over femoral head. Needle at 45&deg; aiming cephalad; advance 5 mm medial to femoral arterial pulse. Tip position: IVC–right atrial border (not SVC-RA junction).</td>
+                  <td>No pneumothorax risk; useful in coagulopathic patients where compression is feasible; accessible during CPR.</td>
+                  <td>Ambulatory patients; immunocompromised; patients who will be mobilized. Thrombosis rate ~20%; highest infection risk of all sites.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <p class="footer-note">Chung HY, Beheshti MV. Tech Vasc Interv Radiol. 2011;14:186-191 &middot; Dariushnia SR et al. J Vasc Interv Radiol. 2010;21:976-981 &middot; Kandarpa K et al. Handbook of Interventional Radiologic Procedures, 5th ed.</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My CVL Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;21g micropuncture kit&#10;Triple-lumen 7Fr catheter&#10;0.035&quot; J-wire"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;US survey of IJ&#10;Position supine + Trendelenburg&#10;Sterile prep and drape"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'access-cvl';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  // ── Load cards ──
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!_cards.length) {
+      loading.textContent = 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = _cards.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            ${isOwn ? `<div class="card-actions">
+              <button onclick="editCard('${c.id}')">Edit</button>
+              <button class="delete-btn" onclick="deleteCard('${c.id}')">Delete</button>
+            </div>` : ''}
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  // ── Card CRUD ──
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user || !sb) return;
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const profile = await window.RadCallAuth.getProfile();
+    const displayName = (profile && profile.display_name) || user.email || 'Anonymous';
+
+    if (editId) {
+      _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, updated_at: new Date().toISOString() } : c);
+      renderCards(); closeCardModal();
+      await sb.from('procedure_cards').update({ title, supplies, steps, pearls, updated_at: new Date().toISOString() }).eq('id', editId);
+    } else {
+      const tmpId = 'tmp-' + Date.now();
+      const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, created_at: new Date().toISOString() };
+      _cards.unshift(newCard);
+      renderCards(); closeCardModal();
+      const { data, error } = await sb.from('procedure_cards')
+        .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName })
+        .select().single();
+      if (!error && data) { _cards = _cards.map(c => c.id === tmpId ? data : c); }
+    }
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  // ── Helpers ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Non-Tunneled CVL Supply List\n' + '\u2550'.repeat(30) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Non-Tunneled CVL Supply List\n' + '\u2550'.repeat(30) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'cvl-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  // ── Init ──
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+</body>
+</html>

@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CT-Guided Lung Biopsy — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Specimen table ── */
+    .fluid-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .fluid-table th, .fluid-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .fluid-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .fluid-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    /* ── Step image dropdown ── */
+    .step-img-toggle { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 5px 10px; border-radius: 8px; border: 1px solid rgba(56,189,248,.2); background: rgba(56,189,248,.06); color: var(--accent); font-size: .82rem; font-weight: 600; cursor: pointer; transition: .15s; }
+    .step-img-toggle:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.35); }
+    .step-img-toggle .arrow { transition: transform .2s; font-size: .7rem; }
+    .step-img-toggle.open .arrow { transform: rotate(90deg); }
+    .step-img-panel { display: none; margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
+    .step-img-panel.open { display: block; }
+    .step-img-panel img { width: 100%; display: block; border-radius: 12px; }
+    .step-img-caption { font-size: .82rem; color: var(--muted); padding: 8px 12px; background: rgba(0,0,0,.3); }
+    .step-img-panel img + .step-img-caption + img { border-top: 1px solid rgba(255,255,255,.06); }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html" onclick="history.back(); return false;">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Playbook</div>
+      <h1>CT-Guided Lung Biopsy</h1>
+      <p class="subhead">Percutaneous coaxial needle biopsy of pulmonary nodules and masses under CT fluoroscopic guidance.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">Moderate IV sedation</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--accent-2)">Moderate (SIR Cat 2)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Pneumothorax (~30%)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Not routine</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">CXR at 2h post</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#troubleshooting">5. Troubleshooting</a></li>
+          <li><a href="#complications">6. Complications</a></li>
+          <li><a href="#postprocedure">7. Post-Procedure</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#specimen">9. Specimen Handling</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications / Contraindications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Indications</h4>
+              <ul class="list">
+                <li><strong>Enlarging or persistent nodule/mass ≥1 cm</strong> — evaluate for primary or metastatic malignancy; provides tissue for molecular profiling required for targeted therapy</li>
+                <li><strong>Suspected infection</strong> not responding to treatment — FNA can identify microorganisms</li>
+                <li>Non-infectious inflammatory processes (e.g., sarcoidosis, organizing pneumonia)</li>
+                <li>Technically feasible for lesions ≥1 cm; diagnostic yield lower for nodules ≤1.5 cm</li>
+              </ul>
+              <h4 style="margin-top:14px;">Alternatives to Consider First</h4>
+              <ul class="list">
+                <li>Bronchoscopy / BAL for hilar masses accessible endobronchially</li>
+                <li>EBUS for central or hilar lesions adjacent to airways</li>
+                <li>VATS for pleural or peripheral lesions requiring resection</li>
+                <li>Biopsy of safer extrathoracic or mediastinal disease if present</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Contraindications</h4>
+              <ul class="list">
+                <li><strong>Absolute:</strong> INR ≥1.5 · Platelets ≤50,000/µL · Patient unable to cooperate or hold still</li>
+                <li><strong>Relative:</strong> Severe emphysema · Severe pulmonary hypertension · Oxygen dependence · Unable to hold aspirin (platelet count &gt;100,000 preferred)</li>
+                <li>Contralateral pneumonectomy — pneumothorax could be fatal; requires careful risk-benefit assessment</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Review prior imaging.</strong> Target growing lesions; avoid shrinking ones. Target the periphery of large lesions to avoid central necrosis. Use contrast CT to identify necrosis and vessel relationships. FDG-PET high-uptake areas reliably exclude necrotic tissue in mixed lesions.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Labs.</strong> CBC, coagulation panel (INR &lt;1.5, platelets &gt;100,000 preferred), BMP. ECG for patients &gt;65 years or with cardiac history.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>History and baseline status.</strong> Document baseline respiratory status. Confirm ability to lie prone &gt;1 hour. Review medications and timing of last blood thinners. Assess cough — offer codeine pre-procedure if significant. Current smokers receive nicotine patch day of procedure.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Anticoagulation holds.</strong> INR &lt;1.5, platelets &gt;100,000 preferred. Hold aspirin 5–7 days; LMWH hold 24h; warfarin hold 5 days; DOACs hold 24–48h.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>IV access + sedation plan.</strong> IV access required. Moderate sedation with midazolam + fentanyl. Anesthesia consult for complex or high-risk patients.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent.</strong> Discuss: pneumothorax (~30%, ~5% require chest tube), hemoptysis, hemothorax, air embolism, infection, tumor seeding (rare with coaxial technique).</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Pathology coordination.</strong> Call pathology in advance to confirm containers and special handling. Confirm if on-site cytopathologist (ROSE) is available for adequacy assessment.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Access Site Principles</h4>
+                <ul class="list">
+                  <li><strong>Prone positioning preferred</strong> — minimizes chest wall motion; patient recovers supine (natural position change acts as positional therapy for small pneumothorax)</li>
+                  <li>Choose skin entry at midpoint of CT slices showing the path to the target</li>
+                  <li>Prefer medial-to-lateral trajectories — less rib motion medially</li>
+                  <li>For central lesions: trajectory parallel to segmental vessels (avascular plane)</li>
+                  <li>For necrotic or cavitated lesions: target the viable wall</li>
+                  <li>Entry angle &gt;30° to prevent sliding off the pleura</li>
+                  <li>Gantry tilt to avoid ribs when needed</li>
+                  <li><strong>Minimize number of pleural crossings</strong> — coaxial technique achieves this</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Structures to Avoid</h4>
+                <ul class="list">
+                  <li><strong>Fissures</strong> — crossing a fissure significantly increases pneumothorax risk</li>
+                  <li><strong>Bullae and emphysematous lung</strong> — high risk of air leak; plan around these on planning CT</li>
+                  <li><strong>Vessels:</strong> Internal mammary artery (medial chest wall), intercostal vessels (inferior rib margin), subclavian artery, axillary vessels</li>
+                  <li><strong>Segmental pulmonary arteries</strong> — use contrast CT for trajectory planning in central lesions</li>
+                  <li>Intercostal neurovascular bundle — hug the superior rib margin when crossing between ribs</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. HOW I DO IT ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">Default RadCall approach + community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <!-- Default RadCall card -->
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">📋 Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">⬇ Download</button></h4>
+              <div class="chip-row card-supplies">
+                <span class="chip">CT scanner</span>
+                <span class="chip">Coaxial 19G introducer needle</span>
+                <span class="chip">22G Chiba needle (FNA)</span>
+                <span class="chip">20G spring-loaded core biopsy device</span>
+                <span class="chip">10% formalin specimen jars</span>
+                <span class="chip">Saline-filled specimen container</span>
+                <span class="chip">Sterile drape + prep</span>
+                <span class="chip">1% lidocaine</span>
+                <span class="chip">25G local anesthesia needle</span>
+                <span class="chip">Midazolam + fentanyl (IV sedation)</span>
+                <span class="chip">Radiopaque skin grid</span>
+                <span class="chip">Sterile US probe cover (if US component)</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Patient positioning</h4><div class="muted">Prone positioning preferred; supine as alternative. Use wedges to elevate the biopsy side up to 45° if needed. Secure patient to CT table with strap. Instruct no movement or talking during needle passes.</div></div></div>
+
+                <div class="step"><div class="step-num">2</div><div><h4>Planning scan</h4><div class="muted">Helical 5 mm → 2.5 mm slices centered on the target. Place radiopaque grid on skin. Select puncture site. Confirm trajectory avoids fissures, bullae, and vessels. Apply gantry tilt as needed to clear ribs or optimize angle.</div></div></div>
+
+                <div class="step"><div class="step-num">3</div><div><h4>Skin prep + local anesthesia</h4><div class="muted">Mark skin entry site. Sterile prep and drape. Raise a 1 cc skin wheal with 25G needle and 1% lidocaine — watch under CT to preview needle angles and depth. Switch to intermittent single-rotation CT acquisitions. Once trajectory confirmed, inject lidocaine into deeper tissues including pleural surface. Create small skin incision.</div></div></div>
+
+                <div class="step"><div class="step-num">4</div><div><h4>Pre-pleural position + lidocaine bolus</h4><div class="muted">Advance 19G coaxial introducer to 1–2 cm short of the pleura under stepwise CT. Administer additional lidocaine through the introducer, especially near pectoralis and ribs. At the endothoracic fascia: remove stylet, connect lidocaine syringe, inject 5–10 cc slowly. Correct position confirmed by no resistance to injection and a subpleural convex bulge visible on CT.</div></div></div>
+
+                <div class="step"><div class="step-num">5</div><div><h4>Pleural puncture</h4><div class="muted">Administer 25 mcg fentanyl IV immediately before puncture. Advance introducer through the pleura during inspiration with a firm, swift motion (≥2 cm advance). Maintain entry angle &gt;30°. Feel a subtle "pop" as the pleura is crossed. Do NOT pull the needle back after crossing the pleura — increases parenchymal hemorrhage risk.</div></div></div>
+
+                <div class="step"><div class="step-num">6</div><div><h4>Targeting + needle positioning</h4><div class="muted">Advance tip to anchor in the target under stepwise CT. Partially withdraw stylet during imaging to reduce streak artifact. Minimize pleural dwell time. Keep a saline drip into the hub during all needle exchanges to prevent air entry.</div></div></div>
+
+                <div class="step"><div class="step-num">7</div><div><h4>FNA passes (cytology/microbiology)</h4><div class="muted">Advance 22G Chiba needle through the introducer into the target. Apply suction with syringe. Use jiggling or rotating motion. Deposit material on slide (cytology) or in saline/RPMI (cell block, flow cytometry, molecular testing).</div></div></div>
+
+                <div class="step"><div class="step-num">8</div><div><h4>Core biopsy passes</h4><div class="muted">Advance 20G spring-loaded core biopsy device through the introducer. Advance the gap (notch) to the target. Fire device. Withdraw introducer and core device as a single unit. Obtain minimum 2–3 cores per target. Cycle specimens to pathology — place in 10% formalin for histology/IHC, or fresh/saline if lymphoma or infection is suspected.</div></div></div>
+
+                <div class="step"><div class="step-num">9</div><div><h4>Post-biopsy CT</h4><div class="muted">Obtain CT immediately after the final pass. Assess for pneumothorax, pulmonary hemorrhage, and hemothorax. Document any immediate complications before moving patient.</div></div></div>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>No aspiration despite apparently correct position</h4>
+              <p class="muted"><strong>Likely cause:</strong> Lesion may be fibrotic or highly cellular; tissue too solid for FNA aspiration.</p>
+              <p class="success"><strong>Next step:</strong> Try repositioning needle tip within lesion. Use smaller gauge needle. Proceed directly to core biopsy passes.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Needle tip not visible on CT</h4>
+              <p class="muted"><strong>Likely cause:</strong> Metal streak artifact from introducer obscuring tip.</p>
+              <p class="success"><strong>Next step:</strong> Partially withdraw stylet to reduce artifact. Switch to bone window settings — metal tips often visible on bone windows when obscured on soft tissue windows.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Lesion not visible at time of procedure</h4>
+              <p class="muted"><strong>Likely cause:</strong> Window/level not optimized; lesion may have partially resolved; GGO lesion collapses with sedation/positioning.</p>
+              <p class="success"><strong>Next step:</strong> Recheck window and level settings. Compare directly to prior contrast CT at same level. Consider CEUS guidance. For GGO lesions, reduce sedation depth to restore ventilation.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Wire or needle resistance on insertion</h4>
+              <p class="muted"><strong>Likely cause:</strong> Calcified or heavily fibrotic lesion; cortical bone (if rib contact).</p>
+              <p class="success"><strong>Next step:</strong> Confirm on bone windows. For calcified lesion: may need slight trajectory adjustment. For rib contact: use gantry tilt to walk needle over rib margin.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Patient coughing during procedure</h4>
+              <p class="muted"><strong>Likely cause:</strong> Pleural irritation or inadequate sedation/analgesia.</p>
+              <p class="success"><strong>Next step:</strong> Administer additional fentanyl (cough suppression effect). Have patient modify breathing pattern. Consider brief voluntary breath-hold during critical needle passes. If needle is across pleura, minimize unnecessary movement.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Pneumothorax develops during procedure</h4>
+              <p class="muted"><strong>Likely cause:</strong> Air leak at pleural crossing; emphysematous lung adjacent to tract.</p>
+              <p class="success"><strong>Next step:</strong> If small (&lt;2 cm from pleura) and hemodynamically stable, may continue if additional passes are essential. If enlarging or symptomatic, consider aspiration through the introducer or abort and place 8Fr chest tube in IR suite.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Difficulty reaching deep or central lesion</h4>
+              <p class="muted"><strong>Likely cause:</strong> Introducer too short; suboptimal gantry angulation.</p>
+              <p class="success"><strong>Next step:</strong> Reposition patient to shorten skin-to-target distance. Use longer introducer needle (spec: 5 cm longer than skin-to-target distance). Ensure correct gantry angulation is applied.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Major</h4>
+              <ul class="list danger">
+                <li><strong>Pneumothorax</strong> (~30% overall; ~5% require chest tube) — risk factors: emphysema, small lesion, deep lesion, multiple passes, crossing fissures. Small/stable → observation + supplemental O₂. Enlarging or symptomatic → 8Fr chest tube, placeable in IR suite.</li>
+                <li><strong>Hemoptysis</strong> — minor in 3–5%; significant (&lt;1%). Usually self-limited. Position patient biopsy-side-down to protect contralateral lung. Supplemental O₂. Bronchoscopy available for massive hemoptysis.</li>
+                <li><strong>Air embolism</strong> — rare but catastrophic. Risk with open needle hub. Immediate management: left lateral decubitus + Trendelenburg position; hyperbaric O₂.</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Minor / Delayed</h4>
+              <ul class="list">
+                <li><strong>Hemothorax</strong> (&lt;1%) — may require thoracentesis or chest tube if significant</li>
+                <li><strong>Pulmonary hemorrhage</strong> — common on post-procedure CT; usually self-limited; monitor for hemoptysis</li>
+                <li><strong>Infection / empyema</strong> (&lt;1%) — prophylactic antibiotics not routine; standard sterile technique</li>
+                <li><strong>Tumor seeding</strong> — extremely rare with coaxial technique; needle tract seeding well-documented only for certain histologies (hepatocellular, pleural mesothelioma)</li>
+                <li><strong>Vasovagal reaction</strong> — from pain at pleural puncture; prevention with adequate fentanyl pre-puncture</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. POST-PROCEDURE ═══ -->
+        <section class="section" id="postprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Post-Procedure Care</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Monitoring + Imaging</h4>
+              <ul class="list">
+                <li><strong>2-hour post-procedure CXR</strong> — if no pneumothorax and patient asymptomatic, may discharge</li>
+                <li>Vitals q30 min for 2 hours</li>
+                <li>Pain assessment — pleuritic chest pain may indicate pneumothorax or hemorrhage</li>
+                <li>Oxygen saturation monitoring throughout observation period</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Pneumothorax Management + Discharge</h4>
+              <ul class="list">
+                <li>If pneumothorax identified on post-procedure CT: assess size. Small and stable → additional CXR in 2–4h</li>
+                <li>If enlarging or symptomatic → aspiration with 14G angiocath, or small-bore chest tube</li>
+                <li><strong>Discharge instructions:</strong> no strenuous activity × 24h; return to ED for increasing chest pain, shortness of breath, or hemoptysis</li>
+                <li>For emphysematous patients: 2-hour observation minimum; low threshold for extended observation even without immediate post-procedure pneumothorax</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Prone positioning:</strong> Reduces chest wall motion with respiration and allows the operator to step back from the CT bore during scanning — the single most effective setup change for improving accuracy and safety.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Pre-pleural lidocaine bolus:</strong> Inject 5–10 cc lidocaine just before the pleura. The subpleural convex bulge on CT confirms correct position. This step dramatically reduces pain and vasovagal response at pleural puncture.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Fentanyl before pleural puncture:</strong> 25 mcg IV immediately before advancing through the pleura suppresses cough reflex and reduces pain — one of the highest-yield timing decisions in the procedure.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Never pull the introducer back after crossing the pleura:</strong> Any backward motion increases parenchymal tearing and hemorrhage risk. If repositioning is needed, advance forward or abort and restart with a fresh pass.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Hub sealed at all times:</strong> Keep a saline drip into the hub during all needle exchanges. An open hub facing a negative-pressure thorax can cause air embolism — a rare but catastrophic complication.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Avoid crossing fissures:</strong> A trajectory crossing a fissure has substantially higher pneumothorax risk. Always review the fissure locations on planning CT and adjust trajectory accordingly.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Target lesion periphery and PET-avid areas:</strong> For large lesions, target the viable peripheral rim to avoid central necrosis. For mixed lesions, the highest FDG-uptake area on PET reliably identifies viable tumor and excludes necrotic tissue.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Coaxial technique = one pleural crossing:</strong> Multiple separate pleural punctures multiply pneumothorax risk. The coaxial system allows multiple FNA and core passes through a single introducer crossing — always use it.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. SPECIMEN HANDLING ═══ -->
+        <section class="section" id="specimen">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>Specimen Handling</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <table class="fluid-table">
+              <thead><tr><th>Specimen Type</th><th>Container</th><th>Purpose</th></tr></thead>
+              <tbody>
+                <tr><td><strong>FNA (cytology)</strong></td><td>Slide (immediate smear) or saline/RPMI</td><td>Cytology, cell block, flow cytometry, molecular testing</td></tr>
+                <tr><td><strong>Core biopsy (histology)</strong></td><td>10% formalin</td><td>H&amp;E histology, IHC, molecular profiling (EGFR, ALK, PD-L1, etc.)</td></tr>
+                <tr><td><strong>Core biopsy (fresh)</strong></td><td>Saline or RPMI (no formalin)</td><td>Flow cytometry (if lymphoma suspected), culture, biobanking</td></tr>
+                <tr><td><strong>Suspected infection</strong></td><td>Sterile saline or culture media — no formalin</td><td>Bacterial, fungal, mycobacterial culture</td></tr>
+                <tr><td><strong>Cell block</strong></td><td>CytoLyt or saline-rinsed syringe</td><td>Molecular profiling, IHC on cell block sections</td></tr>
+              </tbody>
+            </table>
+            <div style="margin-top: 14px;">
+              <div class="panel">
+                <h4>Key Handling Rules</h4>
+                <ul class="list">
+                  <li><strong>Call pathology in advance</strong> — confirm container requirements and whether on-site cytopathologist (ROSE) is available for adequacy check</li>
+                  <li>Minimum <strong>2–3 cores per target</strong> for adequate histology plus molecular profiling</li>
+                  <li><strong>Label every container immediately</strong> at the table: patient name, MRN, date, site, pass number</li>
+                  <li>Never place infection specimens in formalin — kills organisms and prevents culture</li>
+                  <li>FNA slides should be sprayed with fixative or air-dried immediately depending on staining protocol — confirm with cytopathology</li>
+                  <li>For suspected lymphoma: fresh core in RPMI for flow cytometry; formalin for IHC; coordinate with hematopathology</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Bourgouin PP, Rodriguez KJ, Fintelmann FJ. Tech Vasc Interv Radiol. 2021;24:100770 · Kandarpa K et al. Handbook of Interventional Radiologic Procedures, 5th ed.</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My Lung Biopsy Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;19G coaxial introducer&#10;20G core biopsy device&#10;Formalin jars"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;Position prone&#10;Planning CT with grid&#10;Advance to pre-pleural position"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'biopsy-lung';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  // ── Load cards ──
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      // Try localStorage fallback
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!_cards.length) {
+      loading.textContent = 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = _cards.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            ${isOwn ? `<div class="card-actions">
+              <button onclick="editCard('${c.id}')">Edit</button>
+              <button class="delete-btn" onclick="deleteCard('${c.id}')">Delete</button>
+            </div>` : ''}
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  // ── Card CRUD ──
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user || !sb) return;
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const profile = await window.RadCallAuth.getProfile();
+    const displayName = (profile && profile.display_name) || user.email || 'Anonymous';
+
+    if (editId) {
+      // Update
+      _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, updated_at: new Date().toISOString() } : c);
+      renderCards(); closeCardModal();
+      await sb.from('procedure_cards').update({ title, supplies, steps, pearls, updated_at: new Date().toISOString() }).eq('id', editId);
+    } else {
+      // Insert
+      const tmpId = 'tmp-' + Date.now();
+      const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, created_at: new Date().toISOString() };
+      _cards.unshift(newCard);
+      renderCards(); closeCardModal();
+      const { data, error } = await sb.from('procedure_cards')
+        .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName })
+        .select().single();
+      if (!error && data) { _cards = _cards.map(c => c.id === tmpId ? data : c); }
+    }
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  // ── Helpers ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'CT-Guided Lung Biopsy Supply List\n' + '═'.repeat(34) + '\n' + supplies.map((s, i) => `☐ ${s}`).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'CT-Guided Lung Biopsy Supply List\n' + '═'.repeat(34) + '\n' + supplies.map((s, i) => `☐ ${s}`).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'biopsy-lung-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  // ── Init ──
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+</body>
+</html>
