@@ -4327,7 +4327,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const proSection = document.getElementById('nav-pro-section');
     function _applyHeaderAuth(user) {
       if (user) {
-        // Logged in: show email + logout, show sidebar pro tools
+        // Logged in: close auth modal if open, show email + logout, show sidebar pro tools
+        if (window.RadCallAuth && window.RadCallAuth.hideAuthModal) window.RadCallAuth.hideAuthModal();
         if (userNav) {
           userNav.style.display = 'flex';
           userNav.innerHTML = `
