@@ -153,6 +153,7 @@
     .step-img-panel.open { display: block; }
     .step-img-panel img { width: 100%; display: block; border-radius: 12px; }
     .step-img-caption { font-size: .82rem; color: var(--muted); padding: 8px 12px; background: rgba(0,0,0,.3); }
+    .step-img-panel img + .step-img-caption + img { border-top: 1px solid rgba(255,255,255,.06); }
 
     /* ── Export supply button ── */
     .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
@@ -310,7 +311,16 @@
               <div class="step-list">
                 <div class="step"><div class="step-num">1</div><div><h4>Position + US survey</h4><div class="muted">Patient supine. Perform US survey to identify largest accessible fluid pocket. Confirm no bowel or vessels in intended path. Mark skin entry site. Measure depth to fluid.</div>
                   <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> Access site landmark</div>
-                  <div class="step-img-panel"><img src="../images/para-access-site.svg" alt="Paracentesis access site: 3 cm medial and 3 cm superior to ASIS, lateral to rectus sheath" loading="lazy"><div class="step-img-caption">Ideal access: 3 cm medial and 3 cm superior to the ASIS. Lateral to the rectus sheath to avoid the inferior epigastric artery. Confirm pocket depth and absence of bowel with US before proceeding.</div></div>
+                  <div class="step-img-panel"><img src="../images/para-access-site.svg" alt="Paracentesis access site: 3 cm medial and 3 cm superior to ASIS, lateral to rectus sheath" loading="lazy"><div class="step-img-caption">Ideal access: 3 cm medial and 3 cm superior to the ASIS. Lateral to the rectus sheath to avoid the inferior epigastric artery.</div></div>
+                  <div class="step-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span class="arrow">&#9654;</span> US survey — LLQ fluid pocket + Doppler</div>
+                  <div class="step-img-panel">
+                    <img src="../images/Para-us-doppler.jpg" alt="Color Doppler US of LLQ showing vessel check at planned paracentesis access site" loading="lazy">
+                    <div class="step-img-caption">Power Doppler (PDI) over the LLQ access site. Red signal identifies vessels in the abdominal wall — confirm your needle trajectory is clear of flow before proceeding.</div>
+                    <img src="../images/Para-us-measures.jpg" alt="B-mode US measuring distance from skin to ascitic fluid pocket in LLQ" loading="lazy" style="margin-top:8px;">
+                    <div class="step-img-caption">B-mode transverse LLQ. Measure skin-to-fluid distance (here ~1 cm). Confirm an adequate anechoic fluid pocket with no interposed bowel loops.</div>
+                    <img src="../images/Para-us-non-doppler.jpg" alt="B-mode US confirming no vessels along needle trajectory in LLQ" loading="lazy" style="margin-top:8px;">
+                    <div class="step-img-caption">B-mode without Doppler — same window confirming clear trajectory to the fluid pocket. No echogenic bowel wall in the path. Safe to proceed with access.</div>
+                  </div>
                 </div></div>
                 <div class="step"><div class="step-num">2</div><div><h4>Prep + drape</h4><div class="muted">Sterile prep with ChloraPrep. Drape access site. Apply sterile cover to US probe.</div></div></div>
                 <div class="step"><div class="step-num">3</div><div><h4>Local anesthesia</h4><div class="muted">Anesthetize skin to peritoneum with 1% lidocaine using 22G needle under US guidance. Do not puncture peritoneum — infiltrate up to it and withdraw.</div>
