@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image-Guided Drainage — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .muted { color: var(--muted); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Fluid analysis table ── */
+    .fluid-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .fluid-table th, .fluid-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .fluid-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .fluid-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Hub-specific ── */
+    .hub-content { max-width: 900px; margin: 0 auto; display: grid; gap: 18px; }
+    .hub-link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 8px; }
+    .hub-link-card { text-decoration: none; display: flex; align-items: center; gap: 14px; padding: 18px; border-radius: 16px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); transition: .18s; }
+    .hub-link-card:hover { border-color: rgba(56,189,248,.3); background: rgba(56,189,248,.04); }
+    .hub-link-card.coming-soon { opacity: .5; pointer-events: none; }
+    .hub-card-icon { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-size: 1.2rem; flex: 0 0 auto; }
+    .hub-card-body { display: grid; gap: 2px; }
+    .hub-card-title { font-weight: 700; font-size: 1rem; }
+    .hub-card-meta { font-size: .85rem; color: var(--muted); }
+    .coming-badge { display: inline-flex; padding: 3px 8px; border-radius: 6px; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; background: rgba(245,158,11,.12); color: #fcd58e; margin-left: 8px; }
+
+    @media (max-width: 760px) { .two-col, .hub-link-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html" onclick="history.back(); return false;">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Family</div>
+      <h1>Image-Guided Drainage</h1>
+      <p class="subhead">Percutaneous catheter drainage of fluid collections, abscesses, and obstructed systems under CT, US, or fluoroscopic guidance.</p>
+    </header>
+
+    <div class="hub-content">
+
+      <!-- 1 ── What Belongs Here ── -->
+      <div class="section" id="what-belongs">
+        <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="section-title-wrap">
+            <div class="section-index">1</div>
+            <h3>What Belongs Here</h3>
+          </div>
+          <span class="collapse-arrow">&#9662;</span>
+        </div>
+        <div class="section-body">
+          <p>This family covers all percutaneous catheter drainage procedures performed by IR. Includes abscess drainage (abdominal, pelvic, hepatic, perirectal), percutaneous transhepatic biliary drainage (PTBD), percutaneous nephrostomy, empyema drainage, and other fluid collection drainage. These procedures share the common goal of establishing controlled external drainage of fluid that cannot be managed medically, and all rely on image guidance for safe access.</p>
+        </div>
+      </div>
+
+      <!-- 2 ── Shared Principles ── -->
+      <div class="section" id="shared-principles">
+        <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="section-title-wrap">
+            <div class="section-index">2</div>
+            <h3>Shared Principles</h3>
+          </div>
+          <span class="collapse-arrow">&#9662;</span>
+        </div>
+        <div class="section-body">
+          <div class="two-col">
+            <div class="panel">
+              <h4>Technique Fundamentals</h4>
+              <ul class="list">
+                <li>Two primary access techniques: <strong>Seldinger</strong> (needle &rarr; wire &rarr; dilator &rarr; catheter) vs <strong>Trocar</strong> (sharp stylet within catheter, single-step insertion). Seldinger is generally safer and more versatile; trocar is faster for large, superficial collections.</li>
+                <li>Catheter sizing: 8&ndash;10 Fr for simple fluid/serous collections, 10&ndash;14 Fr for viscous/complex collections (abscess, empyema), larger for biliary or organized collections with debris</li>
+                <li>Catheter types: pigtail (locking loop prevents dislodgement), straight (for biliary), multi-sidehole</li>
+                <li>Drain management: daily output tracking, regular flushes with sterile saline (5&ndash;10 mL TID) to maintain patency, secure with suture + dressing</li>
+                <li>Drain removal criteria: imaging resolution of collection, output &lt;10&ndash;30 mL/day (varies by type), clinical improvement, and no ongoing source</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Planning &amp; Safety</h4>
+              <ul class="list">
+                <li>Review cross-sectional imaging to plan safest trajectory &mdash; avoid bowel, major vessels, pleura when possible</li>
+                <li>Transpleural drainage of subdiaphragmatic abscess: acceptable when no safer route exists, but increases empyema risk</li>
+                <li>For biliary drainage: review MRCP or CT to understand level and cause of obstruction</li>
+                <li>For nephrostomy: identify optimal calyx for access (posterior lower pole calyx preferred)</li>
+                <li>Send fluid for appropriate labs: culture/sensitivity, cell count, biochemistry, +/&minus; cytology</li>
+                <li>Aspirate sample <strong>before</strong> connecting to drainage bag &mdash; preserves diagnostic quality</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 ── Common Supplies ── -->
+      <div class="section" id="common-supplies">
+        <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="section-title-wrap">
+            <div class="section-index">3</div>
+            <h3>Common Supplies</h3>
+          </div>
+          <span class="collapse-arrow">&#9662;</span>
+        </div>
+        <div class="section-body">
+          <div class="chip-row">
+            <span class="chip">CT scanner or US</span>
+            <span class="chip">Fluoroscopy</span>
+            <span class="chip">Sterile drapes/gown/gloves</span>
+            <span class="chip">ChloraPrep/Betadine</span>
+            <span class="chip">1% lidocaine</span>
+            <span class="chip">22G access needle</span>
+            <span class="chip">0.035" guidewire</span>
+            <span class="chip">Amplatz stiff wire (nephrostomy)</span>
+            <span class="chip">Fascial dilators</span>
+            <span class="chip">Locking pigtail catheter (8&ndash;14 Fr)</span>
+            <span class="chip">3-way stopcock</span>
+            <span class="chip">Drainage bag</span>
+            <span class="chip">Specimen containers</span>
+            <span class="chip">Suture + StatLock</span>
+            <span class="chip">Sterile dressing</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 ── Contraindications & Bleeding Risk ── -->
+      <div class="section" id="contraindications">
+        <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="section-title-wrap">
+            <div class="section-index">4</div>
+            <h3>Contraindications &amp; Bleeding Risk</h3>
+          </div>
+          <span class="collapse-arrow">&#9662;</span>
+        </div>
+        <div class="section-body">
+          <div class="two-col">
+            <div class="panel">
+              <h4>General Contraindications</h4>
+              <ul class="list">
+                <li><strong>Absolute:</strong> No safe access window, uncorrectable coagulopathy (for large-bore drains)</li>
+                <li><strong>Relative:</strong> Anticoagulation, interposed bowel or solid organ, suspected echinococcal cyst (anaphylaxis risk), collection too small to safely target</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>SIR Bleeding Risk</h4>
+              <table class="fluid-table">
+                <thead>
+                  <tr><th>Procedure</th><th>SIR Category</th><th>INR</th><th>Platelets</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Abscess drainage (superficial)</td><td>Cat 2</td><td>&lt;1.5</td><td>&gt;50K</td></tr>
+                  <tr><td>Abscess drainage (deep/complex)</td><td>Cat 2&ndash;3</td><td>&lt;1.5</td><td>&gt;50K</td></tr>
+                  <tr><td>PTBD</td><td>Cat 3</td><td>&lt;1.5</td><td>&gt;50K</td></tr>
+                  <tr><td>Nephrostomy</td><td>Cat 3</td><td>&lt;1.5</td><td>&gt;50K</td></tr>
+                  <tr><td>Empyema drainage</td><td>Cat 2</td><td>&lt;1.5</td><td>&gt;50K</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 ── Shared Complications ── -->
+      <div class="section" id="complications">
+        <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="section-title-wrap">
+            <div class="section-index">5</div>
+            <h3>Shared Complications</h3>
+          </div>
+          <span class="collapse-arrow">&#9662;</span>
+        </div>
+        <div class="section-body">
+          <div class="two-col">
+            <div class="panel">
+              <h4>Immediate</h4>
+              <ul class="list">
+                <li><strong>Bleeding/hemorrhage</strong> &mdash; along tract or from organ laceration; usually self-limited</li>
+                <li><strong>Organ injury</strong> &mdash; bowel perforation (can cause peritonitis/fistula), vascular injury</li>
+                <li><strong>Bacteremia/sepsis</strong> &mdash; transient bacteremia common during abscess drainage; pre-treat with antibiotics</li>
+                <li><strong>Pneumothorax</strong> &mdash; if transpleural approach used</li>
+                <li><strong>Pain</strong> &mdash; especially with large-bore catheter placement</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Delayed</h4>
+              <ul class="list">
+                <li><strong>Drain dislodgement/malposition</strong> &mdash; most common management issue; reposition or replace</li>
+                <li><strong>Drain occlusion</strong> &mdash; from debris, blood clot, kinking; flush regularly</li>
+                <li><strong>Fistula formation</strong> &mdash; enterocutaneous, biliary-cutaneous, or nephrocutaneous</li>
+                <li><strong>Recurrent collection</strong> &mdash; consider residual undrained loculations, inadequate source control</li>
+                <li><strong>Skin breakdown / exit site infection</strong> &mdash; proper dressing care essential</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 ── Procedures in This Family ── -->
+      <div class="section" id="procedures">
+        <div class="section-header" style="cursor:default;">
+          <div class="section-title-wrap">
+            <div class="section-index">6</div>
+            <h3>Procedures in This Family</h3>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="hub-link-grid">
+            <a class="hub-link-card coming-soon" href="#">
+              <div class="hub-card-icon">&#x1F4A7;</div>
+              <div class="hub-card-body">
+                <div class="hub-card-title">Abscess Drainage <span class="coming-badge">Coming Soon</span></div>
+                <div class="hub-card-meta">CT/US-guided &middot; SIR Cat 2&ndash;3</div>
+              </div>
+            </a>
+            <a class="hub-link-card coming-soon" href="#">
+              <div class="hub-card-icon">&#x1F7E2;</div>
+              <div class="hub-card-body">
+                <div class="hub-card-title">Biliary Drainage (PTBD) <span class="coming-badge">Coming Soon</span></div>
+                <div class="hub-card-meta">US/fluoro-guided &middot; SIR Cat 3</div>
+              </div>
+            </a>
+            <a class="hub-link-card coming-soon" href="#">
+              <div class="hub-card-icon">&#x1F535;</div>
+              <div class="hub-card-body">
+                <div class="hub-card-title">Nephrostomy <span class="coming-badge">Coming Soon</span></div>
+                <div class="hub-card-meta">US/fluoro-guided &middot; SIR Cat 3</div>
+              </div>
+            </a>
+            <a class="hub-link-card coming-soon" href="#">
+              <div class="hub-card-icon">&#x1FA7B;</div>
+              <div class="hub-card-body">
+                <div class="hub-card-title">Empyema Drainage <span class="coming-badge">Coming Soon</span></div>
+                <div class="hub-card-meta">CT/US-guided &middot; SIR Cat 2</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <p class="footer-note">Ref: SIR Consensus Guidelines 2019 &middot; ACR-SIR Practice Parameters.</p>
+
+    </div><!-- /.hub-content -->
+  </div><!-- /.shell -->
+</body>
+</html>

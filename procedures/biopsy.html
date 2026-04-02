@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CT-Guided Biopsy — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+
+    /* ── Layout ── */
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .muted { color: var(--muted); }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Fluid analysis table ── */
+    .fluid-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .fluid-table th, .fluid-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .fluid-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .fluid-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    @media (max-width: 760px) { .two-col, .three-col { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+
+    /* ── Hub page ── */
+    .hub-content { max-width: 900px; margin: 0 auto; display: grid; gap: 18px; }
+    .hub-link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 8px; }
+    .hub-link-card { text-decoration: none; display: flex; align-items: center; gap: 14px; padding: 18px; border-radius: 16px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); transition: .18s; }
+    .hub-link-card:hover { border-color: rgba(56,189,248,.3); background: rgba(56,189,248,.04); }
+    .hub-link-card.coming-soon { opacity: .5; pointer-events: none; }
+    .hub-card-icon { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-size: 1.2rem; flex: 0 0 auto; }
+    .hub-card-body { display: grid; gap: 2px; }
+    .hub-card-title { font-weight: 700; font-size: 1rem; }
+    .hub-card-meta { font-size: .85rem; color: var(--muted); }
+    .coming-badge { display: inline-flex; padding: 3px 8px; border-radius: 6px; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; background: rgba(245,158,11,.12); color: #fcd58e; margin-left: 8px; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html" onclick="history.back(); return false;">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Family</div>
+      <h1>CT-Guided Biopsy</h1>
+      <p class="subhead">Image-guided percutaneous tissue sampling &mdash; core needle biopsy and fine-needle aspiration under CT or US guidance.</p>
+    </header>
+
+    <div class="hub-content">
+
+      <!-- 1 ── What Belongs Here ── -->
+      <div class="section" id="what-belongs">
+        <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="section-title-wrap">
+            <div class="section-index">1</div>
+            <div><h3>What Belongs Here</h3></div>
+          </div>
+          <span class="collapse-arrow">&#9662;</span>
+        </div>
+        <div class="section-body">
+          <div class="panel">
+            <p style="margin:0;">This family covers all <strong>image-guided percutaneous biopsies</strong>: lung, liver, kidney, bone, soft tissue, lymph node, adrenal, and peritoneal/omental masses. Image guidance (CT, US, or fluoroscopy) is used to safely target lesions for tissue diagnosis while avoiding critical structures.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 ── Shared Principles ── -->
+      <div class="section" id="shared-principles">
+        <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="section-title-wrap">
+            <div class="section-index">2</div>
+            <div><h3>Shared Principles</h3></div>
+          </div>
+          <span class="collapse-arrow">&#9662;</span>
+        </div>
+        <div class="section-body">
+          <div class="two-col">
+            <div class="panel">
+              <h4>Technique Fundamentals</h4>
+              <ul class="list">
+                <li><strong>Coaxial technique:</strong> Introducer needle placed to lesion margin, then core biopsy needle or FNA needle advanced through it. Allows multiple passes without re-traversing tissue.</li>
+                <li><strong>Core needle biopsy (CNB) vs Fine-needle aspiration (FNA):</strong> CNB uses cutting needle (typically 18-20G) to obtain tissue cores for histology. FNA uses thin needle (20-25G) for cytology. CNB preferred for most solid organ lesions; FNA for thyroid, lymph nodes, and when core is high-risk.</li>
+                <li><strong>Number of passes:</strong> Typically 3-5 cores for adequate tissue. On-site cytopathology (rapid on-site evaluation / ROSE) when available increases diagnostic yield.</li>
+                <li><strong>Guidance modality:</strong> CT guidance for deep lesions, retroperitoneal targets, lesions near critical structures. US guidance for superficial, well-visualized lesions (liver, kidney, thyroid).</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Planning &amp; Safety</h4>
+              <ul class="list">
+                <li>Review cross-sectional imaging to plan shortest, safest trajectory</li>
+                <li>Avoid traversing bowel, major vessels, pleura (when possible), and fissures</li>
+                <li>For lung biopsy: position biopsy side <strong>DOWN</strong> post-procedure to tamponade</li>
+                <li><strong>Specimen handling:</strong> Formalin for histology, saline for culture, CytoLyt/ThinPrep for cytology, fresh tissue for flow cytometry/molecular</li>
+                <li>Track/coax embolization (gel foam pledget) may be used for lung biopsy to reduce pneumothorax</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 ── Common Supplies ── -->
+      <div class="section" id="supplies">
+        <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="section-title-wrap">
+            <div class="section-index">3</div>
+            <div><h3>Common Supplies</h3></div>
+          </div>
+          <span class="collapse-arrow">&#9662;</span>
+        </div>
+        <div class="section-body">
+          <div class="chip-row">
+            <span class="chip">CT scanner or US</span>
+            <span class="chip">Sterile drapes/towels</span>
+            <span class="chip">ChloraPrep/Betadine</span>
+            <span class="chip">1% Lidocaine</span>
+            <span class="chip">25G needle (skin)</span>
+            <span class="chip">Coaxial introducer needle (17-19G)</span>
+            <span class="chip">Core biopsy needle (18-20G)</span>
+            <span class="chip">FNA needle (20-25G)</span>
+            <span class="chip">Specimen containers (formalin, saline, CytoLyt)</span>
+            <span class="chip">Sterile dressing</span>
+            <span class="chip">Skin marker</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 ── Contraindications & Bleeding Risk ── -->
+      <div class="section" id="contraindications">
+        <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="section-title-wrap">
+            <div class="section-index">4</div>
+            <div><h3>Contraindications &amp; Bleeding Risk</h3></div>
+          </div>
+          <span class="collapse-arrow">&#9662;</span>
+        </div>
+        <div class="section-body">
+          <div class="two-col">
+            <div class="panel">
+              <h4>General Contraindications</h4>
+              <ul class="list">
+                <li><strong>Absolute:</strong> Uncorrectable coagulopathy, no safe access window, uncooperative patient</li>
+                <li><strong>Relative:</strong> Anticoagulation (hold per SIR guidelines), severe emphysema (lung &mdash; high PTX risk), hydatid cyst (anaphylaxis risk), suspected vascular lesion (hemangioma, AVM)</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>SIR Bleeding Risk by Target</h4>
+              <table class="fluid-table">
+                <thead>
+                  <tr><th>Target</th><th>SIR Category</th><th>INR</th><th>Platelets</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Lung (superficial)</td><td>Cat 2</td><td>&lt;1.5</td><td>&gt;50K</td></tr>
+                  <tr><td>Liver</td><td>Cat 2-3</td><td>&lt;1.5</td><td>&gt;50K</td></tr>
+                  <tr><td>Kidney (native)</td><td>Cat 3</td><td>&lt;1.5</td><td>&gt;50K</td></tr>
+                  <tr><td>Bone/Soft tissue</td><td>Cat 2</td><td>&lt;1.5</td><td>&gt;50K</td></tr>
+                  <tr><td>Thyroid (FNA)</td><td>Cat 1</td><td>&lt;3.0</td><td>&gt;20K</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 ── Shared Complications ── -->
+      <div class="section" id="complications">
+        <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="section-title-wrap">
+            <div class="section-index">5</div>
+            <div><h3>Shared Complications</h3></div>
+          </div>
+          <span class="collapse-arrow">&#9662;</span>
+        </div>
+        <div class="section-body">
+          <div class="two-col">
+            <div class="panel">
+              <h4>Immediate</h4>
+              <ul class="list">
+                <li><strong>Bleeding/hematoma</strong> &mdash; most common across all targets; usually self-limited</li>
+                <li><strong>Pneumothorax</strong> (lung biopsy) &mdash; 15-25% incidence, ~5% require chest tube</li>
+                <li>Pain at biopsy site</li>
+                <li>Vasovagal reaction</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Delayed</h4>
+              <ul class="list">
+                <li><strong>Tumor seeding</strong> along needle tract &mdash; rare, risk reduced with coaxial technique</li>
+                <li><strong>Infection/abscess</strong> &mdash; rare with sterile technique</li>
+                <li><strong>Non-diagnostic result</strong> &mdash; may require repeat biopsy or surgical excision</li>
+                <li><strong>Organ-specific:</strong> hemothorax (lung), bile leak (liver), hematuria (kidney), fracture (bone)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 ── Procedures in This Family ── -->
+      <div class="section" id="procedures">
+        <div class="section-header" style="cursor:default;">
+          <div class="section-title-wrap">
+            <div class="section-index">6</div>
+            <div><h3>Procedures in This Family</h3></div>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="hub-link-grid">
+            <a class="hub-link-card coming-soon" href="#">
+              <div class="hub-card-icon">&#x1F9EC;</div>
+              <div class="hub-card-body">
+                <div class="hub-card-title">Lung Biopsy <span class="coming-badge">Coming Soon</span></div>
+                <div class="hub-card-meta">CT-guided, SIR Cat 2</div>
+              </div>
+            </a>
+            <a class="hub-link-card coming-soon" href="#">
+              <div class="hub-card-icon">&#x1F9EC;</div>
+              <div class="hub-card-body">
+                <div class="hub-card-title">Liver Biopsy <span class="coming-badge">Coming Soon</span></div>
+                <div class="hub-card-meta">US/CT-guided, SIR Cat 2-3</div>
+              </div>
+            </a>
+            <a class="hub-link-card coming-soon" href="#">
+              <div class="hub-card-icon">&#x1F9EC;</div>
+              <div class="hub-card-body">
+                <div class="hub-card-title">Renal Biopsy <span class="coming-badge">Coming Soon</span></div>
+                <div class="hub-card-meta">US/CT-guided, SIR Cat 3</div>
+              </div>
+            </a>
+            <a class="hub-link-card coming-soon" href="#">
+              <div class="hub-card-icon">&#x1F9EC;</div>
+              <div class="hub-card-body">
+                <div class="hub-card-title">Bone Biopsy <span class="coming-badge">Coming Soon</span></div>
+                <div class="hub-card-meta">CT-guided, SIR Cat 2</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <p class="footer-note">Ref: SIR Consensus Guidelines 2019 &middot; ACR Appropriateness Criteria.</p>
+
+    </div><!-- /.hub-content -->
+  </div><!-- /.shell -->
+</body>
+</html>
