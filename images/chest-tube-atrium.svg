@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 460" font-family="'IBM Plex Sans', system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </linearGradient>
+  </defs>
+  <rect width="700" height="460" fill="url(#bg)" rx="16"/>
+
+  <!-- Title -->
+  <text x="350" y="27" text-anchor="middle" fill="#38bdf8" font-size="14" font-weight="700" letter-spacing="0.06em">CHEST TUBE — THREE-CHAMBER WATER SEAL SYSTEM</text>
+  <text x="230" y="41" text-anchor="middle" fill="#64748b" font-size="9">Atrium / Pleur-evac — pleural drainage assembly</text>
+
+  <!-- ═══ FROM PATIENT ═══ -->
+  <text x="8" y="217" fill="#94a3b8" font-size="7.5" font-weight="600">FROM</text>
+  <text x="8" y="227" fill="#94a3b8" font-size="7.5" font-weight="600">PATIENT</text>
+  <line x1="8" y1="233" x2="40" y2="233" stroke="#94a3b8" stroke-width="2.5"/>
+  <polygon points="36,229 45,233 36,237" fill="#94a3b8"/>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- CHAMBER 1 — COLLECTION -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <rect x="45" y="54" width="118" height="316" rx="6" fill="rgba(15,23,42,0.92)" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.5"/>
+
+  <!-- fluid fill (blood / pleural fluid) -->
+  <rect x="47" y="282" width="114" height="86" fill="#ef4444" opacity="0.17"/>
+  <rect x="47" y="280" width="114" height="3" fill="#ef4444" opacity="0.55" rx="1"/>
+
+  <!-- graduation marks (right inner wall) -->
+  <line x1="148" y1="283" x2="155" y2="283" stroke="#475569" stroke-width="1"/>
+  <text x="158" y="286" fill="#475569" font-size="7.5">300</text>
+  <line x1="148" y1="309" x2="155" y2="309" stroke="#475569" stroke-width="1"/>
+  <text x="158" y="312" fill="#475569" font-size="7.5">200</text>
+  <line x1="148" y1="335" x2="155" y2="335" stroke="#475569" stroke-width="1"/>
+  <text x="158" y="338" fill="#475569" font-size="7.5">100</text>
+  <line x1="148" y1="361" x2="155" y2="361" stroke="#475569" stroke-width="1"/>
+  <text x="158" y="364" fill="#475569" font-size="7.5">0</text>
+
+  <!-- chamber label -->
+  <circle cx="67" cy="71" r="9" fill="rgba(56,189,248,.15)" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="67" y="75" text-anchor="middle" fill="#38bdf8" font-size="8" font-weight="800">1</text>
+  <text x="106" y="69" text-anchor="middle" fill="#7dd3fc" font-size="9" font-weight="700">COLLECTION</text>
+  <text x="106" y="80" text-anchor="middle" fill="#64748b" font-size="7.5">CHAMBER</text>
+
+  <!-- fluid label -->
+  <text x="104" y="340" text-anchor="middle" fill="#fca5a5" font-size="8">~180 mL</text>
+
+  <!-- inlet tube: patient → top of collection -->
+  <line x1="45" y1="233" x2="78" y2="233" stroke="#94a3b8" stroke-width="2"/>
+  <line x1="78" y1="233" x2="78" y2="106" stroke="#94a3b8" stroke-width="2"/>
+  <circle cx="78" cy="104" r="3" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-opacity="0.6"/>
+
+  <!-- air outlet from collection → WS (dashed, top of chamber) -->
+  <line x1="163" y1="115" x2="183" y2="115" stroke="#7dd3fc" stroke-width="1.5" stroke-dasharray="4,3" stroke-opacity="0.65"/>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- CHAMBER 2 — WATER SEAL -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <rect x="183" y="54" width="108" height="316" rx="6" fill="rgba(15,23,42,0.92)" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.5"/>
+
+  <!-- water fill (2 cm = ~20 px from bottom) -->
+  <rect x="185" y="350" width="104" height="18" fill="#0ea5e9" opacity="0.3"/>
+  <rect x="185" y="348" width="104" height="3" fill="#0ea5e9" opacity="0.65" rx="1"/>
+
+  <!-- 2 cm H₂O callout -->
+  <line x1="185" y1="349" x2="172" y2="349" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.7"/>
+  <text x="170" y="347" text-anchor="end" fill="#38bdf8" font-size="8" font-weight="700">2 cm</text>
+  <text x="170" y="357" text-anchor="end" fill="#38bdf8" font-size="7">H₂O</text>
+
+  <!-- dip tube: air from collection enters, submerges into water -->
+  <!-- horizontal segment from collection air outlet -->
+  <line x1="183" y1="115" x2="210" y2="115" stroke="#7dd3fc" stroke-width="1.5" stroke-dasharray="4,3" stroke-opacity="0.65"/>
+  <!-- vertical dip tube going down into water -->
+  <line x1="210" y1="115" x2="210" y2="354" stroke="#94a3b8" stroke-width="2"/>
+  <circle cx="210" cy="356" r="2.5" fill="#94a3b8" opacity="0.55"/>
+
+  <!-- air bubbles rising through water seal -->
+  <circle cx="216" cy="340" r="3.5" fill="#7dd3fc" opacity="0.22" stroke="#38bdf8" stroke-width="0.5" stroke-opacity="0.3"/>
+  <circle cx="224" cy="328" r="3" fill="#7dd3fc" opacity="0.18"/>
+  <circle cx="212" cy="320" r="2.5" fill="#7dd3fc" opacity="0.15"/>
+  <circle cx="221" cy="312" r="2" fill="#7dd3fc" opacity="0.12"/>
+  <text x="231" y="315" fill="#7dd3fc" font-size="7.5" opacity="0.75">air ↑</text>
+
+  <!-- tidaling indicator (right wall) -->
+  <text x="268" y="333" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">↕</text>
+  <text x="268" y="345" text-anchor="middle" fill="#86efac" font-size="7" font-weight="700">TIDAL</text>
+
+  <!-- chamber label -->
+  <circle cx="203" cy="71" r="9" fill="rgba(56,189,248,.15)" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="203" y="75" text-anchor="middle" fill="#38bdf8" font-size="8" font-weight="800">2</text>
+  <text x="237" y="69" text-anchor="middle" fill="#7dd3fc" font-size="9" font-weight="700">WATER SEAL</text>
+  <text x="237" y="80" text-anchor="middle" fill="#64748b" font-size="7.5">ONE-WAY VALVE</text>
+
+  <!-- air outlet WS → SC (top right, dashed) -->
+  <line x1="291" y1="130" x2="308" y2="130" stroke="#7dd3fc" stroke-width="1.5" stroke-dasharray="4,3" stroke-opacity="0.65"/>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- CHAMBER 3 — SUCTION CONTROL -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <rect x="308" y="54" width="108" height="316" rx="6" fill="rgba(15,23,42,0.92)" stroke="#f59e0b" stroke-width="1.5" stroke-opacity="0.6"/>
+
+  <!-- water fill (20 cm ≈ 200 px from bottom) -->
+  <rect x="310" y="170" width="104" height="200" fill="#0ea5e9" opacity="0.14"/>
+  <rect x="310" y="168" width="104" height="3" fill="#0ea5e9" opacity="0.5" rx="1"/>
+
+  <!-- 20 cm H₂O callout -->
+  <line x1="310" y1="169" x2="297" y2="169" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.7"/>
+  <text x="294" y="167" text-anchor="end" fill="#f59e0b" font-size="8" font-weight="700">20 cm</text>
+  <text x="294" y="177" text-anchor="end" fill="#f59e0b" font-size="7">H₂O</text>
+  <text x="294" y="187" text-anchor="end" fill="#64748b" font-size="7">−20 cmH₂O</text>
+
+  <!-- vent tube: open at top, dips into water to set suction level -->
+  <line x1="342" y1="54" x2="342" y2="174" stroke="#94a3b8" stroke-width="2"/>
+  <!-- open-to-atmosphere indicator -->
+  <line x1="332" y1="54" x2="352" y2="54" stroke="#94a3b8" stroke-width="1.5" stroke-opacity="0.45"/>
+  <text x="358" y="66" fill="#64748b" font-size="8">↑ atm</text>
+  <circle cx="342" cy="176" r="2.5" fill="#94a3b8" opacity="0.55"/>
+
+  <!-- gentle bubbles (confirms active suction) -->
+  <circle cx="342" cy="160" r="3" fill="#fcd58e" opacity="0.22" stroke="#f59e0b" stroke-width="0.5" stroke-opacity="0.3"/>
+  <circle cx="351" cy="150" r="2.5" fill="#fcd58e" opacity="0.18"/>
+  <circle cx="337" cy="143" r="2" fill="#fcd58e" opacity="0.15"/>
+  <text x="358" y="146" fill="#fcd58e" font-size="7.5" opacity="0.8">gentle ✓</text>
+
+  <!-- air inlet from WS (top left of SC) -->
+  <line x1="308" y1="130" x2="328" y2="130" stroke="#7dd3fc" stroke-width="1.5" stroke-dasharray="4,3" stroke-opacity="0.65"/>
+  <line x1="328" y1="130" x2="328" y2="104" stroke="#7dd3fc" stroke-width="1.5" stroke-dasharray="4,3" stroke-opacity="0.5"/>
+
+  <!-- chamber label -->
+  <circle cx="328" cy="71" r="9" fill="rgba(245,158,11,.15)" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="328" y="75" text-anchor="middle" fill="#fcd58e" font-size="8" font-weight="800">3</text>
+  <text x="362" y="69" text-anchor="middle" fill="#fcd58e" font-size="9" font-weight="700">SUCTION</text>
+  <text x="362" y="80" text-anchor="middle" fill="#fcd58e" font-size="7.5">CONTROL</text>
+
+  <!-- wall suction outlet (right side) -->
+  <line x1="416" y1="108" x2="443" y2="108" stroke="#f59e0b" stroke-width="2"/>
+  <polygon points="435,104 445,108 435,112" fill="#f59e0b" opacity="0.8"/>
+  <text x="448" y="104" fill="#f59e0b" font-size="9" font-weight="700">WALL</text>
+  <text x="448" y="116" fill="#f59e0b" font-size="8">SUCTION</text>
+
+  <!-- ═══ FLOW SEQUENCE LABELS ═══ -->
+  <text x="104" y="390" text-anchor="middle" fill="#64748b" font-size="8">fluid + air from chest</text>
+  <text x="237" y="390" text-anchor="middle" fill="#64748b" font-size="8">1-way valve · 2 cmH₂O</text>
+  <text x="362" y="390" text-anchor="middle" fill="#64748b" font-size="8">suction level · −20 cmH₂O</text>
+  <text x="174" y="387" fill="#334155" font-size="13" font-weight="700">→</text>
+  <text x="299" y="387" fill="#334155" font-size="13" font-weight="700">→</text>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- RIGHT PANEL — Clinical Interpretation -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <rect x="462" y="54" width="228" height="354" rx="14" fill="#1e293b" opacity="0.65" stroke="#243041" stroke-width="1.5"/>
+  <text x="576" y="76" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="700" letter-spacing=".04em">CLINICAL INTERPRETATION</text>
+  <line x1="472" y1="83" x2="680" y2="83" stroke="#243041" stroke-width="1"/>
+
+  <!-- 1: Tidaling — good -->
+  <rect x="470" y="89" width="212" height="52" rx="8" fill="#22c55e" opacity="0.09" stroke="#22c55e" stroke-width="1" stroke-opacity="0.45"/>
+  <text x="480" y="104" fill="#86efac" font-size="9" font-weight="700">✓ Tidaling (fluctuation)</text>
+  <text x="480" y="116" fill="#94a3b8" font-size="8">Rises with inspiration, falls with</text>
+  <text x="480" y="127" fill="#94a3b8" font-size="8">expiration → tube PATENT</text>
+
+  <!-- 2: Intermittent bubbling -->
+  <rect x="470" y="147" width="212" height="52" rx="8" fill="#f59e0b" opacity="0.08" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="480" y="162" fill="#fcd58e" font-size="9" font-weight="700">⚠ Bubbling in water seal</text>
+  <text x="480" y="174" fill="#94a3b8" font-size="8">Intermittent = expected early air leak</text>
+  <text x="480" y="185" fill="#94a3b8" font-size="8">Continuous = large persistent leak</text>
+
+  <!-- 3: No tidaling — problem -->
+  <rect x="470" y="205" width="212" height="52" rx="8" fill="#ef4444" opacity="0.08" stroke="#ef4444" stroke-width="1" stroke-opacity="0.35"/>
+  <text x="480" y="220" fill="#fca5a5" font-size="9" font-weight="700">✕ No tidaling + no bubbling</text>
+  <text x="480" y="232" fill="#94a3b8" font-size="8">Tube kinked, clotted, or lung fully</text>
+  <text x="480" y="243" fill="#94a3b8" font-size="8">re-expanded → assess tube</text>
+
+  <!-- 4: Gentle suction bubbling — correct -->
+  <rect x="470" y="263" width="212" height="52" rx="8" fill="#38bdf8" opacity="0.07" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.3"/>
+  <text x="480" y="278" fill="#7dd3fc" font-size="9" font-weight="700">✓ Gentle suction ctrl bubbling</text>
+  <text x="480" y="290" fill="#94a3b8" font-size="8">Confirms active −20 cmH₂O suction</text>
+  <text x="480" y="301" fill="#94a3b8" font-size="8">Vigorous = excess → reduce level</text>
+
+  <!-- 5: High output — emergency -->
+  <rect x="470" y="321" width="212" height="52" rx="8" fill="#ef4444" opacity="0.07" stroke="#ef4444" stroke-width="1" stroke-opacity="0.3"/>
+  <text x="480" y="336" fill="#fca5a5" font-size="9" font-weight="700">✕ Output &gt;200 mL/h × 2 h</text>
+  <text x="480" y="348" fill="#94a3b8" font-size="8">Hemothorax → clamp tube +</text>
+  <text x="480" y="359" fill="#94a3b8" font-size="8">emergent thoracic surgery consult</text>
+
+  <!-- ═══ BOTTOM RULE ═══ -->
+  <rect x="15" y="418" width="670" height="30" rx="8" fill="#1e293b" opacity="0.5" stroke="#243041" stroke-width="1"/>
+  <text x="350" y="430" text-anchor="middle" fill="#94a3b8" font-size="9">Keep system BELOW chest level · Never clamp without order · Water seal ≥2 cm H₂O · Standard suction −20 cmH₂O</text>
+  <text x="350" y="443" text-anchor="middle" fill="#64748b" font-size="8">Air leak test: cough → watch water seal · Tube dislodged: 3-sided occlusive dressing over wound</text>
+</svg>
