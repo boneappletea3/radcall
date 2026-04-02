@@ -48,6 +48,8 @@ body { font-family: 'IBM Plex Sans', system-ui, sans-serif; background: var(--cr
 .nav-link.active { background: var(--teal-light); color: var(--teal); }
 .nav-spacer { flex: 1; }
 .nav-user { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 10px; }
+.nav-back-btn { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 500; color: var(--muted); text-decoration: none; border: 1px solid var(--border-strong); transition: all 0.15s; flex-shrink: 0; }
+.nav-back-btn:hover { color: var(--teal); border-color: var(--teal); background: var(--teal-light); }
 
 /* ── LAYOUT ── */
 .layout { padding-top: 56px; min-height: 100vh; display: flex; flex-direction: column; }
@@ -191,16 +193,15 @@ body { font-family: 'IBM Plex Sans', system-ui, sans-serif; background: var(--cr
 <!-- NAV -->
 <nav class="topnav">
   <a href="index.html" class="logo">
-    <div class="logo-icon">PL</div>
-    <div><div class="logo-text">Procedure Log</div></div>
+    <div class="logo-icon">CD</div>
+    <div><div class="logo-text">Case Deck</div></div>
   </a>
-  <div class="nav-links">
-    <a href="case-log.html" class="nav-link">Procedure Log</a>
-    <a href="procedure-averages.html" class="nav-link">Procedure Dashboard</a>
-    <a href="case-deck.html" class="nav-link active">Case Deck</a>
-  </div>
   <div class="nav-spacer"></div>
   <div class="nav-user" id="userNav"></div>
+  <a href="index.html" class="nav-back-btn" title="Back to RadCall">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    RadCall
+  </a>
 </nav>
 
 <div class="layout">
