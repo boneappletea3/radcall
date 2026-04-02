@@ -398,6 +398,17 @@
   .info-box.red { background: var(--red-bg); border: 1px solid rgba(239,68,68,0.2); border-left: 3px solid var(--red); }
   .info-box strong { color: inherit; }
 
+  /* ── ARTHROGRAM IMAGE TOGGLES ── */
+  .arthr-img-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-top: 14px; }
+  .arthr-img-block { border: 1px solid rgba(255,255,255,.08); border-radius: 12px; overflow: hidden; background: rgba(0,0,0,.2); }
+  .arthr-img-toggle { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 8px 12px; cursor: pointer; font-size: 12.5px; font-weight: 600; color: var(--teal); transition: background .15s; }
+  .arthr-img-toggle:hover { background: rgba(20,184,166,0.07); }
+  .arthr-img-toggle .arthr-arrow { transition: transform .2s; font-size: .65rem; }
+  .arthr-img-toggle.open .arthr-arrow { transform: rotate(90deg); }
+  .arthr-img-pair { display: none; }
+  .arthr-img-pair.open { display: grid; grid-template-columns: 1fr 1fr; }
+  .arthr-img-pair img { width: 100%; display: block; border-top: 1px solid rgba(255,255,255,.06); }
+
   /* ── MEASUREMENTS TABLE ── */
   .meas-table {
     width: 100%;
@@ -995,9 +1006,37 @@
       <tr><td>Hip</td><td>Anterior (femoral neck approach)</td><td>Junction of medial femoral neck and head</td></tr>
       <tr><td>Wrist</td><td>Radiocarpal (dorsal)</td><td>Scapholunate interval or radioscaphoid joint</td></tr>
       <tr><td>Ankle</td><td>Anteromedial or anterolateral</td><td>Talar dome — tibiotalar joint</td></tr>
-      <tr><td>Elbow</td><td>Lateral (radiocapitellar)</td><td>Radiocapitellar joint — lateral approach</td></tr>
+      <tr><td>Elbow</td><td>Posterior (olecranon fossa)</td><td>Olecranon fossa — elbow flexed 90°, needle directed anteriorly into trochlear notch</td></tr>
     </tbody>
   </table>
+
+  <div class="proc-section-label" style="margin-top:16px;">Joint Images — Needle Placement &amp; Post-Injection</div>
+  <div class="arthr-img-grid">
+    <div class="arthr-img-block">
+      <div class="arthr-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span>Shoulder</span><span class="arthr-arrow">&#9654;</span></div>
+      <div class="arthr-img-pair"><img src="images/Shoulder_Arthrogram_Needle_Placement.jpg" loading="lazy"><img src="images/Shoulder_Arthrogram_Post_Injection.jpg" loading="lazy"></div>
+    </div>
+    <div class="arthr-img-block">
+      <div class="arthr-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span>Hip</span><span class="arthr-arrow">&#9654;</span></div>
+      <div class="arthr-img-pair"><img src="images/Hip_Arthrogram_Needle_Placement.jpg" loading="lazy"><img src="images/Hip_Arthrogram_Post_Injection.jpg" loading="lazy"></div>
+    </div>
+    <div class="arthr-img-block">
+      <div class="arthr-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span>Wrist</span><span class="arthr-arrow">&#9654;</span></div>
+      <div class="arthr-img-pair"><img src="images/Wrist_Arthrogram_Needle_Placement.jpg" loading="lazy"><img src="images/Wrist_Arthrogram_Post_Injection.jpg" loading="lazy"></div>
+    </div>
+    <div class="arthr-img-block">
+      <div class="arthr-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span>Ankle</span><span class="arthr-arrow">&#9654;</span></div>
+      <div class="arthr-img-pair"><img src="images/Ankle_Arthrogram_Needle_Placement.jpg" loading="lazy"><img src="images/Ankle_Arthrogram_Post_Injection.jpg" loading="lazy"></div>
+    </div>
+    <div class="arthr-img-block">
+      <div class="arthr-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span>Elbow</span><span class="arthr-arrow">&#9654;</span></div>
+      <div class="arthr-img-pair"><img src="images/Elbow_Arthrogram_Needle_Placement.jpg" loading="lazy"><img src="images/Elbow_Arthrogram_Post_Injection.jpg" loading="lazy"></div>
+    </div>
+    <div class="arthr-img-block">
+      <div class="arthr-img-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')"><span>Knee</span><span class="arthr-arrow">&#9654;</span></div>
+      <div class="arthr-img-pair"><img src="images/Knee_Arthrogram_Needle_Placement.jpg" loading="lazy"><img src="images/Knee_Arthrogram_Post_Injection.jpg" loading="lazy"></div>
+    </div>
+  </div>
 
   <div class="proc-section-label">Imaging Pearls</div>
   <div class="pearl-grid">
