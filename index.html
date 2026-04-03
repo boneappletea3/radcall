@@ -126,7 +126,16 @@
     font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
     color: var(--text3); text-transform: uppercase;
     padding: 8px 16px 4px; user-select: none;
+    cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+    transition: color 0.12s;
   }
+  .nav-group-label:hover { color: var(--text2); }
+  .nav-group-arrow {
+    font-size: 10px; color: var(--text3); opacity: 0.6;
+    transition: transform 0.18s; display: inline-block; flex-shrink: 0;
+  }
+  .nav-section.collapsed .nav-group-arrow { transform: rotate(-90deg); }
+  .nav-section.collapsed > .nav-section-body { display: none; }
   .nav-item {
     display: flex; align-items: center; gap: 8px;
     padding: 6px 16px; cursor: pointer;
@@ -614,6 +623,8 @@
     transition: color .12s, background .1s, border-color .12s;
   }
   .nav-sub-item:hover { color: var(--text1); background: var(--bg3); }
+  .nav-note-del-btn { visibility: hidden; }
+  .nav-sub-item:hover .nav-note-del-btn { visibility: visible; }
   .nav-sub-item.active { color: var(--accent2); border-left-color: var(--accent2); font-weight: 500; }
 
   .calc-box {
@@ -1525,100 +1536,108 @@ body.home-active footer { display: none; }
 
 <!-- SIDEBAR NAV -->
 <nav id="sidebar">
-  <!-- PRO TOOLS — shown only when signed in -->
-  <div class="nav-section" id="nav-pro-section" style="display:none">
-    <div class="nav-item nav-has-sub open" id="nav-pro-toggle" onclick="this.classList.toggle('open');document.getElementById('nav-pro-list').classList.toggle('open')">
-      <span class="nav-dot" style="background:var(--teal)"></span>Pro Tools<span class="nav-arrow">›</span>
+
+  <!-- HOME section: Overview, Pro Tools, Favorites, Scratchpad -->
+  <div class="nav-section" id="nav-section-home">
+    <div class="nav-group-label" onclick="toggleNavSection('nav-section-home')">Home <span class="nav-group-arrow">›</span></div>
+    <div class="nav-section-body">
+      <div class="nav-item active" onclick="showSection('overview')"><span class="nav-dot"></span>Overview</div>
+
+      <!-- Pro Tools — shown only when signed in -->
+      <div id="nav-pro-section" style="display:none">
+        <div class="nav-item nav-has-sub open" id="nav-pro-toggle" onclick="this.classList.toggle('open');document.getElementById('nav-pro-list').classList.toggle('open')">
+          <span class="nav-dot" style="background:var(--teal)"></span>Pro Tools<span class="nav-arrow">›</span>
+        </div>
+        <div class="nav-sub-tree open" id="nav-pro-list">
+          <div class="nav-sub-item" onclick="window.location.href='case-log.html'">Procedure Log</div>
+          <div class="nav-sub-item" onclick="window.location.href='differential.html'">Differential Dx</div>
+          <div class="nav-sub-item" onclick="window.location.href='case-deck.html'">Case Deck</div>
+          <div class="nav-sub-item" onclick="downloadAllMacros()">Download All Macros</div>
+        </div>
+      </div>
+
+      <!-- Favorites — only shown when logged in; rendered by Favorites._renderSidebar() -->
+      <div id="nav-fav-section" style="display:none">
+        <div class="nav-item nav-has-sub" id="nav-fav-toggle" onclick="Favorites.toggleSidebar()">
+          <span class="nav-dot" style="background:var(--amber)"></span>Favorites<span class="nav-pro-badge">PRO</span><span class="nav-arrow">›</span>
+        </div>
+        <div class="nav-sub-tree open" id="nav-fav-list"></div>
+      </div>
+
+      <!-- Scratchpad — only shown when logged in -->
+      <div id="nav-notes-section" style="display:none">
+        <div class="nav-item nav-has-sub" id="nav-notes-toggle" onclick="this.classList.toggle('open');document.getElementById('nav-notes-list').classList.toggle('open')">
+          <span class="nav-dot"></span>Scratchpad<span class="nav-pro-badge">PRO</span><span class="nav-arrow">›</span>
+        </div>
+        <div class="nav-sub-tree" id="nav-notes-list"></div>
+      </div>
     </div>
-    <div class="nav-sub-tree open" id="nav-pro-list">
-      <div class="nav-sub-item" onclick="window.location.href='case-log.html'">Procedure Log</div>
-      <div class="nav-sub-item" onclick="window.location.href='differential.html'">Differential Dx</div>
-      <div class="nav-sub-item" onclick="window.location.href='case-deck.html'">Case Deck</div>
-      <div class="nav-sub-item" onclick="downloadAllMacros()">Download All Macros</div>
+  </div>
+
+  <div class="nav-section" id="nav-section-clinical">
+    <div class="nav-group-label" onclick="toggleNavSection('nav-section-clinical')">Clinical Sections <span class="nav-group-arrow">›</span></div>
+    <div class="nav-section-body">
+      <div class="nav-item nav-has-sub" id="nav-neuro" onclick="navSelect('neuro')"><span class="nav-dot" style="background:var(--accent2)"></span>Neuroradiology<span class="nav-arrow">›</span></div>
+      <div class="nav-sub-tree" id="navtree-neuro"></div>
+
+      <div class="nav-item nav-has-sub" id="nav-chest" onclick="navSelect('chest')"><span class="nav-dot" style="background:var(--teal)"></span>Chest<span class="nav-arrow">›</span></div>
+      <div class="nav-sub-tree" id="navtree-chest"></div>
+
+      <div class="nav-item nav-has-sub" id="nav-body" onclick="navSelect('body')"><span class="nav-dot" style="background:var(--amber)"></span>Body / Abdomen<span class="nav-arrow">›</span></div>
+      <div class="nav-sub-tree" id="navtree-body"></div>
+
+      <div class="nav-item nav-has-sub" id="nav-msk" onclick="navSelect('msk')"><span class="nav-dot" style="background:var(--purple)"></span>MSK<span class="nav-arrow">›</span></div>
+      <div class="nav-sub-tree" id="navtree-msk"></div>
+
+      <div class="nav-item nav-has-sub" id="nav-us" onclick="navSelect('us')"><span class="nav-dot" style="background:var(--green)"></span>Ultrasound<span class="nav-arrow">›</span></div>
+      <div class="nav-sub-tree" id="navtree-us"></div>
+
+      <div class="nav-item nav-has-sub" id="nav-peds" onclick="navSelect('peds')"><span class="nav-dot" style="background:var(--red)"></span>Pediatrics<span class="nav-arrow">›</span></div>
+      <div class="nav-sub-tree" id="navtree-peds"></div>
+
+      <div class="nav-item nav-has-sub" id="nav-nucs" onclick="navSelect('nucs')"><span class="nav-dot" style="background:var(--amber)"></span>Nuclear Medicine<span class="nav-arrow">›</span></div>
+      <div class="nav-sub-tree" id="navtree-nucs"></div>
     </div>
   </div>
 
-  <div class="nav-section">
-    <div class="nav-group-label">Home</div>
-    <div class="nav-item active" onclick="showSection('home')"><span class="nav-dot"></span>Overview</div>
-  </div>
+  <div class="nav-section" id="nav-section-guides">
+    <div class="nav-group-label" onclick="toggleNavSection('nav-section-guides')">Guides <span class="nav-group-arrow">›</span></div>
+    <div class="nav-section-body">
+      <div class="nav-item nav-has-sub" id="nav-fluoro" onclick="navSelect('fluoro')"><span class="nav-dot" style="background:var(--teal)"></span>Fluoroscopy<span class="nav-pro-badge">PRO</span><span class="nav-arrow">›</span></div>
+      <div class="nav-sub-tree" id="navtree-fluoro"></div>
 
-  <!-- FAVORITES NAV — only shown when logged in; rendered by Favorites._renderSidebar() -->
-  <div class="nav-section" id="nav-fav-section" style="display:none">
-    <div class="nav-item nav-has-sub" id="nav-fav-toggle" onclick="Favorites.toggleSidebar()">
-      <span class="nav-dot" style="background:var(--amber)"></span>
-      Favorites
-      <span class="nav-arrow">›</span>
+      <div class="nav-item nav-has-sub" id="nav-ir-guides" onclick="irGuidesToggle(this)"><span class="nav-dot" style="background:var(--teal)"></span>IR Procedures<span class="nav-pro-badge">PRO</span><span class="nav-arrow">›</span></div>
+      <div class="nav-sub-tree" id="navtree-ir-guides">
+        <div class="nav-sub-item" onclick="window.location.href='procedures/library.html'">Procedure Playbooks</div>
+        <div class="nav-sub-item" onclick="goToResult('ir','ir-anticoag')">Periprocedural Anticoag</div>
+        <div class="nav-sub-item" onclick="goToResult('ir','ir-abx-prophylaxis')">Antibiotic Prophylaxis</div>
+        <div class="nav-sub-item" onclick="goToResult('ir','ir-betalactam')">β-Lactam Cross-Reactivity</div>
+      </div>
+
+      <div class="nav-item nav-has-sub" id="nav-searchpatterns" onclick="navSelect('searchpatterns')"><span class="nav-dot" style="background:var(--purple)"></span>Search Patterns<span class="nav-pro-badge">PRO</span><span class="nav-arrow">›</span></div>
+      <div class="nav-sub-tree" id="navtree-searchpatterns"></div>
     </div>
-    <div class="nav-sub-tree open" id="nav-fav-list"></div>
   </div>
 
-  <!-- NOTES NAV — only shown when logged in -->
-  <div class="nav-section" id="nav-notes-section" style="display:none">
-    <div class="nav-item nav-has-sub" id="nav-notes-toggle" onclick="this.classList.toggle('open');document.getElementById('nav-notes-list').classList.toggle('open')">
-      <span class="nav-dot"></span>Notes<span class="nav-arrow">›</span>
+  <div class="nav-section" id="nav-section-quickref">
+    <div class="nav-group-label" onclick="toggleNavSection('nav-section-quickref')">Quick Reference <span class="nav-group-arrow">›</span></div>
+    <div class="nav-section-body">
+      <div class="nav-item nav-has-sub" id="nav-contrast" onclick="navSelect('contrast')"><span class="nav-dot"></span>Contrast &amp; Drugs<span class="nav-arrow">›</span></div>
+      <div class="nav-sub-tree" id="navtree-contrast"></div>
+
+      <div class="nav-item nav-has-sub" id="nav-incidentaloma" onclick="navSelect('incidentaloma')"><span class="nav-dot"></span>Incidentaloma<span class="nav-arrow">›</span></div>
+      <div class="nav-sub-tree" id="navtree-incidentaloma"></div>
+      <div class="nav-item" onclick="showSection('mrisafety')"><span class="nav-dot"></span>MRI Safety</div>
+      <div class="nav-item" onclick="showSection('anatomy')"><span class="nav-dot"></span>Anatomy Resources</div>
     </div>
-    <div class="nav-sub-tree" id="nav-notes-list"></div>
   </div>
 
-
-  <div class="nav-section">
-    <div class="nav-group-label">Clinical Sections</div>
-
-    <div class="nav-item nav-has-sub" id="nav-neuro" onclick="navSelect('neuro')"><span class="nav-dot" style="background:var(--accent2)"></span>Neuroradiology<span class="nav-arrow">›</span></div>
-    <div class="nav-sub-tree" id="navtree-neuro"></div>
-
-    <div class="nav-item nav-has-sub" id="nav-chest" onclick="navSelect('chest')"><span class="nav-dot" style="background:var(--teal)"></span>Chest<span class="nav-arrow">›</span></div>
-    <div class="nav-sub-tree" id="navtree-chest"></div>
-
-    <div class="nav-item nav-has-sub" id="nav-body" onclick="navSelect('body')"><span class="nav-dot" style="background:var(--amber)"></span>Body / Abdomen<span class="nav-arrow">›</span></div>
-    <div class="nav-sub-tree" id="navtree-body"></div>
-
-    <div class="nav-item nav-has-sub" id="nav-msk" onclick="navSelect('msk')"><span class="nav-dot" style="background:var(--purple)"></span>MSK<span class="nav-arrow">›</span></div>
-    <div class="nav-sub-tree" id="navtree-msk"></div>
-
-    <div class="nav-item nav-has-sub" id="nav-us" onclick="navSelect('us')"><span class="nav-dot" style="background:var(--green)"></span>Ultrasound<span class="nav-arrow">›</span></div>
-    <div class="nav-sub-tree" id="navtree-us"></div>
-
-    <div class="nav-item nav-has-sub" id="nav-peds" onclick="navSelect('peds')"><span class="nav-dot" style="background:var(--red)"></span>Pediatrics<span class="nav-arrow">›</span></div>
-    <div class="nav-sub-tree" id="navtree-peds"></div>
-
-    <div class="nav-item nav-has-sub" id="nav-nucs" onclick="navSelect('nucs')"><span class="nav-dot" style="background:var(--amber)"></span>Nuclear Medicine<span class="nav-arrow">›</span></div>
-    <div class="nav-sub-tree" id="navtree-nucs"></div>
-  </div>
-
-  <div class="nav-section">
-    <div class="nav-group-label">Guides</div>
-    <div class="nav-item nav-has-sub" id="nav-fluoro" onclick="navSelect('fluoro')"><span class="nav-dot" style="background:var(--teal)"></span>Fluoroscopy<span class="nav-pro-badge">PRO</span><span class="nav-arrow">›</span></div>
-    <div class="nav-sub-tree" id="navtree-fluoro"></div>
-
-    <div class="nav-item nav-has-sub" id="nav-ir-guides" onclick="irGuidesToggle(this)"><span class="nav-dot" style="background:var(--teal)"></span>IR Procedures<span class="nav-pro-badge">PRO</span><span class="nav-arrow">›</span></div>
-    <div class="nav-sub-tree" id="navtree-ir-guides">
-      <div class="nav-sub-item" onclick="window.location.href='procedures/library.html'">Procedure Playbooks</div>
-      <div class="nav-sub-item" onclick="goToResult('ir','ir-anticoag')">Periprocedural Anticoag</div>
-      <div class="nav-sub-item" onclick="goToResult('ir','ir-abx-prophylaxis')">Antibiotic Prophylaxis</div>
-      <div class="nav-sub-item" onclick="goToResult('ir','ir-betalactam')">β-Lactam Cross-Reactivity</div>
+  <div class="nav-section" id="nav-section-learning">
+    <div class="nav-group-label" onclick="toggleNavSection('nav-section-learning')">Learning <span class="nav-group-arrow">›</span></div>
+    <div class="nav-section-body">
+      <div class="nav-item" onclick="showSection('callprep')"><span class="nav-dot"></span>Call Prep Resources</div>
+      <div class="nav-item" onclick="showSection('books')"><span class="nav-dot"></span>Recommended Books</div>
     </div>
-
-    <div class="nav-item nav-has-sub" id="nav-searchpatterns" onclick="navSelect('searchpatterns')"><span class="nav-dot" style="background:var(--purple)"></span>Search Patterns<span class="nav-pro-badge">PRO</span><span class="nav-arrow">›</span></div>
-    <div class="nav-sub-tree" id="navtree-searchpatterns"></div>
-  </div>
-
-  <div class="nav-section">
-    <div class="nav-group-label">Quick Reference</div>
-    <div class="nav-item nav-has-sub" id="nav-contrast" onclick="navSelect('contrast')"><span class="nav-dot"></span>Contrast &amp; Drugs<span class="nav-arrow">›</span></div>
-    <div class="nav-sub-tree" id="navtree-contrast"></div>
-
-    <div class="nav-item nav-has-sub" id="nav-incidentaloma" onclick="navSelect('incidentaloma')"><span class="nav-dot"></span>Incidentaloma<span class="nav-arrow">›</span></div>
-    <div class="nav-sub-tree" id="navtree-incidentaloma"></div>
-    <div class="nav-item" onclick="showSection('mrisafety')"><span class="nav-dot"></span>MRI Safety</div>
-    <div class="nav-item" onclick="showSection('anatomy')"><span class="nav-dot"></span>Anatomy Resources</div>
-  </div>
-
-  <div class="nav-section">
-    <div class="nav-group-label">Learning</div>
-    <div class="nav-item" onclick="showSection('callprep')"><span class="nav-dot"></span>Call Prep Resources</div>
-    <div class="nav-item" onclick="showSection('books')"><span class="nav-dot"></span>Recommended Books</div>
   </div>
 
 </nav>
@@ -1777,7 +1796,7 @@ body.home-active footer { display: none; }
           </div>
           <div class="pro-tool-body">
             <div class="pro-tool-title">Procedure Log</div>
-            <div class="pro-tool-desc">ACGME tracking &amp; dashboard</div>
+            <div class="pro-tool-desc">Case tracking and Dashboard</div>
           </div>
           <span class="pro-tool-arrow">›</span>
         </a>
@@ -1797,30 +1816,10 @@ body.home-active footer { display: none; }
           </div>
           <div class="pro-tool-body">
             <div class="pro-tool-title">Case Deck</div>
-            <div class="pro-tool-desc">Teaching file &amp; flashcards</div>
+            <div class="pro-tool-desc">Teaching file and follow-up</div>
           </div>
           <span class="pro-tool-arrow">›</span>
         </a>
-        <a class="pro-tool-card" href="notes.html">
-          <div class="pro-tool-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          </div>
-          <div class="pro-tool-body">
-            <div class="pro-tool-title">Notes</div>
-            <div class="pro-tool-desc">Personal call notes &amp; links</div>
-          </div>
-          <span class="pro-tool-arrow">›</span>
-        </a>
-        <div class="pro-tool-card" onclick="downloadAllMacros()">
-          <div class="pro-tool-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          </div>
-          <div class="pro-tool-body">
-            <div class="pro-tool-title">Download Macros</div>
-            <div class="pro-tool-desc">All reporting templates</div>
-          </div>
-          <span class="pro-tool-arrow">›</span>
-        </div>
       </div>
     </div>
 
@@ -2177,6 +2176,12 @@ function initAccordions(sectionEl) {
       setTimeout(() => heading.scrollIntoView({ behavior: 'smooth', block: 'start' }), 40);
     });
   });
+}
+
+// ── COLLAPSIBLE NAV SECTIONS ──
+function toggleNavSection(id) {
+  const sec = document.getElementById(id);
+  if (sec) sec.classList.toggle('collapsed');
 }
 
 function expandAll(sectionEl) {
@@ -4494,12 +4499,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const list = document.getElementById('nav-notes-list');
       if (!list) return;
       const key = userId ? 'rc_notes_v1_' + userId : 'rc_notes_v1';
+      list.dataset.notesKey = key;
       let notesList = [];
       try { notesList = JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) {}
       const populated = notesList.filter(n => (n.title || '').trim() || (n.body || '').trim());
       list.innerHTML = populated.map(n =>
-        `<div class="nav-sub-item" onclick="window.location.href='notes.html?id=${encodeURIComponent(n.id)}'">${(n.title||'Untitled').substring(0,30)}</div>`
+        `<div class="nav-sub-item" style="display:flex;align-items:center;padding-left:0;padding-right:4px;">
+          <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:3px 4px 3px 30px;cursor:pointer" onclick="window.location.href='notes.html?id=${encodeURIComponent(n.id)}'">${(n.title||'Untitled').substring(0,28)}</span>
+          <button class="nav-note-del-btn" onclick="event.stopPropagation();deleteNavNote('${String(n.id).replace(/'/g,"\\'")}');return false;" title="Delete note" style="background:none;border:none;color:var(--text3);font-size:15px;cursor:pointer;flex-shrink:0;padding:0 4px;line-height:1;font-family:var(--font)">×</button>
+        </div>`
       ).join('') + `<div class="nav-sub-item" style="color:var(--teal)" onclick="window.location.href='notes.html?new=1'">+ New note</div>`;
+      // expose re-render for external delete calls
+      window._notesNavRender = () => _renderNotesNav(userId);
     }
 
     function _applyHeaderAuth(user) {
@@ -4556,6 +4567,19 @@ document.addEventListener('DOMContentLoaded', () => {
   if (window.RadCallAuth) { _initFavorites(); }
   else { setTimeout(_initFavorites, 400); }
 });
+
+// ── SCRATCHPAD NOTE DELETE ──
+function deleteNavNote(noteId) {
+  const list = document.getElementById('nav-notes-list');
+  if (!list) return;
+  const key = list.dataset.notesKey || 'rc_notes_v1';
+  try {
+    let arr = JSON.parse(localStorage.getItem(key) || '[]');
+    arr = arr.filter(n => String(n.id) !== String(noteId));
+    localStorage.setItem(key, JSON.stringify(arr));
+    if (window._notesNavRender) window._notesNavRender();
+  } catch(e) { console.error('deleteNavNote error', e); }
+}
 
 // ── KEYBOARD SHORTCUTS ──
 document.addEventListener('keydown', function(e) {
