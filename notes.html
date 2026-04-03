@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notes — RadCall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-auth.js"></script>
+<style>
+:root {
+  --bg: #0b0f14;
+  --panel: #111620;
+  --border: #1e2737;
+  --border-strong: #2a3444;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --text2: #94a3b8;
+  --teal: #14b8a6;
+  --teal-light: rgba(20,184,166,0.1);
+  --teal-mid: #2dd4bf;
+  --red: #ef4444;
+  --red-light: rgba(239,68,68,0.08);
+  --amber: #f59e0b;
+  --font: 'IBM Plex Sans', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ── Top bar ── */
+.topbar {
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text2);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: var(--font);
+}
+.back-btn:hover { color: var(--text); border-color: var(--border-strong); background: rgba(255,255,255,0.04); }
+.topbar-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+}
+.save-indicator {
+  font-size: 12px;
+  color: var(--muted);
+  transition: color 0.3s;
+}
+.save-indicator.saved { color: var(--teal); }
+
+/* ── Tabs ── */
+.tabs-bar {
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 16px;
+  flex-shrink: 0;
+  overflow-x: auto;
+}
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text2);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s;
+  user-select: none;
+}
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+.tab-close {
+  width: 16px; height: 16px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1;
+  transition: all 0.12s;
+}
+.tab:hover .tab-close { color: var(--text2); background: rgba(255,255,255,0.06); }
+.tab-close:hover { color: var(--red) !important; background: var(--red-light) !important; }
+.tab-add {
+  padding: 8px 10px;
+  color: var(--muted);
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 18px;
+  line-height: 1;
+  transition: all 0.15s;
+  margin-left: 2px;
+  flex-shrink: 0;
+}
+.tab-add:hover { color: var(--teal); background: var(--teal-light); }
+
+/* ── Editor ── */
+.editor-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.note-title-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 20px;
+  font-weight: 600;
+  padding: 18px 24px 14px;
+  outline: none;
+  flex-shrink: 0;
+}
+.note-title-input::placeholder { color: var(--muted); }
+.note-body {
+  flex: 1;
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 13.5px;
+  line-height: 1.75;
+  padding: 20px 24px 40px;
+  outline: none;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.note-body:empty::before {
+  content: attr(data-placeholder);
+  color: var(--muted);
+  pointer-events: none;
+}
+.note-body img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 8px 0;
+  display: block;
+  border: 1px solid var(--border);
+}
+.img-paste-hint {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--teal);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  z-index: 100;
+}
+.img-paste-hint.show { opacity: 1; }
+
+/* ── Footer ── */
+.statusbar {
+  background: var(--panel);
+  border-top: 1px solid var(--border);
+  height: 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px;
+  flex-shrink: 0;
+}
+.statusbar span {
+  font-size: 11px;
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <button class="back-btn" onclick="history.back()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Back
+  </button>
+  <div class="topbar-title">Notes</div>
+  <div class="save-indicator" id="saveIndicator">All changes saved</div>
+</div>
+
+<div class="tabs-bar" id="tabsBar">
+  <div class="tab-add" title="New note" onclick="addNote()">+</div>
+</div>
+
+<div class="editor-wrap">
+  <input class="note-title-input" id="noteTitle" type="text" placeholder="Note title…" oninput="onEdit()">
+  <div class="note-body" id="noteBody" contenteditable="true" data-placeholder="Start writing… notes, links, case pearls, reminders" spellcheck="true"></div>
+  <div class="img-paste-hint" id="imgPasteHint">Image pasted</div>
+</div>
+
+<div class="statusbar">
+  <span id="wordCount">0 words</span>
+  <span id="charCount">0 chars</span>
+  <span id="noteDate"></span>
+</div>
+
+<script>
+// Storage key is scoped per user once auth resolves
+let STORAGE_KEY = 'rc_notes_v1';
+let ACTIVE_KEY  = 'rc_notes_active';
+
+let notes = [];
+let activeId = null;
+let saveTimer = null;
+
+function setUserKeys(userId) {
+  STORAGE_KEY = 'rc_notes_v1_' + userId;
+  ACTIVE_KEY  = 'rc_notes_active_' + userId;
+}
+
+function load() {
+  try { notes = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { notes = []; }
+  if (!notes.length) notes = [newNoteObj('', '')];
+  try { activeId = localStorage.getItem(ACTIVE_KEY) || notes[0].id; } catch(e) { activeId = notes[0].id; }
+  if (!notes.find(n => n.id === activeId)) activeId = notes[0].id;
+  renderTabs();
+  loadActive();
+}
+
+function save() {
+  flushActive();
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(notes)); } catch(e) {}
+  try { localStorage.setItem(ACTIVE_KEY, activeId); } catch(e) {}
+  const ind = document.getElementById('saveIndicator');
+  ind.textContent = 'Saved';
+  ind.classList.add('saved');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => { ind.textContent = 'All changes saved'; ind.classList.remove('saved'); }, 1500);
+}
+
+function flushActive() {
+  const note = notes.find(n => n.id === activeId);
+  if (!note) return;
+  note.title = document.getElementById('noteTitle').value;
+  note.body  = document.getElementById('noteBody').innerHTML;
+  note.updated = Date.now();
+}
+
+function newNoteObj(title, body) {
+  return { id: Date.now() + Math.random().toString(36).slice(2), title, body, created: Date.now(), updated: Date.now() };
+}
+
+function renderTabs() {
+  const bar = document.getElementById('tabsBar');
+  const addBtn = bar.querySelector('.tab-add');
+  bar.querySelectorAll('.tab').forEach(t => t.remove());
+  notes.forEach(n => {
+    const tab = document.createElement('div');
+    tab.className = 'tab' + (n.id === activeId ? ' active' : '');
+    tab.dataset.id = n.id;
+    const label = n.title || 'Untitled';
+    tab.innerHTML = `<span style="max-width:120px;overflow:hidden;text-overflow:ellipsis">${esc(label)}</span><span class="tab-close" data-id="${n.id}">×</span>`;
+    tab.addEventListener('click', (e) => {
+      if (e.target.closest('.tab-close')) return;
+      switchTo(n.id);
+    });
+    tab.querySelector('.tab-close').addEventListener('click', (e) => {
+      e.stopPropagation();
+      deleteNote(n.id);
+    });
+    bar.insertBefore(tab, addBtn);
+  });
+}
+
+function switchTo(id) {
+  flushActive();
+  activeId = id;
+  try { localStorage.setItem(ACTIVE_KEY, id); } catch(e) {}
+  renderTabs();
+  loadActive();
+}
+
+function loadActive() {
+  const note = notes.find(n => n.id === activeId);
+  if (!note) return;
+  document.getElementById('noteTitle').value = note.title;
+  document.getElementById('noteBody').innerHTML = note.body || '';
+  updateStatus();
+}
+
+function addNote() {
+  flushActive();
+  const n = newNoteObj('', '');
+  notes.push(n);
+  activeId = n.id;
+  save();
+  renderTabs();
+  loadActive();
+  document.getElementById('noteTitle').focus();
+}
+
+function deleteNote(id) {
+  if (notes.length === 1) {
+    const note = notes[0];
+    note.title = ''; note.body = ''; note.updated = Date.now();
+    save();
+    loadActive();
+    return;
+  }
+  const idx = notes.findIndex(n => n.id === id);
+  notes.splice(idx, 1);
+  if (activeId === id) activeId = notes[Math.max(0, idx - 1)].id;
+  save();
+  renderTabs();
+  loadActive();
+}
+
+function onEdit() {
+  updateStatus();
+  clearTimeout(window._autoSave);
+  window._autoSave = setTimeout(save, 600);
+  const activeTab = document.querySelector(`.tab[data-id="${activeId}"] span`);
+  if (activeTab) {
+    const title = document.getElementById('noteTitle').value || 'Untitled';
+    activeTab.textContent = title.length > 18 ? title.slice(0, 18) + '…' : title;
+  }
+}
+
+function updateStatus() {
+  const body = document.getElementById('noteBody').innerText || '';
+  const words = body.trim() ? body.trim().split(/\s+/).length : 0;
+  document.getElementById('wordCount').textContent = words + ' word' + (words !== 1 ? 's' : '');
+  document.getElementById('charCount').textContent = body.length + ' char' + (body.length !== 1 ? 's' : '');
+  const note = notes.find(n => n.id === activeId);
+  if (note?.updated) {
+    const d = new Date(note.updated);
+    document.getElementById('noteDate').textContent = 'Last saved ' + d.toLocaleDateString([], {month:'short',day:'numeric'}) + ' ' + d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  }
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function applyUrlParams() {
+  const params = new URLSearchParams(location.search);
+  if (params.get('new') === '1') {
+    addNote();
+    history.replaceState(null, '', 'notes.html');
+    return;
+  }
+  const id = params.get('id');
+  if (id && notes.find(n => n.id === id)) {
+    switchTo(id);
+    history.replaceState(null, '', 'notes.html');
+  }
+}
+
+document.getElementById('noteBody').addEventListener('input', onEdit);
+document.getElementById('noteBody').addEventListener('keydown', (e) => {
+  // Tab inserts spaces instead of shifting focus
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    document.execCommand('insertText', false, '    ');
+  }
+});
+window.addEventListener('beforeunload', () => { flushActive(); try { localStorage.setItem(STORAGE_KEY, JSON.stringify(notes)); } catch(e) {} });
+
+// Image paste handler
+document.getElementById('noteBody').addEventListener('paste', (e) => {
+  const items = e.clipboardData?.items;
+  if (!items) return;
+  for (const item of items) {
+    if (item.type.startsWith('image/')) {
+      e.preventDefault();
+      const file = item.getAsFile();
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const img = document.createElement('img');
+        img.src = ev.target.result;
+        const sel = window.getSelection();
+        if (sel.rangeCount) {
+          const range = sel.getRangeAt(0);
+          range.deleteContents();
+          range.insertNode(img);
+          range.setStartAfter(img);
+          range.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        } else {
+          document.getElementById('noteBody').appendChild(img);
+        }
+        const hint = document.getElementById('imgPasteHint');
+        hint.classList.add('show');
+        setTimeout(() => hint.classList.remove('show'), 1800);
+        onEdit();
+      };
+      reader.readAsDataURL(file);
+      return;
+    }
+  }
+});
+
+/* ── Auth gate ── */
+async function initApp() {
+  if (window.RadCallAuth && !RadCallAuth._notConfigured && RadCallAuth.supabase) {
+    try {
+      const user = await RadCallAuth.requireAuth();
+      if (user) {
+        setUserKeys(user.id);
+        load();
+        applyUrlParams();
+        return;
+      }
+    } catch(e) {
+      console.warn('Auth error:', e);
+    }
+  }
+  // Fallback: no auth configured, use generic key
+  load();
+  applyUrlParams();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
+</script>
+</body>
+</html>

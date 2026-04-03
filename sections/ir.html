@@ -12,17 +12,17 @@
         <a class="toc-link" href="procedures/vascular-access.html">Central Venous Access</a>
         <a class="toc-link" href="procedures/drainage.html">Image-Guided Drainage</a>
       </div>
-      <div class="toc-cat-lbl">Guidelines</div>
+      <div class="toc-cat-lbl">Guidelines &amp; Tools</div>
       <div class="toc-list">
-        <a class="toc-link" href="#ir-anticoag">Anticoagulation guidelines</a>
+        <a class="toc-link" href="#ir-proc-library">Procedure Library</a>
+        <a class="toc-link" href="#ir-anticoag">Anticoagulation Guidelines</a>
+        <a class="toc-link" href="#ir-abx-prophylaxis">Antibiotic Prophylaxis</a>
+        <a class="toc-link" href="#ir-betalactam">β-Lactam Cross-Reactivity</a>
       </div>
     </div>
 
     <div class="sec-group-label">Procedure Guides</div>
     <div class="topic-h" id="ir-procedures">Procedure Library</div>
-    <div class="info-box teal">
-      <strong>Procedure Playbooks:</strong> Each guide follows a standardized format — indications, pre-procedure checklist, anatomy, step-by-step technique, troubleshooting, complications, and critical pearls. Create and share your own "How I Do It" cards within each procedure. <a href="procedures/library.html" style="color:inherit;font-weight:600">Browse the community library →</a>
-    </div>
     <div class="link-grid">
       <a class="link-card" href="procedures/paracentesis.html"><div class="link-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></div><div class="link-card-body"><div class="link-card-title">US-Guided Paracentesis</div><div class="link-card-src">SIR Category 1 · Local anesthesia</div></div></a>
       <a class="link-card" href="procedures/thoracentesis.html"><div class="link-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></div><div class="link-card-body"><div class="link-card-title">US-Guided Thoracentesis</div><div class="link-card-src">SIR Category 1 · Local anesthesia</div></div></a>
@@ -32,25 +32,647 @@
       <a class="link-card" href="procedures/drainage.html"><div class="link-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div><div class="link-card-body"><div class="link-card-title">Image-Guided Drainage</div><div class="link-card-src">Procedure Family · Abscess · Chest Tube / Empyema</div></div></a>
     </div>
 
-    <div class="sec-group-label">Guidelines</div>
+    <div class="sec-group-label">Guidelines &amp; Quick-Reference Tools</div>
+
+    <!-- ── IR Procedure Library (PRO) ─────────────────────────── -->
+    <div class="topic-h" id="ir-proc-library">
+      IR Procedure Library
+      <span style="font-size:9px;font-weight:700;font-family:var(--mono);letter-spacing:0.07em;background:rgba(168,85,247,0.12);color:#a855f7;border:1px solid rgba(168,85,247,0.3);padding:2px 6px;border-radius:3px;vertical-align:middle;margin-left:6px;">PRO</span>
+    </div>
+    <div class="info-box teal">
+      <strong>Procedure Playbooks:</strong> Each guide follows a standardized format — indications, pre-procedure checklist, anatomy, step-by-step technique, troubleshooting, complications, and critical pearls. Create and share your own "How I Do It" cards within each procedure. <a href="procedures/library.html" style="color:inherit;font-weight:600">Browse the community library →</a>
+    </div>
+
+    <!-- ── Anticoagulation Quick-Reference Tool ────────────────── -->
     <div class="topic-h" id="ir-anticoag">Anticoagulation Periprocedural Guidelines</div>
-    <div class="info-box blue">See your institution's specific protocols. The below is a general framework based on SIR guidelines.</div>
-    <table class="ref-table">
-      <thead><tr><th>Risk Category</th><th>Examples</th><th>Anticoagulation</th></tr></thead>
-      <tbody>
-        <tr><td>Low bleeding risk</td><td>Dialysis access, venography, IVC filter, PICC, central line</td><td>No need to hold anticoagulation typically</td></tr>
-        <tr><td>Moderate bleeding risk</td><td>Core biopsy (superficial), thoracentesis, paracentesis, drain placement</td><td>Individualize; check INR/platelet; hold anticoagulants per SIR</td></tr>
-        <tr><td>High bleeding risk</td><td>Organ biopsy (renal, liver), RF ablation, biliary drainage</td><td>Hold anticoagulation; INR &lt;1.5; platelets &gt;50K</td></tr>
-      </tbody>
-    </table>
-    <div class="img-gallery">
-<figure class="ref-figure">
-<img src="images/guidelines.png" alt="" loading="lazy">
-</figure>
-</div>
+    <div class="info-box blue">Based on SIR Consensus Guidelines. Always defer to your institution's specific protocols and clinical context.</div>
+
+    <style>
+    /* ── Anticoag Tool ── */
+    .anticoag-tool { margin: 16px 0 24px; }
+    .anticoag-risk-tabs { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+    .anticoag-risk-btn {
+      padding: 7px 16px; border-radius: 7px; border: 1px solid var(--border, #1e2737);
+      background: transparent; color: var(--text2, #94a3b8); font-size: 12.5px; font-weight: 500;
+      cursor: pointer; transition: all 0.15s; font-family: inherit;
+    }
+    .anticoag-risk-btn:hover { border-color: var(--teal, #14b8a6); color: var(--teal, #14b8a6); }
+    .anticoag-risk-btn.active {
+      background: rgba(20,184,166,0.12); color: var(--teal, #14b8a6);
+      border-color: rgba(20,184,166,0.4);
+    }
+    .anticoag-panel { display: none; }
+    .anticoag-panel.active { display: block; }
+    .anticoag-thresholds {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px;
+    }
+    .anticoag-threshold-card {
+      flex: 1; min-width: 130px;
+      background: rgba(20,184,166,0.07); border: 1px solid rgba(20,184,166,0.2);
+      border-radius: 8px; padding: 12px 14px;
+    }
+    .anticoag-threshold-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--teal, #14b8a6); margin-bottom: 4px; font-family: var(--mono, monospace);
+    }
+    .anticoag-threshold-val {
+      font-size: 18px; font-weight: 700; color: var(--text, #e2e8f0); font-family: var(--mono, monospace);
+    }
+    .anticoag-threshold-sub {
+      font-size: 11px; color: var(--text2, #94a3b8); margin-top: 2px;
+    }
+    .anticoag-hold-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .anticoag-hold-table th {
+      text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+      color: var(--text2, #94a3b8); padding: 8px 10px;
+      border-bottom: 1px solid var(--border, #1e2737); background: rgba(255,255,255,0.02);
+    }
+    .anticoag-hold-table td {
+      padding: 9px 10px; border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: var(--text, #e2e8f0); vertical-align: top;
+    }
+    .anticoag-hold-table tr:last-child td { border-bottom: none; }
+    .anticoag-hold-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .hold-drug { font-weight: 600; font-size: 12.5px; }
+    .hold-class { font-size: 11px; color: var(--text2, #94a3b8); margin-top: 1px; }
+    .hold-time { font-family: var(--mono, monospace); font-size: 12px; color: var(--amber, #f59e0b); font-weight: 600; }
+    .hold-resume { font-size: 12px; color: var(--text2, #94a3b8); }
+    .hold-note { font-size: 11px; color: var(--text2, #94a3b8); font-style: italic; }
+    .anticoag-examples {
+      font-size: 12px; color: var(--text2, #94a3b8); margin-bottom: 14px; line-height: 1.6;
+    }
+    </style>
+
+    <div class="anticoag-tool">
+      <div class="anticoag-risk-tabs">
+        <button class="anticoag-risk-btn active" onclick="showAnticoagPanel('low', this)">
+          Category 1 — Low Risk
+        </button>
+        <button class="anticoag-risk-btn" onclick="showAnticoagPanel('mod', this)">
+          Category 2 — Moderate Risk
+        </button>
+        <button class="anticoag-risk-btn" onclick="showAnticoagPanel('high', this)">
+          Category 3 — High Risk
+        </button>
+      </div>
+
+      <!-- LOW RISK -->
+      <div class="anticoag-panel active" id="anticoag-panel-low">
+        <div class="anticoag-examples"><strong>Examples:</strong> Dialysis access, venography, IVC filter placement, PICC, tunneled central line, superficial aspiration/biopsy</div>
+        <div class="anticoag-thresholds">
+          <div class="anticoag-threshold-card">
+            <div class="anticoag-threshold-label">INR</div>
+            <div class="anticoag-threshold-val">No threshold</div>
+            <div class="anticoag-threshold-sub">Typically not required to hold</div>
+          </div>
+          <div class="anticoag-threshold-card">
+            <div class="anticoag-threshold-label">Platelets</div>
+            <div class="anticoag-threshold-val">No threshold</div>
+            <div class="anticoag-threshold-sub">Typically not required to hold</div>
+          </div>
+          <div class="anticoag-threshold-card">
+            <div class="anticoag-threshold-label">Anticoagulation</div>
+            <div class="anticoag-threshold-val">No hold</div>
+            <div class="anticoag-threshold-sub">Continue anticoagulation</div>
+          </div>
+        </div>
+        <table class="anticoag-hold-table">
+          <thead><tr><th>Agent</th><th>Class</th><th>Hold Before</th><th>Resume After</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><div class="hold-drug">Warfarin</div></td><td><div class="hold-class">Vitamin K antagonist</div></td><td><div class="hold-time">No hold needed</div></td><td><div class="hold-resume">Continue</div></td><td><div class="hold-note">Can proceed at any INR for Category 1</div></td></tr>
+            <tr><td><div class="hold-drug">Heparin (UFH)</div></td><td><div class="hold-class">IV anticoagulant</div></td><td><div class="hold-time">No hold needed</div></td><td><div class="hold-resume">Continue</div></td><td><div class="hold-note">—</div></td></tr>
+            <tr><td><div class="hold-drug">LMWH</div><div class="hold-class">(enoxaparin, dalteparin)</div></td><td><div class="hold-class">LMWH</div></td><td><div class="hold-time">No hold needed</div></td><td><div class="hold-resume">Continue</div></td><td><div class="hold-note">—</div></td></tr>
+            <tr><td><div class="hold-drug">Aspirin / NSAIDs</div></td><td><div class="hold-class">Antiplatelet</div></td><td><div class="hold-time">No hold needed</div></td><td><div class="hold-resume">Continue</div></td><td><div class="hold-note">No need to hold for Category 1</div></td></tr>
+            <tr><td><div class="hold-drug">Clopidogrel / Ticagrelor</div></td><td><div class="hold-class">P2Y12 inhibitor</div></td><td><div class="hold-time">No hold needed</div></td><td><div class="hold-resume">Continue</div></td><td><div class="hold-note">—</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- MODERATE RISK -->
+      <div class="anticoag-panel" id="anticoag-panel-mod">
+        <div class="anticoag-examples"><strong>Examples:</strong> Core biopsy (superficial/soft tissue), thoracentesis, paracentesis, drain placement (abdominal/pleural), gastrostomy, nephrostomy (simple), kyphoplasty</div>
+        <div class="anticoag-thresholds">
+          <div class="anticoag-threshold-card">
+            <div class="anticoag-threshold-label">INR</div>
+            <div class="anticoag-threshold-val">&lt; 1.5</div>
+            <div class="anticoag-threshold-sub">Correct if above threshold</div>
+          </div>
+          <div class="anticoag-threshold-card">
+            <div class="anticoag-threshold-label">Platelets</div>
+            <div class="anticoag-threshold-val">&gt; 50K</div>
+            <div class="anticoag-threshold-sub">Transfuse if below threshold</div>
+          </div>
+          <div class="anticoag-threshold-card">
+            <div class="anticoag-threshold-label">Hgb</div>
+            <div class="anticoag-threshold-val">&gt; 8 g/dL</div>
+            <div class="anticoag-threshold-sub">Individualize for patient</div>
+          </div>
+        </div>
+        <table class="anticoag-hold-table">
+          <thead><tr><th>Agent</th><th>Class</th><th>Hold Before</th><th>Resume After</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><div class="hold-drug">Warfarin</div></td><td><div class="hold-class">VKA</div></td><td><div class="hold-time">5 days</div></td><td><div class="hold-resume">Same evening / next day</div></td><td><div class="hold-note">Target INR &lt;1.5; consider bridging in high-thromboembolic-risk patients</div></td></tr>
+            <tr><td><div class="hold-drug">Heparin (UFH)</div></td><td><div class="hold-class">IV anticoagulant</div></td><td><div class="hold-time">4–6 hours</div></td><td><div class="hold-resume">1–2 hours post-procedure</div></td><td><div class="hold-note">Check aPTT; resume at half dose initially if concerned</div></td></tr>
+            <tr><td><div class="hold-drug">LMWH therapeutic</div><div class="hold-class">(enoxaparin 1 mg/kg BID)</div></td><td><div class="hold-class">LMWH</div></td><td><div class="hold-time">24 hours</div></td><td><div class="hold-resume">24 hours post-procedure</div></td><td><div class="hold-note">Hold 1 full dose (last dose &gt;24h before procedure)</div></td></tr>
+            <tr><td><div class="hold-drug">LMWH prophylactic</div><div class="hold-class">(enoxaparin 40 mg daily)</div></td><td><div class="hold-class">LMWH</div></td><td><div class="hold-time">12 hours</div></td><td><div class="hold-resume">Next scheduled dose</div></td><td><div class="hold-note">—</div></td></tr>
+            <tr><td><div class="hold-drug">Rivaroxaban</div><div class="hold-class">Xarelto</div></td><td><div class="hold-class">Factor Xa inhibitor</div></td><td><div class="hold-time">24 hours</div></td><td><div class="hold-resume">Next day (24–48h)</div></td><td><div class="hold-note">CrCl &gt;50: 24h hold. Adjust for renal impairment</div></td></tr>
+            <tr><td><div class="hold-drug">Apixaban</div><div class="hold-class">Eliquis</div></td><td><div class="hold-class">Factor Xa inhibitor</div></td><td><div class="hold-time">24 hours</div></td><td><div class="hold-resume">Next day (24–48h)</div></td><td><div class="hold-note">Lower risk of accumulation vs. dabigatran in renal insufficiency</div></td></tr>
+            <tr><td><div class="hold-drug">Dabigatran</div><div class="hold-class">Pradaxa</div></td><td><div class="hold-class">Direct thrombin inhibitor</div></td><td><div class="hold-time">24–48 hours</div></td><td><div class="hold-resume">24–48h post-procedure</div></td><td><div class="hold-note">CrCl &gt;50: 24h. CrCl 30–50: 48h. Avoid if CrCl &lt;30</div></td></tr>
+            <tr><td><div class="hold-drug">Aspirin</div></td><td><div class="hold-class">Antiplatelet (COX-1)</div></td><td><div class="hold-time">No hold</div></td><td><div class="hold-resume">Continue</div></td><td><div class="hold-note">Generally continue for Category 2; individualize if dual antiplatelet</div></td></tr>
+            <tr><td><div class="hold-drug">Clopidogrel</div><div class="hold-class">Plavix</div></td><td><div class="hold-class">P2Y12 inhibitor</div></td><td><div class="hold-time">5 days</div></td><td><div class="hold-resume">24–48h post-procedure</div></td><td><div class="hold-note">Hold if no recent coronary stent; do NOT hold within 30d of BMS or 12mo of DES</div></td></tr>
+            <tr><td><div class="hold-drug">Ticagrelor</div><div class="hold-class">Brilinta</div></td><td><div class="hold-class">P2Y12 inhibitor</div></td><td><div class="hold-time">5 days</div></td><td><div class="hold-resume">24–48h post-procedure</div></td><td><div class="hold-note">Same cautions as clopidogrel re: coronary stents</div></td></tr>
+            <tr><td><div class="hold-drug">Prasugrel</div><div class="hold-class">Effient</div></td><td><div class="hold-class">P2Y12 inhibitor</div></td><td><div class="hold-time">7 days</div></td><td><div class="hold-resume">24–48h post-procedure</div></td><td><div class="hold-note">More potent antiplatelet; longer hold required</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- HIGH RISK -->
+      <div class="anticoag-panel" id="anticoag-panel-high">
+        <div class="anticoag-examples"><strong>Examples:</strong> Renal biopsy, liver biopsy (transjugular or percutaneous), lung biopsy, biliary drainage (PTBD), RF/microwave ablation, spinal procedures (epidural), TIPS, complex vascular interventions</div>
+        <div class="anticoag-thresholds">
+          <div class="anticoag-threshold-card">
+            <div class="anticoag-threshold-label">INR</div>
+            <div class="anticoag-threshold-val">&lt; 1.5</div>
+            <div class="anticoag-threshold-sub">Mandatory; correct before procedure</div>
+          </div>
+          <div class="anticoag-threshold-card">
+            <div class="anticoag-threshold-label">Platelets</div>
+            <div class="anticoag-threshold-val">&gt; 50K</div>
+            <div class="anticoag-threshold-sub">Some centers use &gt;100K for high-risk</div>
+          </div>
+          <div class="anticoag-threshold-card">
+            <div class="anticoag-threshold-label">Hgb</div>
+            <div class="anticoag-threshold-val">&gt; 8 g/dL</div>
+            <div class="anticoag-threshold-sub">Type &amp; screen or crossmatch</div>
+          </div>
+        </div>
+        <table class="anticoag-hold-table">
+          <thead><tr><th>Agent</th><th>Class</th><th>Hold Before</th><th>Resume After</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><div class="hold-drug">Warfarin</div></td><td><div class="hold-class">VKA</div></td><td><div class="hold-time">5 days</div></td><td><div class="hold-resume">24–48h post-procedure</div></td><td><div class="hold-note">Target INR &lt;1.5; bridging with UFH/LMWH per risk stratification</div></td></tr>
+            <tr><td><div class="hold-drug">Heparin (UFH)</div></td><td><div class="hold-class">IV anticoagulant</div></td><td><div class="hold-time">4–6 hours</div></td><td><div class="hold-resume">2–4 hours post-procedure</div></td><td><div class="hold-note">Confirm aPTT normal; resume cautiously</div></td></tr>
+            <tr><td><div class="hold-drug">LMWH therapeutic</div></td><td><div class="hold-class">LMWH</div></td><td><div class="hold-time">24 hours</div></td><td><div class="hold-resume">24–48h post-procedure</div></td><td><div class="hold-note">Hold 1 full dose; confirm anti-Xa if concerned</div></td></tr>
+            <tr><td><div class="hold-drug">Rivaroxaban</div><div class="hold-class">Xarelto</div></td><td><div class="hold-class">Factor Xa inhibitor</div></td><td><div class="hold-time">48 hours</div></td><td><div class="hold-resume">48h post-procedure</div></td><td><div class="hold-note">Extend hold if renal impairment</div></td></tr>
+            <tr><td><div class="hold-drug">Apixaban</div><div class="hold-class">Eliquis</div></td><td><div class="hold-class">Factor Xa inhibitor</div></td><td><div class="hold-time">48 hours</div></td><td><div class="hold-resume">48h post-procedure</div></td><td><div class="hold-note">—</div></td></tr>
+            <tr><td><div class="hold-drug">Dabigatran</div><div class="hold-class">Pradaxa</div></td><td><div class="hold-class">Direct thrombin inhibitor</div></td><td><div class="hold-time">48–96 hours</div></td><td><div class="hold-resume">48–72h post-procedure</div></td><td><div class="hold-note">CrCl &gt;50: 48h. CrCl 30–50: 96h. Contraindicated if CrCl &lt;30</div></td></tr>
+            <tr><td><div class="hold-drug">Clopidogrel</div><div class="hold-class">Plavix</div></td><td><div class="hold-class">P2Y12 inhibitor</div></td><td><div class="hold-time">5 days</div></td><td><div class="hold-resume">24–48h post-procedure</div></td><td><div class="hold-note">Do NOT hold within 30d of BMS or 12mo of DES without cardiology clearance</div></td></tr>
+            <tr><td><div class="hold-drug">Ticagrelor</div><div class="hold-class">Brilinta</div></td><td><div class="hold-class">P2Y12 inhibitor</div></td><td><div class="hold-time">5 days</div></td><td><div class="hold-resume">24–48h post-procedure</div></td><td><div class="hold-note">—</div></td></tr>
+            <tr><td><div class="hold-drug">Prasugrel</div><div class="hold-class">Effient</div></td><td><div class="hold-class">P2Y12 inhibitor</div></td><td><div class="hold-time">7 days</div></td><td><div class="hold-resume">24–48h post-procedure</div></td><td><div class="hold-note">Most potent; longest hold</div></td></tr>
+            <tr><td><div class="hold-drug">Aspirin (high-risk neuro)</div></td><td><div class="hold-class">Antiplatelet</div></td><td><div class="hold-time">5 days</div></td><td><div class="hold-resume">24–48h post-procedure</div></td><td><div class="hold-note">Hold for spinal/neuraxial procedures; generally continue for visceral organ biopsy</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div><!-- end anticoag-tool -->
+
     <div class="info-box amber">
-      <strong>SIR Thresholds (general guidance):</strong> INR &lt;1.5 · Platelets &gt;50,000 (moderate) / &gt;100,000 (high risk) · Heparin: hold 4–6h; LMWH: hold 24h; Warfarin: hold 5 days; DOACs: hold 24–48h (renal-dependent for dabigatran)
+      <strong>Key Reversal Agents:</strong> Warfarin → Vitamin K ± FFP/4-factor PCC · UFH → Protamine sulfate · LMWH → Protamine (partial) · Dabigatran → Idarucizumab (Praxbind) · Rivaroxaban/Apixaban → Andexanet alfa (Andexxa) or 4-factor PCC off-label
     </div>
     <div class="link-grid">
       <a class="link-card" href="https://www.sirweb.org/" target="_blank"><div class="link-card-icon">🔗</div><div class="link-card-body"><div class="link-card-title">SIR Guidelines</div><div class="link-card-src">sirweb.org</div></div></a>
     </div>
+
+    <script>
+    function showAnticoagPanel(id, btn) {
+      document.querySelectorAll('.anticoag-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.anticoag-risk-btn').forEach(b => b.classList.remove('active'));
+      const panel = document.getElementById('anticoag-panel-' + id);
+      if (panel) panel.classList.add('active');
+      if (btn) btn.classList.add('active');
+    }
+    </script>
+
+    <!-- ── Antibiotic Prophylaxis Tool ─────────────────────────── -->
+    <div class="topic-h" id="ir-abx-prophylaxis">Antibiotic Prophylaxis for IR Procedures</div>
+    <div class="info-box blue">Based on SIR Consensus Guidelines on Periprocedural Antibiotic Prophylaxis. Always confirm with your institution's pharmacy and antibiogram. Allergy history must be reviewed before administration.</div>
+
+    <style>
+    /* ── Abx Prophylaxis Tool ── */
+    .abx-tool { margin: 16px 0 24px; }
+    .abx-search-row {
+      display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; align-items: center;
+    }
+    .abx-search-input {
+      flex: 1; min-width: 200px; max-width: 360px;
+      background: var(--panel, #111620); border: 1px solid var(--border, #1e2737);
+      color: var(--text, #e2e8f0); font-family: inherit; font-size: 13px;
+      padding: 7px 12px; border-radius: 7px; outline: none; transition: border-color 0.15s;
+    }
+    .abx-search-input:focus { border-color: var(--teal, #14b8a6); }
+    .abx-search-input::placeholder { color: var(--muted, #64748b); }
+    .abx-category-filter {
+      display: flex; gap: 6px; flex-wrap: wrap;
+    }
+    .abx-cat-btn {
+      padding: 5px 12px; border-radius: 6px; border: 1px solid var(--border, #1e2737);
+      background: transparent; color: var(--text2, #94a3b8); font-size: 11.5px; font-weight: 500;
+      cursor: pointer; transition: all 0.15s; font-family: inherit; white-space: nowrap;
+    }
+    .abx-cat-btn:hover { border-color: var(--teal, #14b8a6); color: var(--teal, #14b8a6); }
+    .abx-cat-btn.active {
+      background: rgba(20,184,166,0.12); color: var(--teal, #14b8a6);
+      border-color: rgba(20,184,166,0.4);
+    }
+    .abx-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .abx-table th {
+      text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+      color: var(--text2, #94a3b8); padding: 8px 10px;
+      border-bottom: 1px solid var(--border, #1e2737); background: rgba(255,255,255,0.02);
+    }
+    .abx-table td {
+      padding: 10px 10px; border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: top;
+    }
+    .abx-table tr:last-child td { border-bottom: none; }
+    .abx-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .abx-proc { font-weight: 600; font-size: 12.5px; color: var(--text, #e2e8f0); }
+    .abx-cat-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+      padding: 2px 6px; border-radius: 3px; margin-top: 2px; display: inline-block;
+    }
+    .abx-cat-label.vascular { background: rgba(59,130,246,0.12); color: #60a5fa; }
+    .abx-cat-label.drainage { background: rgba(20,184,166,0.12); color: #14b8a6; }
+    .abx-cat-label.biliary  { background: rgba(245,158,11,0.12); color: #f59e0b; }
+    .abx-cat-label.gi       { background: rgba(34,197,94,0.12); color: #22c55e; }
+    .abx-cat-label.genitourinary { background: rgba(168,85,247,0.12); color: #a855f7; }
+    .abx-cat-label.neuro    { background: rgba(239,68,68,0.12); color: #ef4444; }
+    .abx-cat-label.none     { background: rgba(100,116,139,0.12); color: #64748b; }
+    .abx-drug { font-family: var(--mono, monospace); font-size: 12px; color: var(--teal, #14b8a6); font-weight: 600; }
+    .abx-dose { font-size: 11.5px; color: var(--text2, #94a3b8); margin-top: 2px; }
+    .abx-allergy { font-size: 11.5px; color: var(--text2, #94a3b8); }
+    .abx-allergy-drug { font-family: var(--mono, monospace); font-size: 12px; color: var(--amber, #f59e0b); font-weight: 600; }
+    .abx-timing { font-size: 12px; color: var(--text2, #94a3b8); }
+    .abx-no-ppx {
+      font-size: 12px; color: var(--text2, #94a3b8); font-style: italic;
+    }
+    .abx-hidden { display: none !important; }
+    </style>
+
+    <div class="abx-tool">
+      <div class="abx-search-row">
+        <input class="abx-search-input" type="text" id="abxSearch" placeholder="Search procedure…" oninput="filterAbxTable()">
+        <div class="abx-category-filter">
+          <button class="abx-cat-btn active" onclick="setAbxCat('all', this)">All</button>
+          <button class="abx-cat-btn" onclick="setAbxCat('vascular', this)">Vascular</button>
+          <button class="abx-cat-btn" onclick="setAbxCat('drainage', this)">Drainage</button>
+          <button class="abx-cat-btn" onclick="setAbxCat('biliary', this)">Biliary / GI</button>
+          <button class="abx-cat-btn" onclick="setAbxCat('genitourinary', this)">GU</button>
+          <button class="abx-cat-btn" onclick="setAbxCat('neuro', this)">Neuro</button>
+          <button class="abx-cat-btn" onclick="setAbxCat('none', this)">No PPx</button>
+        </div>
+      </div>
+
+      <table class="abx-table" id="abxTable">
+        <thead>
+          <tr>
+            <th style="width:28%">Procedure</th>
+            <th style="width:26%">First-Line Agent &amp; Dose</th>
+            <th style="width:26%">PCN Allergy Alternative</th>
+            <th style="width:20%">Timing / Duration</th>
+          </tr>
+        </thead>
+        <tbody id="abxTableBody">
+          <!-- VASCULAR -->
+          <tr data-cat="vascular" data-proc="aortic stent graft endovascular aortic repair evar">
+            <td><div class="abx-proc">Aortic Stent-Graft / EVAR</div><span class="abx-cat-label vascular">Vascular</span></td>
+            <td><div class="abx-drug">Cefazolin 1–2 g IV</div><div class="abx-dose">(2g if &gt;80 kg; 3g if &gt;120 kg)</div></td>
+            <td><div class="abx-allergy-drug">Clindamycin 600 mg IV</div><div class="abx-allergy">or Vancomycin 15 mg/kg IV if MRSA risk</div></td>
+            <td><div class="abx-timing">30–60 min pre-procedure; re-dose if &gt;4h; single dose generally sufficient</div></td>
+          </tr>
+          <tr data-cat="vascular" data-proc="arterial intervention angioplasty stenting peripheral vascular">
+            <td><div class="abx-proc">Arterial Intervention (peripheral)</div><span class="abx-cat-label vascular">Vascular</span></td>
+            <td><div class="abx-drug">Cefazolin 1–2 g IV</div><div class="abx-dose">or no prophylaxis for diagnostic</div></td>
+            <td><div class="abx-allergy-drug">Clindamycin 600 mg IV</div><div class="abx-allergy">or Vancomycin if MRSA risk</div></td>
+            <td><div class="abx-timing">30–60 min pre-procedure; single dose</div></td>
+          </tr>
+          <tr data-cat="vascular" data-proc="port placement totally implantable venous access device">
+            <td><div class="abx-proc">Port Placement (implanted device)</div><span class="abx-cat-label vascular">Vascular</span></td>
+            <td><div class="abx-drug">Cefazolin 1–2 g IV</div><div class="abx-dose"></div></td>
+            <td><div class="abx-allergy-drug">Clindamycin 600 mg IV</div><div class="abx-allergy">or Vancomycin if MRSA history</div></td>
+            <td><div class="abx-timing">30–60 min pre-procedure; single dose</div></td>
+          </tr>
+          <tr data-cat="vascular" data-proc="ivc filter inferior vena cava">
+            <td><div class="abx-proc">IVC Filter Placement</div><span class="abx-cat-label vascular">Vascular</span></td>
+            <td><div class="abx-no-ppx">Not routinely indicated</div></td>
+            <td><div class="abx-no-ppx">—</div></td>
+            <td><div class="abx-timing">No prophylaxis per SIR</div></td>
+          </tr>
+          <tr data-cat="vascular" data-proc="picc peripherally inserted central catheter tunneled line">
+            <td><div class="abx-proc">PICC / Tunneled Central Line</div><span class="abx-cat-label vascular">Vascular</span></td>
+            <td><div class="abx-no-ppx">Not routinely indicated</div></td>
+            <td><div class="abx-no-ppx">—</div></td>
+            <td><div class="abx-timing">No routine prophylaxis; consider if immunocompromised</div></td>
+          </tr>
+          <tr data-cat="vascular" data-proc="tips transjugular intrahepatic portosystemic shunt">
+            <td><div class="abx-proc">TIPS</div><span class="abx-cat-label vascular">Vascular</span></td>
+            <td><div class="abx-drug">Cefazolin 1–2 g IV</div><div class="abx-dose">+ Metronidazole 500 mg IV if bowel flora risk</div></td>
+            <td><div class="abx-allergy-drug">Ciprofloxacin 400 mg IV</div><div class="abx-allergy">+ Metronidazole 500 mg IV</div></td>
+            <td><div class="abx-timing">30–60 min pre; consider 24h post if high-risk</div></td>
+          </tr>
+
+          <!-- DRAINAGE -->
+          <tr data-cat="drainage" data-proc="abscess drainage percutaneous catheter">
+            <td><div class="abx-proc">Percutaneous Abscess Drainage</div><span class="abx-cat-label drainage">Drainage</span></td>
+            <td><div class="abx-drug">Cefazolin 1–2 g IV</div><div class="abx-dose">or target organism (if known from prior culture)</div></td>
+            <td><div class="abx-allergy-drug">Clindamycin 600 mg IV</div><div class="abx-allergy">± Aztreonam 1 g IV (Gram-neg coverage)</div></td>
+            <td><div class="abx-timing">30–60 min pre-procedure; continue per clinical response</div></td>
+          </tr>
+          <tr data-cat="drainage" data-proc="chest tube empyema pleural drainage thoracostomy">
+            <td><div class="abx-proc">Chest Tube / Empyema Drainage</div><span class="abx-cat-label drainage">Drainage</span></td>
+            <td><div class="abx-drug">Cefazolin 1–2 g IV</div><div class="abx-dose">Broaden based on culture if empyema established</div></td>
+            <td><div class="abx-allergy-drug">Clindamycin 600 mg IV</div></td>
+            <td><div class="abx-timing">30–60 min pre; continue until drain removed if empyema</div></td>
+          </tr>
+          <tr data-cat="drainage" data-proc="nephrostomy tube percutaneous urinary drainage">
+            <td><div class="abx-proc">Percutaneous Nephrostomy</div><span class="abx-cat-label genitourinary">GU</span></td>
+            <td><div class="abx-drug">Cefazolin 1–2 g IV</div><div class="abx-dose">or Ampicillin-Sulbactam 3 g IV</div></td>
+            <td><div class="abx-allergy-drug">Ciprofloxacin 400 mg IV</div><div class="abx-allergy">or Aztreonam 1 g IV</div></td>
+            <td><div class="abx-timing">30–60 min pre-procedure; single dose unless infected system</div></td>
+          </tr>
+
+          <!-- BILIARY -->
+          <tr data-cat="biliary" data-proc="ptbd biliary drainage transhepatic cholangiography ptc">
+            <td><div class="abx-proc">Biliary Drainage (PTBD) / Cholangiography (PTC)</div><span class="abx-cat-label biliary">Biliary</span></td>
+            <td><div class="abx-drug">Ampicillin-Sulbactam 3 g IV</div><div class="abx-dose">or Cefazolin 1–2 g + Metronidazole 500 mg IV</div></td>
+            <td><div class="abx-allergy-drug">Ciprofloxacin 400 mg IV</div><div class="abx-allergy">+ Metronidazole 500 mg IV</div></td>
+            <td><div class="abx-timing">30–60 min pre-procedure; extend 24h if obstruction not relieved</div></td>
+          </tr>
+          <tr data-cat="biliary" data-proc="gastrostomy tube peg gastrostomy placement">
+            <td><div class="abx-proc">Gastrostomy Tube Placement</div><span class="abx-cat-label gi">GI</span></td>
+            <td><div class="abx-drug">Cefazolin 1–2 g IV</div><div class="abx-dose"></div></td>
+            <td><div class="abx-allergy-drug">Clindamycin 600 mg IV</div></td>
+            <td><div class="abx-timing">30–60 min pre-procedure; single dose</div></td>
+          </tr>
+
+          <!-- GU -->
+          <tr data-cat="genitourinary" data-proc="renal biopsy kidney biopsy">
+            <td><div class="abx-proc">Renal Biopsy</div><span class="abx-cat-label genitourinary">GU</span></td>
+            <td><div class="abx-no-ppx">Not routinely indicated</div></td>
+            <td><div class="abx-no-ppx">—</div></td>
+            <td><div class="abx-timing">No routine prophylaxis per SIR</div></td>
+          </tr>
+          <tr data-cat="genitourinary" data-proc="uterine fibroid embolization ufe">
+            <td><div class="abx-proc">Uterine Fibroid Embolization (UFE)</div><span class="abx-cat-label genitourinary">GU</span></td>
+            <td><div class="abx-drug">Cefazolin 1–2 g IV</div><div class="abx-dose"></div></td>
+            <td><div class="abx-allergy-drug">Clindamycin 600 mg IV</div><div class="abx-allergy">or Vancomycin if MRSA risk</div></td>
+            <td><div class="abx-timing">30–60 min pre; some centers extend 24h given post-embolization syndrome risk</div></td>
+          </tr>
+
+          <!-- NEURO -->
+          <tr data-cat="neuro" data-proc="kyphoplasty vertebroplasty spine">
+            <td><div class="abx-proc">Kyphoplasty / Vertebroplasty</div><span class="abx-cat-label neuro">Neuro / Spine</span></td>
+            <td><div class="abx-drug">Cefazolin 1–2 g IV</div><div class="abx-dose"></div></td>
+            <td><div class="abx-allergy-drug">Clindamycin 600 mg IV</div><div class="abx-allergy">or Vancomycin if MRSA risk</div></td>
+            <td><div class="abx-timing">30–60 min pre-procedure; single dose</div></td>
+          </tr>
+
+          <!-- NO PPX -->
+          <tr data-cat="none" data-proc="paracentesis thoracentesis lumbar puncture diagnostic biopsy liver lung">
+            <td><div class="abx-proc">Paracentesis / Thoracentesis / Diagnostic LP</div><span class="abx-cat-label none">No PPx</span></td>
+            <td><div class="abx-no-ppx">Not indicated</div></td>
+            <td><div class="abx-no-ppx">—</div></td>
+            <td><div class="abx-timing">No routine prophylaxis per SIR</div></td>
+          </tr>
+          <tr data-cat="none" data-proc="core biopsy liver lung bone soft tissue image guided biopsy">
+            <td><div class="abx-proc">Image-Guided Core Biopsy (liver, lung, soft tissue)</div><span class="abx-cat-label none">No PPx</span></td>
+            <td><div class="abx-no-ppx">Not routinely indicated</div></td>
+            <td><div class="abx-no-ppx">—</div></td>
+            <td><div class="abx-timing">No routine prophylaxis; consider if immunocompromised or pancreas/bowel adjacent</div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div><!-- end abx-tool -->
+
+    <div class="info-box amber">
+      <strong>Penicillin Allergy Note:</strong> True IgE-mediated PCN allergy is uncommon (&lt;1–2%). Skin testing or allergy referral is recommended when possible. See cross-reactivity section below for β-lactam guidance. Vancomycin is reserved for documented MRSA risk or severe PCN allergy — routine use contributes to resistance.
+    </div>
+
+    <script>
+    let _abxActiveCat = 'all';
+    function setAbxCat(cat, btn) {
+      _abxActiveCat = cat;
+      document.querySelectorAll('.abx-cat-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      filterAbxTable();
+    }
+    function filterAbxTable() {
+      const q = (document.getElementById('abxSearch').value || '').toLowerCase();
+      document.querySelectorAll('#abxTableBody tr').forEach(row => {
+        const proc = (row.dataset.proc || '').toLowerCase();
+        const cat  = row.dataset.cat || '';
+        const catOk = _abxActiveCat === 'all' || cat === _abxActiveCat ||
+                      (_abxActiveCat === 'biliary' && cat === 'gi');
+        const searchOk = !q || proc.includes(q);
+        row.classList.toggle('abx-hidden', !(catOk && searchOk));
+      });
+    }
+    </script>
+
+    <!-- ── β-Lactam Cross-Reactivity Chart ────────────────────── -->
+    <div class="topic-h" id="ir-betalactam">β-Lactam Cross-Reactivity &amp; Graded Challenge</div>
+    <div class="info-box blue">
+      Based on the Northwestern Medicine β-Lactam Cross-Reactivity and Graded Challenge protocol. Cross-reactivity between penicillins and cephalosporins is driven primarily by <strong>similar R1 side chains</strong>, not the core β-lactam ring. True allergy cross-reactivity is much lower than historically quoted (~1–2%, not 10%).
+    </div>
+
+    <style>
+    /* ── β-Lactam tool ── */
+    .blactam-tool { margin: 16px 0 28px; }
+    .blactam-concept-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px; margin-bottom: 20px;
+    }
+    .blactam-concept-card {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border, #1e2737);
+      border-radius: 8px; padding: 14px;
+    }
+    .blactam-concept-title {
+      font-size: 12.5px; font-weight: 600; color: var(--text, #e2e8f0); margin-bottom: 6px;
+    }
+    .blactam-concept-body {
+      font-size: 12px; color: var(--text2, #94a3b8); line-height: 1.6;
+    }
+    .blactam-risk-badge {
+      display: inline-block; font-size: 10px; font-weight: 700; font-family: var(--mono, monospace);
+      letter-spacing: 0.05em; padding: 2px 7px; border-radius: 4px; margin-bottom: 6px;
+    }
+    .blactam-risk-badge.high { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+    .blactam-risk-badge.mod  { background: rgba(245,158,11,0.12); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+    .blactam-risk-badge.low  { background: rgba(34,197,94,0.12);  color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+    .blactam-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-bottom: 16px; }
+    .blactam-table th {
+      text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+      color: var(--text2, #94a3b8); padding: 8px 10px;
+      border-bottom: 1px solid var(--border, #1e2737); background: rgba(255,255,255,0.02);
+    }
+    .blactam-table td {
+      padding: 9px 10px; border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: middle;
+    }
+    .blactam-table tr:last-child td { border-bottom: none; }
+    .blactam-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .blactam-drug-name { font-weight: 600; font-size: 12.5px; }
+    .blactam-drug-brand { font-size: 11px; color: var(--text2, #94a3b8); }
+    .blactam-action {
+      font-size: 12px; font-weight: 600;
+    }
+    .blactam-action.avoid { color: #ef4444; }
+    .blactam-action.caution { color: #f59e0b; }
+    .blactam-action.ok { color: #22c55e; }
+    .blactam-note { font-size: 11.5px; color: var(--text2, #94a3b8); }
+    .blactam-graded-steps {
+      counter-reset: step-counter;
+      display: flex; flex-direction: column; gap: 8px; margin: 14px 0;
+    }
+    .blactam-step {
+      display: flex; gap: 12px; align-items: flex-start;
+      background: rgba(255,255,255,0.025); border: 1px solid var(--border, #1e2737);
+      border-radius: 8px; padding: 12px 14px;
+    }
+    .blactam-step-num {
+      width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(59,130,246,0.15); color: #60a5fa;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; font-family: var(--mono, monospace);
+    }
+    .blactam-step-body { flex: 1; }
+    .blactam-step-title { font-size: 12.5px; font-weight: 600; color: var(--text, #e2e8f0); margin-bottom: 3px; }
+    .blactam-step-detail { font-size: 11.5px; color: var(--text2, #94a3b8); line-height: 1.55; }
+    </style>
+
+    <div class="blactam-tool">
+
+      <div class="blactam-concept-grid">
+        <div class="blactam-concept-card">
+          <div class="blactam-risk-badge high">HIGH CROSS-REACTIVITY</div>
+          <div class="blactam-concept-title">Identical or Similar R1 Side Chain</div>
+          <div class="blactam-concept-body">Cephalosporins sharing the same R1 group as the offending penicillin carry the highest risk of cross-reaction. Avoid unless graded challenge confirms tolerance.</div>
+        </div>
+        <div class="blactam-concept-card">
+          <div class="blactam-risk-badge mod">LOWER RISK</div>
+          <div class="blactam-concept-title">Dissimilar Side Chain</div>
+          <div class="blactam-concept-body">Cephalosporins with different R1 side chains have ~1–2% cross-reactivity. Can often be used with standard monitoring or single-dose graded challenge.</div>
+        </div>
+        <div class="blactam-concept-card">
+          <div class="blactam-risk-badge low">NEGLIGIBLE RISK</div>
+          <div class="blactam-concept-title">Carbapenems / Monobactams</div>
+          <div class="blactam-concept-body">Carbapenems have &lt;1% cross-reactivity with penicillins. Aztreonam (monobactam) shares R1 side chain with ceftazidime — avoid if allergic to ceftazidime.</div>
+        </div>
+        <div class="blactam-concept-card">
+          <div class="blactam-risk-badge low">KEY FACT</div>
+          <div class="blactam-concept-title">Allergy Label Inflation</div>
+          <div class="blactam-concept-body">&gt;90% of patients labeled "penicillin allergic" are not truly allergic on formal testing. Allergy de-labeling reduces broad-spectrum antibiotic use significantly.</div>
+        </div>
+      </div>
+
+      <div class="topic-h" style="font-size:14px;margin-bottom:10px">Penicillin Allergy → Cephalosporin Cross-Reactivity</div>
+      <table class="blactam-table">
+        <thead>
+          <tr>
+            <th>If Allergic To (Penicillin)</th>
+            <th>Cephalosporin</th>
+            <th>R1 Side Chain</th>
+            <th>Recommendation</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="blactam-drug-name">Ampicillin / Amoxicillin</div></td>
+            <td><div class="blactam-drug-name">Cefadroxil</div><div class="blactam-drug-brand">Duricef</div></td>
+            <td>Identical</td>
+            <td><span class="blactam-action avoid">AVOID</span></td>
+            <td><div class="blactam-note">Same aminobenzyl R1 side chain — highest cross-reactivity risk</div></td>
+          </tr>
+          <tr>
+            <td><div class="blactam-drug-name">Ampicillin / Amoxicillin</div></td>
+            <td><div class="blactam-drug-name">Cefprozil</div></td>
+            <td>Identical</td>
+            <td><span class="blactam-action avoid">AVOID</span></td>
+            <td><div class="blactam-note">Same aminobenzyl R1 side chain</div></td>
+          </tr>
+          <tr>
+            <td><div class="blactam-drug-name">Ampicillin / Amoxicillin</div></td>
+            <td><div class="blactam-drug-name">Cefaclor</div></td>
+            <td>Similar</td>
+            <td><span class="blactam-action caution">CAUTION</span></td>
+            <td><div class="blactam-note">Similar aminobenzyl group; higher serum sickness-type reactions reported with cefaclor</div></td>
+          </tr>
+          <tr>
+            <td><div class="blactam-drug-name">Ampicillin / Amoxicillin</div></td>
+            <td><div class="blactam-drug-name">Cefazolin</div><div class="blactam-drug-brand">Ancef</div></td>
+            <td>Dissimilar</td>
+            <td><span class="blactam-action ok">LOW RISK</span></td>
+            <td><div class="blactam-note">Unique R1 side chain; safe for surgical prophylaxis in most amoxicillin-allergic patients</div></td>
+          </tr>
+          <tr>
+            <td><div class="blactam-drug-name">Ampicillin / Amoxicillin</div></td>
+            <td><div class="blactam-drug-name">Ceftriaxone, Cefepime, Cefdinir</div></td>
+            <td>Dissimilar</td>
+            <td><span class="blactam-action ok">LOW RISK</span></td>
+            <td><div class="blactam-note">Different R1 groups; can typically be used without graded challenge in mild allergy history</div></td>
+          </tr>
+          <tr>
+            <td><div class="blactam-drug-name">Nafcillin / Oxacillin / Dicloxacillin</div></td>
+            <td><div class="blactam-drug-name">Most cephalosporins</div></td>
+            <td>Dissimilar</td>
+            <td><span class="blactam-action ok">LOW RISK</span></td>
+            <td><div class="blactam-note">Isoxazolyl side chains — not shared by common cephalosporins</div></td>
+          </tr>
+          <tr>
+            <td><div class="blactam-drug-name">Penicillin G / V</div></td>
+            <td><div class="blactam-drug-name">Cephalosporins (most)</div></td>
+            <td>Dissimilar</td>
+            <td><span class="blactam-action ok">LOW RISK</span></td>
+            <td><div class="blactam-note">Benzyl side chain not shared by commonly used cephalosporins; historical 10% figure is outdated</div></td>
+          </tr>
+          <tr>
+            <td><div class="blactam-drug-name">Piperacillin</div></td>
+            <td><div class="blactam-drug-name">Ceftazidime</div></td>
+            <td>Similar</td>
+            <td><span class="blactam-action caution">CAUTION</span></td>
+            <td><div class="blactam-note">Some structural similarity; also note aztreonam shares R1 chain with ceftazidime</div></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="topic-h" style="font-size:14px;margin-bottom:10px">Graded Challenge Protocol (Low-Risk Patients)</div>
+      <div class="info-box amber" style="margin-bottom:12px">Graded challenge is appropriate when the allergy history is low-risk (eg. remote childhood rash, family history without personal reaction, unknown reaction). It is NOT a substitute for allergy testing in patients with prior anaphylaxis or severe reactions.</div>
+
+      <div class="blactam-graded-steps">
+        <div class="blactam-step">
+          <div class="blactam-step-num">1</div>
+          <div class="blactam-step-body">
+            <div class="blactam-step-title">Risk stratify the allergy history</div>
+            <div class="blactam-step-detail">Low-risk features: remote reaction (&gt;10 years ago), unknown childhood rash, GI intolerance, family history only, prior tolerant exposure. HIGH-risk: anaphylaxis, urticaria, bronchospasm, angioedema — refer to allergy/immunology for formal skin testing.</div>
+          </div>
+        </div>
+        <div class="blactam-step">
+          <div class="blactam-step-num">2</div>
+          <div class="blactam-step-body">
+            <div class="blactam-step-title">Select appropriate agent based on side-chain similarity</div>
+            <div class="blactam-step-detail">Choose a cephalosporin with a dissimilar R1 side chain to the offending penicillin (see table above). Cefazolin is often the agent of choice for surgical prophylaxis given its unique R1 group.</div>
+          </div>
+        </div>
+        <div class="blactam-step">
+          <div class="blactam-step-num">3</div>
+          <div class="blactam-step-body">
+            <div class="blactam-step-title">Administer test dose (10% of full dose)</div>
+            <div class="blactam-step-detail">Give 10% of the therapeutic dose (eg. Cefazolin 100–200 mg IV). Observe for 30 minutes for any signs of reaction: urticaria, flushing, pruritis, bronchospasm, hypotension.</div>
+          </div>
+        </div>
+        <div class="blactam-step">
+          <div class="blactam-step-num">4</div>
+          <div class="blactam-step-body">
+            <div class="blactam-step-title">Administer remaining dose (90%) if no reaction</div>
+            <div class="blactam-step-detail">If the test dose is tolerated for 30 minutes, administer the remaining 90% of the dose. Observe for an additional 30–60 minutes post full dose. Epinephrine, diphenhydramine, and IV access must be immediately available.</div>
+          </div>
+        </div>
+        <div class="blactam-step">
+          <div class="blactam-step-num">5</div>
+          <div class="blactam-step-body">
+            <div class="blactam-step-title">Document outcome and de-label if tolerated</div>
+            <div class="blactam-step-detail">If tolerated without reaction, update the patient's allergy record. Consider formal allergy referral for penicillin skin testing if cephalosporins are frequently needed (eg. recurrent infections, surgical patient).</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end blactam-tool -->
