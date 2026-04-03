@@ -1608,7 +1608,7 @@ body.home-active footer { display: none; }
 
       <div class="nav-item nav-has-sub" id="nav-ir-guides" onclick="irGuidesToggle(this)"><span class="nav-dot" style="background:var(--teal)"></span>IR Procedures<span class="nav-pro-badge">PRO</span><span class="nav-arrow">›</span></div>
       <div class="nav-sub-tree" id="navtree-ir-guides">
-        <div class="nav-sub-item" onclick="window.location.href='procedures/library.html'">Procedure Playbooks</div>
+        <div class="nav-sub-item" onclick="goToResult('ir','ir-proc-library')">Procedure Playbooks</div>
         <div class="nav-sub-item" onclick="goToResult('ir','ir-anticoag')">Periprocedural Anticoag</div>
         <div class="nav-sub-item" onclick="goToResult('ir','ir-abx-prophylaxis')">Antibiotic Prophylaxis</div>
         <div class="nav-sub-item" onclick="goToResult('ir','ir-betalactam')">β-Lactam Cross-Reactivity</div>
@@ -4623,6 +4623,8 @@ document.addEventListener('keydown', function(e) {
   </div>
   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
     <a href="tos.html" style="color:var(--text3);text-decoration:none;transition:color .15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text3)'">Terms of Use</a>
+    <span style="color:var(--border2)">|</span>
+    <a href="mailto:help@rad-call.com" style="color:var(--text3);text-decoration:none;transition:color .15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text3)'">help@rad-call.com</a>
     <span style="color:var(--border2)">|</span>
     <span style="font-family:var(--mono)">v2.0 · 2026</span>
   </div>

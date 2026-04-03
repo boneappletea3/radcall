@@ -567,10 +567,12 @@
       <div class="help-text">One step per line. These will be auto-numbered.</div>
       <label>Pearls (optional)</label>
       <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <label>Your Name</label>
+      <input type="text" id="card-author-name" placeholder="Your name (shown on card)" />
       <input type="hidden" id="editing-card-id" value="" />
       <div class="modal-btns">
         <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
-        <button class="btn-primary" onclick="saveCard()">Save Card</button>
+        <button class="btn-primary" id="save-card-btn" onclick="saveCard()">Save Card</button>
       </div>
     </div>
   </div>
@@ -691,11 +693,13 @@
     const user = _user();
     if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
     document.getElementById('card-modal').classList.add('active');
+    const nameInput = document.getElementById('card-author-name');
     if (cardId) {
       const card = _cards.find(c => c.id === cardId);
       if (!card) return;
       document.getElementById('modal-title').textContent = 'Edit Card';
       document.getElementById('card-title').value = card.title || '';
+      if (nameInput) nameInput.value = card.display_name || '';
       document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
       document.getElementById('card-steps').value = (card.steps || []).join('\n');
       document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
@@ -707,6 +711,16 @@
       document.getElementById('card-steps').value = '';
       document.getElementById('card-pearls').value = '';
       document.getElementById('editing-card-id').value = '';
+      // Pre-fill author name from profile
+      if (nameInput && !nameInput.value.trim()) {
+        const u = _user();
+        if (nameInput && !nameInput.value) nameInput.value = (u && u.email) ? u.email.split('@')[0] : '';
+        if (window.RadCallAuth && window.RadCallAuth.getProfile) {
+          window.RadCallAuth.getProfile().then(p => {
+            if (nameInput && !nameInput.value.trim()) nameInput.value = (p && p.display_name) || '';
+          }).catch(() => {});
+        }
+      }
     }
   }
 
@@ -714,33 +728,48 @@
 
   async function saveCard() {
     const user = _user(); const sb = _sb();
-    if (!user || !sb) return;
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    if (!sb) { alert('Connection error — please reload and try again.'); return; }
     const title = document.getElementById('card-title').value.trim();
-    if (!title) { alert('Please enter a card title'); return; }
+    if (!title) { alert('Please enter a card title.'); return; }
     const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
     const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
     const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
     const editId = document.getElementById('editing-card-id').value;
-    const profile = await window.RadCallAuth.getProfile();
-    const displayName = (profile && profile.display_name) || user.email || 'Anonymous';
-
-    if (editId) {
-      // Update
-      _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, updated_at: new Date().toISOString() } : c);
-      renderCards(); closeCardModal();
-      await sb.from('procedure_cards').update({ title, supplies, steps, pearls, updated_at: new Date().toISOString() }).eq('id', editId);
-    } else {
-      // Insert
-      const tmpId = 'tmp-' + Date.now();
-      const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, created_at: new Date().toISOString() };
-      _cards.unshift(newCard);
-      renderCards(); closeCardModal();
-      const { data, error } = await sb.from('procedure_cards')
-        .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName })
-        .select().single();
-      if (!error && data) { _cards = _cards.map(c => c.id === tmpId ? data : c); }
+    const authorInput = document.getElementById('card-author-name');
+    const displayName = (authorInput && authorInput.value.trim()) || (user.email ? user.email.split('@')[0] : 'Anonymous');
+    const saveBtn = document.getElementById('save-card-btn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving…'; }
+    try {
+      if (editId) {
+        _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() } : c);
+        renderCards(); closeCardModal();
+        const { error } = await sb.from('procedure_cards').update({ title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() }).eq('id', editId);
+        if (error) console.error('Card update error:', error);
+      } else {
+        const tmpId = 'tmp-' + Date.now();
+        const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0, created_at: new Date().toISOString() };
+        _cards.unshift(newCard);
+        renderCards(); closeCardModal();
+        const { data, error } = await sb.from('procedure_cards')
+          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName })
+          .select().single();
+        if (error) {
+          console.error('Card insert error:', error);
+          _cards = _cards.filter(c => c.id !== tmpId);
+          renderCards();
+          alert('Could not save card: ' + (error.message || 'Unknown error. Check your connection and try again.'));
+        } else if (data) {
+          _cards = _cards.map(c => c.id === tmpId ? data : c);
+        }
+      }
+      try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    } catch(err) {
+      console.error('saveCard exception:', err);
+      alert('Something went wrong saving your card. Please try again.');
+    } finally {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Card'; }
     }
-    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
   }
 
   function editCard(id) { openCardModal(id); }
