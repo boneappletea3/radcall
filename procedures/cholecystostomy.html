@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Percutaneous Cholecystostomy — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Drain management table ── */
+    .drain-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .drain-table th, .drain-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .drain-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .drain-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    /* ── Info box ── */
+    .info-box { background: rgba(56,189,248,.06); border: 1px solid rgba(56,189,248,.18); border-radius: 14px; padding: 14px 16px; margin-top: 14px; }
+    .info-box h4 { margin: 0 0 8px; color: var(--accent); font-size: .9rem; text-transform: uppercase; letter-spacing: .06em; }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Playbook</div>
+      <h1>Percutaneous Cholecystostomy</h1>
+      <p class="subhead">Image-guided percutaneous decompression of the gallbladder in critically ill patients with acute cholecystitis who cannot tolerate surgery.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">Local + mild sedation (MAC in critically ill)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--accent-2)">Moderate (SIR Cat 2-3)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Bile peritonitis &middot; Hemorrhage &middot; Vasovagal</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Required (pip-tazo)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">Clinical response 24-72h &middot; Tube check 2-4 wks</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Relevant Anatomy</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#troubleshooting">5. Troubleshooting</a></li>
+          <li><a href="#complications">6. Complications</a></li>
+          <li><a href="#postprocedure">7. Post-Procedure</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#drain-management">9. Drain Management</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications / Contraindications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:14px;">
+              <div class="panel">
+                <h4>Indications</h4>
+                <ul class="list">
+                  <li>Acute calculous cholecystitis in high-risk surgical candidate (ASA 3-4)</li>
+                  <li><strong>Acute acalculous cholecystitis (AAC)</strong> — critically ill ICU patients; mortality &gt;50% without treatment</li>
+                  <li>Bridge to cholecystectomy — stabilize patient, then plan elective surgery</li>
+                  <li>Gallbladder perforation with bile leak</li>
+                  <li>Malignant gallbladder obstruction</li>
+                  <li>Portal for biliary interventions — transcholecystic CBD access when ERCP and PTBD not feasible</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Contraindications</h4>
+                <ul class="list">
+                  <li><strong>Absolute:</strong> None in true emergencies</li>
+                  <li><strong>Relative:</strong> Uncorrectable coagulopathy (SIR Cat 2-3 — correct when possible)</li>
+                  <li><strong>Relative:</strong> Massive ascites, especially transperitoneal approach</li>
+                  <li><strong>Relative:</strong> Non-distended gallbladder (no target for access)</li>
+                  <li><strong>Relative:</strong> Hepatic cirrhosis with portal hypertension — favor transperitoneal to avoid hepatic veins</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel">
+              <h4>Patient Populations</h4>
+              <ul class="list">
+                <li><strong>ICU patients:</strong> Acalculous cholecystitis common in the critically ill (trauma, post-op, TPN-dependent, burns)</li>
+                <li><strong>Elderly with multiple comorbidities:</strong> Cannot safely undergo general anesthesia or laparoscopic cholecystectomy</li>
+                <li><strong>Patients on anticoagulation:</strong> High bleeding risk with surgery; cholecystostomy is lower risk</li>
+                <li><strong>Pregnant patients:</strong> Transperitoneal approach avoids hepatic injury; avoid general anesthesia if possible</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Imaging review.</strong> US: wall thickening (&gt;3.5 mm), pericholecystic fluid, sonographic Murphy's sign, stones or sludge. CT: for anatomy, ascites, and bowel interposition on planned access route. HIDA if diagnosis uncertain — no GB visualization at 60 min after morphine augmentation = acalculous cholecystitis (99% sensitivity).</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Labs (SIR Category 2-3).</strong> CBC (leukocytosis), LFTs, BMP, coagulation panel. INR &lt;1.5, platelets &gt;50K for transhepatic approach. Transperitoneal approach slightly lower risk — no hepatic parenchyma traversal. Bilirubin elevation suggests CBD involvement — may need PTBD in addition.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Antibiotics.</strong> Piperacillin-tazobactam 3.375g IV prior to procedure. Continue 24-48h post-procedure. Covers the broad enteric spectrum (gram-negatives, anaerobes) expected in biliary infections.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Approach planning.</strong> Transhepatic (preferred): more stable catheter, less bile leak risk, suitable when bowel interposition or ascites preclude direct access. Transperitoneal: preferred with coagulopathy, cirrhosis, or hepatomegaly — no hepatic parenchyma traversal.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent.</strong> Discuss: bile peritonitis (~1%), hemorrhage (&lt;1%), vasovagal reaction during procedure, catheter dislodgement, need for surgery if no clinical improvement (~10% of patients). Emphasize that drain must NOT be removed early.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. RELEVANT ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="panel" style="margin-bottom:14px;">
+              <h4>Gallbladder and Access Principles</h4>
+              <ul class="list">
+                <li>Gallbladder lies in fossa on inferior surface of right liver (segments IVb and V). Fundus is the most anterior and inferior portion.</li>
+                <li>Access should target the GB fundus or body; approach along the long axis when possible to maximize catheter stability and pigtail formation</li>
+                <li>Fundus is furthest from hilar structures — safest access point, minimizing risk to CBD, hepatic artery, and portal vein</li>
+                <li>Neck connects to cystic duct &rarr; CBD. Do not puncture the cystic duct or CBD.</li>
+              </ul>
+            </div>
+            <div class="two-col">
+              <div class="panel">
+                <h4>Transhepatic Approach (Preferred)</h4>
+                <ul class="list">
+                  <li>Needle traverses liver parenchyma before entering GB</li>
+                  <li>Liver parenchyma acts as a seal around the catheter — bile peritonitis risk dramatically reduced if catheter dislodges</li>
+                  <li>More stable catheter position; preferred for GB body/neck access</li>
+                  <li>Use for: bowel interposition, large ascites, most routine cases</li>
+                  <li><strong class="danger">Avoid if: severe coagulopathy, significant hepatomegaly, cirrhosis with portal hypertension</strong></li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Transperitoneal Approach</h4>
+                <ul class="list">
+                  <li>Direct puncture of GB fundus through anterior abdominal wall — no liver traversal</li>
+                  <li>Higher bile leak risk if catheter dislodges (no hepatic seal)</li>
+                  <li>Lower hemorrhagic risk — no hepatic parenchymal crossing</li>
+                  <li>Preferred for: coagulopathy, cirrhosis, hepatomegaly, pregnancy</li>
+                  <li><strong>Must confirm no bowel interposition on US/CT</strong> before proceeding</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel" style="margin-top:14px;">
+              <h4>Danger Structures</h4>
+              <ul class="list danger">
+                <li><strong>Hepatic flexure of colon:</strong> Can interpose between anterior abdominal wall and GB fundus — confirm on US in real-time</li>
+                <li><strong>Duodenum:</strong> Medial to GB neck — avoid needle trajectory toward duodenum</li>
+                <li><strong>Hepatic artery and portal vein (hilum):</strong> Avoid central/hilar access; always target fundus/body</li>
+                <li><strong>CBD:</strong> Avoid puncturing common bile duct — access GB lumen only</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. HOW I DO IT ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">Default RadCall approach + community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+
+            <!-- Default RadCall card -->
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#128203; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#8595; Download</button></h4>
+              <div class="chip-row card-supplies">
+                <span class="chip">Ultrasound + sterile probe cover</span>
+                <span class="chip">ChloraPrep</span>
+                <span class="chip">Sterile drape</span>
+                <span class="chip">1% lidocaine</span>
+                <span class="chip">18G trocar needle or access needle</span>
+                <span class="chip">0.035" guidewire</span>
+                <span class="chip">8-10 Fr locking pigtail drainage catheter</span>
+                <span class="chip">Drainage bag</span>
+                <span class="chip">0-silk suture</span>
+                <span class="chip">Specimen tubes (gram stain, culture)</span>
+              </div>
+
+              <div class="info-box" style="margin-bottom:16px;">
+                <h4>Trocar vs. Seldinger Technique</h4>
+                <div class="two-col">
+                  <div>
+                    <p style="margin:0 0 6px;"><strong style="color:var(--accent)">Trocar (preferred in critically ill)</strong></p>
+                    <ul class="list muted" style="font-size:.93rem;">
+                      <li>One-stick technique — combined catheter/cannula/stylet advanced directly into GB</li>
+                      <li>Faster; no wire exchange needed</li>
+                      <li>Preferred when GB may collapse before catheter is in — decompresses in same motion</li>
+                      <li>Use for: distended GB, critically ill, urgent cases</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p style="margin:0 0 6px;"><strong style="color:var(--accent-2)">Seldinger</strong></p>
+                    <ul class="list muted" style="font-size:.93rem;">
+                      <li>Needle &rarr; aspirate bile confirmation &rarr; wire &rarr; dilate &rarr; catheter</li>
+                      <li>Allows small-needle confirmation before large catheter placement</li>
+                      <li>Use for: deep GB, uncertain access, or when confirming bile return before committing</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>US survey and planning</h4><div class="muted">Identify gallbladder, measure wall thickness, locate fundus and body. Plan transhepatic vs. transperitoneal based on anatomy and patient risk factors. Look for colon or bowel interposition on transperitoneal approach in real-time. Measure depth from skin to GB lumen.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Prep and local anesthesia</h4><div class="muted">Sterile prep with ChloraPrep. Sterile drape. Local anesthesia: 1% lidocaine infiltrated from skin to GB capsule (transhepatic) or GB wall (transperitoneal). Do not enter the GB lumen with the anesthesia needle.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Access under continuous real-time US guidance</h4><div class="muted">Trocar method (preferred in critically ill): advance 18G trocar needle-catheter system under continuous real-time US directly into GB lumen in a single motion. Aspirate bile to confirm position. OR Seldinger: advance access needle, aspirate bile, advance 0.035" wire, dilate tract, advance catheter.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Bile aspiration and culture</h4><div class="muted">Aspirate bile for gram stain and culture — critical diagnostic step. Note appearance: purulent = infected; bloody = hemorrhagic cholecystitis; dark green = concentrated; mucoid = mucocele. Send: aerobic culture, anaerobic culture, gram stain.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Catheter placement and pigtail formation</h4><div class="muted">Advance 8 Fr locking pigtail catheter over wire (Seldinger) or confirm trocar catheter position. Release locking mechanism to form pigtail within the GB lumen. Confirm catheter position on US — catheter should be visible within the gallbladder and bile should flow freely.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>Secure and connect</h4><div class="muted">Suture catheter to skin with 0-silk. Connect to external drainage bag. Record initial output volume, color, and character. Order nursing flush instructions (5-10 mL sterile saline q12h).</div></div></div>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Gallbladder collapses during access</h4>
+              <p class="muted"><strong>Likely cause:</strong> GB wall decompresses as needle tip perforates the wall — particularly if GB is tensely distended. Occurs before catheter is fully advanced.</p>
+              <p class="success"><strong>Next step:</strong> Trocar technique is preferred precisely to avoid this — catheter and needle advance together so the GB is entered and secured in one motion. If using Seldinger and GB collapses: advance wire quickly before GB decompresses. Consider switching to trocar on next case.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Difficult access — GB not well distended</h4>
+              <p class="muted"><strong>Likely cause:</strong> GB not adequately distended (partially decompressed, small or contracted GB, stones preventing distension). Small target is technically challenging under US alone.</p>
+              <p class="success"><strong>Next step:</strong> CT guidance or cone-beam CT may help in complex anatomy. Ensure patient is fasted (GB distends without stimulation). If still inadequate target, reconsider the diagnosis — a non-distended GB is less likely to be the source of acute cholecystitis.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>No bile return on aspiration</h4>
+              <p class="muted"><strong>Likely cause:</strong> Needle not in GB lumen — may be in liver parenchyma, pericholecystic fluid, or adjacent bowel.</p>
+              <p class="success"><strong>Next step:</strong> Confirm on real-time US that needle tip is within the GB lumen. Withdraw and redirect if not clearly intraluminal. Aspirate slowly — very thick bile (pus or inspissated bile) may require gentle suction. If still no return with correct position, viscous contents may require wire-based confirmation of position before proceeding.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>High-output bile from drain (&gt;500 mL/day)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Normal in first 24-48h as a tensely distended GB decompresses. Ongoing high output suggests cystic duct obstruction, continued biliary leak into GB, or CBD fistula.</p>
+              <p class="success"><strong>Next step:</strong> Expected early on. Monitor electrolytes if high volume (bile contains bicarbonate, chloride, potassium). If output remains &gt;500 mL/day beyond 72h, consider cholescintigraphy or cholecystocholangiogram to assess cystic duct patency and CBD anatomy.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Immediate / Periprocedural</h4>
+              <ul class="list danger">
+                <li><strong>Bile peritonitis (1-4%)</strong> — catheter dislodgement or inadequate hepatic seal (transperitoneal approach); most feared complication</li>
+                <li><strong>Hemorrhage</strong> — usually minor tract hemostasis; significant if hepatic vessel injured (transhepatic approach)</li>
+                <li><strong>Vasovagal reaction</strong> — monitor during and immediately after; have atropine available</li>
+                <li><strong>Procedure-related sepsis</strong> — infected bile manipulation; pre-procedure antibiotics essential</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Delayed</h4>
+              <ul class="list">
+                <li><strong>Catheter dislodgement</strong> — most common delayed complication; patient education critical; do not remove early</li>
+                <li><strong>Catheter occlusion</strong> — requires flush or exchange; sludge common in cholecystitis</li>
+                <li><strong>Failed decompression requiring surgery (~10%)</strong> — gangrenous cholecystitis, emphysematous cholecystitis, perforation; surgical consult when no clinical improvement at 48-72h</li>
+                <li><strong>Peritoneal access site bleeding</strong> — rare, usually self-limited</li>
+                <li><strong>Skin site infection</strong> — regular dressing changes and site inspection</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. POST-PROCEDURE ═══ -->
+        <section class="section" id="postprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Post-Procedure Care</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Clinical Response Assessment</h4>
+                <ul class="list">
+                  <li>Clinical response expected within <strong>24-72 hours</strong>: fever resolves, WBC trending down, RUQ pain improving</li>
+                  <li>Output: 50-500 mL/day bile drainage expected; high output in first 24-48h is normal</li>
+                  <li>If no clinical improvement at 48-72h: CT to reassess for gangrenous cholecystitis, GB perforation, or drain malposition</li>
+                  <li>Surgical consult if no improvement — approximately 10% of patients will ultimately require cholecystectomy urgently</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Long-Term Planning</h4>
+                <ul class="list">
+                  <li><strong>Cholescintigraphy (HIDA)</strong> at 4-6 weeks if cholecystectomy planned: cystic duct patency determines if laparoscopic approach remains feasible</li>
+                  <li><strong>Cholecystectomy timing:</strong> Elective laparoscopic cholecystectomy 6-8 weeks after acute resolution in fit patients</li>
+                  <li>For non-surgical candidates: long-term catheter management with scheduled exchanges every 3 months</li>
+                  <li>Drain removal only after fistula tract maturation (~4 weeks minimum) AND confirmed cystic duct patency AND resolution of cholecystitis</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Transhepatic approach is preferred</strong> — liver parenchyma seals around the catheter, preventing bile peritonitis if the catheter dislodges. Transperitoneal approach loses this protection.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Trocar one-stick technique</strong> is faster and preferred in critically ill — the catheter and needle advance together so the GB is entered and secured before it can decompress. Less risk of GB decompression before catheter is in place.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Critically ill patients may not show classic cholecystitis signs</strong> — ICU patients with AAC often lack fever, RUQ tenderness, or leukocytosis. Have a low threshold for cholecystostomy when clinical picture fits in an ICU patient with unexplained sepsis.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>HIDA scan (DISIDA) diagnosis:</strong> No GB visualization at 60 min after morphine augmentation = acalculous cholecystitis with 99% sensitivity. Most reliable test for AAC when US is equivocal.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Do NOT remove drain until fistula track has matured (4 weeks minimum)</strong> — if removed too early before track formation, bile will spill into the peritoneum, causing bile peritonitis. Patient education is critical. Document this clearly in discharge instructions.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>10-30% of patients fail cholecystostomy</strong> and eventually require surgery — counsel patients and families accordingly. Gangrenous cholecystitis, emphysematous cholecystitis, and GB perforation are more likely to fail conservative management.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>AAC mortality:</strong> Acalculous cholecystitis carries &gt;50% mortality without treatment in critically ill patients. Cholecystostomy is a potentially life-saving intervention in this population — do not delay for marginal lab corrections.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. DRAIN MANAGEMENT ═══ -->
+        <section class="section" id="drain-management">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>Drain Management + Removal Criteria</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <table class="drain-table">
+              <thead>
+                <tr><th>Parameter</th><th>Normal / Target</th><th>Action / Notes</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Output monitoring</strong></td><td>50-500 mL/day</td><td>High output in first 24-48h is expected; if persistently &gt;500 mL, check cystic duct and CBD on cholecystocholangiogram</td></tr>
+                <tr><td><strong>Flushing</strong></td><td>5-10 mL sterile saline q12h</td><td>Nursing order required to maintain patency; prevents sludge accumulation in catheter</td></tr>
+                <tr><td><strong>Dressing change</strong></td><td>Every 3-5 days or when soiled</td><td>Inspect skin entry site for erythema, bile leak, or signs of drain migration</td></tr>
+                <tr><td><strong>Imaging confirmation</strong></td><td>Cholecystocholangiogram at 4 weeks</td><td>Confirm cystic duct patent before removal; inject dilute contrast through catheter under fluoroscopy</td></tr>
+                <tr><td><strong>Removal criteria (all must be met)</strong></td><td>Mature tract (4+ weeks) + clinical resolution + patent cystic duct on imaging</td><td>Never remove early; if all three criteria not met, continue drainage and reassess</td></tr>
+                <tr><td><strong>Long-term exchange</strong></td><td>Every 3 months if long-term drainage needed</td><td>For non-surgical candidates; scheduled IR follow-up with cholangiogram at exchange</td></tr>
+                <tr><td><strong>Signs of dysfunction</strong></td><td>—</td><td>Returning RUQ pain, fever, WBC rising, decreased output or output cessation — all warrant urgent reassessment</td></tr>
+                <tr><td><strong>Cholecystectomy timing</strong></td><td>6-8 weeks after resolution</td><td>For surgical candidates; confirm with surgery team; HIDA prior to surgery if laparoscopic approach planned</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <p class="footer-note">Ref: Winbladh A et al. Surg Endosc. 2009;23:1753-1768 &middot; Kandarpa K et al. Handbook of Interventional Radiologic Procedures, 5th ed. &middot; SIR Consensus Guidelines for Periprocedural Management.</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My Cholecystostomy Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;18G trocar needle&#10;8 Fr locking pigtail&#10;Sterile probe cover"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;US survey — transhepatic vs transperitoneal&#10;Trocar access under continuous real-time US&#10;Aspirate bile for culture"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <label>Your Name</label>
+      <input type="text" id="card-author-name" placeholder="Your name (shown on card)" />
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" id="save-card-btn" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'cholecystostomy';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _myVotes = {};
+  let _cardSearch = '';
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  // ── Load cards ──
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    await loadVotes();
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!document.getElementById('card-search-wrap')) {
+      const wrap = document.createElement('div');
+      wrap.id = 'card-search-wrap';
+      wrap.style.cssText = 'margin-bottom:12px';
+      wrap.innerHTML = '<input id="card-search" type="text" placeholder="Search community cards\u2026" style="width:100%;padding:8px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:inherit;font-family:inherit;font-size:13px;outline:none;" oninput="_cardSearch=this.value.toLowerCase();renderCards()">';
+      container.parentElement.insertBefore(wrap, container);
+    }
+    const q = _cardSearch.trim();
+    const visible = q ? _cards.filter(c => [c.title||'',c.display_name||'',...(c.supplies||[]),...(c.steps||[]),...(c.pearls||[])].join(' ').toLowerCase().includes(q)) : _cards;
+    if (!visible.length) {
+      loading.textContent = q ? 'No cards match your search.' : 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      container.innerHTML = '';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = visible.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      const myVote = _myVotes[c.id];
+      const votes = c.net_votes || 0;
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}" data-card-id="${c.id}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:5px;flex-shrink:0">
+              <button onclick="voteCard('${c.id}','up')" title="Helpful" style="background:none;border:1px solid ${myVote==='up'?'#22c55e':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='up'?'#22c55e':'inherit'};transition:.15s">${myVote==='up'?'▲':'△'}${votes>0?' '+votes:''}</button>
+              <button onclick="voteCard('${c.id}','down')" title="Not helpful" style="background:none;border:1px solid ${myVote==='down'?'#ef4444':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='down'?'#ef4444':'inherit'};transition:.15s">${myVote==='down'?'▼':'▽'}</button>
+              ${isOwn ? `<button onclick="editCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Edit</button><button onclick="deleteCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Delete</button>` : ''}
+            </div>
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  async function loadVotes() {
+    const sb = _sb(); const user = _user();
+    if (!sb || !user) return;
+    const { data } = await sb.from('procedure_card_votes').select('card_id,vote').eq('user_id', user.id);
+    _myVotes = {};
+    if (data) for (const v of data) _myVotes[v.card_id] = v.vote;
+  }
+
+  async function voteCard(cardId, dir) {
+    const sb = _sb(); const user = _user();
+    if (!user || !sb) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    const existing = _myVotes[cardId];
+    const card = _cards.find(c => c.id === cardId);
+    if (!card) return;
+    if (existing === dir) {
+      await sb.from('procedure_card_votes').delete().match({ user_id: user.id, card_id: cardId });
+      delete _myVotes[cardId];
+      card.net_votes = (card.net_votes || 0) + (dir === 'up' ? -1 : 1);
+    } else {
+      await sb.from('procedure_card_votes').upsert({ user_id: user.id, card_id: cardId, vote: dir }, { onConflict: 'user_id,card_id' });
+      const prev = existing ? (existing === 'up' ? -1 : 1) : 0;
+      card.net_votes = (card.net_votes || 0) + prev + (dir === 'up' ? 1 : -1);
+      _myVotes[cardId] = dir;
+    }
+    await sb.from('procedure_cards').update({ net_votes: card.net_votes }).eq('id', cardId);
+    renderCards();
+  }
+
+  // ── Card CRUD ──
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    const nameInput = document.getElementById('card-author-name');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      if (nameInput) nameInput.value = card.display_name || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+      if (nameInput && !nameInput.value.trim()) {
+        const u = _user();
+        if (nameInput && !nameInput.value) nameInput.value = (u && u.email) ? u.email.split('@')[0] : '';
+        if (window.RadCallAuth && window.RadCallAuth.getProfile) {
+          window.RadCallAuth.getProfile().then(p => {
+            if (nameInput && !nameInput.value.trim()) nameInput.value = (p && p.display_name) || '';
+          }).catch(() => {});
+        }
+      }
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    if (!sb) { alert('Connection error — please reload and try again.'); return; }
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title.'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const authorInput = document.getElementById('card-author-name');
+    const displayName = (authorInput && authorInput.value.trim()) || (user.email ? user.email.split('@')[0] : 'Anonymous');
+    const saveBtn = document.getElementById('save-card-btn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving\u2026'; }
+    try {
+      if (editId) {
+        _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() } : c);
+        renderCards(); closeCardModal();
+        const { error } = await sb.from('procedure_cards').update({ title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() }).eq('id', editId);
+        if (error) console.error('Card update error:', error);
+      } else {
+        const tmpId = 'tmp-' + Date.now();
+        const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0, created_at: new Date().toISOString() };
+        _cards.unshift(newCard);
+        renderCards(); closeCardModal();
+        const { data, error } = await sb.from('procedure_cards')
+          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0 })
+          .select().single();
+        if (error) {
+          console.error('Card insert error:', error);
+          _cards = _cards.filter(c => c.id !== tmpId);
+          renderCards();
+          alert('Could not save card: ' + (error.message || 'Unknown error. Check your connection and try again.'));
+        } else if (data) {
+          _cards = _cards.map(c => c.id === tmpId ? data : c);
+        }
+      }
+      try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    } catch(err) {
+      console.error('saveCard exception:', err);
+      alert('Something went wrong saving your card. Please try again.');
+    } finally {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Card'; }
+    }
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  // ── Helpers ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Percutaneous Cholecystostomy Supply List\n' + '\u2550'.repeat(40) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Percutaneous Cholecystostomy Supply List\n' + '\u2550'.repeat(40) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'cholecystostomy-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  // ── Init ──
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+</body>
+</html>
