@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biliary Drain Exchange — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Exchange table ── */
+    .drain-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .drain-table th, .drain-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .drain-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .drain-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    /* ── Info box ── */
+    .info-box { background: rgba(56,189,248,.06); border: 1px solid rgba(56,189,248,.18); border-radius: 14px; padding: 14px 16px; margin-top: 14px; }
+    .info-box h4 { margin: 0 0 8px; color: var(--accent); font-size: .9rem; text-transform: uppercase; letter-spacing: .06em; }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Playbook</div>
+      <h1>Biliary Drain Exchange</h1>
+      <p class="subhead">Routine fluoroscopic exchange of a percutaneous transhepatic biliary drainage (PTBD) catheter over a guidewire. Methodical wire control prevents the most common complication &mdash; tract loss.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">Local only (mature tract)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value">Low-Moderate (SIR Cat 2)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Wire loss &middot; Cholangitis</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Situational (culture-directed or empiric if febrile)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">Output/bile color check at 24h</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Relevant Anatomy</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#troubleshooting">5. Troubleshooting</a></li>
+          <li><a href="#complications">6. Complications</a></li>
+          <li><a href="#postprocedure">7. Post-Procedure</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#exchange-schedule">9. Exchange Schedule</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications / Contraindications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:14px;">
+              <div class="panel">
+                <h4>Scheduled Exchange</h4>
+                <ul class="list">
+                  <li>Every 3 months for external and internal-external biliary drainage catheters &mdash; encrustation, biofilm formation, and sludge accumulation cause routine occlusion</li>
+                  <li>Earlier if: catheter malfunction (poor drainage, increased pain, fever, jaundice returning)</li>
+                  <li>Catheter degradation &mdash; softening or cracking of hub</li>
+                  <li>Patient request for smaller or different catheter type</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Unscheduled Exchange</h4>
+                <ul class="list">
+                  <li><strong>Catheter occlusion (most common)</strong> &mdash; indicated by: &uarr;bilirubin, recurrent jaundice, fever, purulent bile, or no drainage from bag</li>
+                  <li>Partial dislodgement (catheter pulled back but still in tract)</li>
+                  <li>Side-hole malposition (all drainage into bag = internal holes not past stricture)</li>
+                  <li>Post-procedure assessment showing inadequate drain position</li>
+                  <li>New or progressive stricture requiring catheter repositioning</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel">
+              <h4>Contraindications</h4>
+              <ul class="list">
+                <li><strong>Complete dislodgement (tract loss)</strong> &mdash; new PTBD access required, not exchange</li>
+                <li><strong>Suspected hemobilia (bloody bag)</strong> &mdash; evaluate before exchange</li>
+                <li><strong>Uncorrectable coagulopathy</strong> &mdash; relative; SIR Cat 2, low risk with exchange over wire</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Review recent imaging.</strong> Has obstruction changed? New stricture? Progression of malignancy affecting catheter position needs? Consider whether repositioning or upsizing is indicated at this exchange.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Cholangiogram through existing catheter BEFORE exchange.</strong> Perform same sitting or prior day. Establishes current catheter position and biliary anatomy before removing the old catheter.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Antibiotics: situational.</strong> Give ciprofloxacin or ceftriaxone if fever, known biliary infection, immunocompromised, or diabetic. Not routine for a clean scheduled exchange in an afebrile patient.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Confirm new catheter ordered.</strong> Same type and size, or as clinically indicated. Have the replacement catheter at the table before you start.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Local anesthesia only.</strong> Mature transhepatic tract tolerates exchange with minimal lidocaine at the skin entry site. No systemic sedation required in most patients.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Positioning.</strong> Supine for right hepatic approach. Supine or slight left lateral decubitus for left hepatic approach.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. RELEVANT ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="panel" style="margin-bottom:14px;">
+              <h4>The Mature Biliary Tract</h4>
+              <ul class="list">
+                <li>Fibrosed channel from skin &rarr; hepatic parenchyma &rarr; bile duct. The hepatic parenchyma seals around the catheter, providing natural hemostasis.</li>
+                <li>Tract is maintained by catheter presence. Without catheter &rarr; tract begins closing within hours. This is the fundamental reason wire control is paramount.</li>
+                <li>Transhepatic = hemorrhage risk if wire lost &mdash; hepatic artery and portal vein branches run within the parenchyma traversed by the tract.</li>
+              </ul>
+            </div>
+            <div class="two-col">
+              <div class="panel">
+                <h4>Tract Timeline</h4>
+                <ul class="list">
+                  <li><strong>Immediately after wire loss:</strong> Mature tract holds open for approximately 30&ndash;60 minutes</li>
+                  <li><strong>After 1&ndash;2 hours:</strong> Tract becomes significantly narrowed &mdash; recannulation increasingly difficult</li>
+                  <li><strong>After several hours:</strong> Tract effectively closed &mdash; new transhepatic puncture required</li>
+                  <li>Older and more fibrosed tracts (months of catheter) hold longer than recent tracts</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Vascular Danger Within Tract</h4>
+                <ul class="list danger">
+                  <li>Hepatic artery branches run parallel and adjacent to bile ducts (portal triad)</li>
+                  <li>Portal vein tributaries traverse the parenchyma adjacent to the catheter tract</li>
+                  <li>Injury during wire manipulation can cause hemobilia or pseudoaneurysm</li>
+                  <li>Mature tracts that are well-established are generally safer than immature tracts (&lt;4 weeks)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. HOW I DO IT ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">Default RadCall approach + community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+
+            <!-- Default RadCall card -->
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#128203; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#8595; Download</button></h4>
+              <div class="chip-row card-supplies">
+                <span class="chip">Fluoroscopy</span>
+                <span class="chip">Dilute contrast + syringes</span>
+                <span class="chip">0.035&quot; Amplatz stiff wire</span>
+                <span class="chip">New biliary drain (same type/size or as indicated)</span>
+                <span class="chip">1% lidocaine (minimal)</span>
+                <span class="chip">0-silk suture</span>
+                <span class="chip">Drainage bag</span>
+              </div>
+
+              <h4 style="margin: 16px 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Cholangiogram through existing drain</h4><div class="muted">Inject 10&ndash;15 mL dilute contrast. Document: catheter position, side-hole location relative to stricture, biliary anatomy, any extravasation or significant change. Assess whether catheter needs repositioning at this exchange.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Unlock internal suture/string if present</h4><div class="muted">Biliary catheters often have a locking string (Cope loop or locking mechanism). Unlock before wire passage to allow the catheter to straighten for removal.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Advance Amplatz stiff guidewire</h4><div class="muted">Thread the Amplatz stiff wire through the existing catheter. Advance it well into the biliary system &mdash; ideally into the common bile duct or duodenum if this is an internal-external drain. Maximum purchase prevents wire loss during catheter removal.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Hold wire, remove old catheter</h4><div class="muted">Maintain a firm grip on the wire at the skin level with one hand. With the other, withdraw the old catheter in one smooth motion. Confirm wire still in position immediately by fluoroscopy. Never let go of the wire.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Advance new catheter over wire</h4><div class="muted">Track the new catheter over the wire to the same depth and position as the old catheter. If repositioning is needed (e.g., all sideholes should straddle the stricture), adjust position now under fluoroscopic guidance.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>Post-exchange cholangiogram</h4><div class="muted">Confirm catheter position: sideholes above AND below stricture for internal-external drain; free flow of contrast into duodenum if crossing stricture; no extravasation. Document the cholangiogram.</div></div></div>
+                <div class="step"><div class="step-num">7</div><div><h4>Secure and connect</h4><div class="muted">Suture catheter to skin with 0-silk. Connect drainage bag. Confirm bile drains freely. Document new catheter size, type, and position. Schedule next exchange in 3 months.</div></div></div>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Wire won't pass through occluded catheter</h4>
+              <p class="muted"><strong>Likely cause:</strong> Sludge, biofilm, or inspissated bile completely occluding the catheter lumen.</p>
+              <p class="success"><strong>Next step:</strong> Inject contrast first &mdash; may dislodge sludge and demonstrate the occlusion level. Try gentle rotation of the wire. If truly occluded: place a new wire alongside the catheter under fluoroscopy through the skin entry site, then exchange both simultaneously. A Chiba needle alongside the catheter through the same tract can also facilitate access.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Lost wire (most feared complication)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Wire slipped during catheter removal. Premature wire release before catheter fully removed.</p>
+              <p class="success"><strong>Next step:</strong> Act immediately. A mature transhepatic tract stays patent for approximately 30&ndash;60 minutes. Insert a new wire under fluoroscopic guidance through the tract using a Chiba needle directed along the known tract trajectory. Dilute contrast can help outline the tract. If tract closes &rarr; new PTBD access required.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>New catheter won't track to intended position</h4>
+              <p class="muted"><strong>Likely cause:</strong> Wire has buckled or looped, particularly in a dilated biliary system. Catheter kinking at the tract angulation.</p>
+              <p class="success"><strong>Next step:</strong> Confirm wire position under fluoroscopy &mdash; may need to advance wire further into duodenum for more purchase. Consider a hydrophilic-coated catheter (tracks more easily through tortuous tracts). A stiffer dilator passed first may help straighten the tract.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Hemobilia after exchange</h4>
+              <p class="muted"><strong>Likely cause:</strong> Pink or blood-tinged bile immediately after exchange is common and usually clears. Bright red pulsatile output in the bag is concerning for arterial injury or pseudoaneurysm.</p>
+              <p class="success"><strong>Next step:</strong> Pink bile &mdash; monitor and flush; usually clears within hours. Bright red pulsatile blood: CT angiography &rarr; hepatic artery embolization if pseudoaneurysm confirmed. Never remove the drain prematurely in the setting of active hemobilia.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Procedure-Related</h4>
+              <ul class="list danger">
+                <li><strong>Wire/tract loss (most feared)</strong> &mdash; prevents catheter replacement without new hepatic puncture; act immediately if wire lost</li>
+                <li><strong>Cholangitis / bacteremia (~2&ndash;5% of exchanges)</strong> &mdash; antibiotic prophylaxis in at-risk patients; ensure drain is draining after exchange</li>
+                <li><strong>Hemobilia</strong> &mdash; minor is common; significant pulsatile hemobilia needs CT angiography</li>
+                <li><strong>Catheter malposition</strong> &mdash; all side-holes must straddle the stricture; verify on post-exchange cholangiogram</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Minor / Manageable</h4>
+              <ul class="list">
+                <li><strong>Bile leak at entry site</strong> &mdash; often resolves with catheter in good position; skin care important</li>
+                <li><strong>Pain at exchange</strong> &mdash; local anesthesia at skin site is usually sufficient for mature tract; rarely needs sedation</li>
+                <li><strong>Vasovagal</strong> &mdash; monitor during procedure; IV access recommended</li>
+                <li><strong>Delayed occlusion</strong> &mdash; prevent with regular 3-month exchange schedule and daily flushing protocol</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. POST-PROCEDURE ═══ -->
+        <section class="section" id="postprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Post-Procedure Care</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Immediate Monitoring</h4>
+                <ul class="list">
+                  <li>Output monitoring: bile should drain freely from bag within minutes of exchange</li>
+                  <li>Bile color: yellow-green normal. Bloody = monitor closely. Purulent = active infection requiring antibiotics</li>
+                  <li>Confirm suture is secure and bag connected before patient leaves fluoroscopy suite</li>
+                  <li>Vital signs check before patient leaves if any concern</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Capping Trial</h4>
+                <ul class="list">
+                  <li>If considering internal drainage after exchange: cap 24&ndash;48h post-exchange to confirm internal drainage is functioning</li>
+                  <li>During cap trial: monitor for pain, fever, or jaundice (suggests internal drainage failing)</li>
+                  <li>If cap trial fails &rarr; uncap and return to external drainage; re-evaluate catheter position</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel" style="margin-top:14px;">
+              <h4>Patient Education</h4>
+              <ul class="list">
+                <li>Drain flushing technique: 5&ndash;10 mL sterile saline q12h maintains catheter patency</li>
+                <li>Dressing care: change every 3&ndash;5 days or when soiled; inspect entry site for erythema or bile leak</li>
+                <li>When to call IR: no output, fever, increasing pain, bloody bag, catheter appearing to have moved or pulled out</li>
+                <li>Next exchange scheduled: 3 months from today. Reinforce this with written instructions.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>NEVER let go of the wire.</strong> Exactly as with nephrostomy exchange, wire loss equals a new hepatic puncture. Maintain firm grip at skin level throughout the catheter removal. This is the single most important step.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Always do a cholangiogram BEFORE removing the old catheter.</strong> Do not assume the catheter is still in the correct position. The pre-exchange cholangiogram establishes the map before you remove the catheter and your window closes.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Amplatz stiff wire is essential.</strong> A floppy wire in a biliary system will not maintain adequate tract during catheter exchange. Use the stiffest wire that can be safely advanced to the deepest position possible in the biliary tree.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Advance wire as far as possible before exchanging.</strong> Ideally into the duodenum if the drain crosses the stricture. More wire purchase in a well-supported position means a safer, smoother exchange.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Regular 3-month exchanges prevent emergency procedures.</strong> The vast majority of after-hours biliary calls for occlusion are patients who missed scheduled exchanges. Reinforce the schedule clearly at every visit.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>If wire is lost, act immediately &mdash; do not wait for help to arrive.</strong> You have a 30&ndash;60 minute window. A Chiba needle directed into the known tract under fluoroscopy and contrast outlining the tract is your fastest recannulation approach.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Unlock the locking string before advancing the wire.</strong> Many biliary catheters have a Cope loop or locking mechanism. Failure to unlock before advancing the exchange wire will prevent the catheter from straightening, making smooth removal impossible.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. EXCHANGE SCHEDULE ═══ -->
+        <section class="section" id="exchange-schedule">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>Exchange Schedule &amp; Documentation</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:16px;">
+              <div class="panel">
+                <h4>Scheduled Intervals</h4>
+                <ul class="list">
+                  <li><strong>Internal-external biliary drain:</strong> Every 3 months</li>
+                  <li><strong>External-only biliary drain:</strong> Every 3 months</li>
+                  <li><strong>Metallic biliary stent (SEMS):</strong> Re-evaluate at 6&ndash;12 months; may need re-lining with plastic stent if occluded (tumor ingrowth)</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Early Exchange Indications</h4>
+                <ul class="list danger">
+                  <li>Fever + rigors suggesting cholangitis</li>
+                  <li>Bloody drain output</li>
+                  <li>Bilirubin rising despite apparently patent drain</li>
+                  <li>Patient reporting drainage stoppage or decreased output</li>
+                  <li>Catheter visible on imaging to be malpositioned</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel">
+              <h4>Procedure Note Documentation Checklist</h4>
+              <table class="drain-table">
+                <thead>
+                  <tr><th>Item</th><th>Document</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Previous catheter</strong></td><td>Size (Fr), type (external vs. internal-external), approximate dwell time</td></tr>
+                  <tr><td><strong>New catheter</strong></td><td>Size (Fr), type, brand if relevant</td></tr>
+                  <tr><td><strong>Pre-exchange cholangiogram</strong></td><td>Catheter position, side-hole locations, biliary anatomy changes, any extravasation</td></tr>
+                  <tr><td><strong>Post-exchange cholangiogram</strong></td><td>New catheter position; all sideholes across stricture; tip in duodenum (if internal-external); free flow confirmed</td></tr>
+                  <tr><td><strong>Wire used</strong></td><td>Type and size (Amplatz stiff 0.035&quot;)</td></tr>
+                  <tr><td><strong>Any repositioning</strong></td><td>Describe if catheter was advanced, repositioned, or upsized</td></tr>
+                  <tr><td><strong>Antibiotics</strong></td><td>Drug, dose, route, reason if given</td></tr>
+                  <tr><td><strong>Next exchange date</strong></td><td>3 months from today (or sooner if indicated)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Ref: Kaufman JA, Lee MJ (eds). Vascular and Interventional Radiology: The Requisites, 3rd ed. &middot; Kandarpa K et al. Handbook of Interventional Radiologic Procedures, 5th ed. &middot; SIR Consensus Guidelines for Periprocedural Management.</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My Biliary Exchange Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;0.035&quot; Amplatz stiff wire&#10;New biliary drain&#10;Dilute contrast"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;Pre-exchange cholangiogram&#10;Unlock locking string&#10;Advance Amplatz wire to duodenum"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <label>Your Name</label>
+      <input type="text" id="card-author-name" placeholder="Your name (shown on card)" />
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" id="save-card-btn" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'biliary-drain-exchange';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _myVotes = {};
+  let _cardSearch = '';
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  // ── Load cards ──
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    await loadVotes();
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!document.getElementById('card-search-wrap')) {
+      const wrap = document.createElement('div');
+      wrap.id = 'card-search-wrap';
+      wrap.style.cssText = 'margin-bottom:12px';
+      wrap.innerHTML = '<input id="card-search" type="text" placeholder="Search community cards\u2026" style="width:100%;padding:8px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:inherit;font-family:inherit;font-size:13px;outline:none;" oninput="_cardSearch=this.value.toLowerCase();renderCards()">';
+      container.parentElement.insertBefore(wrap, container);
+    }
+    const q = _cardSearch.trim();
+    const visible = q ? _cards.filter(c => [c.title||'',c.display_name||'',...(c.supplies||[]),...(c.steps||[]),...(c.pearls||[])].join(' ').toLowerCase().includes(q)) : _cards;
+    if (!visible.length) {
+      loading.textContent = q ? 'No cards match your search.' : 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      container.innerHTML = '';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = visible.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      const myVote = _myVotes[c.id];
+      const votes = c.net_votes || 0;
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}" data-card-id="${c.id}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:5px;flex-shrink:0">
+              <button onclick="voteCard('${c.id}','up')" title="Helpful" style="background:none;border:1px solid ${myVote==='up'?'#22c55e':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='up'?'#22c55e':'inherit'};transition:.15s">${myVote==='up'?'▲':'△'}${votes>0?' '+votes:''}</button>
+              <button onclick="voteCard('${c.id}','down')" title="Not helpful" style="background:none;border:1px solid ${myVote==='down'?'#ef4444':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='down'?'#ef4444':'inherit'};transition:.15s">${myVote==='down'?'▼':'▽'}</button>
+              ${isOwn ? `<button onclick="editCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Edit</button><button onclick="deleteCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Delete</button>` : ''}
+            </div>
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  async function loadVotes() {
+    const sb = _sb(); const user = _user();
+    if (!sb || !user) return;
+    const { data } = await sb.from('procedure_card_votes').select('card_id,vote').eq('user_id', user.id);
+    _myVotes = {};
+    if (data) for (const v of data) _myVotes[v.card_id] = v.vote;
+  }
+
+  async function voteCard(cardId, dir) {
+    const sb = _sb(); const user = _user();
+    if (!user || !sb) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    const existing = _myVotes[cardId];
+    const card = _cards.find(c => c.id === cardId);
+    if (!card) return;
+    if (existing === dir) {
+      await sb.from('procedure_card_votes').delete().match({ user_id: user.id, card_id: cardId });
+      delete _myVotes[cardId];
+      card.net_votes = (card.net_votes || 0) + (dir === 'up' ? -1 : 1);
+    } else {
+      await sb.from('procedure_card_votes').upsert({ user_id: user.id, card_id: cardId, vote: dir }, { onConflict: 'user_id,card_id' });
+      const prev = existing ? (existing === 'up' ? -1 : 1) : 0;
+      card.net_votes = (card.net_votes || 0) + prev + (dir === 'up' ? 1 : -1);
+      _myVotes[cardId] = dir;
+    }
+    await sb.from('procedure_cards').update({ net_votes: card.net_votes }).eq('id', cardId);
+    renderCards();
+  }
+
+  // ── Card CRUD ──
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    const nameInput = document.getElementById('card-author-name');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      if (nameInput) nameInput.value = card.display_name || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+      if (nameInput && !nameInput.value.trim()) {
+        const u = _user();
+        if (nameInput && !nameInput.value) nameInput.value = (u && u.email) ? u.email.split('@')[0] : '';
+        if (window.RadCallAuth && window.RadCallAuth.getProfile) {
+          window.RadCallAuth.getProfile().then(p => {
+            if (nameInput && !nameInput.value.trim()) nameInput.value = (p && p.display_name) || '';
+          }).catch(() => {});
+        }
+      }
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    if (!sb) { alert('Connection error — please reload and try again.'); return; }
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title.'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const authorInput = document.getElementById('card-author-name');
+    const displayName = (authorInput && authorInput.value.trim()) || (user.email ? user.email.split('@')[0] : 'Anonymous');
+    const saveBtn = document.getElementById('save-card-btn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving\u2026'; }
+    try {
+      if (editId) {
+        _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() } : c);
+        renderCards(); closeCardModal();
+        const { error } = await sb.from('procedure_cards').update({ title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() }).eq('id', editId);
+        if (error) console.error('Card update error:', error);
+      } else {
+        const tmpId = 'tmp-' + Date.now();
+        const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0, created_at: new Date().toISOString() };
+        _cards.unshift(newCard);
+        renderCards(); closeCardModal();
+        const { data, error } = await sb.from('procedure_cards')
+          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0 })
+          .select().single();
+        if (error) {
+          console.error('Card insert error:', error);
+          _cards = _cards.filter(c => c.id !== tmpId);
+          renderCards();
+          alert('Could not save card: ' + (error.message || 'Unknown error. Check your connection and try again.'));
+        } else if (data) {
+          _cards = _cards.map(c => c.id === tmpId ? data : c);
+        }
+      }
+      try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    } catch(err) {
+      console.error('saveCard exception:', err);
+      alert('Something went wrong saving your card. Please try again.');
+    } finally {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Card'; }
+    }
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  // ── Helpers ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Biliary Drain Exchange Supply List\n' + '\u2550'.repeat(40) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Biliary Drain Exchange Supply List\n' + '\u2550'.repeat(40) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'biliary-drain-exchange-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  // ── Init ──
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+</body>
+</html>

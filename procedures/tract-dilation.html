@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nephrostomy Tract Dilation — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Table ── */
+    .fluid-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .fluid-table th, .fluid-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .fluid-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .fluid-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    /* ── Lightbox ── */
+    .lightbox-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.88); z-index: 9999; align-items: center; justify-content: center; padding: 24px; }
+    .lightbox-overlay.open { display: flex; }
+    .lightbox-overlay img { width: min(90vw, 1400px); max-height: 90vh; object-fit: contain; border-radius: 16px; box-shadow: 0 0 60px rgba(0,0,0,.6); }
+    .lightbox-close { position: absolute; top: 20px; right: 24px; color: #fff; font-size: 1.8rem; cursor: pointer; opacity: .7; line-height: 1; }
+    .lightbox-close:hover { opacity: 1; }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Playbook</div>
+      <h1>Nephrostomy Tract Dilation</h1>
+      <p class="subhead">Sequential fluoroscopic dilation of a mature percutaneous nephrostomy tract to allow large-bore access (≥20 Fr) for endourologic procedures — percutaneous nephrolithotomy (PCNL) access and endoscopy.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">Moderate / General</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--accent-2)">Moderate (SIR Cat 2-3)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Hemorrhage · Perforation · Tract loss</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Required (ceftriaxone 1g IV)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">Urology PCNL within 24-72h</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#troubleshooting">5. Troubleshooting</a></li>
+          <li><a href="#complications">6. Complications</a></li>
+          <li><a href="#postprocedure">7. Post-Procedure</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#sheath-sizing">9. Access Sheath Sizing</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications / Contraindications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Indications</h4>
+              <ul class="list">
+                <li><strong>PCNL (percutaneous nephrolithotomy)</strong> — stone removal requiring nephroscope access (24-30 Fr)</li>
+                <li>Percutaneous endoscopy — nephroscopy, ureteral endoscopy</li>
+                <li>Nephrostomy upsizing for thick or pyonephric drainage</li>
+                <li>Second-stage nephrolithotomy after initial nephrostomy drainage</li>
+              </ul>
+              <div style="margin-top:14px; padding:12px; border-radius:10px; background:rgba(56,189,248,.07); border:1px solid rgba(56,189,248,.18);">
+                <div style="font-size:.8rem; font-weight:700; color:#c6ecff; text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px;">Target Access Size</div>
+                <div class="muted" style="font-size:.9rem;">PCNL requires 24-30 Fr Amplatz working sheath. Endoscopic procedures typically 14-20 Fr. Confirm with urology BEFORE dilating — know their scope size.</div>
+              </div>
+            </div>
+            <div class="panel">
+              <h4>Contraindications</h4>
+              <ul class="list">
+                <li><strong>Uncorrectable coagulopathy</strong> — risk of significant hemorrhage substantially higher with large-bore access than standard PCN</li>
+                <li><strong>Thin renal parenchyma</strong> — high rupture risk with large sheath dilation</li>
+                <li><strong>Active uncontrolled infection</strong> — dilate after antibiotic treatment and adequate drainage</li>
+              </ul>
+              <div style="margin-top:14px; padding:12px; border-radius:10px; background:rgba(245,158,11,.07); border:1px solid rgba(245,158,11,.18);">
+                <div style="font-size:.8rem; font-weight:700; color:#fcd58e; text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px;">SIR Bleeding Risk</div>
+                <div class="muted" style="font-size:.9rem;">Category 2–3. INR &lt;1.5, Plt &gt;50K. Type and screen required — hemorrhage risk 1-5% with large-bore access. Transfusion may be needed.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>CT/KUB review.</strong> Confirm stone burden, calyceal anatomy, planned access calyx. PCNL access calyx selection is a collaborative decision with urology — lower pole vs upper pole based on stone location and nephroscope trajectory needed.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Retrorenal colon check.</strong> Review CT specifically for retrorenal colon position before ANY large-bore access attempt. Far more dangerous to perforate colon with a 30 Fr sheath than a 21G needle.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Confirm access sheath size needed with urology</strong> before starting. Know what nephroscope they're using and what Fr they need. Don't guess.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Blood type and screen.</strong> Required — significant hemorrhage risk with large-bore access.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Antibiotics.</strong> Ceftriaxone 1g IV or fluoroquinolone based on urine culture. Required — large-bore manipulation of collecting system has high bacteremia risk.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Anesthesia plan.</strong> General anesthesia often preferred — patient movement during dilation is dangerous. Discuss with urology. If two-stage (IR dilation → urology PCNL separate day), moderate sedation may be adequate for IR portion.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Verify existing access or plan new access simultaneously.</strong> Patient should have existing nephrostomy or new PCN placement planned as part of same procedure.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Access Route</h4>
+                <ul class="list">
+                  <li><strong>Lower pole posterior calyx:</strong> Ideal for most PCNL access — below 12th rib, away from pleura, best trajectory for lower/mid ureteral stones</li>
+                  <li><strong>Upper pole access:</strong> Required for upper pole/staghorn stones — above 12th rib risk of pleural transgression (below 11th rib = transpleural). Higher risk; chest tube may be needed.</li>
+                  <li>Large-bore dilation traverses a significantly larger channel of renal parenchyma vs standard PCN — higher risk of laceration of interlobar or arcuate vessels</li>
+                  <li>Brödel's avascular zone still applies — aim for posterior calyceal access</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Danger Structures</h4>
+                <ul class="list">
+                  <li><strong>Interlobar/arcuate vessels:</strong> Large vessels at risk during 24-30 Fr dilation through renal parenchyma — most common source of significant hemorrhage</li>
+                  <li><strong>Pleura (upper pole):</strong> Transpleural risk with above-12th-rib access</li>
+                  <li><strong>Retrorenal colon:</strong> Check CT — far more dangerous with 30 Fr sheath than 21G needle</li>
+                  <li><strong>Liver/Spleen:</strong> Right and left flank access respectively</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. HOW I DO IT ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">Default RadCall approach + community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <!-- Default RadCall card -->
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#128203; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#8595; Download</button></h4>
+              <div class="chip-row card-supplies">
+                <span class="chip">Fluoroscopy (biplane or C-arm)</span>
+                <span class="chip">0.035" Amplatz super-stiff guidewire (safety wire)</span>
+                <span class="chip">Second working wire (0.035" Amplatz)</span>
+                <span class="chip">Balloon dilator (Nephromax 28-30 Fr) OR Alken telescoping metal dilators</span>
+                <span class="chip">30 Fr Amplatz peel-away working sheath</span>
+                <span class="chip">Serial dilators (8 → 28 Fr) if sequential method</span>
+                <span class="chip">Nephrostomy catheter (12-20 Fr for end-of-case drain)</span>
+                <span class="chip">Dilute contrast + generous syringes</span>
+                <span class="chip">ChloraPrep + sterile drape</span>
+                <span class="chip">1% lidocaine</span>
+                <span class="chip">Suture material</span>
+              </div>
+
+              <div style="margin: 12px 0; padding:12px; border-radius:12px; background:rgba(56,189,248,.05); border:1px solid rgba(56,189,248,.15);">
+                <div style="font-size:.85rem; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;">Dilation Method — Pick One</div>
+                <div class="muted" style="font-size:.9rem;"><strong>Balloon dilation (Nephromax):</strong> Faster. Inflate balloon under fluoroscopy to target Fr in one step. Hold 60-90 seconds. Good for straightforward tracts. — <strong>Sequential Alken dilators:</strong> More tactile. Telescope through each size 8 Fr → 30 Fr. Fluoroscopic confirmation at each step. Good for resistant tracts. Center preference/availability dependent. Learn one system well.</div>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Access confirmation</h4><div class="muted">Use existing nephrostomy catheter or place new PCN access. Take nephrostogram to confirm catheter position and delineate collecting system anatomy.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Safety wire placement</h4><div class="muted">Place stiff Amplatz wire as safety wire — advance into ureter or deep into renal pelvis. <strong>This is your lifeline.</strong> If anything goes wrong during dilation, this wire maintains access.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Two-wire technique</h4><div class="muted">Place second Amplatz wire alongside safety wire into collecting system. This two-wire technique is non-negotiable for large-bore dilation — wire loss during 30 Fr dilation is a serious emergency. The second wire provides immediate backup.</div></div></div>
+                <div class="step"><div class="step-num">4a</div><div><h4>Balloon dilation method</h4><div class="muted">Advance balloon dilator (Nephromax) over working wire. Inflate under fluoroscopy to target French size in one inflation. Confirm full expansion (hourglass deformity should efface as balloon reaches full size). Hold 60-90 seconds. Deflate and remove balloon.</div></div></div>
+                <div class="step"><div class="step-num">4b</div><div><h4>Sequential Alken dilator method (alternative)</h4><div class="muted">Start at 8 Fr dilator, advance over working wire under fluoroscopy. Telescope through each size upward to 28-30 Fr. Confirm fluoroscopic position at each step. The Alken system provides more tactile feedback but is more time-consuming.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Amplatz peel-away sheath</h4><div class="muted">Advance 30 Fr peel-away sheath + dilator over working wire through dilated tract. Position tip in renal pelvis — confirm intrarenal with contrast injection. Remove dilator — sheath remains in collecting system as working portal for urology.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>Confirm and hand off to urology</h4><div class="muted">Inject contrast through sheath to confirm intrarenal position and no significant extravasation. Transfer to urology for nephroscopy. OR: If staged procedure, leave a large-bore tube through sheath and peel away sheath — urology performs PCNL within 24-72h.</div></div></div>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Dilator buckles in retroperitoneal fat</h4>
+              <p class="muted"><strong>Likely cause:</strong> Insufficient wire advancement, retroperitoneal fat resistance, or floppy wire.</p>
+              <p class="success"><strong>Next step:</strong> Ensure Amplatz wire is maximally advanced — well into ureter for maximum purchase. Manual counterpressure on the flank while advancing dilator. Confirm Amplatz super-stiff is being used (not standard guidewire). Consider 2-wire technique if not already placed.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Difficulty advancing sheath after dilation</h4>
+              <p class="muted"><strong>Likely cause:</strong> Tract not fully open, skin/fascia adhesion, or wire kink.</p>
+              <p class="success"><strong>Next step:</strong> One more pass with the largest dilator to fully open the pathway. Skin nick may need to be enlarged. Confirm wire is not kinked on fluoroscopy. For balloon method: try another inflation at same size.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Significant arterial hemorrhage during dilation</h4>
+              <p class="muted"><strong>Likely cause:</strong> Interlobar or arcuate vessel laceration from large-bore dilation.</p>
+              <p class="success"><strong>Next step:</strong> STOP advancing. Notify urology immediately. Tamponade by advancing a large-bore nephrostomy catheter through the tract (tamponades the tract). If massive hemorrhage: angiographic embolization (pseudoaneurysm or AV fistula). Have this plan predetermined — brief the team before starting.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Lost wire — both wires out</h4>
+              <p class="muted"><strong>Likely cause:</strong> Inadvertent wire withdrawal during sheath/dilator exchanges.</p>
+              <p class="success"><strong>Next step:</strong> CRITICAL EMERGENCY. The 30 Fr tract will close rapidly. Rapid new needle access under fluoroscopy/US. This is why the two-wire technique is non-negotiable — one wire is never enough backup during large-bore work. Losing both wires simultaneously with a large tract open is an operating room emergency.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Immediate</h4>
+              <ul class="list danger">
+                <li><strong>Hemorrhage</strong> (#1 serious complication — 1-5% requiring transfusion; pseudoaneurysm/AV fistula from large-bore dilation)</li>
+                <li><strong>Pleural transgression</strong> (upper pole access) — pneumothorax or hemothorax; chest tube may be needed</li>
+                <li><strong>Collecting system perforation</strong> — urinoma; usually managed with drainage</li>
+                <li><strong>Organ injury</strong> — liver, spleen, colon (retrorenal); rare but serious</li>
+                <li><strong>Loss of tract access</strong> — two wires both lost; OR emergency</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Delayed (post-PCNL)</h4>
+              <ul class="list">
+                <li><strong>Delayed hemorrhage</strong> — pseudoaneurysm or AV fistula presenting 1-3 weeks post-PCNL as gross hematuria; angiographic embolization</li>
+                <li><strong>Urinoma</strong> — from tract extravasation</li>
+                <li><strong>Tract infection</strong> — treat with antibiotics; may need repeat drainage</li>
+                <li><strong>Hematuria</strong> — expected post-PCNL; should progressively clear. Clot obstruction → nephroscopy or irrigation</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. POST-PROCEDURE ═══ -->
+        <section class="section" id="postprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Post-Procedure Care</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Two-Stage Protocol (IR dilation → Urology PCNL)</h4>
+              <ul class="list">
+                <li>Tube in place after dilation; urology performs PCNL within 24-72h</li>
+                <li>Monitor Hgb post-dilation: check at 4-6h; transfusion per clinical status</li>
+                <li>Hematuria: expected; should be pink-red → clearing over hours to days</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Post-PCNL (Urology Handoff)</h4>
+              <ul class="list">
+                <li>Nephrostomy tube left in place (typically 12-20 Fr) for drainage — urology removes when cleared</li>
+                <li>Monitor Hgb 24h post-PCNL</li>
+                <li>Gross hematuria: track closely. Progressive clearing expected. Bright red with clots or dropping Hgb → CT angiography → embolization</li>
+                <li>KUB or CT post-PCNL for stone clearance assessment</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Two-wire technique is non-negotiable for large-bore dilation.</strong> Wire loss during 30 Fr dilation is a serious emergency — a tract that size closes fast and putting a new needle in that field is extremely difficult. One safety wire is never enough; use two.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Amplatz super-stiff wire provides the rigidity needed to drive dilators through 3-4 cm of soft tissue and renal parenchyma.</strong> Standard guidewires buckle. Standard Amplatz (not super-stiff) may be inadequate for very obese patients or resistant tissue. Super-stiff is the minimum.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Know the urology team's nephroscope size before you dilate.</strong> If they need 24 Fr and you dilate to 30 Fr, you've created excess parenchymal injury. If they need 30 Fr and you only went to 24 Fr, they'll need re-dilation. Communicate beforehand.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Have blood typed and screened, not just ordered.</strong> The 1-5% hemorrhage rate requiring transfusion is not trivial. In an obese or difficult-to-access patient, that number climbs. Blood should be available, not just "on order."</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Balloon dilation vs sequential Alken: both work.</strong> Learn your center's system and be expert in one. Don't switch mid-case when things get difficult. The complication rate is similar between methods when performed by an experienced operator.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Retrorenal colon check is mandatory before large-bore access.</strong> Present in ~10% of patients. Perforating the colon with a 30 Fr sheath causes fecaluria, severe sepsis, and very complicated management. Five seconds on CT to check is worth it every time.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. ACCESS SHEATH SIZING ═══ -->
+        <section class="section" id="sheath-sizing">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>Access Sheath Sizing Reference</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="panel">
+              <table class="fluid-table">
+                <thead>
+                  <tr>
+                    <th>Sheath Size</th>
+                    <th>Use</th>
+                    <th>Instrument</th>
+                    <th>Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>11-13 Fr</strong></td><td>Mini-PCNL</td><td>Mini-nephroscope</td><td>Growing adoption; less bleeding risk; smaller stones or selected cases</td></tr>
+                  <tr><td><strong>14-16 Fr</strong></td><td>Flexible ureteroscopy</td><td>Ureteroscope</td><td>Smaller tract, less bleeding risk</td></tr>
+                  <tr><td><strong>20 Fr</strong></td><td>Semi-rigid ureteroscopy</td><td>Ureteroscope</td><td>Moderate tract size</td></tr>
+                  <tr><td><strong>24 Fr</strong></td><td>Standard PCNL</td><td>Nephroscope</td><td>Most common PCNL access size</td></tr>
+                  <tr><td><strong>26-28 Fr</strong></td><td>Large nephroscope</td><td>Nephroscope + large basket</td><td>Standard PCNL for large/staghorn stones</td></tr>
+                  <tr><td><strong>30 Fr</strong></td><td>Max PCNL / staghorn</td><td>Nephroscope + lithotripsy</td><td>Upper limit; bleeding risk increases</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Ref: Dariushnia SR et al. Quality improvement guidelines for percutaneous nephrostomy. J Vasc Interv Radiol. 2016. · Türk C et al. EAU Guidelines on Urolithiasis. European Association of Urology. · SIR Consensus Guidelines for Periprocedural Management.</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My Tract Dilation Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;2x Amplatz super-stiff wire&#10;Nephromax balloon dilator&#10;30 Fr Amplatz peel-away sheath"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;Nephrostogram to confirm access&#10;Place safety wire to ureter&#10;Place second working wire"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <label>Your Name</label>
+      <input type="text" id="card-author-name" placeholder="Your name (shown on card)" />
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" id="save-card-btn" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'tract-dilation';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _myVotes = {};
+  let _cardSearch = '';
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    await loadVotes();
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!document.getElementById('card-search-wrap')) {
+      const wrap = document.createElement('div');
+      wrap.id = 'card-search-wrap';
+      wrap.style.cssText = 'margin-bottom:12px';
+      wrap.innerHTML = '<input id="card-search" type="text" placeholder="Search community cards…" style="width:100%;padding:8px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:inherit;font-family:inherit;font-size:13px;outline:none;" oninput="_cardSearch=this.value.toLowerCase();renderCards()">';
+      container.parentElement.insertBefore(wrap, container);
+    }
+    const q = _cardSearch.trim();
+    const visible = q ? _cards.filter(c => [c.title||'',c.display_name||'',...(c.supplies||[]),...(c.steps||[]),...(c.pearls||[])].join(' ').toLowerCase().includes(q)) : _cards;
+    if (!visible.length) {
+      loading.textContent = q ? 'No cards match your search.' : 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      container.innerHTML = '';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = visible.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      const myVote = _myVotes[c.id];
+      const votes = c.net_votes || 0;
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}" data-card-id="${c.id}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:5px;flex-shrink:0">
+              <button onclick="voteCard('${c.id}','up')" title="Helpful" style="background:none;border:1px solid ${myVote==='up'?'#22c55e':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='up'?'#22c55e':'inherit'};transition:.15s">${myVote==='up'?'▲':'△'}${votes>0?' '+votes:''}</button>
+              <button onclick="voteCard('${c.id}','down')" title="Not helpful" style="background:none;border:1px solid ${myVote==='down'?'#ef4444':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='down'?'#ef4444':'inherit'};transition:.15s">${myVote==='down'?'▼':'▽'}</button>
+              ${isOwn ? `<button onclick="editCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Edit</button><button onclick="deleteCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Delete</button>` : ''}
+            </div>
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  async function loadVotes() {
+    const sb = _sb(); const user = _user();
+    if (!sb || !user) return;
+    const { data } = await sb.from('procedure_card_votes').select('card_id,vote').eq('user_id', user.id);
+    _myVotes = {};
+    if (data) for (const v of data) _myVotes[v.card_id] = v.vote;
+  }
+
+  async function voteCard(cardId, dir) {
+    const sb = _sb(); const user = _user();
+    if (!user || !sb) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    const existing = _myVotes[cardId];
+    const card = _cards.find(c => c.id === cardId);
+    if (!card) return;
+    if (existing === dir) {
+      await sb.from('procedure_card_votes').delete().match({ user_id: user.id, card_id: cardId });
+      delete _myVotes[cardId];
+      card.net_votes = (card.net_votes || 0) + (dir === 'up' ? -1 : 1);
+    } else {
+      await sb.from('procedure_card_votes').upsert({ user_id: user.id, card_id: cardId, vote: dir }, { onConflict: 'user_id,card_id' });
+      const prev = existing ? (existing === 'up' ? -1 : 1) : 0;
+      card.net_votes = (card.net_votes || 0) + prev + (dir === 'up' ? 1 : -1);
+      _myVotes[cardId] = dir;
+    }
+    await sb.from('procedure_cards').update({ net_votes: card.net_votes }).eq('id', cardId);
+    renderCards();
+  }
+
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    const nameInput = document.getElementById('card-author-name');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      if (nameInput) nameInput.value = card.display_name || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+      if (nameInput && !nameInput.value.trim()) {
+        const u = _user();
+        if (nameInput && !nameInput.value) nameInput.value = (u && u.email) ? u.email.split('@')[0] : '';
+        if (window.RadCallAuth && window.RadCallAuth.getProfile) {
+          window.RadCallAuth.getProfile().then(p => {
+            if (nameInput && !nameInput.value.trim()) nameInput.value = (p && p.display_name) || '';
+          }).catch(() => {});
+        }
+      }
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    if (!sb) { alert('Connection error — please reload and try again.'); return; }
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title.'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const authorInput = document.getElementById('card-author-name');
+    const displayName = (authorInput && authorInput.value.trim()) || (user.email ? user.email.split('@')[0] : 'Anonymous');
+    const saveBtn = document.getElementById('save-card-btn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving…'; }
+    try {
+      if (editId) {
+        _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() } : c);
+        renderCards(); closeCardModal();
+        const { error } = await sb.from('procedure_cards').update({ title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() }).eq('id', editId);
+        if (error) console.error('Card update error:', error);
+      } else {
+        const tmpId = 'tmp-' + Date.now();
+        const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0, created_at: new Date().toISOString() };
+        _cards.unshift(newCard);
+        renderCards(); closeCardModal();
+        const { data, error } = await sb.from('procedure_cards')
+          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0 })
+          .select().single();
+        if (error) {
+          console.error('Card insert error:', error);
+          _cards = _cards.filter(c => c.id !== tmpId);
+          renderCards();
+          alert('Could not save card: ' + (error.message || 'Unknown error. Check your connection and try again.'));
+        } else if (data) {
+          _cards = _cards.map(c => c.id === tmpId ? data : c);
+        }
+      }
+      try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    } catch(err) {
+      console.error('saveCard exception:', err);
+      alert('Something went wrong saving your card. Please try again.');
+    } finally {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Card'; }
+    }
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Nephrostomy Tract Dilation Supply List\n' + '═'.repeat(38) + '\n' + supplies.map(s => '☐ ' + s).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Nephrostomy Tract Dilation Supply List\n' + '═'.repeat(38) + '\n' + supplies.map(s => '☐ ' + s).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'tract-dilation-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+    function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('open'); }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>

@@ -1985,7 +1985,7 @@ async function _loadSection(id) {
   // Show spinner
   sec.innerHTML = '<div class="lazy-spinner"><div class="lazy-dot"></div><div class="lazy-dot"></div><div class="lazy-dot"></div></div>';
   try {
-    const r = await fetch('sections/' + id + '.html?v=27');
+    const r = await fetch('sections/' + id + '.html?v=28');
     if (!r.ok) throw new Error('HTTP ' + r.status);
     sec.innerHTML = await r.text();
     sec.dataset.loaded = '1';
@@ -2542,6 +2542,19 @@ const searchIndex = [
   { q: 'lower GI bleed embolization hemorrhage diverticulosis IMA SMA vasa recta superselective ischemic colitis angiodysplasia hematochezia', section: 'ir', topic: 'ir-proc-library', label: 'Lower GI Bleed Embolization — IR Procedure' },
   { q: 'GDA blowout post-Whipple pancreaticoduodenectomy hemorrhage covered stent hepatic artery pseudoaneurysm sentinel bleed', section: 'ir', topic: 'ir-proc-library', label: 'GDA Blowout — IR Procedure' },
   { q: 'Y-90 radioembolization yttrium SIRT SIR-Spheres TheraSphere HCC hepatocellular carcinoma liver metastases lung shunt fraction MAA mapping', section: 'ir', topic: 'ir-proc-library', label: 'Y-90 Radioembolization — IR Procedure' },
+  { q: 'nephroureteral stent NUS internal external limb nephrostomy ureteral hybrid capping protocol antegrade', section: 'ir', topic: 'ir-proc-library', label: 'Nephroureteral Stent (NUS) — IR Procedure' },
+  { q: 'suprapubic catheter SPC bladder drainage urinary retention Foley failure cystostomy ultrasound guided', section: 'ir', topic: 'ir-proc-library', label: 'Suprapubic Catheter — IR Procedure' },
+  { q: 'nephrostomy exchange tube change over-wire nephrostogram tract maturity never let go wire', section: 'ir', topic: 'ir-proc-library', label: 'Nephrostomy Exchange — IR Procedure' },
+  { q: 'tract dilation PCNL percutaneous nephrolithotomy Amplatz sheath serial fascial dilators two-wire technique large bore access', section: 'ir', topic: 'ir-proc-library', label: 'Tract Dilation / PCNL Access — IR Procedure' },
+  { q: 'biliary drain exchange PTBD catheter change cholangiogram over-wire biliary tube exchange three month schedule', section: 'ir', topic: 'ir-proc-library', label: 'Biliary Drain Exchange — IR Procedure' },
+  { q: 'biliary stent SEMS metal stent covered uncovered Wallstent WallFlex foreshortening cholangiogram placement malignant stricture', section: 'ir', topic: 'ir-proc-library', label: 'Biliary Stent Placement — IR Procedure' },
+  { q: 'benign biliary stricture balloon dilation anastomotic post-cholecystectomy serial dilation no permanent SEMS hepaticojejunostomy', section: 'ir', topic: 'ir-proc-library', label: 'Benign Biliary Stricture — IR Procedure' },
+  { q: 'PEG pull antegrade gastrostomy endoscopy fluoroscopy oral wire tumor seeding risk head neck cancer', section: 'ir', topic: 'ir-proc-library', label: 'PEG Pull Technique — IR Procedure' },
+  { q: 'GJ tube gastrojejunostomy conversion jejunal extension glucagon ligament of Treitz J-limb migration fluoroscopy', section: 'ir', topic: 'ir-proc-library', label: 'Gastrojejunostomy (GJ Tube) — IR Procedure' },
+  { q: 'J-tube direct jejunostomy CT-guided T-fasteners mandatory slow feeds jejunal access enteral nutrition', section: 'ir', topic: 'ir-proc-library', label: 'Direct Jejunostomy (J-Tube) — IR Procedure' },
+  { q: 'TACE transarterial chemoembolization cTACE DEB-TACE lipiodol doxorubicin Child-Pugh HCC hepatocellular carcinoma mRECIST', section: 'ir', topic: 'ir-proc-library', label: 'TACE — IR Procedure' },
+  { q: 'HCC ablation hepatocellular carcinoma percutaneous microwave cryoablation Milan criteria BCLC LI-RADS TR ablation margin', section: 'ir', topic: 'ir-proc-library', label: 'HCC Percutaneous Ablation — IR Procedure' },
+  { q: 'RCC ablation renal cell carcinoma percutaneous microwave RFA cryoablation T1a T1b hydrodissection D5W collecting system', section: 'ir', topic: 'ir-proc-library', label: 'RCC Percutaneous Ablation — IR Procedure' },
   { q: 'contrast reaction anaphylaxis epinephrine treatment', section: 'contrast', label: 'Contrast Reactions — Contrast & Drugs' },
   { q: 'premedication prednisone methylprednisolone diphenhydramine', section: 'contrast', label: 'Premedication — Contrast & Drugs' },
   { q: 'iodinated contrast renal function egfr pc-aki cin', section: 'contrast', label: 'Renal & Iodinated Contrast — Contrast & Drugs' },
@@ -4245,7 +4258,7 @@ async function _preIndexBackground() {
     if (!sec || sec.dataset.searchIndexed) continue;
     if (sec.dataset.loaded) { _indexSectionContent(id, sec); continue; }
     try {
-      const r = await fetch('sections/' + id + '.html?v=27');
+      const r = await fetch('sections/' + id + '.html?v=28');
       if (!r.ok) continue;
       const tmp = document.createElement('div');
       tmp.innerHTML = await r.text();

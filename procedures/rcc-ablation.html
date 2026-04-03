@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Renal Ablation (RCC) — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Reference table ── */
+    .ref-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .ref-table th, .ref-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .ref-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .ref-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "\2756"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Playbook</div>
+      <h1>Percutaneous Renal Ablation (RCC)</h1>
+      <p class="subhead">CT-guided microwave or radiofrequency ablation for renal cell carcinoma (RCC) &mdash; minimally invasive thermal ablation for T1a/T1b RCC in patients who are poor surgical candidates or who prefer nephron-sparing approaches.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">General or deep sedation / MAC</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--accent-2)">Moderate (SIR Cat 2&ndash;3)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Collecting system injury &middot; Ureter thermal damage &middot; Incomplete ablation</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Not routine</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">CT/MRI at 1 month &middot; Then q3&ndash;6 months &times; 2 years</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#troubleshooting">5. Troubleshooting</a></li>
+          <li><a href="#complications">6. Complications</a></li>
+          <li><a href="#postprocedure">7. Post-Procedure</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#outcomes">9. Outcomes Reference</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications / Contraindications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom: 14px;">
+              <div class="panel">
+                <h4>Indications</h4>
+                <ul class="list">
+                  <li><strong>T1a RCC (&le;4 cm)</strong> — excellent candidate; local tumor control comparable to partial nephrectomy; preferred in poor surgical candidates</li>
+                  <li><strong>T1b RCC (4&ndash;7 cm)</strong> — acceptable for high surgical risk patients; higher recurrence rate than T1a; multi-antenna technique required</li>
+                  <li><strong>Significant comorbidities / poor surgical risk</strong> — cardiac, pulmonary, or renal disease making surgery prohibitive</li>
+                  <li><strong>Solitary kidney</strong> — nephron-sparing is critical; ablation avoids open or laparoscopic nephrectomy</li>
+                  <li><strong>Bilateral RCC</strong> — staged bilateral ablations; preserve maximum renal parenchyma</li>
+                  <li><strong>Von Hippel-Lindau disease / hereditary RCC syndromes</strong> — multiple tumors over lifetime; ablation allows repeat treatments while preserving function</li>
+                  <li><strong>Local recurrence after prior partial nephrectomy</strong></li>
+                  <li><strong>Exophytic clear cell RCC</strong> — best results; posterior exophytic ideal for prone CT approach</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Contraindications</h4>
+                <ul class="list danger">
+                  <li>Active infection at access site</li>
+                  <li>Uncorrectable coagulopathy (INR &gt;1.5, platelets &lt;50K)</li>
+                  <li>Central tumor with direct collecting system involvement (thermal injury &rarr; urine leak, fistula, obstruction)</li>
+                  <li>Tumor adjacent to ureter (&lt;1 cm) without hydrodissection capability</li>
+                  <li>Solitary kidney with central large tumor — partial nephrectomy may be safer option</li>
+                  <li>Metastatic RCC — ablation is not curative; may treat dominant symptomatic lesion as palliation</li>
+                </ul>
+                <h4 style="margin-top: 14px;">Ablation Modalities</h4>
+                <ul class="list">
+                  <li><strong>Microwave (MWA) — preferred:</strong> Faster, larger zones, no heat sink effect from vessels. 915&ndash;2450 MHz, 65&ndash;100 W, 5&ndash;10 min per position.</li>
+                  <li><strong>Radiofrequency (RFA) — alternative:</strong> Heat sink effect limits use near vessels; conductive urine affects current; multiple electrodes needed for larger tumors.</li>
+                  <li><strong>Cryoablation:</strong> Ice ball visible on CT (precise margin visualization); excellent for central tumors; two-cycle freeze-thaw-freeze; longer procedure time.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel" style="border-color: rgba(56,189,248,.15); background: rgba(56,189,248,.03);">
+              <h4 style="color: #93dcff;">Expected Local Tumor Control Rates</h4>
+              <ul class="list">
+                <li><strong>T1a (&le;4 cm):</strong> 90&ndash;95% local tumor control; comparable to partial nephrectomy in most series</li>
+                <li><strong>T1b (4&ndash;7 cm):</strong> 80&ndash;85%; higher local recurrence; surgery preferred if patient is fit</li>
+                <li><strong>Factors reducing success:</strong> Size &gt;3 cm, endophytic location, proximity to collecting system/ureter, prior renal surgery</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Biopsy confirmation.</strong> Consider biopsy at time of ablation (or prior) to confirm RCC. 20&ndash;30% of small renal masses are benign on biopsy (oncocytoma, angiomyolipoma). If benign, ablation may be deferred. Many operators biopsy at same session as planned ablation and proceed regardless to spare a visit.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>CT planning (dedicated thin-slice).</strong> Contrast-enhanced CT for ablation planning. Assess: tumor size, location (exophytic vs endophytic vs central), distance to collecting system and ureter, relationship to adjacent organs (bowel, liver, spleen), access route planning, patient positioning (prone vs lateral).</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Labs.</strong> CBC, coagulation panel (INR &lt;1.5, platelets &gt;50K per SIR Cat 2&ndash;3), BMP (creatinine/GFR &mdash; nephron-sparing critical; establish baseline).</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Anticoagulation hold.</strong> Per SIR Category 2&ndash;3: hold oral anticoagulants. Heparin: 4&ndash;6 h; LMWH: 24 h; Warfarin: 5 days (bridge if needed); DOACs: 24&ndash;48 h. Antiplatelets as appropriate for risk.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Urology coordination.</strong> Discuss case before proceeding. If complete ablation fails, surgical salvage must be possible. For tumors within 1 cm of collecting system: coordinate with urology for retrograde cold saline ureteral irrigation during ablation.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Hydrodissection supplies.</strong> D5W (dextrose 5% in water) NOT normal saline. D5W is non-ionic &mdash; does not conduct heat &mdash; creates an insulating fluid layer between tumor and adjacent critical structures. Stock 500 mL&ndash;1 L bags. Essential for tumors near bowel, ureter, or collecting system.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Patient positioning plan.</strong> Posterior/posterolateral tumors &mdash; prone or prone oblique (most common). Lateral decubitus or supine for anterior tumors (less common). Confirm positioning can achieve access trajectory on planning CT.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>General/deep sedation / MAC coordination.</strong> Mandatory for MWA. Breath-hold coordination is essential for CT-guided antenna placement. Anesthesia must be able to suspend respirations on command for CT guidance sweeps.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom: 14px;">
+              <div class="panel">
+                <h4>Kidney and Collecting System</h4>
+                <ul class="list">
+                  <li><strong>Position:</strong> Retroperitoneal, surrounded by Gerota's fascia. Right kidney lower than left (liver displaces cephalad). Both slightly oblique on axial CT.</li>
+                  <li><strong>Collecting system:</strong> Renal pelvis centrally, infundibula to calyces. Thermal ablation within 1 cm of collecting system &rarr; risk of urine leak, infundibular stricture, ureteropelvic junction damage.</li>
+                  <li><strong>Ureter:</strong> Exits UPJ and courses inferiorly along psoas. Upper ureter within 1 cm of lower pole medial tumors &rarr; thermal injury &rarr; ureteral stricture. Hydrodissection with D5W displaces ureter away from ablation zone.</li>
+                  <li><strong>Renal hilum:</strong> Renal artery, vein, and pelvis. Central tumors near hilum: highest risk; surgery preferred if technically feasible.</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Tumor Location Classification</h4>
+                <ul class="list">
+                  <li><strong>Exophytic (protrudes beyond renal contour)</strong> — easiest to ablate; lowest complication risk; best outcomes; ideal for prone CT access</li>
+                  <li><strong>Mixed</strong> — partially exophytic/partially intrarenal; intermediate risk</li>
+                  <li><strong>Endophytic (entirely within parenchyma)</strong> — harder to ablate with adequate margin; more parenchymal loss; higher recurrence risk</li>
+                  <li><strong>Central (near collecting system/hilum)</strong> — highest risk; proximity to ureter and vessels; ureteral irrigation mandatory; cryoablation preferred by many operators for better ice ball visualization</li>
+                </ul>
+                <h4 style="margin-top: 14px;">Adjacent Organ Risk (Prone Access)</h4>
+                <ul class="list">
+                  <li>Ribs / intercostal neurovascular bundle (upper pole tumors &rarr; intercostal approach may be needed)</li>
+                  <li>Lung / pleura (upper pole &rarr; pneumothorax risk)</li>
+                  <li>Liver (right side lateral access)</li>
+                  <li>Spleen (left side lateral access)</li>
+                  <li>Descending colon (posterior left kidney)</li>
+                  <li>Bowel loops (especially anterior tumors)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. HOW I DO IT ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">CT-guided microwave ablation + community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <!-- Default RadCall card -->
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#128203; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#8595; Download</button></h4>
+              <div class="chip-row card-supplies">
+                <span class="chip">CT scanner (CT fluoroscopy or intermittent CT)</span>
+                <span class="chip">Microwave ablation system (Emprint or equivalent)</span>
+                <span class="chip">Microwave antenna 13G or 17G</span>
+                <span class="chip">18G core biopsy gun (if biopsy at same session)</span>
+                <span class="chip">D5W (500 mL&ndash;1 L for hydrodissection)</span>
+                <span class="chip">18&ndash;22G spinal needle (hydrodissection)</span>
+                <span class="chip">1% lidocaine</span>
+                <span class="chip">Skin marker</span>
+                <span class="chip">Sterile drape</span>
+                <span class="chip">Foley catheter (optional &mdash; cold saline irrigation for central tumors)</span>
+              </div>
+
+              <h4 style="margin: 14px 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Planning CT + skin marking</h4><div class="muted">CT scan with IV contrast to confirm tumor position and plan antenna trajectory. Re-confirm tumor size, location, and relationships to collecting system, ureter, and adjacent organs. Mark skin entry site using grid or free-hand marking under CT. Plan access to avoid ribs, bowel, and adjacent organs. Approach from posterolateral in prone position for most posterior tumors.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Hydrodissection (if needed)</h4><div class="muted">Before antenna placement, advance 18&ndash;22G spinal needle to space between tumor and critical adjacent structure under CT guidance. Inject D5W (NOT normal saline &mdash; saline conducts heat) to create a fluid buffer. Typical volume: 50&ndash;200 mL. CT check to confirm adequate separation (&ge;1 cm). May need to re-inject during procedure as D5W absorbs. Essential for tumors near ureter, bowel, or collecting system.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Biopsy (if performing at same session)</h4><div class="muted">Core biopsy before ablation &mdash; ablation destroys histologic architecture. Advance 18G biopsy gun into viable tumor using CT guidance. Obtain 2&ndash;3 cores from enhancing (viable) edge of tumor. Send for permanent histology. Proceed with ablation regardless if clinically indicated.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Antenna placement</h4><div class="muted">Under CT guidance (intermittent CT with breath-hold), advance microwave antenna using coaxial technique. Target center of tumor for T1a (&le;4 cm). For T1b, plan multiple overlapping antenna positions before starting. Confirm tip position with CT before activating. Communicate with anesthesia for controlled breath-holds during CT sweeps.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Ablation</h4><div class="muted">Activate microwave system per protocol. Typical T1a: 65&ndash;100 W &times; 5&ndash;8 minutes (single antenna). During ablation: low-density zone expanding around antenna = ablation zone. Target: ablation zone with &ge;5&ndash;10 mm margin beyond all tumor edges. CT check during ablation to monitor zone size. Stop if antenna tip becomes dislodged.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>Mid-ablation CT assessment</h4><div class="muted">Non-contrast CT after initial ablation to assess zone size relative to tumor. Is there adequate coverage of all tumor margins? Any residual hyperdense rim suggesting viable tumor beyond ablation zone? If margin is inadequate, plan repositioning before antenna withdrawal.</div></div></div>
+                <div class="step"><div class="step-num">7</div><div><h4>Repositioning for larger / incompletely covered tumors</h4><div class="muted">For T1b or tumors with inadequate initial coverage: reposition antenna to overlapping position. Allow 1&ndash;2 mm overlap between adjacent ablation zones. Multi-antenna simultaneous ablation for tumors &gt;4 cm. Each position confirmed on CT before activation.</div></div></div>
+                <div class="step"><div class="step-num">8</div><div><h4>Completion CT (with contrast)</h4><div class="muted">Arterial phase CT to assess ablation coverage. Absent enhancement within ablation zone = complete ablation. Residual arterial enhancement at tumor margin = incomplete &rarr; additional ablation pass if technically feasible. Document ablation zone dimensions and relationship to tumor edges.</div></div></div>
+                <div class="step"><div class="step-num">9</div><div><h4>Track ablation on withdrawal</h4><div class="muted">Ablate the antenna track during withdrawal to reduce tumor seeding along the needle tract and reduce bleeding from the biopsy/ablation channel. Most modern systems perform this automatically. Confirm on post-procedure CT.</div></div></div>
+                <div class="step"><div class="step-num">10</div><div><h4>Post-procedure CT</h4><div class="muted">Non-contrast CT to assess for immediate complications: perinephric hematoma (common &mdash; small hematoma is expected), pneumothorax (upper pole access), bowel injury (if bowel was adjacent). Compare ablation zone to tumor size on final images. Document hematoma size for baseline comparison.</div></div></div>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Antenna deflected during insertion (rib or fascial resistance)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Intercostal or paraspinal approach with rib in path; dense perirenal fascia deflecting antenna tip.</p>
+              <p class="success"><strong>Next step:</strong> Use coaxial approach &mdash; advance outer sheath first, confirm position, then introduce antenna through sheath. Blunt inner trocar before transitioning to sharp antenna tip. If rib is obstructing, adjust angle 1&ndash;2 cm cephalad or caudad. Oblique/angled gantry CT can help with difficult trajectories.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Inadequate ablation zone (residual enhancement on completion CT)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Antenna not optimally centered, heat sink from adjacent vessel, insufficient power/time, large tumor requiring multiple positions.</p>
+              <p class="success"><strong>Next step:</strong> Reposition antenna to the enhancing margin and perform additional overlapping ablation at same session. If not safely achievable same-session (bleeding, patient fatigue, bowel proximity), obtain 1-month follow-up MRI and re-ablate any LR-TR viable residual at that time. Document all decisions clearly.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Collecting system thermal injury (urine leak, flank pain post-procedure)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Tumor within 1 cm of collecting system without adequate thermal protection. Retrograde irrigation not performed or insufficient.</p>
+              <p class="success"><strong>Next step:</strong> Prevention is key &mdash; for any tumor within 1 cm of collecting system, coordinate with urology before procedure for retrograde cold saline ureteral irrigation via Foley catheter during ablation. This cools the collecting system from inside while ablation proceeds. If injury occurs post-procedure: monitor for urinoma formation, nephrostomy drainage if obstruction develops, urology follow-up.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Bowel interposition along planned access trajectory</h4>
+              <p class="muted"><strong>Likely cause:</strong> Descending or sigmoid colon posteriorly, small bowel for anterior tumors. Common with anteriorly located tumors or in thin patients.</p>
+              <p class="success"><strong>Next step:</strong> D5W hydrodissection &mdash; inject via small spinal needle into the plane between bowel and kidney to displace bowel. 50&ndash;150 mL often sufficient. If bowel cannot be displaced with hydrodissection: try CT fluoroscopy for real-time guidance at a slightly different angle. Last resort: laparoscopic surgical displacement (rare). Never advance ablation antenna through bowel.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Expanding perinephric hematoma / hemodynamic instability</h4>
+              <p class="muted"><strong>Likely cause:</strong> Renal parenchymal or capsular vessel injury from antenna placement. Small stable hematomas are common and expected; expanding hematoma with vital sign changes is a procedural emergency.</p>
+              <p class="success"><strong>Next step:</strong> Small stable perinephric hematoma on completion CT &mdash; observe, document size, discharge with instructions to return for worsening pain or hemodynamic change. Expanding hematoma + hemodynamic instability &rarr; urgent CT angiography &rarr; super-selective renal artery embolization vs surgical consultation. Track access site as well for bleeding.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Common</h4>
+              <ul class="list">
+                <li><strong>Perinephric hematoma (10&ndash;20%)</strong> &mdash; most common; usually subclinical; seen on completion CT; rarely requires intervention</li>
+                <li><strong>Post-ablation pain</strong> &mdash; significant first 48&ndash;72 h; oral NSAIDs + opioids PRN</li>
+                <li><strong>Transient hematuria</strong> &mdash; common with collecting system proximity; usually self-limited</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Serious</h4>
+              <ul class="list danger">
+                <li><strong>Incomplete ablation / local recurrence (5&ndash;15%)</strong> &mdash; size and location dependent; re-ablation or surgical salvage</li>
+                <li><strong>Collecting system injury / urine leak (2&ndash;5%)</strong> &mdash; urinoma, pyelonephritis, fistula; collecting system irrigation is protective</li>
+                <li><strong>Ureteral stricture (1&ndash;3%)</strong> &mdash; central tumors near upper ureter; delayed presentation; may require ureteral stenting</li>
+                <li><strong>Bowel injury</strong> &mdash; rare with proper hydrodissection; thermal perforation requires surgical consultation</li>
+                <li><strong>Pneumothorax</strong> &mdash; upper pole access; chest tube if &gt;15&ndash;20% or symptomatic</li>
+                <li><strong>Skin/subcutaneous thermal injury</strong> &mdash; antenna track near skin in thin patients; track ablation timing</li>
+                <li><strong>Needle tract seeding (&lt;1%)</strong> &mdash; track ablation is protective</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. POST-PROCEDURE ═══ -->
+        <section class="section" id="postprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Post-Procedure Care</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom: 14px;">
+              <div class="panel">
+                <h4>Immediate Recovery</h4>
+                <ul class="list">
+                  <li>2&ndash;4 h observation post-procedure; most patients same-day discharge or 23 h admission</li>
+                  <li>Monitor vitals, urine output, and flank pain</li>
+                  <li>Pain management: oral NSAIDs + opioids PRN; post-ablation pain significant for 48&ndash;72 h</li>
+                  <li>Activity restrictions: no heavy lifting, strenuous exercise for 1&ndash;2 weeks</li>
+                  <li>Post-procedure CT (non-contrast): confirm ablation zone, assess hematoma size</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Renal Function Monitoring</h4>
+                <ul class="list">
+                  <li>GFR at 1 month and ongoing &mdash; critical in solitary kidney patients</li>
+                  <li>Ablation of T1a in a kidney with contralateral normal kidney: minimal functional impact expected</li>
+                  <li>Solitary kidney or bilateral ablation: closer GFR monitoring; nephrology involvement if pre-existing CKD</li>
+                  <li>Resume anticoagulation 24&ndash;48 h post-procedure (or per risk assessment)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="two-col">
+              <div class="panel">
+                <h4>Imaging Follow-up Schedule</h4>
+                <ul class="list">
+                  <li><strong>1 month:</strong> Contrast CT or MRI &mdash; primary LR-TR assessment. Arterial phase enhancement &ge;15 HU = residual viable tumor &rarr; plan re-ablation.</li>
+                  <li><strong>3 months:</strong> CT or MRI</li>
+                  <li><strong>6 months:</strong> CT or MRI</li>
+                  <li><strong>12 months:</strong> CT or MRI</li>
+                  <li><strong>Then annually</strong> &mdash; ongoing surveillance per urology/oncology protocol</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Residual / Recurrent Tumor</h4>
+                <ul class="list">
+                  <li>Arterial phase enhancement on follow-up imaging = residual or recurrent viable tumor</li>
+                  <li>Threshold: &ge;15 HU above pre-contrast (some centers use 20 HU)</li>
+                  <li>Non-enhancing ablation zone = treatment success</li>
+                  <li>Re-ablation: percutaneous, same technique &mdash; second ablation is standard first response</li>
+                  <li>Surgical salvage (partial nephrectomy) if re-ablation is not feasible due to location or prior ablation zone</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">&#x2756;</div><div><strong>Margin is everything.</strong> Target &ge;5&ndash;10 mm ablation margin beyond all tumor edges on every axis. This is technically the hardest part &mdash; central tumors, near collecting system, and large T1b tumors all make achieving adequate margin challenging. Local recurrence correlates directly with inadequate margin, not with ablation modality.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2756;</div><div><strong>D5W hydrodissection: NOT normal saline.</strong> Saline conducts heat and will not protect adjacent structures &mdash; it concentrates the thermal injury. D5W is non-ionic, does not conduct heat, and creates a genuine insulating fluid buffer. This is the single most powerful safety tool for protecting adjacent bowel, ureter, and collecting system.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2756;</div><div><strong>Collecting system protection: coordinate with urology before the procedure starts.</strong> For tumors within 1 cm of the collecting system, urology should place a ureteral catheter and run continuous cold saline irrigation during ablation. This cools the collecting system from inside and dramatically reduces the risk of stricture and urine leak. Do not start ablation without this in place for high-risk tumors.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2756;</div><div><strong>Cryoablation advantage: the ice ball is visible on CT.</strong> With MWA, you are estimating the ablation zone from a low-density region that may not perfectly correlate with lethal temperature margin. With cryoablation, the sharply defined ice ball on CT gives precise margin visibility. Many operators prefer cryo for central and challenging tumors where margin confidence is critical.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2756;</div><div><strong>Biopsy first: 20&ndash;30% of small renal masses are benign.</strong> Oncocytoma and angiomyolipoma do not require ablation. Biopsy at same session is efficient (saves a visit) &mdash; some operators biopsy immediately before ablation and proceed regardless for indeterminate masses. If prior biopsy was benign and low-risk appearance, spare the procedure.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2756;</div><div><strong>Post-ablation enhancement threshold: &ge;15 HU above pre-contrast = viable tumor.</strong> Non-enhancing zone = success. Perilesional arterial enhancement (rim enhancement) from inflammatory reaction can mimic residual tumor in the first few weeks &mdash; this is why the 1-month scan is preferred over immediate post-procedure contrast for definitive response assessment. When in doubt, follow at 3 months before re-treating.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. OUTCOMES REFERENCE ═══ -->
+        <section class="section" id="outcomes">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>Size and Location Outcomes Reference</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <table class="ref-table" style="margin-bottom: 16px;">
+              <thead><tr><th>Tumor Size</th><th>Modality</th><th>Expected Complete Ablation</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td><strong>&le;3 cm exophytic</strong></td><td>MWA or RFA</td><td>95&ndash;98%</td><td>Excellent candidate; single antenna; posterior exophytic ideal</td></tr>
+                <tr><td><strong>3&ndash;4 cm exophytic</strong></td><td>MWA</td><td>90&ndash;95%</td><td>Single large antenna; margin discipline critical</td></tr>
+                <tr><td><strong>4&ndash;5 cm (T1b)</strong></td><td>MWA (multi-antenna)</td><td>80&ndash;88%</td><td>Multiple overlapping positions; higher local recurrence; close follow-up</td></tr>
+                <tr><td><strong>&gt;5 cm</strong></td><td>MWA</td><td>65&ndash;75%</td><td>Surgery preferred if patient is operative candidate; ablation for inoperable only</td></tr>
+              </tbody>
+            </table>
+            <div class="two-col">
+              <div class="panel">
+                <h4>Location Risk Stratification</h4>
+                <ul class="list">
+                  <li><strong style="color: #bbf7d0;">Posterior exophytic</strong> &mdash; Low risk &mdash; ideal for prone CT approach; best outcomes</li>
+                  <li><strong style="color: #bbf7d0;">Lateral exophytic</strong> &mdash; Low-moderate risk &mdash; lateral decubitus approach; confirm no spleen/liver in path</li>
+                  <li><strong style="color: #fcd58e;">Upper pole</strong> &mdash; Moderate risk &mdash; ribs and lung/pleura in trajectory; pneumothorax risk; intercostal access often needed</li>
+                  <li><strong style="color: #fca5a5;">Central (&lt;1 cm collecting system)</strong> &mdash; High risk &mdash; ureteral irrigation mandatory; cryoablation preferred by many</li>
+                  <li><strong style="color: #fca5a5;">Hilar</strong> &mdash; Very high risk &mdash; vessels + collecting system + ureter all at risk; surgery preferred if operative candidate</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Nephron-Sparing Impact</h4>
+                <ul class="list">
+                  <li>Percutaneous ablation: minimal GFR impact for T1a in a normal contralateral kidney (&lt;5% GFR decline expected)</li>
+                  <li>Partial nephrectomy: ~10&ndash;15% GFR decline</li>
+                  <li>Radical nephrectomy: ~30&ndash;50% GFR decline</li>
+                  <li>Solitary kidney: ablation is a major advantage over any surgery; preserves remaining parenchyma</li>
+                  <li>VHL / hereditary RCC: ablation allows repeat nephron-sparing treatment over a lifetime of new tumor development</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Ref: Campbell SC et al. J Urol 2021 (AUA Renal Mass Guidelines) &middot; Gervais DA et al. Radiology 2005 (RFA for RCC) &middot; Schmit GD et al. AJR 2014 (MWA for RCC) &middot; SIR/AUA/ASCO Practice Standards &middot; NCCN Kidney Cancer Guidelines 2024.</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My RCC Ablation Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;CT scanner&#10;Microwave ablation system&#10;13G antenna&#10;D5W for hydrodissection"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;Planning CT + skin marking&#10;Hydrodissection with D5W&#10;Antenna placement under CT guidance&#10;Ablation 65-100W x 5-8 min&#10;Completion CT with contrast"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <label>Your Name</label>
+      <input type="text" id="card-author-name" placeholder="Your name (shown on card)" />
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" id="save-card-btn" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'rcc-ablation';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _myVotes = {};
+  let _cardSearch = '';
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  // ── Load cards ──
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    await loadVotes();
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!document.getElementById('card-search-wrap')) {
+      const wrap = document.createElement('div');
+      wrap.id = 'card-search-wrap';
+      wrap.style.cssText = 'margin-bottom:12px';
+      wrap.innerHTML = '<input id="card-search" type="text" placeholder="Search community cards\u2026" style="width:100%;padding:8px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:inherit;font-family:inherit;font-size:13px;outline:none;" oninput="_cardSearch=this.value.toLowerCase();renderCards()">';
+      container.parentElement.insertBefore(wrap, container);
+    }
+    const q = _cardSearch.trim();
+    const visible = q ? _cards.filter(c => [c.title||'',c.display_name||'',...(c.supplies||[]),...(c.steps||[]),...(c.pearls||[])].join(' ').toLowerCase().includes(q)) : _cards;
+    if (!visible.length) {
+      loading.textContent = q ? 'No cards match your search.' : 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      container.innerHTML = '';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = visible.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      const myVote = _myVotes[c.id];
+      const votes = c.net_votes || 0;
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}" data-card-id="${c.id}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:5px;flex-shrink:0">
+              <button onclick="voteCard('${c.id}','up')" title="Helpful" style="background:none;border:1px solid ${myVote==='up'?'#22c55e':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='up'?'#22c55e':'inherit'};transition:.15s">${myVote==='up'?'&#x25B2;':'&#x25B3;'}${votes>0?' '+votes:''}</button>
+              <button onclick="voteCard('${c.id}','down')" title="Not helpful" style="background:none;border:1px solid ${myVote==='down'?'#ef4444':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='down'?'#ef4444':'inherit'};transition:.15s">${myVote==='down'?'&#x25BC;':'&#x25BD;'}</button>
+              ${isOwn ? `<button onclick="editCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Edit</button><button onclick="deleteCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Delete</button>` : ''}
+            </div>
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  async function loadVotes() {
+    const sb = _sb(); const user = _user();
+    if (!sb || !user) return;
+    const { data } = await sb.from('procedure_card_votes').select('card_id,vote').eq('user_id', user.id);
+    _myVotes = {};
+    if (data) for (const v of data) _myVotes[v.card_id] = v.vote;
+  }
+
+  async function voteCard(cardId, dir) {
+    const sb = _sb(); const user = _user();
+    if (!user || !sb) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    const existing = _myVotes[cardId];
+    const card = _cards.find(c => c.id === cardId);
+    if (!card) return;
+    if (existing === dir) {
+      await sb.from('procedure_card_votes').delete().match({ user_id: user.id, card_id: cardId });
+      delete _myVotes[cardId];
+      card.net_votes = (card.net_votes || 0) + (dir === 'up' ? -1 : 1);
+    } else {
+      await sb.from('procedure_card_votes').upsert({ user_id: user.id, card_id: cardId, vote: dir }, { onConflict: 'user_id,card_id' });
+      const prev = existing ? (existing === 'up' ? -1 : 1) : 0;
+      card.net_votes = (card.net_votes || 0) + prev + (dir === 'up' ? 1 : -1);
+      _myVotes[cardId] = dir;
+    }
+    await sb.from('procedure_cards').update({ net_votes: card.net_votes }).eq('id', cardId);
+    renderCards();
+  }
+
+  // ── Card CRUD ──
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    const nameInput = document.getElementById('card-author-name');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      if (nameInput) nameInput.value = card.display_name || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+      if (nameInput && !nameInput.value.trim()) {
+        const u = _user();
+        if (nameInput && !nameInput.value) nameInput.value = (u && u.email) ? u.email.split('@')[0] : '';
+        if (window.RadCallAuth && window.RadCallAuth.getProfile) {
+          window.RadCallAuth.getProfile().then(p => {
+            if (nameInput && !nameInput.value.trim()) nameInput.value = (p && p.display_name) || '';
+          }).catch(() => {});
+        }
+      }
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    if (!sb) { alert('Connection error \u2014 please reload and try again.'); return; }
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title.'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const authorInput = document.getElementById('card-author-name');
+    const displayName = (authorInput && authorInput.value.trim()) || (user.email ? user.email.split('@')[0] : 'Anonymous');
+    const saveBtn = document.getElementById('save-card-btn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving\u2026'; }
+    try {
+      if (editId) {
+        _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() } : c);
+        renderCards(); closeCardModal();
+        const { error } = await sb.from('procedure_cards').update({ title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() }).eq('id', editId);
+        if (error) console.error('Card update error:', error);
+      } else {
+        const tmpId = 'tmp-' + Date.now();
+        const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0, created_at: new Date().toISOString() };
+        _cards.unshift(newCard);
+        renderCards(); closeCardModal();
+        const { data, error } = await sb.from('procedure_cards')
+          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0 })
+          .select().single();
+        if (error) {
+          console.error('Card insert error:', error);
+          _cards = _cards.filter(c => c.id !== tmpId);
+          renderCards();
+          alert('Could not save card: ' + (error.message || 'Unknown error. Check your connection and try again.'));
+        } else if (data) {
+          _cards = _cards.map(c => c.id === tmpId ? data : c);
+        }
+      }
+      try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    } catch(err) {
+      console.error('saveCard exception:', err);
+      alert('Something went wrong saving your card. Please try again.');
+    } finally {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Card'; }
+    }
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  // ── Helpers ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Renal Ablation (RCC) Supply List\n' + '\u2550'.repeat(36) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Renal Ablation (RCC) Supply List\n' + '\u2550'.repeat(36) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'rcc-ablation-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  // ── Init ──
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+</body>
+</html>

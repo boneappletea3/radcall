@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Percutaneous Biliary Stent Placement — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Stent reference table ── */
+    .drain-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .drain-table th, .drain-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .drain-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .drain-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    /* ── Info box ── */
+    .info-box { background: rgba(56,189,248,.06); border: 1px solid rgba(56,189,248,.18); border-radius: 14px; padding: 14px 16px; margin-top: 14px; }
+    .info-box h4 { margin: 0 0 8px; color: var(--accent); font-size: .9rem; text-transform: uppercase; letter-spacing: .06em; }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Playbook</div>
+      <h1>Percutaneous Biliary Stent Placement</h1>
+      <p class="subhead">Deployment of self-expanding metallic stent (SEMS) or plastic stent across biliary stricture via transhepatic access &mdash; for palliation of malignant obstruction or as bridge to surgery.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">Moderate / MAC</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--danger)">Moderate (SIR Cat 3)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Sepsis &middot; Stent malposition &middot; Hemobilia</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Required (pip-tazo or ceftriaxone)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">LFTs at 1 wk &middot; CT/MRCP at 4&ndash;6 wks</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Relevant Anatomy</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#troubleshooting">5. Troubleshooting</a></li>
+          <li><a href="#complications">6. Complications</a></li>
+          <li><a href="#postprocedure">7. Post-Procedure</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#stent-reference">9. Stent Type Reference</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications / Contraindications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:14px;">
+              <div class="panel">
+                <h4>Metallic Stent (SEMS) Indications</h4>
+                <ul class="list">
+                  <li>Malignant biliary obstruction (pancreatic cancer, cholangiocarcinoma, hepatic metastases) with confirmed ability to cross obstruction</li>
+                  <li>Life expectancy &gt;3 months &mdash; metallic stents are not easily changed; justify the permanence</li>
+                  <li>Patient preference for catheter-free drainage</li>
+                  <li>Following successful internal-external drainage and adequate decompression</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Plastic Stent Indications</h4>
+                <ul class="list">
+                  <li>Benign strictures (post-op anastomotic, PSC &mdash; see benign stricture protocol)</li>
+                  <li>Bridging to surgery (bilirubin normalization before resection)</li>
+                  <li>When metallic stent may be premature: uncertain diagnosis, neoadjuvant chemotherapy response assessment</li>
+                  <li>Situations where retrievability is important</li>
+                </ul>
+              </div>
+            </div>
+            <div class="two-col" style="margin-bottom:14px;">
+              <div class="panel">
+                <h4>Covered vs Uncovered SEMS</h4>
+                <ul class="list">
+                  <li><strong>Uncovered SEMS:</strong> Better mucosal purchase, lower migration rate. Tumor ingrowth through mesh &rarr; occlusion (median patency ~6&ndash;9 months). Preferred for most malignant hilar obstructions.</li>
+                  <li><strong>Covered SEMS:</strong> Longer patency (reduces tumor ingrowth), but higher migration rate. Cannot be used at hepatic hilum &mdash; covers segmental duct origins. Preferred for mid/distal CBD malignant obstruction.</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Contraindications</h4>
+                <ul class="list danger">
+                  <li>Benign etiology uncertain &mdash; never place permanent metallic stent without confirmed malignancy</li>
+                  <li>Hilar obstruction requiring segmental drainage with covered SEMS (covers duct orifices)</li>
+                  <li>Short life expectancy (&lt;3 months) &mdash; external drain may be simpler to manage</li>
+                  <li>Active cholangitis &mdash; decompress first with external drain; stent when resolved and patient stable</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Confirmed biliary decompression before stenting.</strong> Most operators: PTBD + external drainage for 48&ndash;72h FIRST to decompress and reduce cholangitis/sepsis risk. Stent when patient is stable, afebrile, and bilirubin trending down.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Confirmed ability to cross the obstruction on prior cholangiogram.</strong> If you have never crossed the obstruction, do not assume stent placement will be straightforward. Prior crossing is a prerequisite.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Stent sizing.</strong> Diameter: 8&ndash;10 mm standard SEMS. Length = stricture length + 2 cm proximal overhang + 2 cm distal overhang. Measure carefully on MRCP. Account for SEMS foreshortening at deployment.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Antibiotics &mdash; mandatory.</strong> Piperacillin-tazobactam 3.375g IV or ceftriaxone 1g IV before stent deployment. Continue 24&ndash;48h post-stenting.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Fluoroscopy quality check.</strong> Ensure good-quality fluoroscopy is available &mdash; stent deployment landmarks must be clearly visible. Poor imaging during deployment risks malposition.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent: metallic stents are permanent.</strong> Counsel patient that uncovered SEMS cannot be retrieved. Covered SEMS sometimes retrievable early. This is a one-way decision for uncovered stents.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. RELEVANT ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="panel" style="margin-bottom:14px;">
+              <h4>Biliary Anatomy and Stent Position Landmarks</h4>
+              <ul class="list">
+                <li>Right hepatic duct + left hepatic duct &rarr; common hepatic duct (CHD) &rarr; CBD &rarr; ampulla of Vater (into duodenum)</li>
+                <li><strong>Distal CBD stent:</strong> tip should terminate in proximal duodenum (just past ampulla). Proximal end above stricture with good purchase in normal duct.</li>
+                <li><strong>Hilar stent (Klatskin):</strong> left and right duct drainage required. Two stents often needed &mdash; &ldquo;T&rdquo; or &ldquo;Y&rdquo; configuration. Uncovered SEMS only at hilum.</li>
+                <li><strong>Intrahepatic duct stent:</strong> rare &mdash; used for peripheral cholangiocarcinoma or metastatic lymphangitic obstruction.</li>
+              </ul>
+            </div>
+            <div class="two-col">
+              <div class="panel">
+                <h4>Stent Foreshortening (Critical)</h4>
+                <ul class="list">
+                  <li>Metallic stents are significantly shorter after full expansion than their nominal (pre-deployment) length</li>
+                  <li>Wallstent: foreshortens ~30&ndash;40% &mdash; the most pronounced foreshortening of common biliary stents</li>
+                  <li>WallFlex: foreshortens ~20%</li>
+                  <li>Nitinol stents (Zilver): foreshorten &lt;10%</li>
+                  <li>Account for foreshortening in positioning: place slightly more distally than intended final position, then watch stent walk proximally as it opens</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Danger Structures</h4>
+                <ul class="list danger">
+                  <li>Hepatic artery branches adjacent to bile duct (portal triad) &mdash; pseudoaneurysm if injured</li>
+                  <li>Portal vein &mdash; hemobilia if injured during access</li>
+                  <li>Pancreatic duct orifice &mdash; distal CBD stents crossing the ampulla can obstruct pancreatic drainage &rarr; pancreatitis</li>
+                  <li>Segmental duct origins at hilum &mdash; covered stents here will occlude segmental drainage</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. HOW I DO IT ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">Default RadCall approach + community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+
+            <!-- Default RadCall card -->
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#128203; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#8595; Download</button></h4>
+              <div class="chip-row card-supplies">
+                <span class="chip">Established PTBD access (or establish during session)</span>
+                <span class="chip">0.035&quot; stiff guidewire</span>
+                <span class="chip">10&ndash;12 Fr access sheath</span>
+                <span class="chip">Metallic stent system (Wallstent, WallFlex, or equivalent &mdash; 8&ndash;10 mm &times; appropriate length)</span>
+                <span class="chip">Stent deployment catheter</span>
+                <span class="chip">8&ndash;10 mm angioplasty balloon (optional, for post-deployment dilation)</span>
+                <span class="chip">Dilute contrast + syringes</span>
+                <span class="chip">Fluoroscopy</span>
+              </div>
+
+              <div class="info-box" style="margin-bottom:16px;">
+                <h4>Key Principle: Decompress Before You Stent</h4>
+                <p style="margin:0;color:var(--muted);font-size:.93rem;">Placing a stent in a cholangitic, high-pressure biliary system dramatically increases bacteremia risk. Standard approach: PTBD with external drainage first &rarr; 48&ndash;72h of decompression and IV antibiotics &rarr; stent when patient is stable. Only rush to same-session stenting in rare selected patients with excellent status and no signs of cholangitis.</p>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Establish or confirm biliary access</h4><div class="muted">Use existing PTBD catheter tract or establish new access per PTBD technique. Confirm wire position in the duodenum with a wire loop and duodenal contrast fill.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Cholangiogram</h4><div class="muted">Delineate stricture &mdash; measure length, confirm crossing wire still in duodenum. Mark fluoroscopic landmarks: stricture start and end points; nearby vessels; papilla position. This is your targeting map.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Size the stent</h4><div class="muted">Length = stricture + 2 cm above + 2 cm below. Diameter: 8 mm standard, 10 mm for primary hepatic duct. Add extra length to account for foreshortening (for Wallstent: add ~35% to nominal deployed length when selecting stent).</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Advance stent delivery system</h4><div class="muted">Over guidewire, advance the stent deployment catheter to the correct starting position. The distal radiopaque marker should align just below or at the distal end of the stricture. Confirm position under fluoroscopy before deploying.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Deploy stent under continuous fluoroscopy</h4><div class="muted">Slowly retract the outer sheath while holding the inner catheter absolutely stable. Watch stent foreshortening as it expands. Metallic stents foreshorten significantly &mdash; the proximal end will walk toward you as it opens. Fully deployed when inner catheter releases from stent.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>Post-deployment balloon dilation (optional)</h4><div class="muted">Some operators dilate SEMS with an 8&ndash;10 mm balloon after deployment for immediate expansion. Most SEMS self-expand to full diameter over 24&ndash;72h. Balloon dilation is most useful when rapid drainage is needed or stent appears pinched.</div></div></div>
+                <div class="step"><div class="step-num">7</div><div><h4>Post-deployment cholangiogram</h4><div class="muted">Confirm bile flow through stent into duodenum. Document stent position. Leave residual transhepatic catheter alongside stent for 24&ndash;48h &mdash; this is your safety valve until stent function is confirmed.</div></div></div>
+                <div class="step"><div class="step-num">8</div><div><h4>Confirm patency, then remove external access</h4><div class="muted">At 24&ndash;48h: cholangiogram through external catheter confirms stent patent and expanded &rarr; then remove external catheter. Do not remove external access before confirming stent function.</div></div></div>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Stent deployed too proximally (inadequate distal coverage)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Insufficient distal advancement of delivery system before deployment, or more foreshortening than anticipated.</p>
+              <p class="success"><strong>Next step:</strong> Do not attempt to pull the deployed stent &mdash; uncovered SEMS cannot be retracted. Place a second overlapping stent distally (&ldquo;stent-in-stent&rdquo;). Size the second stent to overlap the first by at least 1&ndash;2 cm.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Stent deployed too distally (duodenal impaction)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Over-advancement of the delivery system or underestimated foreshortening pulling stent into duodenum.</p>
+              <p class="success"><strong>Next step:</strong> If functional drainage is adequate and no duodenal obstruction, may accept the position. If causing duodenal obstruction or pain &rarr; surgical consult. A second stent may be placed proximally to extend coverage to the obstruction if stent missed the stricture.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Acute stent occlusion / insufficient expansion</h4>
+              <p class="muted"><strong>Likely cause:</strong> Stent has not fully expanded (normal for first 24&ndash;72h) or immediate sludge/clot plugging.</p>
+              <p class="success"><strong>Next step:</strong> If external drain still in place, flush and confirm drain patent. Allow 24&ndash;72h for stent self-expansion. If no improvement: balloon dilation through stent lumen with an appropriately sized balloon. Hydrophilic wire + angled catheter to break sludge plugs.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Stent migration</h4>
+              <p class="muted"><strong>Likely cause:</strong> Covered stents migrate more commonly (lack tissue ingrowth anchor). Distal migration into duodenum is most common direction.</p>
+              <p class="success"><strong>Next step:</strong> Covered stent may be retrievable with a snare catheter if migration is recent and stent accessible. If not retrievable: deploy second stent proximal to the migrated stent, overlapping to re-cover the stricture. Surgical retrieval rarely needed.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Bilateral hilar stenting (Klatskin tumor)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Need for simultaneous left and right hepatic duct drainage with two stents converging at the hilum.</p>
+              <p class="success"><strong>Next step:</strong> &ldquo;Kiss&rdquo; technique: advance both stents to position simultaneously, then deploy sequentially with the first stent deployed while the second delivery system holds the other stent in place. Or sequential deployment with stent-in-stent overlap. Use uncovered stents only at the hilum.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Early / Periprocedural</h4>
+              <ul class="list danger">
+                <li><strong>Cholangitis / sepsis post-stenting</strong> &mdash; most dangerous; prophylactic antibiotics and pre-stent decompression are essential prevention</li>
+                <li><strong>Hemobilia</strong> &mdash; hepatic artery injury during access; persistent pulsatile hemobilia &rarr; CT angiography &rarr; embolization</li>
+                <li><strong>Stent malposition</strong> &mdash; too proximal (missed distal end) or too distal (duodenal impaction)</li>
+                <li><strong>Pancreatitis</strong> &mdash; distal CBD stents occluding pancreatic duct orifice</li>
+                <li><strong>Duodenal perforation/obstruction</strong> &mdash; from stent too far into duodenum</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Delayed</h4>
+              <ul class="list">
+                <li><strong>Stent occlusion</strong> &mdash; tumor ingrowth ~40% at 12 months for uncovered SEMS; less for covered; re-intervention with stent-in-stent</li>
+                <li><strong>Stent migration</strong> &mdash; 5&ndash;10% covered SEMS; &lt;2% uncovered</li>
+                <li><strong>Recurrent cholangitis</strong> &mdash; from stent occlusion; new percutaneous access needed</li>
+                <li><strong>Liver abscess</strong> &mdash; undrained biliary segment following stenting of main duct while ignoring a segmental duct</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. POST-PROCEDURE ═══ -->
+        <section class="section" id="postprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Post-Procedure Care</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Immediate Post-Stent (Day 0&ndash;2)</h4>
+                <ul class="list">
+                  <li>External transhepatic catheter maintained 24&ndash;48h post-stenting to confirm stent function before removing external access</li>
+                  <li>Cholangiogram at 48h through external catheter: confirm stent patent and expanded &rarr; then remove external catheter</li>
+                  <li>Antibiotics continued 24&ndash;48h post-procedure</li>
+                  <li>Monitor for fever, rigors &mdash; signs of cholangitis despite stent</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Outpatient Follow-up</h4>
+                <ul class="list">
+                  <li><strong>LFTs at 1 week:</strong> Expect bilirubin reduction &gt;50% if stent is functional. Flat or rising bilirubin suggests inadequate drainage.</li>
+                  <li><strong>CT or MRCP at 4&ndash;6 weeks:</strong> Confirms stent in position, adequate drainage of biliary system, no undrained segments</li>
+                  <li><strong>Oncology coordination:</strong> Chemotherapy protocols (e.g., gemcitabine for pancreatic cancer) typically begin after bilirubin normalization; confirm timing with oncology team</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel" style="margin-top:14px;">
+              <h4>Stent Dysfunction (Jaundice Returns)</h4>
+              <ul class="list">
+                <li>Bilirubin rising after initial decrease: suspect stent occlusion (tumor ingrowth, sludge, migration)</li>
+                <li>New percutaneous access &rarr; cholangiogram &rarr; stent-in-stent (plastic or metallic) or new PTBD beside occluded stent</li>
+                <li>Covered stent occlusion: balloon dilation +/&ndash; stent-in-stent</li>
+                <li>Uncovered stent with tumor ingrowth: place covered plastic or metallic stent through existing stent lumen</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Decompress BEFORE stenting.</strong> Placing a stent in a cholangitic, high-pressure system is a bacteremia disaster. External drain + antibiotics &rarr; 48&ndash;72h &rarr; then stent when the patient is stable. Only rarely justified to stent same-session.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>SEMS foreshorten significantly.</strong> Metallic stents are much shorter after full expansion than their nominal length. Wallstent foreshortens ~35%. Watch deployment carefully. Position slightly more distally than intended final resting position and let foreshortening work for you.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Uncovered SEMS only at the hilum.</strong> Covered stents CANNOT be used at biliary confluences &mdash; they will cover segmental duct orifices, causing isolation of hepatic segments. For any hilar or near-hilar stricture: uncovered SEMS is the only option.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Bilateral hilar stenting (Klatskin):</strong> Drain the hepatic lobe providing the most functional liver volume first. For bilateral complete drainage: kiss technique or sequential deployment. Coordinate with oncology &mdash; draining &gt;50% of liver volume is the clinical target.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Metallic stents are permanent (mostly).</strong> Counsel patient before placing uncovered SEMS &mdash; cannot retrieve. Covered SEMS can sometimes be retrieved early if migration occurs. This is a significant commitment for the patient &mdash; confirm malignancy and life expectancy.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Leave the external drain post-stenting.</strong> Your safety valve for early dysfunction. Do not remove transhepatic access until you have confirmed stent patency and expansion at 24&ndash;48h cholangiogram. Early removal before confirmed function is a preventable error.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Never place metallic stent in active cholangitis.</strong> Active infection + foreign body + high-pressure system = life-threatening sepsis. Decompress, treat, stabilize &mdash; then stent.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. STENT TYPE REFERENCE ═══ -->
+        <section class="section" id="stent-reference">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>Stent Type Quick Reference</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <table class="drain-table">
+              <thead>
+                <tr><th>Stent</th><th>Diameter</th><th>Covered</th><th>Foreshortening</th><th>Best Use</th><th>Limitations</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Wallstent (uncovered)</strong></td><td>8 mm</td><td>No</td><td>~30&ndash;40%</td><td>Hilar, mid-CBD malignant</td><td>Tumor ingrowth at 6&ndash;9 mo</td></tr>
+                <tr><td><strong>WallFlex (partially covered)</strong></td><td>10 mm</td><td>Partial</td><td>~20%</td><td>Distal CBD malignancy</td><td>Migration ~5%; not for hilum</td></tr>
+                <tr><td><strong>Zilver (uncovered nitinol)</strong></td><td>6&ndash;8 mm</td><td>No</td><td>&lt;10%</td><td>Peripheral ducts</td><td>Less radial force; smaller diameter</td></tr>
+                <tr><td><strong>Plastic biliary stent</strong></td><td>7&ndash;10 Fr</td><td>N/A</td><td>None</td><td>Benign, bridge to surgery</td><td>Exchange q3 months; occludes faster than SEMS</td></tr>
+              </tbody>
+            </table>
+            <div class="info-box" style="margin-top:14px;">
+              <h4>Stent Selection Summary</h4>
+              <ul class="list" style="font-size:.93rem;">
+                <li><strong>Hilar (Klatskin) obstruction:</strong> Uncovered SEMS only. Covered stents contraindicated at biliary confluence.</li>
+                <li><strong>Mid or distal CBD malignant obstruction:</strong> Covered or uncovered SEMS acceptable. Covered preferred for longer patency if no hilar involvement.</li>
+                <li><strong>Benign stricture:</strong> Plastic stent or repeated balloon dilation. Never permanent SEMS for benign disease.</li>
+                <li><strong>Life expectancy &lt;3 months:</strong> Consider plastic stent or external drain rather than permanent SEMS.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Ref: Kaufman JA, Lee MJ (eds). Vascular and Interventional Radiology: The Requisites, 3rd ed. &middot; Kandarpa K et al. Handbook of Interventional Radiologic Procedures, 5th ed. &middot; SIR Consensus Guidelines for Periprocedural Management.</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My Biliary Stent Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;0.035&quot; stiff guidewire&#10;Wallstent 8mm&#10;10 Fr access sheath"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;Pre-stent cholangiogram to measure stricture&#10;Size stent with 2cm overhang each side&#10;Deploy under continuous fluoro watching foreshortening"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <label>Your Name</label>
+      <input type="text" id="card-author-name" placeholder="Your name (shown on card)" />
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" id="save-card-btn" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'biliary-stent';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _myVotes = {};
+  let _cardSearch = '';
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  // ── Load cards ──
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    await loadVotes();
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!document.getElementById('card-search-wrap')) {
+      const wrap = document.createElement('div');
+      wrap.id = 'card-search-wrap';
+      wrap.style.cssText = 'margin-bottom:12px';
+      wrap.innerHTML = '<input id="card-search" type="text" placeholder="Search community cards\u2026" style="width:100%;padding:8px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:inherit;font-family:inherit;font-size:13px;outline:none;" oninput="_cardSearch=this.value.toLowerCase();renderCards()">';
+      container.parentElement.insertBefore(wrap, container);
+    }
+    const q = _cardSearch.trim();
+    const visible = q ? _cards.filter(c => [c.title||'',c.display_name||'',...(c.supplies||[]),...(c.steps||[]),...(c.pearls||[])].join(' ').toLowerCase().includes(q)) : _cards;
+    if (!visible.length) {
+      loading.textContent = q ? 'No cards match your search.' : 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      container.innerHTML = '';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = visible.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      const myVote = _myVotes[c.id];
+      const votes = c.net_votes || 0;
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}" data-card-id="${c.id}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:5px;flex-shrink:0">
+              <button onclick="voteCard('${c.id}','up')" title="Helpful" style="background:none;border:1px solid ${myVote==='up'?'#22c55e':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='up'?'#22c55e':'inherit'};transition:.15s">${myVote==='up'?'▲':'△'}${votes>0?' '+votes:''}</button>
+              <button onclick="voteCard('${c.id}','down')" title="Not helpful" style="background:none;border:1px solid ${myVote==='down'?'#ef4444':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='down'?'#ef4444':'inherit'};transition:.15s">${myVote==='down'?'▼':'▽'}</button>
+              ${isOwn ? `<button onclick="editCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Edit</button><button onclick="deleteCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Delete</button>` : ''}
+            </div>
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  async function loadVotes() {
+    const sb = _sb(); const user = _user();
+    if (!sb || !user) return;
+    const { data } = await sb.from('procedure_card_votes').select('card_id,vote').eq('user_id', user.id);
+    _myVotes = {};
+    if (data) for (const v of data) _myVotes[v.card_id] = v.vote;
+  }
+
+  async function voteCard(cardId, dir) {
+    const sb = _sb(); const user = _user();
+    if (!user || !sb) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    const existing = _myVotes[cardId];
+    const card = _cards.find(c => c.id === cardId);
+    if (!card) return;
+    if (existing === dir) {
+      await sb.from('procedure_card_votes').delete().match({ user_id: user.id, card_id: cardId });
+      delete _myVotes[cardId];
+      card.net_votes = (card.net_votes || 0) + (dir === 'up' ? -1 : 1);
+    } else {
+      await sb.from('procedure_card_votes').upsert({ user_id: user.id, card_id: cardId, vote: dir }, { onConflict: 'user_id,card_id' });
+      const prev = existing ? (existing === 'up' ? -1 : 1) : 0;
+      card.net_votes = (card.net_votes || 0) + prev + (dir === 'up' ? 1 : -1);
+      _myVotes[cardId] = dir;
+    }
+    await sb.from('procedure_cards').update({ net_votes: card.net_votes }).eq('id', cardId);
+    renderCards();
+  }
+
+  // ── Card CRUD ──
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    const nameInput = document.getElementById('card-author-name');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      if (nameInput) nameInput.value = card.display_name || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+      if (nameInput && !nameInput.value.trim()) {
+        const u = _user();
+        if (nameInput && !nameInput.value) nameInput.value = (u && u.email) ? u.email.split('@')[0] : '';
+        if (window.RadCallAuth && window.RadCallAuth.getProfile) {
+          window.RadCallAuth.getProfile().then(p => {
+            if (nameInput && !nameInput.value.trim()) nameInput.value = (p && p.display_name) || '';
+          }).catch(() => {});
+        }
+      }
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    if (!sb) { alert('Connection error — please reload and try again.'); return; }
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title.'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const authorInput = document.getElementById('card-author-name');
+    const displayName = (authorInput && authorInput.value.trim()) || (user.email ? user.email.split('@')[0] : 'Anonymous');
+    const saveBtn = document.getElementById('save-card-btn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving\u2026'; }
+    try {
+      if (editId) {
+        _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() } : c);
+        renderCards(); closeCardModal();
+        const { error } = await sb.from('procedure_cards').update({ title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() }).eq('id', editId);
+        if (error) console.error('Card update error:', error);
+      } else {
+        const tmpId = 'tmp-' + Date.now();
+        const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0, created_at: new Date().toISOString() };
+        _cards.unshift(newCard);
+        renderCards(); closeCardModal();
+        const { data, error } = await sb.from('procedure_cards')
+          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0 })
+          .select().single();
+        if (error) {
+          console.error('Card insert error:', error);
+          _cards = _cards.filter(c => c.id !== tmpId);
+          renderCards();
+          alert('Could not save card: ' + (error.message || 'Unknown error. Check your connection and try again.'));
+        } else if (data) {
+          _cards = _cards.map(c => c.id === tmpId ? data : c);
+        }
+      }
+      try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    } catch(err) {
+      console.error('saveCard exception:', err);
+      alert('Something went wrong saving your card. Please try again.');
+    } finally {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Card'; }
+    }
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  // ── Helpers ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Percutaneous Biliary Stent Placement Supply List\n' + '\u2550'.repeat(40) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Percutaneous Biliary Stent Placement Supply List\n' + '\u2550'.repeat(40) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'biliary-stent-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  // ── Init ──
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+</body>
+</html>

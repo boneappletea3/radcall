@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PEG — Antegrade (Pull) Gastrostomy Technique — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Reference table ── */
+    .ref-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .ref-table th, .ref-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .ref-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .ref-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Playbook</div>
+      <h1>PEG &mdash; Antegrade (Pull) Gastrostomy Technique</h1>
+      <p class="subhead">Fluoroscopy-assisted antegrade "pull" technique for percutaneous gastrostomy &mdash; oral wire passed endoscopically, snared through abdominal wall, G-tube pulled into position. Used when retrograde push approach is not feasible.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">General/MAC (requires endoscopy coordination)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--accent-2)">Low (SIR Cat 1-2)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Seeding of tumor at tube site &middot; Aspiration</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Required (ceftriaxone 1g IV)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">Tube position check at 24h &middot; Feeds at 24h</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#troubleshooting">5. Troubleshooting</a></li>
+          <li><a href="#complications">6. Complications</a></li>
+          <li><a href="#postprocedure">7. Post-Procedure</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#comparison">9. Push vs. Pull Comparison</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications / Contraindications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Indications</h4>
+              <ul class="list">
+                <li><strong>Poor gastric distension</strong> despite air insufflation precluding safe retrograde transabdominal access</li>
+                <li><strong>Cannot identify safe stomach wall window</strong> to avoid colon or liver interposition via retrograde approach</li>
+                <li><strong>Patient/clinical preference</strong> for endoscopic approach; GI/surgery coordination preferred</li>
+                <li><strong>Esophageal or oropharyngeal anatomy</strong> that allows oral wire passage but stomach not safely accessible from outside</li>
+                <li><strong>Complex head/neck cancer patients</strong> where combined ENT + GI/IR approach is planned &mdash; though note tumor seeding risk below</li>
+              </ul>
+              <div style="margin-top: 12px; padding: 12px; border-radius: 12px; border: 1px solid rgba(245,158,11,.25); background: rgba(245,158,11,.06);">
+                <strong style="color: #fcd58e;">vs. Retrograde Push Technique:</strong>
+                <p class="muted" style="margin: 6px 0 0; font-size: .92rem;">The retrograde push technique (gastrostomy.html) is IR's preferred method &mdash; no endoscopy required, less sedation, less radiation, equivalent safety. The pull technique requires GI endoscopy and general/deep sedation. Default to push; use pull when push is not feasible.</p>
+              </div>
+            </div>
+            <div class="panel">
+              <h4>Contraindications</h4>
+              <ul class="list">
+                <li><strong>Same absolute contraindications as retrograde technique:</strong> no safe gastric window, massive ascites, uncorrectable coagulopathy</li>
+                <li><strong>Severe trismus or pharyngeal obstruction</strong> preventing safe oral scope passage (relative &mdash; transnasal endoscopy may be used)</li>
+                <li><strong>Completely obstructing esophageal mass</strong> where wire cannot be passed orally</li>
+                <li><strong>High aspiration risk</strong> without secured airway protection</li>
+              </ul>
+              <div style="margin-top: 12px; padding: 12px; border-radius: 12px; border: 1px solid rgba(239,68,68,.25); background: rgba(239,68,68,.05);">
+                <strong style="color: #fca5a5;">Tumor Seeding Warning:</strong>
+                <p class="muted" style="margin: 6px 0 0; font-size: .92rem;">Pull technique carries a risk of seeding head/neck cancer cells from oropharynx/esophagus to the abdominal tube site (estimated 0.5&ndash;3%). Many centers prefer retrograde technique for H&amp;N cancer patients specifically to avoid this. Counsel patients and discuss with oncology/tumor board before proceeding.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>GI/endoscopy team confirmed and available</strong> for simultaneous procedure. This is a two-person coordinated procedure &mdash; schedule accordingly.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Anesthesia/MAC arranged.</strong> General anesthesia or deep MAC required given endoscopy component. Confirm with anesthesia team prior to scheduling.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Airway protection plan.</strong> Anesthesia team manages airway (LMA or intubation depending on aspiration risk). Aspiration risk assessment critical for H&amp;N cancer patients.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>CT review.</strong> Same as retrograde approach &mdash; review liver and colon position relative to stomach. Identify safe transabdominal window.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent: tumor seeding risk</strong> (for head/neck cancer patients, 0.5&ndash;3%), aspiration, standard G-tube risks (peritonitis, bleeding, tube dislodgement, peristomal infection, buried bumper syndrome).</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Antibiotics: ceftriaxone 1g IV</strong> 1 hour before procedure.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Labs.</strong> CBC, coagulation (INR &lt;1.5, Plt &gt;50K).</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>NPO 6+ hours.</strong> General/MAC anesthesia protocol.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Stomach Anatomy &amp; Target</h4>
+                <ul class="list">
+                  <li>Same target as retrograde technique: <strong>anterior gastric body/antrum</strong> &mdash; most accessible, safest window</li>
+                  <li><strong>Trans-oral wire path:</strong> pharynx &rarr; esophagus &rarr; stomach &rarr; under endoscopic visualization throughout</li>
+                  <li>Endoscopist controls wire placement and illuminates the anterior stomach wall with the endoscope light (<em>transillumination technique</em>) to guide IR's abdominal puncture site</li>
+                  <li>Avoid fundus (adjacent to spleen/diaphragm) and areas of liver overlap &mdash; same as retrograde</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Transillumination Principle</h4>
+                <ul class="list">
+                  <li><strong>Transillumination:</strong> Endoscope light pressed against anterior stomach wall &rarr; visible as glow through abdominal wall in a darkened room &rarr; confirms safe puncture site</li>
+                  <li><strong>Finger-press confirmation:</strong> IR presses finger firmly against transilluminated site &rarr; endoscopist sees indentation of stomach wall &rarr; bidirectional confirmation of correct location</li>
+                  <li>Both transillumination AND finger indentation must be positive before needle insertion &mdash; this two-step check is the safety equivalent of the gastropexy/fluoroscopy confirmation in the retrograde technique</li>
+                  <li>Danger structures (liver, colon) same as retrograde &mdash; review CT for position before starting</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. HOW I DO IT ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">Coordinated IR + GI endoscopist pull technique &plus; community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <!-- Default RadCall card -->
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies &mdash; IR <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#128203; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#8595; Download</button></h4>
+              <div class="chip-row card-supplies" style="margin-bottom: 16px;">
+                <span class="chip">Fluoroscopy (or US for access site)</span>
+                <span class="chip">Sterile field</span>
+                <span class="chip">ChloraPrep</span>
+                <span class="chip">1% lidocaine</span>
+                <span class="chip">18G introducer needle</span>
+                <span class="chip">Retrieval snare (loop snare, 15&ndash;25 mm)</span>
+                <span class="chip">PEG pull kit (bumper/crossbar style tube)</span>
+                <span class="chip">#11 scalpel</span>
+                <span class="chip">Silk suture</span>
+                <span class="chip">Omnipaque contrast</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies &mdash; GI Endoscopist</h4>
+              <div class="chip-row" style="margin-bottom: 16px;">
+                <span class="chip">GI endoscope</span>
+                <span class="chip">Biopsy channel snare</span>
+                <span class="chip">Endoscope light for transillumination</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Patient positioning &amp; anesthesia</h4><div class="muted">Supine. General anesthesia or deep MAC administered by anesthesia team. Endoscopist at head of table. IR at patient's left side. Coordinate airway management before endoscope insertion.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Endoscopy &amp; gastric insufflation</h4><div class="muted">GI physician passes endoscope through oropharynx into stomach under direct vision. Insufflates stomach with air via endoscope &mdash; same effect as NG tube air insufflation in the retrograde technique.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Transillumination</h4><div class="muted">Endoscopist presses endoscope tip firmly against anterior stomach wall in the body/antrum. IR team darkens the room and looks for the transilluminated glow through the abdominal wall, confirming a safe percutaneous access site.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Finger-press bidirectional confirmation</h4><div class="muted">IR physician presses one finger firmly against the transilluminated site on the abdominal wall. Endoscopist directly visualizes the indentation of the gastric wall. BOTH positive = safe to proceed. This is the essential two-step safety confirmation before any needle insertion.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>IR puncture</h4><div class="muted">Prep and drape abdominal wall. Local anesthetic. 18G needle puncture through abdominal wall into stomach at the confirmed transillumination site, guided by fluoroscopy or US. Pass a wire or suture thread through the needle into the gastric lumen.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>Endoscopic snare capture</h4><div class="muted">Endoscopist advances snare through the biopsy channel into the stomach. Snares the wire/thread inside the stomach and holds it securely. Confirm snare has captured wire under direct endoscopic vision before proceeding.</div></div></div>
+                <div class="step"><div class="step-num">7</div><div><h4>Wire exteriorization</h4><div class="muted">Endoscopist withdraws the scope slowly and carefully, bringing the snared wire/thread out through the patient's mouth. The wire now exits at both the mouth and the abdominal puncture site.</div></div></div>
+                <div class="step"><div class="step-num">8</div><div><h4>Attach &amp; pull G-tube</h4><div class="muted">Pull-type PEG tube is attached to the oral end of the wire/thread. IR pulls the wire/thread at the abdominal end continuously and smoothly, drawing the PEG tube from the mouth &rarr; esophagus &rarr; stomach &rarr; out through the abdominal wall. Smooth, steady tension &mdash; no jerking.</div></div></div>
+                <div class="step"><div class="step-num">9</div><div><h4>Position &amp; secure</h4><div class="muted">PEG tube emerges at abdominal wall. Endoscopist confirms inner bumper position under direct vision in stomach &mdash; bumper should be gently apposed to gastric mucosa, not ischemic (can rotate tube slightly). Adjust external crossbar/flange to sit 1&ndash;2 cm from skin, not flush.</div></div></div>
+                <div class="step"><div class="step-num">10</div><div><h4>Final confirmation</h4><div class="muted">Endoscopist confirms inner bumper position. IR confirms external flange position. Fluoroscopy can verify position but is often not required if endoscopic visualization is adequate. Document tube length at skin mark.</div></div></div>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Poor transillumination (obese patient)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Thick abdominal wall attenuating endoscope light.</p>
+              <p class="success"><strong>Next step:</strong> Use brighter endoscope light setting. Darken room maximally. Switch to US to confirm stomach position and safe access window. May proceed with finger-press indentation technique alone if transillumination not visible but indentation is clear. CT guidance is an option in extreme cases.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Snare misses wire in stomach</h4>
+              <p class="muted"><strong>Likely cause:</strong> Wire in suboptimal position, obscured by air/secretions, or snare size mismatch.</p>
+              <p class="success"><strong>Next step:</strong> Reposition endoscope for better angle. Suction air and secretions. Try a different snare size (15&ndash;25 mm options). Confirm wire is still inside gastric lumen under fluoroscopy. Re-pass wire if needed.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Tube tears or breaks during pull</h4>
+              <p class="muted"><strong>Likely cause:</strong> Jerky or asymmetric pulling; tube defect.</p>
+              <p class="success"><strong>Next step:</strong> Ensure smooth, continuous tension without jerking. If tube tears within esophagus: endoscopic retrieval of remnant. If tear occurs at abdominal wall: call for backup PEG kit. Never leave tube fragments in esophagus or stomach.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Cannot pass endoscope (obstructing tumor)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Obstructing oropharyngeal or esophageal tumor preventing scope passage.</p>
+              <p class="success"><strong>Next step:</strong> Switch to retrograde push technique (preferred IR approach &mdash; does not require oral access). Transnasal ultrathin endoscope may allow passage past high oropharyngeal tumors. If complete esophageal obstruction: retrograde push is the only percutaneous option.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Pull-Technique Specific</h4>
+              <ul class="list danger">
+                <li><strong>Tumor seeding at abdominal site</strong> (0.5&ndash;3% for head/neck cancer pull technique) &mdash; malignant cells dragged from oropharynx/esophagus to tube site; most feared complication; leads to cutaneous metastasis at gastrostomy site</li>
+                <li><strong>Aspiration during procedure</strong> &mdash; general/MAC anesthesia with airway protection minimizes this risk; H&amp;N patients at highest risk</li>
+                <li><strong>Buried bumper syndrome</strong> &mdash; inner bumper too tight initially causes pressure necrosis &rarr; bumper erodes into gastric mucosa; requires endoscopic or surgical removal</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Standard G-tube Complications (shared with retrograde)</h4>
+              <ul class="list">
+                <li><strong>Peristomal infection</strong> (most common delayed complication)</li>
+                <li><strong>Tube dislodgement</strong> &mdash; same protocol as retrograde; within 4 weeks = emergency</li>
+                <li><strong>Peritonitis</strong> (rare &mdash; from inner bumper erosion or tract leak)</li>
+                <li><strong>Bleeding</strong> &mdash; minor from dilation site; major rare</li>
+                <li><strong>Tube migration</strong> or occlusion; granulation tissue at site</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. POST-PROCEDURE ═══ -->
+        <section class="section" id="postprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Post-Procedure Care</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom: 14px;">
+              <div class="panel">
+                <h4>Immediate (0&ndash;24h)</h4>
+                <ul class="list">
+                  <li><strong>Tube position check at 24h:</strong> Contrast injection through tube to confirm intragastric position before initiating feeds</li>
+                  <li><strong>Feeds at 24h:</strong> Start at 20 mL/hr once position confirmed; advance over 24&ndash;48h</li>
+                  <li>Monitor for fever, abdominal pain, peritonitis signs</li>
+                  <li>Ensure inner bumper is not too tight &mdash; patient should be able to rotate tube slightly against skin</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Ongoing Care</h4>
+                <ul class="list">
+                  <li><strong>Tube flushing:</strong> 30 mL water flush before and after each feed and medication; q4h if continuous feeding</li>
+                  <li><strong>Site care:</strong> Daily cleaning around tube with mild soap and water. No submerging for 4 weeks.</li>
+                  <li><strong>T-fastener removal:</strong> N/A for pull technique (no T-fasteners placed)</li>
+                  <li><strong>Tube exchange:</strong> At 4&ndash;6 months (balloon-retained replacement); same protocol as push gastrostomy</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel" style="border-color: rgba(239,68,68,.2); background: rgba(239,68,68,.04);">
+              <h4 style="color: #fca5a5;">Tube Dislodgement &mdash; Same Protocol as Retrograde Gastrostomy</h4>
+              <ul class="list">
+                <li><strong style="color: #fca5a5;">Dislodgement within 4 weeks = EMERGENCY.</strong> Do NOT attempt reinsertion at bedside. Return to IR for urgent fluoroscopic replacement or surgical referral immediately.</li>
+                <li><strong>Dislodgement after 4 weeks:</strong> Mature fistula tract &mdash; bedside Foley catheter replacement acceptable as bridge. Return to IR within 2&ndash;4 hours before tract closes.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Retrograde push = IR default. Pull technique = when push is not feasible.</strong> Know both, but always default to the retrograde transabdominal approach in IR. The pull technique is a specialized alternative, not a first choice.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Tumor seeding is a real risk for H&amp;N cancer patients undergoing pull technique.</strong> Many multidisciplinary H&amp;N oncology programs specifically prefer the retrograde approach to eliminate this risk. Discuss with tumor board before committing to the pull technique in any head/neck cancer patient.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Transillumination + finger indentation = two-step safety confirmation.</strong> Both must be positive before needle insertion. Transillumination alone is insufficient &mdash; the indentation check confirms you are at the correct stomach wall location, not just overlying bowel or fat.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Buried bumper syndrome from too-tight inner bumper.</strong> At end of procedure, the endoscopist should confirm the inner bumper can be rotated slightly and is gently apposed to mucosa &mdash; not ischemic or blanching. External flange should be 1&ndash;2 cm from skin, not flush.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Coordinate early &mdash; this is a two-team procedure.</strong> Scheduling pull gastrostomy requires coordinating IR + GI endoscopy + anesthesia + the appropriate procedure room (fluoroscopy-capable and endoscopy-capable simultaneously). Last-minute scheduling is not ideal for this technique.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. PUSH VS. PULL COMPARISON ═══ -->
+        <section class="section" id="comparison">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>Push vs. Pull Technique Comparison</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <table class="ref-table">
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>Retrograde Push (IR Default)</th>
+                  <th>Antegrade Pull (PEG)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Endoscopy required</strong></td><td>No</td><td>Yes (GI team)</td></tr>
+                <tr><td><strong>Sedation level</strong></td><td>Moderate sedation</td><td>General/MAC</td></tr>
+                <tr><td><strong>Procedure time</strong></td><td>30&ndash;45 min</td><td>45&ndash;60 min</td></tr>
+                <tr><td><strong>Fluoroscopy</strong></td><td>Yes (primary guidance)</td><td>Minimal/optional</td></tr>
+                <tr><td><strong>Tumor seeding risk</strong></td><td>None</td><td>0.5&ndash;3% (H&amp;N cancer)</td></tr>
+                <tr><td><strong>Colon avoidance method</strong></td><td>Fluoroscopic visualization</td><td>Transillumination + finger-press</td></tr>
+                <tr><td><strong>IR independent</strong></td><td>Yes</td><td>No &mdash; requires GI team</td></tr>
+                <tr><td><strong>Preferred for H&amp;N cancer</strong></td><td>Yes (no seeding risk)</td><td>No (seeding risk)</td></tr>
+                <tr><td><strong>Gastropexy (T-fasteners)</strong></td><td>Yes (standard)</td><td>No</td></tr>
+                <tr><td><strong>When pull is preferred</strong></td><td>&mdash;</td><td>Retrograde gastric access not safe; complex anatomy; GI preference</td></tr>
+              </tbody>
+            </table>
+            <div style="margin-top: 16px;">
+              <div class="panel">
+                <h4>Enteral Access Decision Context</h4>
+                <ul class="list">
+                  <li>Standard gastric access needed &rarr; <strong>Retrograde push gastrostomy</strong> (see gastrostomy.html)</li>
+                  <li>Retrograde push not feasible, oral access available &rarr; <strong>This page (pull technique)</strong></li>
+                  <li>Aspiration risk / gastroparesis with existing G-tube &rarr; <strong>GJ tube conversion</strong> (see gj-tube.html)</li>
+                  <li>No stomach present / GJ tube fails &rarr; <strong>Direct jejunostomy</strong> (see j-tube.html)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Ref: Kandarpa K et al. Handbook of Interventional Radiologic Procedures, 5th ed. &middot; SIR Consensus Guidelines &middot; Shike M et al. Gastrointest Endosc 1989 (PEG pull technique). Tumor seeding estimate: Holm AN et al. Gastrointest Endosc 2007.</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My PEG Pull Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;GI endoscope&#10;18G introducer needle&#10;PEG pull kit"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;Endoscope into stomach, insufflate&#10;Transilluminate anterior wall&#10;Finger-press confirmation&#10;18G needle into stomach&#10;Snare wire, exteriorize orally&#10;Pull PEG tube through"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <label>Your Name</label>
+      <input type="text" id="card-author-name" placeholder="Your name (shown on card)" />
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" id="save-card-btn" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'peg-pull';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _myVotes = {};
+  let _cardSearch = '';
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  // ── Load cards ──
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    await loadVotes();
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!document.getElementById('card-search-wrap')) {
+      const wrap = document.createElement('div');
+      wrap.id = 'card-search-wrap';
+      wrap.style.cssText = 'margin-bottom:12px';
+      wrap.innerHTML = '<input id="card-search" type="text" placeholder="Search community cards\u2026" style="width:100%;padding:8px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:inherit;font-family:inherit;font-size:13px;outline:none;" oninput="_cardSearch=this.value.toLowerCase();renderCards()">';
+      container.parentElement.insertBefore(wrap, container);
+    }
+    const q = _cardSearch.trim();
+    const visible = q ? _cards.filter(c => [c.title||'',c.display_name||'',...(c.supplies||[]),...(c.steps||[]),...(c.pearls||[])].join(' ').toLowerCase().includes(q)) : _cards;
+    if (!visible.length) {
+      loading.textContent = q ? 'No cards match your search.' : 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      container.innerHTML = '';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = visible.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      const myVote = _myVotes[c.id];
+      const votes = c.net_votes || 0;
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}" data-card-id="${c.id}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:5px;flex-shrink:0">
+              <button onclick="voteCard('${c.id}','up')" title="Helpful" style="background:none;border:1px solid ${myVote==='up'?'#22c55e':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='up'?'#22c55e':'inherit'};transition:.15s">${myVote==='up'?'▲':'△'}${votes>0?' '+votes:''}</button>
+              <button onclick="voteCard('${c.id}','down')" title="Not helpful" style="background:none;border:1px solid ${myVote==='down'?'#ef4444':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='down'?'#ef4444':'inherit'};transition:.15s">${myVote==='down'?'▼':'▽'}</button>
+              ${isOwn ? `<button onclick="editCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Edit</button><button onclick="deleteCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Delete</button>` : ''}
+            </div>
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  async function loadVotes() {
+    const sb = _sb(); const user = _user();
+    if (!sb || !user) return;
+    const { data } = await sb.from('procedure_card_votes').select('card_id,vote').eq('user_id', user.id);
+    _myVotes = {};
+    if (data) for (const v of data) _myVotes[v.card_id] = v.vote;
+  }
+
+  async function voteCard(cardId, dir) {
+    const sb = _sb(); const user = _user();
+    if (!user || !sb) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    const existing = _myVotes[cardId];
+    const card = _cards.find(c => c.id === cardId);
+    if (!card) return;
+    if (existing === dir) {
+      await sb.from('procedure_card_votes').delete().match({ user_id: user.id, card_id: cardId });
+      delete _myVotes[cardId];
+      card.net_votes = (card.net_votes || 0) + (dir === 'up' ? -1 : 1);
+    } else {
+      await sb.from('procedure_card_votes').upsert({ user_id: user.id, card_id: cardId, vote: dir }, { onConflict: 'user_id,card_id' });
+      const prev = existing ? (existing === 'up' ? -1 : 1) : 0;
+      card.net_votes = (card.net_votes || 0) + prev + (dir === 'up' ? 1 : -1);
+      _myVotes[cardId] = dir;
+    }
+    await sb.from('procedure_cards').update({ net_votes: card.net_votes }).eq('id', cardId);
+    renderCards();
+  }
+
+  // ── Card CRUD ──
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    const nameInput = document.getElementById('card-author-name');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      if (nameInput) nameInput.value = card.display_name || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+      if (nameInput && !nameInput.value.trim()) {
+        const u = _user();
+        if (nameInput && !nameInput.value) nameInput.value = (u && u.email) ? u.email.split('@')[0] : '';
+        if (window.RadCallAuth && window.RadCallAuth.getProfile) {
+          window.RadCallAuth.getProfile().then(p => {
+            if (nameInput && !nameInput.value.trim()) nameInput.value = (p && p.display_name) || '';
+          }).catch(() => {});
+        }
+      }
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    if (!sb) { alert('Connection error — please reload and try again.'); return; }
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title.'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const authorInput = document.getElementById('card-author-name');
+    const displayName = (authorInput && authorInput.value.trim()) || (user.email ? user.email.split('@')[0] : 'Anonymous');
+    const saveBtn = document.getElementById('save-card-btn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving\u2026'; }
+    try {
+      if (editId) {
+        _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() } : c);
+        renderCards(); closeCardModal();
+        const { error } = await sb.from('procedure_cards').update({ title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() }).eq('id', editId);
+        if (error) console.error('Card update error:', error);
+      } else {
+        const tmpId = 'tmp-' + Date.now();
+        const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0, created_at: new Date().toISOString() };
+        _cards.unshift(newCard);
+        renderCards(); closeCardModal();
+        const { data, error } = await sb.from('procedure_cards')
+          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0 })
+          .select().single();
+        if (error) {
+          console.error('Card insert error:', error);
+          _cards = _cards.filter(c => c.id !== tmpId);
+          renderCards();
+          alert('Could not save card: ' + (error.message || 'Unknown error. Check your connection and try again.'));
+        } else if (data) {
+          _cards = _cards.map(c => c.id === tmpId ? data : c);
+        }
+      }
+      try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    } catch(err) {
+      console.error('saveCard exception:', err);
+      alert('Something went wrong saving your card. Please try again.');
+    } finally {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Card'; }
+    }
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  // ── Helpers ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'PEG Pull Supply List\n' + '\u2550'.repeat(30) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'PEG Pull Supply List\n' + '\u2550'.repeat(30) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'peg-pull-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  // ── Init ──
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+</body>
+</html>

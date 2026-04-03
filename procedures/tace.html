@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TACE — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .phase-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; font-size: .82rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 14px; }
+    .phase-badge.ctace { background: rgba(56,189,248,.12); color: #93dcff; border: 1px solid rgba(56,189,248,.2); }
+    .phase-badge.debtace { background: rgba(245,158,11,.12); color: #fcd58e; border: 1px solid rgba(245,158,11,.2); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Reference table ── */
+    .ref-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .ref-table th, .ref-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .ref-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .ref-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "\2756"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Playbook</div>
+      <h1>Transarterial Chemoembolization (TACE)</h1>
+      <p class="subhead">Selective intra-arterial delivery of chemotherapy combined with embolic occlusion of tumor-feeding hepatic arteries. Primary use: hepatocellular carcinoma (HCC). Conventional TACE (cTACE) and drug-eluting bead TACE (DEB-TACE) covered.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">Moderate sedation</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--success)">Low-Moderate (SIR Cat 1&ndash;2)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Post-embolization syndrome &middot; Hepatic failure &middot; Non-target embolization</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Not routine (consider if biliary stent / bilio-enteric anastomosis)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">MRI/CT at 4&ndash;6 weeks &middot; LFTs at 1 week</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#troubleshooting">5. Troubleshooting</a></li>
+          <li><a href="#complications">6. Complications</a></li>
+          <li><a href="#postprocedure">7. Post-Procedure</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#response">9. Response Assessment</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications / Contraindications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom: 14px;">
+              <div class="panel">
+                <h4>Primary Indications</h4>
+                <ul class="list">
+                  <li><strong>HCC — unresectable, BCLC B (intermediate stage)</strong> — largest body of evidence; standard of care per EASL/AASLD guidelines</li>
+                  <li><strong>Bridge to liver transplantation</strong> — prevent dropout while on waitlist; maintain within Milan criteria</li>
+                  <li><strong>Downstaging for transplant eligibility</strong> — Metroticket criteria; coordinate with hepatology and transplant surgery</li>
+                  <li><strong>Residual HCC after RFA</strong> — salvage TACE for incompletely ablated tumors</li>
+                  <li><strong>Hepatic artery infusion (HAI) for mCRC</strong> — different setup; requires surgically placed port; mention for completeness</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Secondary / Off-Label</h4>
+                <ul class="list">
+                  <li><strong>Hepatic metastases</strong> — NET most responsive; mCRC less so; breast, uveal melanoma</li>
+                  <li><strong>Intrahepatic cholangiocarcinoma (iCCA)</strong> — emerging role; typically DEB-TACE; use in unresectable disease</li>
+                </ul>
+                <h4 style="margin-top: 14px;">Child-Pugh Patient Selection</h4>
+                <ul class="list">
+                  <li><strong>Child-Pugh A</strong> — good candidate</li>
+                  <li><strong>Child-Pugh B7</strong> — carefully selected cases</li>
+                  <li><strong>Child-Pugh B8&ndash;9</strong> — very high risk; extreme caution</li>
+                  <li><strong>Child-Pugh C</strong> — contraindicated; TACE accelerates hepatic failure in decompensated cirrhosis</li>
+                </ul>
+              </div>
+            </div>
+            <div class="two-col">
+              <div class="panel" style="border-color: rgba(56,189,248,.15); background: rgba(56,189,248,.03);">
+                <h4 style="color: #93dcff;">cTACE — Conventional TACE</h4>
+                <ul class="list">
+                  <li>Lipiodol (ethiodized oil) + chemotherapy emulsified and injected into tumor-feeding artery</li>
+                  <li>Standard chemo: doxorubicin 50 mg, cisplatin 50&ndash;100 mg, mitomycin C 10 mg (single agent or combination; per institutional protocol)</li>
+                  <li>Followed by bland embolic: gelfoam pledgets or 100&ndash;300 &mu;m microspheres to achieve stasis</li>
+                  <li>Lipiodol = chemotherapy carrier + imaging marker; brilliant white on CT = tumor retention</li>
+                </ul>
+              </div>
+              <div class="panel" style="border-color: rgba(245,158,11,.15); background: rgba(245,158,11,.03);">
+                <h4 style="color: #fcd58e;">DEB-TACE — Drug-Eluting Bead</h4>
+                <ul class="list">
+                  <li>DC Beads or LC Beads loaded with doxorubicin (100&ndash;300 &mu;m); deployed directly into tumor feeder</li>
+                  <li>More predictable chemotherapy elution; possibly less systemic toxicity</li>
+                  <li>No lipiodol needed; endpoint = near stasis</li>
+                  <li>Equivalent efficacy to cTACE in randomized trials (PRECISION V, EMERALD)</li>
+                  <li>Preferred for patients with marginal liver function (lower systemic doxorubicin exposure)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel" style="margin-top: 14px; border-color: rgba(239,68,68,.18); background: rgba(239,68,68,.03);">
+              <h4 style="color: #fca5a5;">Contraindications</h4>
+              <ul class="list danger">
+                <li>Decompensated cirrhosis (Child-Pugh C, bilirubin &gt;3, INR &gt;2)</li>
+                <li>Hepatic encephalopathy</li>
+                <li>Extensive portal vein thrombosis — main PVT = relative to absolute contraindication; segmental/branch PVT = proceed with caution</li>
+                <li>Complete biliary obstruction without external drainage (biliary embolization &rarr; cholangitis)</li>
+                <li>Prior bilio-enteric anastomosis — greatly elevated cholangitis risk; prophylactic antibiotics mandatory if treating</li>
+                <li>ECOG performance status &gt;2</li>
+                <li>Tumor replacement &gt;50% liver volume</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Multidisciplinary tumor board.</strong> TACE should ideally be discussed at liver tumor board before proceeding. Oncology, hepatology, and transplant surgery coordination as appropriate.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Cross-sectional imaging (within 4 weeks).</strong> CT or MRI liver with contrast. Assess: tumor size, number, vascularity, portal vein and hepatic vein involvement. LI-RADS characterization for HCC. BCLC staging.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Labs.</strong> CBC, CMP (bilirubin, LFTs, creatinine), coagulation panel, AFP (tumor marker for HCC). Calculate Child-Pugh score — perform before every treatment session.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Portal vein patency.</strong> Doppler US or CT/MRI. Main PVT = high risk for ischemia post-TACE; must reassess risks before proceeding.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Pre-procedure hydration.</strong> IV fluids 1&ndash;2 L NS before procedure. Renal protection and adequate hydration for contrast load and doxorubicin nephrotoxicity.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Antiemetics + steroids.</strong> Ondansetron 4&ndash;8 mg IV (doxorubicin causes significant nausea). Dexamethasone 4&ndash;8 mg IV to reduce post-embolization syndrome severity.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>NPO 6 h minimum.</strong> Standard pre-procedure fasting for moderate sedation.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Antibiotic prophylaxis (when indicated).</strong> Patients with biliary stents, prior cholangitis, or bilio-enteric anastomosis: piperacillin-tazobactam before TACE. Not routine otherwise.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Hepatic Arterial Supply</h4>
+                <ul class="list">
+                  <li><strong>Normal anatomy:</strong> Celiac trunk &rarr; common hepatic artery &rarr; proper hepatic artery &rarr; right + left hepatic arteries (bifurcation at porta hepatis)</li>
+                  <li><strong>Variants in ~25% of patients</strong> — replaced right hepatic from SMA most common (~15%); replaced left hepatic from left gastric (~5%). Must catheterize ALL tumor-feeding vessels.</li>
+                  <li><strong>HCC is hypervascular:</strong> ~90&ndash;100% hepatic artery supply vs. normal liver (75% portal vein, 25% hepatic artery). This differential vascularity allows selective tumor targeting while sparing normal liver parenchyma.</li>
+                  <li><strong>Segmental/subsegmental targeting:</strong> More selective catheterization = less normal liver injury = better tolerance. Target one or two segments when possible.</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Non-Target Embolization Risks</h4>
+                <ul class="list">
+                  <li><strong style="color: #fca5a5;">Right gastric artery</strong> — lesser curvature of stomach; gastric ulceration if embolized</li>
+                  <li><strong>Cystic artery</strong> — cholecystitis (radiation cholecystitis with cTACE); coil-protect if in field</li>
+                  <li><strong>Falciform artery</strong> — anterior abdominal wall injury</li>
+                  <li><strong>Phrenic artery contributions</strong> — can supply large or dome HCC lesions; must identify</li>
+                  <li><strong>Stasis endpoint is critical</strong> — gelfoam/particles can reflux past stasis into non-target vessels more easily than coils; catheter position is everything</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. HOW I DO IT ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">cTACE &amp; DEB-TACE technique + community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <!-- Default RadCall card -->
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <div class="phase-badge ctace">cTACE — Conventional TACE</div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#128203; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#8595; Download</button></h4>
+              <div class="chip-row card-supplies">
+                <span class="chip">5 Fr sheath</span>
+                <span class="chip">Flush catheter</span>
+                <span class="chip">Selective catheter (Cobra / Mickelsson / SH)</span>
+                <span class="chip">2.7 Fr microcatheter</span>
+                <span class="chip">0.014&ndash;0.018&quot; microwire</span>
+                <span class="chip">Lipiodol (5&ndash;20 mL vial)</span>
+                <span class="chip">Doxorubicin 50 mg</span>
+                <span class="chip">Contrast + syringes</span>
+                <span class="chip">Gelfoam pledgets or 100&ndash;300 &mu;m microspheres</span>
+                <span class="chip">Heparinized saline</span>
+              </div>
+
+              <h4 style="margin: 14px 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">cTACE Steps</h4>
+              <div class="step-list" style="margin-bottom: 20px;">
+                <div class="step"><div class="step-num">1</div><div><h4>Celiac + SMA arteriography</h4><div class="muted">Define hepatic arterial anatomy in AP and lateral projections. Document tumor-feeding vessels. Identify vessels requiring protection: right gastric artery, cystic artery, falciform, replaced or accessory hepatic vessels. SMA angiogram to identify replaced right hepatic artery (~15% incidence).</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Superselective catheterization</h4><div class="muted">Advance microcatheter into tumor-feeding vessel (segmental or subsegmental hepatic artery). Confirm tumor blush on selective arteriogram. Document catheter position. More selective = better tumor coverage and less normal liver injury.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Lipiodol-chemotherapy emulsion preparation</h4><div class="muted">Mix lipiodol + doxorubicin 50 mg (dissolved in saline). Emulsify between two syringes connected via stopcock until viscous water-in-oil consistency is achieved. Typical lipiodol volume: 5&ndash;20 mL depending on tumor size. Do not inject before emulsion is homogeneous.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Infuse lipiodol-chemo emulsion</h4><div class="muted">Slowly inject emulsion under fluoroscopy. Watch emulsion flow selectively into tumor (characteristic fluoroscopic opacification). Critical endpoint: stop injection at stasis (forward flow slows to near zero). Do NOT inject past stasis &rarr; non-target embolization to stomach, gallbladder, or biliary tree.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Bland embolization</h4><div class="muted">After lipiodol delivery: inject gelfoam slurry or 100&ndash;300 &mu;m microspheres to achieve proximal stasis in the feeding artery. This retains chemotherapy within the tumor by eliminating arterial washout. Endpoint: complete stasis of the segmental/subsegmental artery.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>Post-TACE arteriogram</h4><div class="muted">Confirm tumor devascularization and stasis of flow in treated vessel(s). Document residual tumor blush if present (plan for retreatment). AP arteriogram to confirm no filling of gastric, gallbladder, or other non-target vessels.</div></div></div>
+                <div class="step"><div class="step-num">7</div><div><h4>Check for non-target fill</h4><div class="muted">Before removing catheter: confirm no unintended embolization to right gastric territory, gallbladder, or bowel. If non-target fill detected, document carefully and monitor appropriately post-procedure.</div></div></div>
+              </div>
+
+              <div class="phase-badge debtace">DEB-TACE — Drug-Eluting Bead</div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">DEB-TACE Steps (Abbreviated)</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Same angiography setup as cTACE</h4><div class="muted">Celiac + SMA angiogram, identify anatomy and tumor feeders, superselect tumor-feeding vessel with microcatheter. No vessel protection coiling needed (no lipiodol to protect non-target vessels differently than DEB beads). Catheter position still critical.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Load and infuse DC Beads</h4><div class="muted">DC Beads 100&ndash;300 &mu;m loaded with doxorubicin (per institutional protocol). Infuse slowly from microcatheter under fluoroscopy. Endpoint = near stasis in the tumor-feeding vessel. No lipiodol; bead deposition is the therapeutic agent.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Post-procedure arteriogram</h4><div class="muted">Confirm devascularization. DEB-TACE does not produce lipiodol staining on fluoroscopy — response assessment entirely by follow-up MRI/CT. Document devascularization and stasis on completion angiogram.</div></div></div>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Tumor not fully devascularized (residual blush)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Additional feeding vessels not yet catheterized — contralateral hepatic artery, right gastric branch contribution, inferior phrenic artery supply to dome lesions.</p>
+              <p class="success"><strong>Next step:</strong> Systematically check for additional feeders. Consider additional superselective passes to remaining contributing vessels. If anatomy is exhausted, plan for retreatment at 4&ndash;6 weeks after follow-up MRI confirms residual viable tumor.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Non-target embolization (gallbladder pain, epigastric pain)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Reflux of embolic material into cystic artery (cholecystitis) or right gastric / gastroduodenal territory (gastric ulceration) during injection past stasis.</p>
+              <p class="success"><strong>Next step:</strong> Post-procedure imaging to assess. Radiation cholecystitis (dull RUQ pain, gallbladder wall thickening on CT) is usually self-limited; manage conservatively. Gastric ulceration: PPI, close monitoring, hospitalization for significant cases. Document and avoid repeat embolization to same territory.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Post-TACE liver failure</h4>
+              <p class="muted"><strong>Likely cause:</strong> Occurs typically 1&ndash;4 weeks post in patients with pre-existing compromised hepatic reserve. Child-Pugh B8&ndash;9 patients most vulnerable. Bilateral treatment or large volume treatment in a single session.</p>
+              <p class="success"><strong>Next step:</strong> Monitor LFTs and bilirubin closely post-procedure. Aggressive supportive care — hydration, nutrition, hepatic encephalopathy management. Hepatology consultation. This is the most feared TACE complication; prevention through proper patient selection (Child-Pugh) is paramount.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Portal vein thrombosis discovered at angiography</h4>
+              <p class="muted"><strong>Likely cause:</strong> PVT may be present but not fully characterized on pre-procedure imaging. Can be progressive in cirrhotic HCC patients.</p>
+              <p class="success"><strong>Next step:</strong> Re-evaluate with Child-Pugh score. Main PVT = withhold TACE or use an extremely selective segmental approach with minimal treatment volume. Branch/segmental PVT = proceed with caution, smaller treatment territory. Consider Y-90 (TheraSphere) as alternative — approved for HCC with portal vein thrombosis.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Common / Expected</h4>
+              <ul class="list">
+                <li><strong>Post-embolization syndrome (70&ndash;80%)</strong> — fever, nausea, RUQ pain, malaise 1&ndash;7 days post; almost universal; self-limited; supportive care</li>
+                <li><strong>Radiation cholecystitis (~5%)</strong> — when cystic artery in treatment field; usually self-limited; cholecystectomy rarely needed</li>
+                <li><strong>Transient LFT elevation</strong> — expected; resolves 1&ndash;2 weeks post; persistent or worsening = hepatic failure warning sign</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Serious / Feared</h4>
+              <ul class="list danger">
+                <li><strong>Hepatic failure (3&ndash;5%)</strong> — most feared; occurs in decompensated liver; prevent through Child-Pugh screening; aggressive supportive care</li>
+                <li><strong>Non-target embolization</strong> — gastric ulcer, biliary ischemia; prevented by stasis endpoint discipline</li>
+                <li><strong>Biloma / hepatic abscess (~0.5&ndash;1%)</strong> — biliary tree necrosis; higher risk with biliary stents or bilio-enteric anastomosis</li>
+                <li><strong>Hepatic artery thrombosis</strong> — rare; limits future treatment options</li>
+                <li><strong>Tumor rupture</strong> — very rare; emergent embolization</li>
+                <li><strong>Renal impairment</strong> — contrast + doxorubicin nephrotoxicity; pre-hydration is protective</li>
+                <li><strong>Access site complications</strong> — hematoma, pseudoaneurysm; standard arterial post-care</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. POST-PROCEDURE ═══ -->
+        <section class="section" id="postprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Post-Procedure Care</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom: 14px;">
+              <div class="panel">
+                <h4>Immediate (Day of Procedure)</h4>
+                <ul class="list">
+                  <li>Inpatient observation 4&ndash;6 h minimum; 23 h overnight admission standard at most centers</li>
+                  <li>Antiemetics: ondansetron or prochlorperazine PRN</li>
+                  <li>Pain management: ketorolac, morphine for post-embolization syndrome</li>
+                  <li>IV hydration: 2&ndash;3 L during and after procedure</li>
+                  <li>Monitor vitals, RUQ exam, urine output</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Short-Term Follow-up</h4>
+                <ul class="list">
+                  <li>LFTs at 24 h and at 1 week</li>
+                  <li>AFP at 4 weeks (should decline with effective treatment; rise = residual/progressive disease)</li>
+                  <li>Imaging response: MRI or CT with contrast at 4&ndash;6 weeks — use mRECIST or LI-RADS Treatment Response (LR-TR)</li>
+                  <li>Resume anticoagulation per baseline risk at 24&ndash;48 h if indicated</li>
+                </ul>
+              </div>
+            </div>
+            <div class="two-col">
+              <div class="panel">
+                <h4>Retreatment Planning</h4>
+                <ul class="list">
+                  <li>Retreatment typically every 6&ndash;8 weeks for HCC (until complete response, transplant, or progression)</li>
+                  <li>CR/PR on mRECIST &rarr; next session at 6&ndash;8 weeks</li>
+                  <li>Stable disease &rarr; 4&ndash;6 weeks, consider different approach (more selective, different embolic)</li>
+                  <li>Progressive disease &rarr; alternative therapy (Y-90, systemic, ablation, transplant workup)</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Transplant Bridging Coordination</h4>
+                <ul class="list">
+                  <li>Coordinate with hepatology and transplant surgery — treatment response affects waitlist priority</li>
+                  <li>MELD exception points for HCC require periodic imaging response documentation</li>
+                  <li>Goal: maintain tumor within Milan criteria throughout waitlist period</li>
+                  <li>AFP &gt;1,000 ng/mL despite TACE may affect transplant candidacy (institutional variation)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">&#x2756;</div><div><strong>Child-Pugh A = safe. B7 = careful selection. B8&ndash;9 / C = do NOT treat with TACE.</strong> Post-TACE hepatic failure in a decompensated liver is the single most preventable complication. Calculate Child-Pugh before every session, not just the first.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2756;</div><div><strong>Superselective is key.</strong> Subsegmental TACE (one subsegment) gives better tumor coverage and less normal liver injury than lobar TACE. Move as distal as possible with the microcatheter. Superselective = less post-embolization syndrome + better outcomes.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2756;</div><div><strong>Stasis endpoint: stop injecting when forward flow stalls.</strong> Over-injection past stasis forces lipiodol-chemo emulsion or beads retrograde into non-target vessels &rarr; gastric ulcers, biliary injury. The most common technical error in TACE. Watch fluoroscopy continuously during injection.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2756;</div><div><strong>Lipiodol on CT at 24 h is your immediate response marker.</strong> The brilliant white lipiodol retention in tumor on non-contrast CT means good chemotherapy delivery. Poor retention = insufficient embolization or hypovascular tumor. Use this information to plan retreatment.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2756;</div><div><strong>DEB-TACE: similar efficacy, lower systemic toxicity.</strong> Better for patients with marginal liver function who cannot tolerate the systemic doxorubicin exposure of cTACE. Does not produce lipiodol CT signal — response assessment is entirely by MRI/CT arterial enhancement.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2756;</div><div><strong>Post-embolization syndrome is universal — prepare patients.</strong> Fever, nausea, RUQ pain for 1&ndash;7 days. Admission for 23 h observation is common. Hydrate aggressively (2&ndash;3 L during and after). Dexamethasone and antiemetics before the procedure blunt the syndrome.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2756;</div><div><strong>Antibiotic prophylaxis when indicated.</strong> Patients with biliary stents, prior cholangitis, or bilio-enteric anastomosis (Whipple, hepaticojejunostomy) &rarr; piperacillin-tazobactam before TACE. Hepatic artery occlusion in the setting of biliary-enteric continuity &rarr; ischemic cholangitis &rarr; liver abscess. This is a life-threatening complication that is entirely preventable.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. RESPONSE ASSESSMENT ═══ -->
+        <section class="section" id="response">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>TACE Response Assessment</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom: 16px;">
+              <div class="panel">
+                <h4>Modified RECIST (mRECIST) for HCC</h4>
+                <ul class="list">
+                  <li><strong>Complete Response (CR):</strong> Disappearance of arterial phase enhancement in all target lesions</li>
+                  <li><strong>Partial Response (PR):</strong> &ge;30% decrease in sum of viable (enhancing) diameters</li>
+                  <li><strong>Progressive Disease (PD):</strong> &ge;20% increase in sum of viable diameters, or new lesions</li>
+                  <li><strong>Stable Disease (SD):</strong> Neither PR nor PD criteria met</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>LI-RADS Treatment Response (LR-TR)</h4>
+                <ul class="list">
+                  <li><strong>LR-TR Nonviable:</strong> No arterial phase enhancement = complete treatment response</li>
+                  <li><strong>LR-TR Equivocal:</strong> Equivocal enhancement — likely treated, possible residual; follow closely</li>
+                  <li><strong>LR-TR Viable:</strong> Definite residual arterial enhancement = incomplete treatment; plan retreatment</li>
+                </ul>
+              </div>
+            </div>
+            <table class="ref-table">
+              <thead><tr><th>Response Category</th><th>AFP Trend</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr><td><strong>CR (mRECIST) / LR-TR Nonviable</strong></td><td>&gt;50% decline from peak</td><td>Continue surveillance; next session at 6&ndash;8 weeks or transplant evaluation</td></tr>
+                <tr><td><strong>PR (mRECIST)</strong></td><td>Declining</td><td>Retreatment at 6&ndash;8 weeks; continue TACE series</td></tr>
+                <tr><td><strong>SD</strong></td><td>Plateau</td><td>Retreatment at 4&ndash;6 weeks; consider more selective approach or different embolic agent</td></tr>
+                <tr><td><strong>PD / LR-TR Viable (persistent)</strong></td><td>Rising or plateau</td><td>Reassess — consider Y-90, ablation, systemic therapy (sorafenib, lenvatinib), or transplant workup if applicable</td></tr>
+              </tbody>
+            </table>
+            <div style="margin-top: 16px;">
+              <div class="panel">
+                <h4>Response Assessment Checklist</h4>
+                <ul class="list">
+                  <li>MRI or CT with contrast at 4&ndash;6 weeks post-TACE (arterial, portal venous, and delayed phases)</li>
+                  <li>Use arterial phase enhancement as primary response criterion (NOT size alone &mdash; size-based RECIST 1.1 underestimates response)</li>
+                  <li>AFP at 4 weeks: &gt;50% decline = favorable; plateau or rise = residual/progressive disease</li>
+                  <li>Re-treatment decision should incorporate: imaging response, Child-Pugh score at follow-up, patient performance status, and transplant eligibility status</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Ref: Llovet JM et al. NEJM 2002 (TACE vs BSC RCT) &middot; Lammer J et al. Cardiovasc Intervent Radiol 2010 (PRECISION V &mdash; DEB-TACE) &middot; Varela M et al. J Hepatol 2007 (EMERALD) &middot; Lencioni R, Llovet JM. Semin Liver Dis 2010 (mRECIST) &middot; SIR/CIRSE/ACR Practice Standards &middot; AASLD HCC Practice Guidance 2023.</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My TACE Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;5 Fr sheath&#10;2.7 Fr microcatheter&#10;Lipiodol&#10;Doxorubicin 50 mg"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;CFA access + heparin&#10;Celiac + SMA angiogram&#10;Superselect tumor feeder&#10;Lipiodol-chemo emulsion injection&#10;Bland embolization to stasis"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <label>Your Name</label>
+      <input type="text" id="card-author-name" placeholder="Your name (shown on card)" />
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" id="save-card-btn" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'tace';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _myVotes = {};
+  let _cardSearch = '';
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  // ── Load cards ──
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    await loadVotes();
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!document.getElementById('card-search-wrap')) {
+      const wrap = document.createElement('div');
+      wrap.id = 'card-search-wrap';
+      wrap.style.cssText = 'margin-bottom:12px';
+      wrap.innerHTML = '<input id="card-search" type="text" placeholder="Search community cards\u2026" style="width:100%;padding:8px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:inherit;font-family:inherit;font-size:13px;outline:none;" oninput="_cardSearch=this.value.toLowerCase();renderCards()">';
+      container.parentElement.insertBefore(wrap, container);
+    }
+    const q = _cardSearch.trim();
+    const visible = q ? _cards.filter(c => [c.title||'',c.display_name||'',...(c.supplies||[]),...(c.steps||[]),...(c.pearls||[])].join(' ').toLowerCase().includes(q)) : _cards;
+    if (!visible.length) {
+      loading.textContent = q ? 'No cards match your search.' : 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      container.innerHTML = '';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = visible.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      const myVote = _myVotes[c.id];
+      const votes = c.net_votes || 0;
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}" data-card-id="${c.id}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:5px;flex-shrink:0">
+              <button onclick="voteCard('${c.id}','up')" title="Helpful" style="background:none;border:1px solid ${myVote==='up'?'#22c55e':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='up'?'#22c55e':'inherit'};transition:.15s">${myVote==='up'?'&#x25B2;':'&#x25B3;'}${votes>0?' '+votes:''}</button>
+              <button onclick="voteCard('${c.id}','down')" title="Not helpful" style="background:none;border:1px solid ${myVote==='down'?'#ef4444':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='down'?'#ef4444':'inherit'};transition:.15s">${myVote==='down'?'&#x25BC;':'&#x25BD;'}</button>
+              ${isOwn ? `<button onclick="editCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Edit</button><button onclick="deleteCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Delete</button>` : ''}
+            </div>
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  async function loadVotes() {
+    const sb = _sb(); const user = _user();
+    if (!sb || !user) return;
+    const { data } = await sb.from('procedure_card_votes').select('card_id,vote').eq('user_id', user.id);
+    _myVotes = {};
+    if (data) for (const v of data) _myVotes[v.card_id] = v.vote;
+  }
+
+  async function voteCard(cardId, dir) {
+    const sb = _sb(); const user = _user();
+    if (!user || !sb) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    const existing = _myVotes[cardId];
+    const card = _cards.find(c => c.id === cardId);
+    if (!card) return;
+    if (existing === dir) {
+      await sb.from('procedure_card_votes').delete().match({ user_id: user.id, card_id: cardId });
+      delete _myVotes[cardId];
+      card.net_votes = (card.net_votes || 0) + (dir === 'up' ? -1 : 1);
+    } else {
+      await sb.from('procedure_card_votes').upsert({ user_id: user.id, card_id: cardId, vote: dir }, { onConflict: 'user_id,card_id' });
+      const prev = existing ? (existing === 'up' ? -1 : 1) : 0;
+      card.net_votes = (card.net_votes || 0) + prev + (dir === 'up' ? 1 : -1);
+      _myVotes[cardId] = dir;
+    }
+    await sb.from('procedure_cards').update({ net_votes: card.net_votes }).eq('id', cardId);
+    renderCards();
+  }
+
+  // ── Card CRUD ──
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    const nameInput = document.getElementById('card-author-name');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      if (nameInput) nameInput.value = card.display_name || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+      if (nameInput && !nameInput.value.trim()) {
+        const u = _user();
+        if (nameInput && !nameInput.value) nameInput.value = (u && u.email) ? u.email.split('@')[0] : '';
+        if (window.RadCallAuth && window.RadCallAuth.getProfile) {
+          window.RadCallAuth.getProfile().then(p => {
+            if (nameInput && !nameInput.value.trim()) nameInput.value = (p && p.display_name) || '';
+          }).catch(() => {});
+        }
+      }
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    if (!sb) { alert('Connection error \u2014 please reload and try again.'); return; }
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title.'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const authorInput = document.getElementById('card-author-name');
+    const displayName = (authorInput && authorInput.value.trim()) || (user.email ? user.email.split('@')[0] : 'Anonymous');
+    const saveBtn = document.getElementById('save-card-btn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving\u2026'; }
+    try {
+      if (editId) {
+        _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() } : c);
+        renderCards(); closeCardModal();
+        const { error } = await sb.from('procedure_cards').update({ title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() }).eq('id', editId);
+        if (error) console.error('Card update error:', error);
+      } else {
+        const tmpId = 'tmp-' + Date.now();
+        const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0, created_at: new Date().toISOString() };
+        _cards.unshift(newCard);
+        renderCards(); closeCardModal();
+        const { data, error } = await sb.from('procedure_cards')
+          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0 })
+          .select().single();
+        if (error) {
+          console.error('Card insert error:', error);
+          _cards = _cards.filter(c => c.id !== tmpId);
+          renderCards();
+          alert('Could not save card: ' + (error.message || 'Unknown error. Check your connection and try again.'));
+        } else if (data) {
+          _cards = _cards.map(c => c.id === tmpId ? data : c);
+        }
+      }
+      try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    } catch(err) {
+      console.error('saveCard exception:', err);
+      alert('Something went wrong saving your card. Please try again.');
+    } finally {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Card'; }
+    }
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  // ── Helpers ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'TACE Supply List\n' + '\u2550'.repeat(30) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'TACE Supply List\n' + '\u2550'.repeat(30) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'tace-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  // ── Init ──
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+</body>
+</html>

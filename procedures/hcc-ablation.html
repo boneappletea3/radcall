@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HCC Percutaneous Ablation — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(239,68,68,.12); color: #fecaca; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .pitfall { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(239,68,68,.18); background: linear-gradient(180deg, rgba(239,68,68,.08), rgba(239,68,68,.03)); }
+    .pitfall-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(239,68,68,.18); color: #fecaca; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Reference table ── */
+    .ref-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .ref-table th, .ref-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .ref-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .ref-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Playbook</div>
+      <h1>HCC Percutaneous Ablation</h1>
+      <p class="subhead">CT-guided thermal ablation (microwave/cryoablation) for hepatocellular carcinoma &mdash; targeting complete necrosis with &ge;5 mm margins in HCC meeting ablative criteria.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">MAC / General</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--accent-2)">Moderate (SIR Cat 2&ndash;3)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Incomplete ablation &middot; Biliary injury &middot; Tumor seeding</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Not routine (immunocomp: cipro 500 mg PO BID &times; 5d)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">MRI liver w/ contrast 4&ndash;6 wks (LI-RADS TR)</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#consent">3. Consent / Risks</a></li>
+          <li><a href="#supplies">4. Supplies</a></li>
+          <li><a href="#steps">5. Procedure Steps</a></li>
+          <li><a href="#pearls">6. Pearls &amp; Pitfalls</a></li>
+          <li><a href="#postprocedure">7. Post-Procedure</a></li>
+          <li><a href="#escalation">8. Emergency Escalation</a></li>
+          <li><a href="#resources">9. Related Resources</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications &amp; Patient Selection</h3><div class="section-subtitle">BCLC staging, Milan criteria, contraindications</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom: 16px;">
+              <div class="panel" style="border-color: rgba(56,189,248,.15); background: rgba(56,189,248,.03);">
+                <h4 style="color: #93dcff;">Ideal Candidates (BCLC 0/A)</h4>
+                <ul class="list">
+                  <li>Single HCC &le;3 cm (optimal &le;2 cm &mdash; highest complete ablation rates)</li>
+                  <li>Up to 3 nodules &le;3 cm (Milan criteria compatible)</li>
+                  <li>Child-Pugh A or B7 (B8+ &mdash; hepatology review required)</li>
+                  <li>ECOG PS 0&ndash;1</li>
+                  <li>Bridging therapy to transplant (downstage or maintain Milan while waiting)</li>
+                  <li>Recurrent HCC post-resection if anatomically accessible</li>
+                </ul>
+              </div>
+              <div class="panel" style="border-color: rgba(245,158,11,.15); background: rgba(245,158,11,.03);">
+                <h4 style="color: #fcd58e;">Relative Indications / Tumor Board</h4>
+                <ul class="list">
+                  <li>3&ndash;5 cm HCC: combination ablation + TACE (TACE-ablation); microwave preferred over RFA for larger tumors</li>
+                  <li>Subphrenic/perivascular HCC (near major bile duct or portal vein): cryoablation preferred (visible iceball, less heat-sink), or hydrodissection</li>
+                  <li>Recurrent HCC after TACE: ablation of residual viable tumor confirmed by LI-RADS LR-TR Viable</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel" style="border-color: rgba(239,68,68,.15); background: rgba(239,68,68,.03);">
+              <h4 style="color: #fecaca;">Contraindications</h4>
+              <ul class="list">
+                <li>Child-Pugh C (unless bridge to transplant &mdash; very selective)</li>
+                <li>Uncorrectable coagulopathy (INR &gt;1.5 &mdash; correct with FFP; platelets &lt;50K &mdash; transfuse)</li>
+                <li>Tumors adjacent to common bile duct/hepatic duct confluence: risk of biliary stricture &mdash; surgical or combined approach preferred</li>
+                <li>Extrahepatic disease (curative intent contraindicated)</li>
+                <li>Poor acoustic/CT window or inaccessible lesion (rare with CT guidance)</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Planning</h3><div class="section-subtitle">Imaging review, labs, modality selection, anesthesia</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom: 16px;">
+              <div class="panel">
+                <h4>Imaging Review</h4>
+                <ul class="list">
+                  <li>Diagnostic MRI liver (LI-RADS LR-4 or LR-5 preferred &mdash; confirm arterial phase enhancement + washout)</li>
+                  <li>CT or PET-CT to exclude extrahepatic disease</li>
+                  <li>Review prior TACE lipiodol deposition: viable tumor = arterial enhancement BEYOND lipiodol zone</li>
+                  <li>Measure tumor diameter in 3 planes; plan probe trajectory to achieve 1 cm circumferential margin</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Labs</h4>
+                <ul class="list">
+                  <li>CBC, CMP, PT/INR, type and screen</li>
+                  <li>AFP (baseline; 50% HCCs are AFP-producing &mdash; useful for response tracking)</li>
+                  <li>HBV/HCV viral load (active HBV: prophylactic entecavir pre-procedure)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="panel" style="margin-bottom: 16px;">
+              <h4>Modality Selection</h4>
+              <table class="ref-table" style="margin-top: 8px;">
+                <thead><tr><th>Ablation Type</th><th>Best For</th><th>Limitation</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Microwave (MWA)</strong></td><td>Most HCC &lt;5 cm; near vasculature (less heat-sink)</td><td>Tip artifact; larger ablation zone harder to predict</td></tr>
+                  <tr><td><strong>RFA</strong></td><td>Well-circumscribed HCC &lt;3 cm, away from vessels</td><td>Heat-sink near portal/hepatic veins; slower</td></tr>
+                  <tr><td><strong>Cryoablation</strong></td><td>Subphrenic, perivascular, near bile ducts (visible iceball)</td><td>Longer procedure; cryoshock risk (rare)</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Anesthesia plan confirmed.</strong> MAC preferred for breath-hold compliance and pain management. General anesthesia for subphrenic or difficult lesions requiring controlled apnea.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Recent cross-sectional imaging reviewed.</strong> Lesion size, location, proximity to bile ducts, bowel, diaphragm, and major vessels documented.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Coagulopathy corrected.</strong> INR &le;1.5, platelets &ge;50K before procedure.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>HBV status confirmed.</strong> Active HBV replication &rarr; entecavir prophylaxis ordered pre-procedure.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Ablation probe and energy system confirmed available.</strong> Verify probe size and manufacturer protocol for planned tumor diameter.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>D5W available for hydrodissection</strong> if lesion near bile duct, diaphragm, or bowel (&lt;1 cm clearance).</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. CONSENT / RISKS ═══ -->
+        <section class="section" id="consent">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Consent / Risks</h3><div class="section-subtitle">Risks to discuss with patient</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Procedure-Specific Risks</h4>
+                <ul class="list">
+                  <li>Incomplete ablation / local tumor recurrence (10&ndash;30% depending on tumor size and location)</li>
+                  <li>Hepatic abscess (1&ndash;2%; higher with bilioenteric anatomy &mdash; Whipple, biliary stents)</li>
+                  <li>Biliary injury / biloma (duct proximity &mdash; bile duct &ge;5 mm distance recommended)</li>
+                  <li>Post-ablation syndrome (fever, malaise, RUQ pain &mdash; self-limited 3&ndash;7 days)</li>
+                  <li>Tumor seeding (rare, &lt;1% &mdash; risk with biopsy at time of ablation)</li>
+                  <li>Hepatic decompensation (Child-Pugh B &mdash; bilirubin rise, ascites worsening)</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>General Risks</h4>
+                <ul class="list">
+                  <li>Hemorrhage / hematoma requiring transfusion or embolization (&lt;2%)</li>
+                  <li>Pneumothorax (subphrenic approach, crossing pleural space)</li>
+                  <li>Skin burn (grounding pad burns &mdash; RFA; probe insertion site)</li>
+                  <li>Anesthesia risks (MAC / general)</li>
+                  <li>Contrast reaction (if IV contrast used for confirmation)</li>
+                  <li>Infection / sepsis</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. SUPPLIES ═══ -->
+        <section class="section" id="supplies">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>Supplies</h3><div class="section-subtitle">CT guidance, ablation probes, medications</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div style="margin-bottom: 14px;">
+              <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#x2398; Copy List</button>
+              <button class="export-btn" onclick="downloadSupplyList()" title="Download supply list">&#x2193; Download</button>
+            </div>
+            <div class="three-col" style="margin-bottom: 14px;">
+              <div class="panel">
+                <h4>Imaging &amp; Guidance</h4>
+                <ul class="list" id="supplies-imaging">
+                  <li>CT fluoroscopy suite (wide-bore 70 cm preferred)</li>
+                  <li>Preprocedure CT arterial/portal phase for lesion targeting</li>
+                  <li>IV contrast (lesion confirmation at start if planning phase)</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Ablation Probes</h4>
+                <ul class="list" id="supplies-probes">
+                  <li><strong>MWA:</strong> Neuwave Certus, Covidien Emprint, or Medtronic Solero &mdash; 13&ndash;17G antenna; 45&ndash;60W, 10&ndash;15 min/zone</li>
+                  <li><strong>RFA:</strong> Cool-Tip (Medtronic) or VIVA RF (AngioDynamics) &mdash; 17G internally cooled; grounding pads &times;2</li>
+                  <li><strong>Cryo:</strong> Galil IceSense3 or Endocare PresIce &mdash; 17G; freeze-thaw-freeze cycle</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Access &amp; Hydrodissection</h4>
+                <ul class="list" id="supplies-access">
+                  <li>21G Chiba/coaxial needle (biopsy if needed &mdash; after ablation)</li>
+                  <li>D5W 200&ndash;500 mL (hydrodissection &mdash; NOT saline; saline conducts electricity)</li>
+                  <li>Extension tubing for continuous D5W drip</li>
+                  <li>Grounding pads &times;2 (RFA only) &mdash; thighs, lateral placement</li>
+                  <li>Standard procedural tray: sterile drapes, syringes, 25G/22G needles, lidocaine 1%</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel">
+              <h4>Medications</h4>
+              <ul class="list" id="supplies-meds">
+                <li>MAC sedation: propofol infusion, fentanyl, versed per anesthesia</li>
+                <li>Lidocaine 1% &mdash; skin and subcutaneous down to liver capsule</li>
+                <li>Toradol 30 mg IV (post-procedure pain; hold if renal insufficiency)</li>
+                <li>Ondansetron 4 mg IV (anti-emetic)</li>
+                <li>Tylenol 975 mg PO q8h (post-ablation fever)</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. PROCEDURE STEPS ═══ -->
+        <section class="section" id="steps">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Procedure Steps</h3><div class="section-subtitle">CT-guided microwave / RFA / cryoablation</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="step-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div>
+                  <h4>Patient Positioning &amp; Setup</h4>
+                  <div class="muted">Supine (most HCC) or left lateral decubitus (posterior right lobe lesions). Arms above head. Apply grounding pads to bilateral thighs if using RFA. Establish IV access &times;2.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div>
+                  <h4>MAC / General Anesthesia Initiated</h4>
+                  <div class="muted">MAC preferred. Confirm adequate IV access. For subphrenic or posterior lesions requiring controlled apnea for probe insertion, general anesthesia with anesthesiologist for held-breath technique.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div>
+                  <h4>Preprocedural CT Planning</h4>
+                  <div class="muted">Unenhanced CT from diaphragm to pelvis. Confirm lesion position and respiratory motion. Plan probe trajectory: avoid gallbladder, bowel, bile ducts, diaphragm. Note respiratory position at end-expiration for insertion. For tumors &gt;2.5 cm: plan overlapping zones ("tiling") — map multiple probe positions before starting.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div>
+                  <h4>Skin Prep, Drape, and Local Anesthesia</h4>
+                  <div class="muted">Standard sterile prep over right abdomen/flank. 1% lidocaine down to liver capsule — the peritoneum is exquisitely sensitive; adequate capsular block reduces patient movement during probe advancement.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">5</div>
+                <div>
+                  <h4>Probe Placement</h4>
+                  <div class="muted">CT scout &rarr; target lesion center &rarr; choose subcostal or intercostal approach (intercostal: use 11th or 12th space, ABOVE rib to avoid neurovascular bundle). Insert probe tip through skin; advance in increments under apneic conditions with intermittent CT fluoroscopy. Final CT confirms probe tip centered in/at deep margin of tumor. Traverse normal liver parenchyma to reach tumor &mdash; reduces capsular bleeding risk for subcapsular lesions.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">6</div>
+                <div>
+                  <h4>Hydrodissection (if Needed)</h4>
+                  <div class="muted">If bile ducts, bowel, or diaphragm within 1 cm of planned ablation zone: insert 21G Chiba needle into targeted dissection plane. Inject D5W 20&ndash;50 mL &mdash; confirm separation on CT. Use continuous slow D5W drip during ablation to maintain separation. <strong>Use D5W only &mdash; saline conducts electricity and can cause injury.</strong></div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">7</div>
+                <div>
+                  <h4>Ablation</h4>
+                  <div class="muted">Activate per manufacturer protocol. Monitor for breakthrough pain (inadequate anesthesia or probe repositioning needed) and for arcing (RFA &mdash; reduce power, check grounding pads). For tumors &gt;2.5 cm: complete first zone, then shift probe 1.5 cm and ablate again. Two-probe simultaneous MWA technique for 3&ndash;5 cm lesions creates larger confluent zone.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">8</div>
+                <div>
+                  <h4>Intraprocedural Assessment</h4>
+                  <div class="muted">CT after ablation. Ablation zone should be hyperattenuating (MWA/RFA) or hypoattenuating iceball (cryo). Zone must encompass tumor + &ge;5 mm margin in ALL directions. If margin inadequate: reposition probe and ablate additional zone before withdrawal.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">9</div>
+                <div>
+                  <h4>Probe Tract Ablation</h4>
+                  <div class="muted">On withdrawal, activate probe during removal to ablate tract (MWA/RFA) &mdash; reduces seeding risk. Not needed with cryoablation.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">10</div>
+                <div>
+                  <h4>Post-Ablation CT</h4>
+                  <div class="muted">Unenhanced CT to document ablation zone size, check for pneumothorax, hematoma, or subcapsular collection. Document final ablation zone dimensions in 3 planes.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">11</div>
+                <div>
+                  <h4>Recovery</h4>
+                  <div class="muted">4h observation minimum. Pain control: Toradol + Tylenol scheduled; opioids PRN. Monitor CBC at 4h. Post-ablation fever (&gt;38&deg;C) expected &mdash; Tylenol and reassurance.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.06);">
+              <h4 style="margin: 0 0 14px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Community Cards</h4>
+              <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+              <div id="community-cards" class="cards-grid">
+                <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. PEARLS & PITFALLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Pearls &amp; Pitfalls</h3><div class="section-subtitle">Technique refinements and critical errors to avoid</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <h4 style="margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .84rem;">Technique Pearls</h4>
+            <div class="pearls" style="margin-bottom: 20px;">
+              <div class="pearl">
+                <div class="pearl-mark">✦</div>
+                <div>Ablation margin &ge;5 mm in ALL planes = local tumor control goal; &ge;10 mm strongly preferred for tumors with vascular invasion pattern. Plan 1.5&ndash;2&times; tumor diameter probe zone to achieve adequate margins.</div>
+              </div>
+              <div class="pearl">
+                <div class="pearl-mark">✦</div>
+                <div>For subcapsular HCC: traverse normal liver before entering tumor. No free needle pass through capsule directly into tumor &mdash; reduces capsular bleeding risk.</div>
+              </div>
+              <div class="pearl">
+                <div class="pearl-mark">✦</div>
+                <div>Perivascular HCC (touching portal vein &ge;3 mm): MWA preferred over RFA (less heat-sink effect). Reposition probe toward the portal side of the tumor to achieve margin despite heat dissipation.</div>
+              </div>
+              <div class="pearl">
+                <div class="pearl-mark">✦</div>
+                <div>Two-probe simultaneous MWA technique for 3&ndash;5 cm lesions: activate both simultaneously for larger confluent zone. Overlapping coagulation is additive, not just additive &mdash; the synergy yields a larger zone than sequential ablation.</div>
+              </div>
+              <div class="pearl">
+                <div class="pearl-mark">✦</div>
+                <div>Cryoablation iceball tracking: clearly seen as hypoattenuating zone on CT in real time. Monitor continuously; stop freeze when iceball extends 1 cm beyond tumor edge in all directions.</div>
+              </div>
+              <div class="pearl">
+                <div class="pearl-mark">✦</div>
+                <div>Check AFP pre- and 4&ndash;6 weeks post-ablation. Rising AFP at follow-up = likely residual/recurrent HCC before imaging shows it &mdash; important early signal to act on.</div>
+              </div>
+            </div>
+            <h4 style="margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .84rem;">Critical Pitfalls</h4>
+            <div class="pearls">
+              <div class="pitfall">
+                <div class="pitfall-mark">!</div>
+                <div><strong>DO NOT ablate tumor adjacent to common bile duct/hepatic duct confluence</strong> without hepatobiliary surgery backup. Biliary stricture risk is high. Combined surgical/ablation or resection preferred.</div>
+              </div>
+              <div class="pitfall">
+                <div class="pitfall-mark">!</div>
+                <div><strong>Bilioenteric anastomosis (Whipple, Roux-en-Y)</strong> = high abscess risk. Prophylactic antibiotics required; consider ERCP drainage post-ablation. Do not treat without covering antibiotics and close post-procedure surveillance.</div>
+              </div>
+              <div class="pitfall">
+                <div class="pitfall-mark">!</div>
+                <div><strong>Segment VIII (near right hepatic vein/IVC junction):</strong> cryoablation preferred &mdash; visible iceball avoids inadvertent IVC thermal injury that is not visible with MWA/RFA.</div>
+              </div>
+              <div class="pitfall">
+                <div class="pitfall-mark">!</div>
+                <div><strong>Do NOT biopsy before ablation.</strong> Tissue confirmation is acceptable post-ablation or can await LI-RADS response. Pre-ablation biopsy significantly increases seeding risk.</div>
+              </div>
+              <div class="pitfall">
+                <div class="pitfall-mark">!</div>
+                <div><strong>Child-Pugh B8+:</strong> risk of decompensation increases substantially. Keep ablation zone as small as clinically appropriate (preserve functional liver volume). Discuss with hepatology; bridging to transplant listing preferred over repeated ablation.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. POST-PROCEDURE ═══ -->
+        <section class="section" id="postprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Post-Procedure Care</h3><div class="section-subtitle">Recovery, surveillance imaging, LI-RADS TR response</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom: 16px;">
+              <div class="panel">
+                <h4>Day 0 Recovery</h4>
+                <ul class="list">
+                  <li>4h bedrest, vitals q30min &times;4h</li>
+                  <li>CBC at 4h (hematocrit drop &gt;6 = significant hemorrhage &mdash; repeat CT)</li>
+                  <li>Pain management: Toradol + Tylenol scheduled; opioids PRN</li>
+                  <li>Post-ablation fever (&gt;38&deg;C) expected &mdash; Tylenol, reassurance; persistent &gt;72h = CT to r/o abscess</li>
+                  <li>Nausea: ondansetron PRN</li>
+                  <li>Discharge if stable (most patients same-day for single-lesion; overnight for Child-Pugh B or complex cases)</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Days 1&ndash;3: Post-Ablation Syndrome</h4>
+                <ul class="list">
+                  <li>RUQ pain, fever, fatigue, malaise &mdash; self-limiting and expected</li>
+                  <li>Continue scheduled Tylenol; avoid NSAIDs if renal dysfunction</li>
+                  <li>Patient education: call if rigors, temp &gt;39&deg;C, jaundice worsening, or increasing pain not controlled with oral medications</li>
+                </ul>
+              </div>
+            </div>
+
+            <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .84rem;">Imaging Follow-up Schedule</h4>
+            <table class="ref-table" style="margin-bottom: 16px;">
+              <thead><tr><th>Timepoint</th><th>Study</th><th>What to Assess</th></tr></thead>
+              <tbody>
+                <tr><td><strong>4&ndash;6 weeks</strong></td><td>MRI liver with gadolinium</td><td>LI-RADS TR-1 (no enhancement) = complete response; LI-RADS TR-Viable = residual/recurrence</td></tr>
+                <tr><td><strong>3 months</strong></td><td>MRI liver</td><td>Early recurrence detection; AFP trend</td></tr>
+                <tr><td><strong>6 months</strong></td><td>MRI liver</td><td>Continued surveillance; new lesions</td></tr>
+                <tr><td><strong>12 months</strong></td><td>MRI liver + AFP</td><td>Annual thereafter; transplant candidacy reassessment</td></tr>
+              </tbody>
+            </table>
+
+            <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .84rem;">LI-RADS Treatment Response (TR) Categories</h4>
+            <table class="ref-table">
+              <thead><tr><th>Category</th><th>Finding</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr><td><strong style="color: #bbf7d0;">LI-RADS TR-1 (No viable)</strong></td><td>No arterial enhancement in ablation zone</td><td>Routine surveillance per schedule above</td></tr>
+                <tr><td><strong>LI-RADS TR-2 (Probably no viable)</strong></td><td>Minimal equivocal enhancement</td><td>Repeat MRI at 3 months</td></tr>
+                <tr><td><strong style="color: #fcd58e;">LI-RADS TR-3 (Equivocal)</strong></td><td>Enhancement present, unclear viability</td><td>Repeat imaging or biopsy; tumor board discussion</td></tr>
+                <tr><td><strong style="color: #fecaca;">LI-RADS TR-Viable</strong></td><td>Nodular/thick rim arterial enhancement</td><td>Re-ablation or TACE; urgent tumor board</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ═══ 8. EMERGENCY ESCALATION ═══ -->
+        <section class="section" id="escalation">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Emergency Escalation</h3><div class="section-subtitle">Hemorrhage, pneumothorax, abscess, decompensation</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="danger-label">Hemorrhage</div>
+              <h4>Subcapsular Hematoma / Active Bleeding</h4>
+              <p class="muted">Subcapsular hematoma: most self-limit; serial CT if expanding; transfuse if Hgb &lt;8.</p>
+              <p class="success"><strong>Active arterial extravasation:</strong> emergent hepatic arteriography + embolization. Call surgery if hemodynamically unstable or pericapsular blood with ongoing bleeding (hepatic artery pseudoaneurysm post-ablation).</p>
+            </div>
+            <div class="problem">
+              <div class="danger-label">Pneumothorax</div>
+              <h4>Post-Ablation Pneumothorax (Subphrenic Access)</h4>
+              <p class="muted">Identified on post-ablation CT after intercostal approach. Small (&lt;20%, asymptomatic): observation and supplemental oxygen.</p>
+              <p class="success"><strong>Moderate-large or symptomatic:</strong> chest tube &mdash; IR or CT-guided 8&ndash;12F pigtail catheter. Monitor with serial CXR.</p>
+            </div>
+            <div class="problem">
+              <div class="danger-label">Hepatic Abscess</div>
+              <h4>Fever + Leukocytosis at 1&ndash;2 Weeks Post-Ablation</h4>
+              <p class="muted">CT abdomen with contrast. Thick-walled, gas-containing, or fluid collection in ablation zone = abscess until proven otherwise.</p>
+              <p class="success"><strong>Management:</strong> CT-guided drain placement (8&ndash;12F pigtail); aspirate for culture and Gram stain. Broad-spectrum antibiotics: pip-tazo 3.375g IV q6h; narrow based on culture results. Bilioenteric anatomy patients: higher threshold for ERCP to decompress bile ducts.</p>
+            </div>
+            <div class="problem">
+              <div class="danger-label">Biliary Injury</div>
+              <h4>Rising Bilirubin + Biloma on Follow-up Imaging</h4>
+              <p class="muted">Biliary injury may manifest days to weeks post-ablation. Infected biloma requires drainage.</p>
+              <p class="success"><strong>Management:</strong> ERCP &plusmn; biliary stent for bile leak; CT-guided drain if biloma infected. Bile duct stricture at hepatic hilum (late finding): hepatobiliary surgery consultation urgently.</p>
+            </div>
+            <div class="problem">
+              <div class="danger-label">Hepatic Decompensation</div>
+              <h4>Child-Pugh B: Rising Bilirubin, Worsening Ascites, Encephalopathy</h4>
+              <p class="muted">Most likely to occur 3&ndash;14 days post-ablation in Child-Pugh B8+ patients or those with prior large ablation zones.</p>
+              <p class="success"><strong>Management:</strong> Hepatology consult immediately. Lactulose for encephalopathy; diuresis for ascites. Consider TIPS evaluation if refractory ascites. Expedite transplant listing &mdash; decompensation post-ablation may improve transplant priority (MELD increase).</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. RELATED RESOURCES ═══ -->
+        <section class="section" id="resources">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>Related Resources</h3><div class="section-subtitle">Internal links and external guidelines</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Related Procedures</h4>
+                <ul class="list">
+                  <li><a href="y90.html" style="color: var(--accent);">Y-90 Radioembolization</a> &mdash; TACE/Y-90 for BCLC B HCC not meeting ablative criteria</li>
+                  <li><a href="tace.html" style="color: var(--accent);">TACE</a> &mdash; combination TACE-ablation for 3&ndash;5 cm lesions; treating residual after ablation</li>
+                  <li><a href="biliary-drain-exchange.html" style="color: var(--accent);">Biliary Drain Exchange</a> &mdash; biliary injury management post-ablation</li>
+                  <li><a href="drainage-abscess.html" style="color: var(--accent);">Abscess Drainage</a> &mdash; hepatic abscess drain placement technique</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>External Guidelines</h4>
+                <ul class="list">
+                  <li>AASLD HCC Guidelines (2023) &mdash; ablation indication thresholds and surveillance protocol</li>
+                  <li>ESMO Clinical Practice Guidelines HCC &mdash; European consensus on BCLC staging and treatment allocation</li>
+                  <li>LI-RADS v2018 Treatment Response Algorithm &mdash; TR category definitions and imaging criteria</li>
+                  <li>Barcelona Clinic Liver Cancer (BCLC) staging system &mdash; treatment allocation by stage</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Ref: AASLD HCC Guidelines 2023 &middot; Llovet JM et al. Nat Rev Dis Primers 2021 &middot; LI-RADS v2018 Treatment Response &middot; BCLC staging system &middot; Lencioni R et al. Radiology 2012 (microwave ablation margins).</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My HCC Ablation Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;Neuwave Certus 17G antenna&#10;D5W 500 mL&#10;21G Chiba needle&#10;Grounding pads x2"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;CT planning at end-expiration&#10;Subcostal approach above 12th rib&#10;Probe to deep tumor margin&#10;Ablate 12 min at 65W"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <label>Your Name</label>
+      <input type="text" id="card-author-name" placeholder="Your name (shown on card)" />
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" id="save-card-btn" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'hcc-ablation';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _myVotes = {};
+  let _cardSearch = '';
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  // ── Load cards ──
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    await loadVotes();
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!document.getElementById('card-search-wrap')) {
+      const wrap = document.createElement('div');
+      wrap.id = 'card-search-wrap';
+      wrap.style.cssText = 'margin-bottom:12px';
+      wrap.innerHTML = '<input id="card-search" type="text" placeholder="Search community cards\u2026" style="width:100%;padding:8px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:inherit;font-family:inherit;font-size:13px;outline:none;" oninput="_cardSearch=this.value.toLowerCase();renderCards()">';
+      container.parentElement.insertBefore(wrap, container);
+    }
+    const q = _cardSearch.trim();
+    const visible = q ? _cards.filter(c => [c.title||'',c.display_name||'',...(c.supplies||[]),...(c.steps||[]),...(c.pearls||[])].join(' ').toLowerCase().includes(q)) : _cards;
+    if (!visible.length) {
+      loading.textContent = q ? 'No cards match your search.' : 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      container.innerHTML = '';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = visible.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      const myVote = _myVotes[c.id];
+      const votes = c.net_votes || 0;
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}" data-card-id="${c.id}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:5px;flex-shrink:0">
+              <button onclick="voteCard('${c.id}','up')" title="Helpful" style="background:none;border:1px solid ${myVote==='up'?'#22c55e':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='up'?'#22c55e':'inherit'};transition:.15s">${myVote==='up'?'▲':'△'}${votes>0?' '+votes:''}</button>
+              <button onclick="voteCard('${c.id}','down')" title="Not helpful" style="background:none;border:1px solid ${myVote==='down'?'#ef4444':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='down'?'#ef4444':'inherit'};transition:.15s">${myVote==='down'?'▼':'▽'}</button>
+              ${isOwn ? `<button onclick="editCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Edit</button><button onclick="deleteCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Delete</button>` : ''}
+            </div>
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  async function loadVotes() {
+    const sb = _sb(); const user = _user();
+    if (!sb || !user) return;
+    const { data } = await sb.from('procedure_card_votes').select('card_id,vote').eq('user_id', user.id);
+    _myVotes = {};
+    if (data) for (const v of data) _myVotes[v.card_id] = v.vote;
+  }
+
+  async function voteCard(cardId, dir) {
+    const sb = _sb(); const user = _user();
+    if (!user || !sb) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    const existing = _myVotes[cardId];
+    const card = _cards.find(c => c.id === cardId);
+    if (!card) return;
+    if (existing === dir) {
+      await sb.from('procedure_card_votes').delete().match({ user_id: user.id, card_id: cardId });
+      delete _myVotes[cardId];
+      card.net_votes = (card.net_votes || 0) + (dir === 'up' ? -1 : 1);
+    } else {
+      await sb.from('procedure_card_votes').upsert({ user_id: user.id, card_id: cardId, vote: dir }, { onConflict: 'user_id,card_id' });
+      const prev = existing ? (existing === 'up' ? -1 : 1) : 0;
+      card.net_votes = (card.net_votes || 0) + prev + (dir === 'up' ? 1 : -1);
+      _myVotes[cardId] = dir;
+    }
+    await sb.from('procedure_cards').update({ net_votes: card.net_votes }).eq('id', cardId);
+    renderCards();
+  }
+
+  // ── Card CRUD ──
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    const nameInput = document.getElementById('card-author-name');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      if (nameInput) nameInput.value = card.display_name || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+      if (nameInput && !nameInput.value.trim()) {
+        const u = _user();
+        if (nameInput && !nameInput.value) nameInput.value = (u && u.email) ? u.email.split('@')[0] : '';
+        if (window.RadCallAuth && window.RadCallAuth.getProfile) {
+          window.RadCallAuth.getProfile().then(p => {
+            if (nameInput && !nameInput.value.trim()) nameInput.value = (p && p.display_name) || '';
+          }).catch(() => {});
+        }
+      }
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    if (!sb) { alert('Connection error \u2014 please reload and try again.'); return; }
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title.'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const authorInput = document.getElementById('card-author-name');
+    const displayName = (authorInput && authorInput.value.trim()) || (user.email ? user.email.split('@')[0] : 'Anonymous');
+    const saveBtn = document.getElementById('save-card-btn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving\u2026'; }
+    try {
+      if (editId) {
+        _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() } : c);
+        renderCards(); closeCardModal();
+        const { error } = await sb.from('procedure_cards').update({ title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() }).eq('id', editId);
+        if (error) console.error('Card update error:', error);
+      } else {
+        const tmpId = 'tmp-' + Date.now();
+        const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0, created_at: new Date().toISOString() };
+        _cards.unshift(newCard);
+        renderCards(); closeCardModal();
+        const { data, error } = await sb.from('procedure_cards')
+          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0 })
+          .select().single();
+        if (error) {
+          console.error('Card insert error:', error);
+          _cards = _cards.filter(c => c.id !== tmpId);
+          renderCards();
+          alert('Could not save card: ' + (error.message || 'Unknown error. Check your connection and try again.'));
+        } else if (data) {
+          _cards = _cards.map(c => c.id === tmpId ? data : c);
+        }
+      }
+      try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    } catch(err) {
+      console.error('saveCard exception:', err);
+      alert('Something went wrong saving your card. Please try again.');
+    } finally {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Card'; }
+    }
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  // ── Helpers ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const items = [];
+    document.querySelectorAll('#supplies-imaging li, #supplies-probes li, #supplies-access li, #supplies-meds li').forEach(li => {
+      items.push(li.textContent.trim());
+    });
+    const text = 'HCC Ablation Supply List\n' + '\u2550'.repeat(30) + '\n' + items.map(s => '\u2610 ' + s).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const items = [];
+    document.querySelectorAll('#supplies-imaging li, #supplies-probes li, #supplies-access li, #supplies-meds li').forEach(li => {
+      items.push(li.textContent.trim());
+    });
+    const text = 'HCC Ablation Supply List\n' + '\u2550'.repeat(30) + '\n' + items.map(s => '\u2610 ' + s).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'hcc-ablation-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  // ── Init ──
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+</body>
+</html>
