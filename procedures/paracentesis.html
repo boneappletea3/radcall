@@ -666,9 +666,14 @@
     const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
     const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
     const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const saveBtn = document.querySelector('.btn-primary');
+    if (saveBtn) { saveBtn.textContent = 'Saving…'; saveBtn.disabled = true; }
     const editId = document.getElementById('editing-card-id').value;
-    const profile = await window.RadCallAuth.getProfile();
-    const displayName = (profile && profile.display_name) || user.email || 'Anonymous';
+    let displayName = user.email || 'Anonymous';
+    try {
+      const profile = await window.RadCallAuth.getProfile();
+      if (profile && profile.display_name) displayName = profile.display_name;
+    } catch(e) {}
 
     if (editId) {
       // Update
@@ -684,9 +689,12 @@
       const { data, error } = await sb.from('procedure_cards')
         .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName })
         .select().single();
-      if (!error && data) { _cards = _cards.map(c => c.id === tmpId ? data : c); }
+      if (error) console.error('saveCard insert error:', error);
+      if (!error && data) { _cards = _cards.map(c => c.id === tmpId ? data : c); renderCards(); }
     }
     try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const saveBtnFinal = document.querySelector('.btn-primary');
+    if (saveBtnFinal) { saveBtnFinal.textContent = 'Save Card'; saveBtnFinal.disabled = false; }
   }
 
   function editCard(id) { openCardModal(id); }

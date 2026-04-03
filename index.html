@@ -1585,14 +1585,23 @@ body.home-active footer { display: none; }
 
     <div class="nav-item nav-has-sub" id="nav-nucs" onclick="navSelect('nucs')"><span class="nav-dot" style="background:var(--amber)"></span>Nuclear Medicine<span class="nav-arrow">›</span></div>
     <div class="nav-sub-tree" id="navtree-nucs"></div>
-    <div class="nav-item nav-has-sub" id="nav-ir" onclick="navSelect('ir')"><span class="nav-dot" style="background:var(--teal)"></span>Interventional Rad.<span class="nav-arrow">›</span></div>
-    <div class="nav-sub-tree" id="navtree-ir"></div>
   </div>
 
   <div class="nav-section">
     <div class="nav-group-label">Guides</div>
     <div class="nav-item nav-has-sub" id="nav-fluoro" onclick="navSelect('fluoro')"><span class="nav-dot" style="background:var(--teal)"></span>Fluoroscopy<span class="nav-pro-badge">PRO</span><span class="nav-arrow">›</span></div>
     <div class="nav-sub-tree" id="navtree-fluoro"></div>
+
+    <div class="nav-item nav-has-sub" id="nav-ir-guides" onclick="irGuidesToggle(this)"><span class="nav-dot" style="background:var(--teal)"></span>IR Procedures<span class="nav-pro-badge">PRO</span><span class="nav-arrow">›</span></div>
+    <div class="nav-sub-tree" id="navtree-ir-guides">
+      <div class="nav-sub-item" onclick="window.location.href='procedures/library.html'">Procedure Playbooks</div>
+      <div class="nav-sub-item" onclick="goToResult('ir','ir-anticoag')">Periprocedural Anticoag</div>
+      <div class="nav-sub-item" onclick="goToResult('ir','ir-abx-prophylaxis')">Antibiotic Prophylaxis</div>
+      <div class="nav-sub-item" onclick="goToResult('ir','ir-betalactam')">β-Lactam Cross-Reactivity</div>
+    </div>
+
+    <div class="nav-item nav-has-sub" id="nav-searchpatterns" onclick="navSelect('searchpatterns')"><span class="nav-dot" style="background:var(--purple)"></span>Search Patterns<span class="nav-pro-badge">PRO</span><span class="nav-arrow">›</span></div>
+    <div class="nav-sub-tree" id="navtree-searchpatterns"></div>
   </div>
 
   <div class="nav-section">
@@ -1604,8 +1613,6 @@ body.home-active footer { display: none; }
     <div class="nav-sub-tree" id="navtree-incidentaloma"></div>
     <div class="nav-item" onclick="showSection('mrisafety')"><span class="nav-dot"></span>MRI Safety</div>
     <div class="nav-item" onclick="showSection('anatomy')"><span class="nav-dot"></span>Anatomy Resources</div>
-    <div class="nav-item nav-has-sub" id="nav-searchpatterns" onclick="navSelect('searchpatterns')" style="color:var(--teal)"><span class="nav-dot" style="background:var(--teal)"></span>Search Patterns<span class="nav-arrow">›</span></div>
-    <div class="nav-sub-tree" id="navtree-searchpatterns"></div>
   </div>
 
   <div class="nav-section">
@@ -1759,7 +1766,10 @@ body.home-active footer { display: none; }
 
     <!-- Pro Tools panel — shown only when signed in -->
     <div class="pro-tools-wrap" id="pro-tools-overview" style="display:none">
-      <div class="pro-tools-eyebrow">Pro Tools</div>
+      <div class="overview-hdr" style="margin-bottom:18px">
+        <div class="overview-hdr-eyebrow" style="color:var(--purple)">✦ Pro Tools</div>
+        <div class="overview-hdr-title">Your Tools</div>
+      </div>
       <div class="pro-tools-grid">
         <a class="pro-tool-card" href="case-log.html">
           <div class="pro-tool-icon">
@@ -1980,6 +1990,13 @@ async function _loadSection(id) {
     if (!r.ok) throw new Error('HTTP ' + r.status);
     sec.innerHTML = await r.text();
     sec.dataset.loaded = '1';
+    // Re-execute any <script> tags (innerHTML doesn't run scripts)
+    sec.querySelectorAll('script').forEach(oldScript => {
+      const newScript = document.createElement('script');
+      newScript.textContent = oldScript.textContent;
+      document.body.appendChild(newScript);
+      newScript.remove();
+    });
   } catch(e) {
     sec.innerHTML = '<div style="padding:40px;color:var(--red);text-align:center">Failed to load section. <a href="" onclick="location.reload()">Reload</a></div>';
     console.error('Failed to load section', id, e);
@@ -2954,6 +2971,22 @@ function toggleNavGrp(grpId, section, firstTopic) {
     hdr.classList.add('open', 'active-grp');
     goToResult(section, firstTopic);
   }
+}
+
+function irGuidesToggle(el) {
+  const tree = document.getElementById('navtree-ir-guides');
+  const isOpen = el.classList.contains('open');
+  // Close other sub-trees
+  document.querySelectorAll('.nav-sub-tree').forEach(t => {
+    if (t.id !== 'navtree-ir-guides') t.classList.remove('open');
+  });
+  document.querySelectorAll('.nav-has-sub').forEach(item => {
+    if (item.id !== 'nav-ir-guides') item.classList.remove('open', 'active');
+  });
+  tree.classList.toggle('open', !isOpen);
+  el.classList.toggle('open', !isOpen);
+  el.classList.toggle('active', !isOpen);
+  if (!isOpen) showSection('ir');
 }
 
 function navSelect(sectionId) {
