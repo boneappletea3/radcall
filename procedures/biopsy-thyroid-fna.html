@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thyroid FNA — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117; --panel: #111827; --panel-2: #0f172a; --border: #243041;
+      --text: #e5e7eb; --muted: #94a3b8; --accent: #38bdf8; --accent-2: #f59e0b;
+      --success: #22c55e; --danger: #ef4444; --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28); --radius: 18px; --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+    .tirads-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+    .tirads-table th, .tirads-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); vertical-align: top; }
+    .tirads-table th { color: var(--muted); font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .tirads-table tr:hover td { background: rgba(56,189,248,.04); }
+    .info-box { background: rgba(56,189,248,.07); border: 1px solid rgba(56,189,248,.2); border-radius: 14px; padding: 14px 16px; font-size: .92rem; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="biopsy.html">&larr; Back to Image-Guided Biopsy</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Playbook</div>
+      <h1>Thyroid FNA / Core Needle Biopsy</h1>
+      <p class="subhead">Ultrasound-guided fine-needle aspiration (and core biopsy when indicated) of thyroid nodules for cytologic/histologic diagnosis and risk stratification per ACR TI-RADS.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Guidance</span><div class="snapshot-value">US (linear/hockey-stick)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:#86efac">Low (SIR Cat 1)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Hematoma &middot; Airway</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Not routine</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">Outpatient / 30 min obs</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#troubleshooting">5. Troubleshooting</a></li>
+          <li><a href="#complications">6. Complications</a></li>
+          <li><a href="#postprocedure">7. Post-Procedure</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#specimen">9. Specimen Handling</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications / TI-RADS Thresholds</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:14px">
+              <div class="panel">
+                <h4>Indications</h4>
+                <ul class="list">
+                  <li>Sonographically suspicious thyroid nodule meeting ACR TI-RADS size thresholds (see table below)</li>
+                  <li>Nodule with microcalcifications, taller-than-wide shape, hypoechoic/very hypoechoic echogenicity, irregular margins, or extrathyroidal extension</li>
+                  <li>Diffuse rapid thyroid enlargement (rule out anaplastic carcinoma or lymphoma) — especially age &gt;50</li>
+                  <li>Hashimoto thyroiditis with a discrete nodular focus (rule out lymphoma or PTC)</li>
+                  <li>Known primary malignancy with thyroid mass (evaluate for metastasis)</li>
+                  <li>High-risk history: prior head/neck radiation, family history thyroid cancer, MEN 2A/2B, Cowden syndrome</li>
+                  <li>Non-diagnostic prior FNA → repeat FNA or CNB</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Contraindications</h4>
+                <ul class="list">
+                  <li><strong>SIR Category 1 (LOW bleeding risk)</strong> — routine coagulation testing not required for FNA</li>
+                  <li>INR &gt;3.0 or platelets &lt;20,000: consider correction before proceeding (especially if CNB planned)</li>
+                  <li>Purely cystic nodule (very low malignancy risk) — drainage ± cytology, not FNA</li>
+                  <li>Hot/hyperfunctioning nodule on scintigraphy — almost always benign, biopsy rarely indicated</li>
+                  <li>Uncooperative patient unable to hold still</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel">
+              <h4>ACR TI-RADS Biopsy Thresholds</h4>
+              <table class="tirads-table" style="margin-top:8px">
+                <thead>
+                  <tr><th>Category</th><th>Points</th><th>Risk</th><th>Follow-up Threshold</th><th>FNA Threshold</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>TR1</strong> — Benign</td><td>0</td><td>Benign</td><td>No follow-up</td><td>No biopsy</td></tr>
+                  <tr><td><strong>TR2</strong> — Not suspicious</td><td>2</td><td>&lt;1%</td><td>No follow-up</td><td>No biopsy</td></tr>
+                  <tr><td><strong>TR3</strong> — Mildly suspicious</td><td>3</td><td>~5%</td><td>US if &ge;1.5 cm</td><td>FNA if &ge;2.5 cm</td></tr>
+                  <tr><td><strong>TR4</strong> — Moderately suspicious</td><td>4–6</td><td>~15%</td><td>US if &ge;1 cm</td><td>FNA if &ge;1.5 cm</td></tr>
+                  <tr><td><strong>TR5</strong> — Highly suspicious</td><td>&ge;7</td><td>~35%</td><td>US if &ge;0.5 cm</td><td>FNA if &ge;1 cm</td></tr>
+                </tbody>
+              </table>
+              <p style="font-size:.82rem;color:var(--muted);margin-top:8px">TI-RADS scoring: Composition (0–2), Echogenicity (0–3), Shape (0–3), Margin (0–3), Echogenic foci (0–3). Isthmus nodules carry higher malignancy risk — lower threshold for biopsy.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Review prior imaging.</strong> Confirm target nodule on dedicated thyroid US (not just CT scout). Note size, TI-RADS category, location (isthmus vs pole), and any associated lymphadenopathy. Plan biopsy approach and identify adjacent carotid/jugular.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Endocrine labs.</strong> Check TSH. If TSH &lt;0.5 &mu;U/mL (hyperthyroid), order I-123 scan before biopsy — hot nodules are almost always benign. Do not biopsy a hot nodule without scintigraphy first.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Anticoagulation.</strong> No specific hold required for FNA (SIR Cat 1). For CNB: treat as Cat 2 — INR &lt;2.0, platelets &gt;50,000. Hold warfarin 5 days for CNB if clinically appropriate.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent.</strong> Key risks: hematoma (most common), pain, non-diagnostic specimen (10–20%), false-negative (0–5%), infection (rare), tract seeding (extremely rare 0.00012% FNA), airway compromise from expanding hematoma (rare but emergent).</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Target nodule selection.</strong> Biopsy no more than 2 nodules per session. In multinodular thyroid, prioritize the most sonographically suspicious nodule — not necessarily the largest.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Notify cytopathology.</strong> If ROSE (rapid on-site evaluation) is available, coordinate for specimen adequacy at the table. If not available, plan for 2–3 FNA needle passes per nodule.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>NPO: Not required</strong> for FNA. Outpatient procedure. Patient should have a driver if sedation (rare) is planned.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Key Structures</h4>
+                <ul class="list">
+                  <li><strong>Thyroid lobes:</strong> Butterfly-shaped gland straddling the trachea at C5–T1. Right and left lobes connected by the isthmus. Each lobe ~4–6 cm in length, 1.5–2 cm AP dimension.</li>
+                  <li><strong>Isthmus:</strong> Overlies the 2nd–4th tracheal rings. Nodules here have a higher malignancy risk per cm than polar nodules.</li>
+                  <li><strong>Carotid sheath:</strong> Lateral to each lobe — contains common carotid artery, internal jugular vein, vagus nerve. Identify with Doppler before every pass.</li>
+                  <li><strong>Trachea:</strong> Posterior medial — don't confuse shadowing ring for a nodule.</li>
+                  <li><strong>Parathyroids:</strong> Posterior to lobes; not typically at risk with careful anterior approach.</li>
+                  <li><strong>Recurrent laryngeal nerve:</strong> Runs in the tracheoesophageal groove — no direct US visualization; stay anterior to paratracheal region.</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Needle Approaches</h4>
+                <ul class="list">
+                  <li><strong>Lateral (parallel) approach:</strong> Needle enters skin lateral to thyroid, advances parallel to transducer axis into nodule. Full needle shaft visible — preferred by most operators. Reduces risk of tracheal or carotid injury.</li>
+                  <li><strong>Anterior (perpendicular) approach:</strong> Short-axis — needle crosses transducer plane; tip seen as bright echogenic focus. Useful for small or isthmus nodules. Higher carotid risk if off-axis — use Doppler before every pass.</li>
+                  <li><strong>Shoulder-roll positioning:</strong> Pillow under shoulders extends the neck, improving thyroid/isthmus access and creating separation between gland and trachea.</li>
+                  <li><strong>Head rotation:</strong> Ipsilateral rotation 10–15° to the side of the biopsy increases access to posterior pole nodules.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. HOW I DO IT ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">Default RadCall approach + community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list">&#128203; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list">&#8595; Download</button></h4>
+              <div class="chip-row card-supplies">
+                <span class="chip">High-freq linear US probe (15 MHz)</span>
+                <span class="chip">Hockey-stick probe (small parts)</span>
+                <span class="chip">Sterile probe cover + sterile gel</span>
+                <span class="chip">25g needle (FNA) &times;3–4</span>
+                <span class="chip">5 mL syringe (aspiration technique)</span>
+                <span class="chip">18g or 20g CNB device (if CNB planned)</span>
+                <span class="chip">1% lidocaine</span>
+                <span class="chip">25g needle for local anesthesia</span>
+                <span class="chip">ChloraPrep / iodine prep</span>
+                <span class="chip">Sterile drape</span>
+                <span class="chip">Glass slides &times;6+</span>
+                <span class="chip">95% ethanol fixative (Pap stain)</span>
+                <span class="chip">RPMI tube (cell block / flow)</span>
+                <span class="chip">Cold compress for post-procedure</span>
+              </div>
+
+              <h4 style="margin: 16px 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps — FNA</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Position patient and survey</h4><div class="muted">Supine, pillow under shoulders to extend neck. Turn head slightly away from target side. Perform full US survey with color Doppler. Identify target nodule, its largest diameter, solid vs. cystic components, and nearest vascular structures (carotid, jugular). Mark skin if helpful.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Sterile prep and local anesthesia</h4><div class="muted">ChloraPrep or iodine wipe. Sterile probe cover and gel. Infiltrate 1% lidocaine — skin wheal then deeper injection to thyroid capsule under US guidance (25g 1.5" needle). Anesthetize the capsule: pause needle at capsule and inject 0.5 mL lidocaine. Allow 60 seconds to dwell. Avoids major discomfort during FNA needle traversal of the capsule.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Plan needle trajectory</h4><div class="muted">Apply Doppler along planned path. Confirm no large vessel in tract. Lateral (parallel) approach preferred — aligns needle with US beam for full shaft visualization. Perpendicular (short-axis) for difficult isthmus nodules. Instruct patient: do not swallow or speak during needle insertion.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>FNA — Aspiration technique</h4><div class="muted">25g needle attached to 5 mL syringe. Advance into nodule under real-time US. Create 1–2 mL negative pressure suction in syringe plunger. Move needle back and forth 30–60 times within nodule (short excursions). Rotate needle gently for shearing action. Release negative pressure before withdrawing — if plunger not released first, sample will be sucked into syringe and become unusable. Target solid/cellular component; avoid cystic areas.</div></div></div>
+                <div class="step"><div class="step-num">4A</div><div><h4>FNA — Non-aspiration (capillary) technique</h4><div class="muted">25g needle without syringe. Advance into nodule and move back and forth ~30–60 times until material is visible in needle hub. No suction applied. Lower blood contamination — preferred for hypervascular nodules. If specimen appears adequate, blot hub onto slide. For very vascular nodules, start with non-aspiration, then switch to aspiration if yield is poor.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Number of passes and specimen prep</h4><div class="muted">Minimum 2–3 passes per nodule (up to 5 if no ROSE). If ROSE is available, pass 1–2 needles and check adequacy before additional passes. For partly cystic nodules: aspirate cystic component first (send for cytology, not discarded), then biopsy solid mural component. Prepare slide immediately: deposit on glass slide, smear with second slide, fix in 95% ethanol (Pap stain) or air-dry (Diff-Quik). Send remaining material in RPMI for cell block.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>CNB — when indicated</h4><div class="muted">If FNA is non-diagnostic after adequate passes, or if lymphoma is suspected (flow cytometry requires intact architecture): use 18g or 20g CNB device coaxially or direct. Make superficial skin nick with 18g needle. Target nodule under real-time US. Confirm tip in nodule before firing. Obtain 2–3 cores. Short-throw device recommended given proximity of thyroid to carotid, trachea, and jugular — confirm throw stays within gland. Hold pressure 20–30 min post-CNB given higher bleeding risk vs FNA.</div></div></div>
+                <div class="step"><div class="step-num">7</div><div><h4>Post-procedure hemostasis</h4><div class="muted">Remove needle and apply firm manual pressure for minimum 5 minutes (FNA) or 20–30 minutes (CNB). Apply cold compress. US scan to assess for hematoma before discharge. If hematoma is visualized, continue pressure until stable.</div></div></div>
+              </div>
+            </div>
+
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Needle tip not visible</h4>
+              <p class="muted"><strong>Likely cause:</strong> Steep angle crossing the US beam (perpendicular approach); deep position; fine gauge needle.</p>
+              <p class="success"><strong>Next step:</strong> Rock transducer gently while holding needle still — tip will appear as bright focus when beam intersects it. Partially withdraw and re-align so needle is more parallel to beam. Switch to lateral (parallel) approach. Try gentle in-out motion to create tip artifact.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Repeated non-diagnostic specimens</h4>
+              <p class="muted"><strong>Likely cause:</strong> Blood dilution (too much suction or hypervascular nodule), operator technique, cystic component sampled instead of solid, inadequate passes.</p>
+              <p class="success"><strong>Next step:</strong> Switch to non-aspiration (capillary) technique. Sample solid mural component only. Use ROSE if available. Ensure minimum 3 passes. If still non-diagnostic after adequate attempts, proceed to CNB. Consider opting for a larger gauge needle (21g spinal needle for difficult nodules).</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Expanding hematoma during / after procedure</h4>
+              <p class="muted"><strong>Likely cause:</strong> Vascular puncture, coagulopathy, or patient on anticoagulation. Large hematomas can compress airway — rare but emergent.</p>
+              <p class="success"><strong>Next step:</strong> Apply firm direct pressure with US probe immediately. Hold for 3–5 minutes minimum. Monitor US for expansion. If hematoma expanding rapidly or patient develops swallowing difficulty/stridor — activate airway emergency, anesthesia to bedside, prepare for intubation. Most hematomas are minor and resolve with compression.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Nodule moves away from needle tip</h4>
+              <p class="muted"><strong>Likely cause:</strong> Cervical lymph nodes and small thyroid nodules are mobile and can shift with needle pressure. Imprecise angle.</p>
+              <p class="success"><strong>Next step:</strong> Use real-time US — watch tip approach nodule, adjust angle. Stabilize gland with non-needle hand if needed. For slippery lymph nodes, target the cortex not the center, and use a slightly more medial entry to "pin" the node against deeper structures.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Fluid-fluid level developing in cystic nodule</h4>
+              <p class="muted"><strong>Likely cause:</strong> Hemorrhage into cystic component during biopsy — this is common and expected in part-cystic nodules.</p>
+              <p class="success"><strong>Next step:</strong> Hold US probe pressure on overlying skin for 5 minutes. Monitor to ensure fluid level stops expanding. If stable — patient can be discharged normally. Document on post-procedure note. Pathology will confirm benign hemorrhagic change.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Hemorrhagic</h4>
+              <ul class="list danger">
+                <li><strong>Small intrathyroidal / subcapsular hematoma</strong> — most common; self-limited; compression and cold compress</li>
+                <li><strong>Perithyroidal hematoma</strong> — less common; observe; rarely requires intervention</li>
+                <li><strong>Large expanding hematoma with airway compression</strong> — rare but emergent. Pain + swelling + dysphagia + stridor. Requires immediate intubation and surgical decompression. Risk dramatically higher in anticoagulated patients.</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Other</h4>
+              <ul class="list">
+                <li><strong>Pain / discomfort</strong> — most common; ear-radiating pain from capsular irritation is expected and resolves</li>
+                <li><strong>Vasovagal reaction</strong> — manage with supine positioning, leg elevation; atropine if persistent bradycardia</li>
+                <li><strong>Non-diagnostic specimen</strong> — 10–20% of FNA procedures; repeat FNA or CNB. Male patients and taller-than-wide nodules are higher risk for non-diagnostic result.</li>
+                <li><strong>False negative</strong> — 0–5%; cytologic benign in malignant nodule. High-risk imaging features after benign FNA → repeat biopsy.</li>
+                <li><strong>Tract seeding</strong> — 0.00012% (FNA), 0.0011% (CNB). Extremely rare but documented.</li>
+                <li><strong>Infection</strong> — extremely rare. No antibiotic prophylaxis indicated.</li>
+                <li><strong>Recurrent laryngeal nerve palsy</strong> — rare; transient hoarseness possible; resolves spontaneously.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. POST-PROCEDURE ═══ -->
+        <section class="section" id="postprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Post-Procedure Care</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Monitoring</h4>
+              <ul class="list">
+                <li>FNA: 20–30 min observation; post-procedure US to check for hematoma</li>
+                <li>CNB: 20–30 min manual pressure + 30 min observation; post-procedure US</li>
+                <li>Assess for neck swelling, dysphagia, hoarseness, or stridor before discharge</li>
+                <li>Provide cold compress; instruct patient to apply intermittently for 2–4 hours</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Discharge + Follow-up</h4>
+              <ul class="list">
+                <li>Outpatient discharge when asymptomatic and no expanding hematoma</li>
+                <li>Return to ED for: rapidly enlarging neck swelling, difficulty swallowing/breathing, severe pain</li>
+                <li>Bethesda result reported in 2–5 business days; notify ordering provider</li>
+                <li><strong>Bethesda I (non-diagnostic):</strong> Repeat FNA in 3 months or proceed to CNB</li>
+                <li><strong>Bethesda II (benign):</strong> Sonographic follow-up per TI-RADS (6 months if TR3–4; 12–24 months if TR2)</li>
+                <li><strong>Bethesda III–VI:</strong> Endocrine surgery / endocrinology referral</li>
+                <li><strong>Bethesda V–VI (malignant):</strong> Thyroidectomy ± lymph node dissection; radioactive I-131 for papillary/follicular types</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>Check TSH before any thyroid biopsy:</strong> If TSH &lt;0.5 (hyperthyroid), order I-123 scan first. Hot nodules are benign — do not biopsy without ruling out hot nodule first.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>Lateral (parallel) approach is the default:</strong> Full shaft visibility reduces risk of overshooting into carotid/trachea. Perpendicular is useful for isthmus but requires meticulous tip tracking.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>Anesthetize the thyroid capsule:</strong> The capsule is where most pain occurs. Pause at the capsule, inject 0.5 mL lidocaine, and wait 60 seconds before advancing. This small step dramatically improves patient comfort for multi-pass procedures.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>Non-aspiration first for vascular nodules:</strong> High vascularity leads to blood-diluted specimens with aspiration technique. Start with capillary (non-aspiration) — only switch to aspiration if yield is inadequate.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>Release suction before withdrawing the needle:</strong> If the plunger is still pulled back when you withdraw, the specimen is sucked into the syringe barrel and becomes non-diagnostic. Always release suction first.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>ROSE saves passes:</strong> If on-site cytopathology is available, request rapid adequacy — adequacy is confirmed in 1–2 passes vs. needing 3–5 without it. Reduces bleeding and patient discomfort.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>For part-cystic nodules:</strong> Aspirate cyst first (send fluid; don't discard), then biopsy the solid mural component. The solid component is where malignant cells are.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>Biopsy no more than 2 nodules per session:</strong> Biopsying multiple nodules increases cost, risk, and time with minimal added benefit. Prioritize the most suspicious nodule by US features, not by size alone.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>Suspect lymphoma → CNB required:</strong> FNA cytology cannot subtype lymphoma — flow cytometry and immunophenotyping from CNB cores are required. Submit in saline, not formalin.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#10022;</div><div><strong>Benign FNA with high-risk features → don't stop:</strong> If imaging is highly suspicious (microcalcifications, extrathyroidal extension, associated cervical LAD) and FNA returns benign, this is a high-risk benign — discuss with endocrine surgery. In one series, all thyroid nodules with associated cervical LAD were malignant.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. SPECIMEN HANDLING ═══ -->
+        <section class="section" id="specimen">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>Specimen Handling</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:14px">
+              <div class="panel">
+                <h4>FNA Cytology</h4>
+                <ul class="list">
+                  <li><strong>Papanicolaou (wet fix):</strong> Smear on glass slide → immediately fix in 95% ethanol. Best for nuclear chromatin detail — identifying ground-glass nuclei and nuclear grooves of papillary carcinoma.</li>
+                  <li><strong>Diff-Quik / Giemsa (air dry):</strong> Smear and air-dry. Better for cytoplasm and colloid visualization. Allow to air-dry completely before staining.</li>
+                  <li><strong>Cell block (RPMI or saline):</strong> Rinse syringe into RPMI tube after slide prep. Used for IHC, molecular markers, flow cytometry.</li>
+                  <li><strong>ThinPrep:</strong> If institutional protocol — deposits material in preservative solution for liquid-based cytology. Requires specific technique and experience.</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>CNB Histology + Special</h4>
+                <ul class="list">
+                  <li><strong>Routine histology:</strong> 10% formalin for IHC, architectural analysis, molecular markers</li>
+                  <li><strong>Suspected lymphoma:</strong> <span style="color:#fecaca;font-weight:700">Fresh saline (NOT formalin)</span> — flow cytometry requires viable cells; formalin will kill them</li>
+                  <li><strong>Molecular / NGS:</strong> RPMI or snap-freeze for BRAF, RAS, RET/PTC, PAX8-PPAR&gamma; testing on indeterminate nodules</li>
+                  <li><strong>Cyst fluid:</strong> Centrifuge and submit as cytologic specimen; don't discard — malignant cells may be present</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel">
+              <h4>Bethesda System Reference</h4>
+              <table class="tirads-table" style="margin-top:8px">
+                <thead><tr><th>Bethesda Category</th><th>Malignancy Risk</th><th>Recommended Management</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>I</strong> — Non-diagnostic</td><td>1–4%</td><td>Repeat FNA in 3 months (or CNB)</td></tr>
+                  <tr><td><strong>II</strong> — Benign</td><td>0–3%</td><td>Sonographic follow-up per TI-RADS</td></tr>
+                  <tr><td><strong>III</strong> — AUS / FLUS</td><td>10–30%</td><td>Repeat FNA, molecular testing, or surgery</td></tr>
+                  <tr><td><strong>IV</strong> — Follicular neoplasm</td><td>25–40%</td><td>Molecular testing or lobectomy</td></tr>
+                  <tr><td><strong>V</strong> — Suspicious malignancy</td><td>50–75%</td><td>Surgery (lobectomy or thyroidectomy)</td></tr>
+                  <tr><td><strong>VI</strong> — Malignant</td><td>97–99%</td><td>Thyroidectomy ± LN dissection ± RAI</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Smith T, Kaufman CS. Tech Vasc Interventional Rad. 2021;24:100768 &middot; Kim MJ et al. Radiographics. 2008;28:1869–1889 &middot; Kandarpa K et al. Handbook of Interventional Radiologic Procedures, 5th ed.</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My Thyroid FNA Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;25g needle&#10;5 mL syringe&#10;Glass slides + ethanol"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;Supine with shoulder roll&#10;Color Doppler survey&#10;Non-aspiration technique x3 passes"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" id="save-card-btn" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'biopsy-thyroid-fna';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = []; let _myVotes = {}; let _cardSearch = ''; let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  async function loadCards() {
+    _currentUser = _user(); const sb = _sb();
+    if (!sb || !_currentUser) { document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards'; return; }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards').select('*').eq('procedure_slug', PROCEDURE_SLUG).order('created_at', { ascending: false });
+    if (!error && data) { _cards = data; try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {} }
+    else { try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; } }
+    await loadVotes(); renderCards();
+  }
+
+  async function loadVotes() {
+    _myVotes = {}; const sb = _sb(); const user = _user();
+    if (!sb || !user) return;
+    const { data } = await sb.from('card_votes').select('card_id, vote').eq('user_id', user.id);
+    if (data) data.forEach(v => { _myVotes[v.card_id] = v.vote; });
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards'); const loading = document.getElementById('cards-loading');
+    if (!document.getElementById('card-search-wrap')) {
+      const wrap = document.createElement('div'); wrap.id = 'card-search-wrap'; wrap.style.cssText = 'margin-bottom:12px';
+      wrap.innerHTML = '<input id="card-search" type="text" placeholder="Search community cards\u2026" style="width:100%;padding:8px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:inherit;font-family:inherit;font-size:13px;outline:none;" oninput="_cardSearch=this.value.toLowerCase();renderCards()">';
+      container.parentElement.insertBefore(wrap, container);
+    }
+    const q = _cardSearch.trim();
+    const visible = q ? _cards.filter(c => [c.title||'',c.display_name||'',...(c.supplies||[]),...(c.steps||[]),...(c.pearls||[])].join(' ').toLowerCase().includes(q)) : _cards;
+    if (!visible.length) { loading.textContent = q ? 'No cards match your search.' : 'No community cards yet. Be the first to create one!'; loading.style.display = 'block'; container.innerHTML = ''; return; }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = visible.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = c.supplies || []; const steps = c.steps || []; const pearls = c.pearls || [];
+      const myVote = _myVotes[c.id]; const votes = c.net_votes || 0;
+      return `<div class="procedure-card ${isOwn ? 'own-card' : ''}" data-card-id="${c.id}">
+        <div class="card-meta"><span class="card-author">${esc(c.display_name || 'Anonymous')}</span><span class="badge">${timeAgo(c.created_at)}</span>
+        ${isOwn ? `<div class="card-actions"><button onclick="editCard('${c.id}')">Edit</button><button class="delete-btn" onclick="deleteCard('${c.id}')">Delete</button></div>` : ''}
+        </div>
+        ${c.title ? `<h4 style="margin:0 0 12px;font-size:1rem">${esc(c.title)}</h4>` : ''}
+        ${supplies.length ? `<div class="chip-row card-supplies" style="margin-bottom:12px">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+        ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+        ${pearls.length ? `<ul class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ul>` : ''}
+        <div style="display:flex;gap:10px;align-items:center;margin-top:8px">
+          <button onclick="vote('${c.id}',1)" style="background:${myVote===1?'rgba(56,189,248,.2)':'rgba(255,255,255,.04)'};border:1px solid ${myVote===1?'var(--accent)':'rgba(255,255,255,.1)'};color:${myVote===1?'var(--accent)':'var(--muted)'};border-radius:8px;padding:4px 10px;font-size:.8rem;cursor:pointer">&#x25B2; ${votes > 0 ? votes : ''}</button>
+          <button onclick="vote('${c.id}',-1)" style="background:${myVote===-1?'rgba(239,68,68,.2)':'rgba(255,255,255,.04)'};border:1px solid ${myVote===-1?'var(--danger)':'rgba(255,255,255,.1)'};color:${myVote===-1?'var(--danger)':'var(--muted)'};border-radius:8px;padding:4px 10px;font-size:.8rem;cursor:pointer">&#x25BC;</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  async function vote(cardId, v) {
+    const sb = _sb(); const user = _user(); if (!sb || !user) return;
+    const current = _myVotes[cardId];
+    const newVote = current === v ? 0 : v;
+    _myVotes[cardId] = newVote;
+    const card = _cards.find(c => c.id === cardId); if (card) { card.net_votes = (card.net_votes || 0) + (newVote - (current || 0)); }
+    renderCards();
+    if (newVote === 0) { await sb.from('card_votes').delete().eq('card_id', cardId).eq('user_id', user.id); }
+    else { await sb.from('card_votes').upsert({ card_id: cardId, user_id: user.id, vote: newVote }, { onConflict: 'card_id,user_id' }); }
+  }
+
+  function openCardModal(editId) {
+    const modal = document.getElementById('card-modal'); modal.classList.add('active');
+    document.getElementById('editing-card-id').value = editId || '';
+    document.getElementById('modal-title').textContent = editId ? 'Edit Card' : 'Create My Card';
+    if (editId) {
+      const c = _cards.find(c => c.id === editId);
+      if (c) { document.getElementById('card-title').value = c.title || ''; document.getElementById('card-supplies').value = (c.supplies || []).join('\n'); document.getElementById('card-steps').value = (c.steps || []).join('\n'); document.getElementById('card-pearls').value = (c.pearls || []).join('\n'); }
+    } else { document.getElementById('card-title').value = ''; document.getElementById('card-supplies').value = ''; document.getElementById('card-steps').value = ''; document.getElementById('card-pearls').value = ''; }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); if (!user) { alert('Please sign in to save cards.'); return; }
+    const sb = _sb(); if (!sb) return;
+    const saveBtn = document.getElementById('save-card-btn');
+    saveBtn.textContent = 'Saving\u2026'; saveBtn.disabled = true;
+    const title = document.getElementById('card-title').value.trim();
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    let displayName = user.email || 'Anonymous';
+    try { const profile = await window.RadCallAuth.getProfile(); if (profile && profile.display_name) displayName = profile.display_name; } catch(e) {}
+    if (editId) {
+      _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, updated_at: new Date().toISOString() } : c);
+      renderCards(); closeCardModal();
+      await sb.from('procedure_cards').update({ title, supplies, steps, pearls, updated_at: new Date().toISOString() }).eq('id', editId);
+    } else {
+      const tmpId = 'tmp-' + Date.now();
+      const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, created_at: new Date().toISOString() };
+      _cards.unshift(newCard); renderCards(); closeCardModal();
+      const { data, error } = await sb.from('procedure_cards').insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName }).select().single();
+      if (!error && data) { _cards = _cards.map(c => c.id === tmpId ? data : c); }
+      if (error) console.error('saveCard error:', error);
+    }
+    const saveBtnFinal = document.getElementById('save-card-btn');
+    if (saveBtnFinal) { saveBtnFinal.textContent = 'Save Card'; saveBtnFinal.disabled = false; }
+  }
+
+  function editCard(id) { openCardModal(id); }
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id); renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb(); if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now'; if (diff < 3600) return Math.floor(diff/60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff/3600) + 'h ago'; if (diff < 604800) return Math.floor(diff/86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const text = 'Thyroid FNA Supply List\n' + '='.repeat(30) + '\n' + Array.from(chips).map(c => '\u2610 ' + c.textContent.trim()).join('\n');
+    if (navigator.clipboard) { navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied')); }
+  }
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const text = 'Thyroid FNA Supply List\n' + '='.repeat(30) + '\n' + Array.from(chips).map(c => '\u2610 ' + c.textContent.trim()).join('\n');
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], {type:'text/plain'})); a.download = 'thyroid-fna-supplies.txt'; a.click();
+    showExportToast('Downloaded');
+  }
+  function showExportToast(msg) {
+    let t = document.getElementById('export-toast');
+    if (!t) { t = document.createElement('div'); t.id = 'export-toast'; t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;'; document.body.appendChild(t); }
+    t.textContent = msg; requestAnimationFrame(() => { t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  if (window.RadCallAuth) { window.RadCallAuth.onAuth(() => loadCards()); setTimeout(loadCards, 500); }
+  </script>
+</body>
+</html>
