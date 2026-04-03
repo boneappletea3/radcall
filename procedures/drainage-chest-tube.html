@@ -711,7 +711,7 @@
         _cards.unshift(newCard);
         renderCards(); closeCardModal();
         const { data, error } = await sb.from('procedure_cards')
-          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName })
+          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0 })
           .select().single();
         if (error) {
           console.error('Card insert error:', error);
