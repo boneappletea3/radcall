@@ -1546,7 +1546,7 @@ body.home-active footer { display: none; }
       <!-- Pro Tools — shown only when signed in -->
       <div id="nav-pro-section" style="display:none">
         <div class="nav-item nav-has-sub open" id="nav-pro-toggle" onclick="this.classList.toggle('open');document.getElementById('nav-pro-list').classList.toggle('open')">
-          <span class="nav-dot" style="background:var(--teal)"></span>Pro Tools<span class="nav-arrow">›</span>
+          <span class="nav-dot" style="background:var(--teal)"></span>Tools<span class="nav-arrow">›</span>
         </div>
         <div class="nav-sub-tree open" id="nav-pro-list">
           <div class="nav-sub-item" onclick="window.location.href='case-log.html'">Procedure Log</div>
@@ -2239,7 +2239,7 @@ const Favorites = (() => {
         if (t) return t.label;
       }
     }
-    return topicId;
+    return null; // fall through to heading text
   }
 
   // ── Load from Supabase ───────────────────────────────────────────────────
@@ -2320,9 +2320,16 @@ const Favorites = (() => {
   function injectStars(sectionEl, sectionId) {
     sectionEl.querySelectorAll('.topic-h').forEach(h => {
       if (h.querySelector('.fav-star')) return; // already injected
-      const topicId = h.id;
-      if (!topicId) return;
-      const label = _getLabelFromNavTree(sectionId, topicId) || h.textContent.replace(/[☆★›]/g, '').trim();
+      let topicId = h.id;
+      if (!topicId) {
+        // Auto-generate a stable ID from section + heading text
+        const slug = h.textContent.replace(/[☆★›✦×]/g, '').trim()
+          .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').substring(0, 48);
+        topicId = sectionId + '--' + slug;
+        h.id = topicId;
+      }
+      const rawLabel = h.textContent.replace(/[☆★›✦]/g, '').trim();
+      const label = _getLabelFromNavTree(sectionId, topicId) || rawLabel;
       const faved = _isFaved(sectionId, topicId);
       const star = document.createElement('button');
       star.className = 'fav-star' + (faved ? ' active' : '');
