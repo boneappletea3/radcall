@@ -495,6 +495,36 @@ select.sort-select:focus { border-color: var(--teal); }
 }
 
 .drawer-body { padding: 20px 24px 40px; }
+.drawer-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.drawer-btn {
+  flex: 1;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.drawer-btn-edit {
+  background: var(--teal-light);
+  color: var(--teal);
+  border-color: rgba(20,184,166,0.25);
+}
+.drawer-btn-edit:hover { background: rgba(20,184,166,0.18); }
+.drawer-btn-delete {
+  background: var(--red-light);
+  color: var(--red);
+  border-color: rgba(239,68,68,0.2);
+}
+.drawer-btn-delete:hover { background: rgba(239,68,68,0.15); }
 
 .section {
   margin-bottom: 24px;
@@ -742,6 +772,29 @@ select.sort-select:focus { border-color: var(--teal); }
 .month-bar-wrap { width: 100%; height: 60px; display: flex; align-items: flex-end; }
 .month-bar { width: 100%; background: var(--teal); border-radius: 3px 3px 0 0; min-height: 2px; transition: height 0.4s ease; }
 .month-label { font-size: 9px; color: var(--muted); }
+.dash-section-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.dash-section-hdr .dash-section-title { margin-bottom: 0; }
+.acgme-toggle { font-size: 11px; color: var(--muted); background: transparent; border: 1px solid var(--border-strong); border-radius: 6px; padding: 3px 10px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+.acgme-toggle:hover { color: var(--teal); border-color: var(--teal); }
+.dash-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.dash-card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; }
+.dash-card-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
+.dash-card-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+.dash-card-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.dash-card-title-row .dash-card-title { margin-bottom: 0; }
+.range-pills { display: flex; gap: 3px; }
+.range-pill { font-size: 10px; font-family: inherit; padding: 2px 8px; border-radius: 10px; border: 1px solid var(--border-strong); background: transparent; color: var(--muted); cursor: pointer; transition: all 0.15s; line-height: 1.6; }
+.range-pill:hover { border-color: var(--teal); color: var(--teal); }
+.range-pill.active { background: var(--teal-light); border-color: var(--teal); color: var(--teal); font-weight: 600; }
+.stat-customize-wrap { position: relative; }
+.stat-customize-btn { font-size: 12px; background: transparent; border: 1px solid var(--border-strong); border-radius: 6px; padding: 3px 9px; color: var(--muted); cursor: pointer; font-family: inherit; transition: all 0.15s; line-height: 1.5; }
+.stat-customize-btn:hover { color: var(--teal); border-color: var(--teal); }
+.stat-picker { position: absolute; top: calc(100% + 6px); right: 0; background: var(--warm-white); border: 1px solid var(--border-strong); border-radius: 10px; padding: 10px 14px; z-index: 50; min-width: 200px; box-shadow: 0 8px 24px rgba(0,0,0,0.4); display: none; }
+.stat-picker.open { display: block; }
+.stat-picker-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
+.stat-picker-item { display: flex; align-items: center; gap: 8px; padding: 5px 0; font-size: 12px; color: var(--slate-light); cursor: pointer; }
+.stat-picker-item input[type=checkbox] { accent-color: var(--teal); cursor: pointer; }
+.stat-summary-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 700px) {
@@ -754,6 +807,7 @@ select.sort-select:focus { border-color: var(--teal); }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="acgme-data.js"></script>
+<script src="rvu-data.js"></script>
 <script src="supabase-auth.js"></script>
 </head>
 <body>
@@ -764,10 +818,6 @@ select.sort-select:focus { border-color: var(--teal); }
     <div class="logo-icon">PL</div>
     <div><div class="logo-text">Procedure Log</div></div>
   </a>
-  <div class="nav-links">
-    <a href="case-log.html" class="nav-link active">Procedure Log</a>
-    <a href="procedure-averages.html" class="nav-link">Procedure Dashboard</a>
-  </div>
   <div class="search-container">
     <span class="search-icon">
       <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
@@ -871,12 +921,13 @@ select.sort-select:focus { border-color: var(--teal); }
         </div>
         <div class="form-field">
           <label>Hospital</label>
-          <select id="cfHospital"><option value="">Select...</option></select>
+          <input type="text" id="cfHospital" placeholder="Hospital name" list="cfHospitalList" autocomplete="off">
+          <datalist id="cfHospitalList"></datalist>
         </div>
       </div>
       <div class="form-field">
         <label>Procedure Name</label>
-        <input type="text" id="cfProcedure" placeholder="e.g., Port placement, TIPS revision..." required>
+        <input type="text" id="cfProcedure" placeholder="e.g., Port placement, TIPS revision..." required oninput="autofillCpt(this.value)">
       </div>
       <div class="form-grid">
         <div class="form-field">
@@ -895,6 +946,7 @@ select.sort-select:focus { border-color: var(--teal); }
       <div class="form-field">
         <label>CPT Codes</label>
         <input type="text" id="cfCptCodes" placeholder="e.g., 36561, 77001">
+        <div id="cfCptHint" style="font-size:10px;color:var(--muted);margin-top:3px;min-height:14px"></div>
       </div>
       <div class="form-field">
         <label>Technique</label>
@@ -902,8 +954,13 @@ select.sort-select:focus { border-color: var(--teal); }
       </div>
       <div class="form-grid">
         <div class="form-field">
-          <label>Attending</label>
-          <input type="text" id="cfAttending" placeholder="Last name">
+          <label style="display:flex;align-items:center;justify-content:space-between">
+            Attending
+            <label style="display:flex;align-items:center;gap:5px;font-size:11px;font-weight:400;color:var(--muted);cursor:pointer">
+              <input type="checkbox" id="cfAttendingMe" style="accent-color:var(--teal);cursor:pointer" onchange="toggleAttendingMe(this)"> Me
+            </label>
+          </label>
+          <input type="text" id="cfAttending" placeholder="Last name" oninput="document.getElementById('cfAttendingMe').checked=false">
         </div>
         <div class="form-field">
           <label>Accession</label>
@@ -1279,9 +1336,12 @@ document.getElementById('results').addEventListener('click', function(e) {
   openDrawer(parseInt(card.dataset.idx));
 });
 
+let _drawerCase = null;
+
 function openDrawer(idx) {
   const c = filtered[idx];
   if (!c) return;
+  _drawerCase = c;
   const cat = (c['ACGME Procedure Category']||'').trim();
   
   const isVasc = c['Procedure Type'] === 'Vascular Intervention';
@@ -1320,9 +1380,15 @@ function openDrawer(idx) {
         <div class="section-header"><div class="section-icon purple"></div><div class="section-label">Case Details</div></div>
         <div class="stats-grid">${stats.map(([k,v])=>`<div class="stat-box"><div class="label">${esc(k)}</div><div class="value">${esc(String(v))}</div></div>`).join('')}</div>
       </div>` : ''}
+      <div class="drawer-actions">
+        <button class="drawer-btn drawer-btn-edit" id="drawerEditBtn">Edit</button>
+        <button class="drawer-btn drawer-btn-delete" id="drawerDeleteBtn">Delete</button>
+      </div>
     </div>`;
 
   document.getElementById('drawerCloseBtn').onclick = closeDrawer;
+  document.getElementById('drawerEditBtn').onclick = () => { closeDrawer(); openCaseForm(_drawerCase); };
+  document.getElementById('drawerDeleteBtn').onclick = () => deleteCase(_drawerCase);
   document.getElementById('drawerOverlay').classList.add('open');
   document.getElementById('drawer').classList.add('open');
 }
@@ -1337,6 +1403,24 @@ function mkSection(color, label, text, extra) {
 function closeDrawer() {
   document.getElementById('drawerOverlay').classList.remove('open');
   document.getElementById('drawer').classList.remove('open');
+}
+
+async function deleteCase(c) {
+  const proc = c['Procedure'] || c['ACGME Procedure Category'] || 'this case';
+  if (!confirm(`Delete "${proc}"? This cannot be undone.`)) return;
+  if (_supabaseReady && window.RadCallAuth) {
+    const user = RadCallAuth.getUser();
+    if (user && c._id) {
+      await RadCallAuth.supabase.from('cases').delete().eq('id', c._id);
+      await loadCases();
+    }
+  } else {
+    const idx = all.indexOf(c);
+    if (idx !== -1) all.splice(idx, 1);
+    buildSidebar();
+    run();
+  }
+  closeDrawer();
 }
 
 document.getElementById('drawerOverlay').addEventListener('click', closeDrawer);
@@ -1367,18 +1451,85 @@ function switchView(view) {
 }
 
 /* ── Dashboard ── */
+let _dashChart = null;
+let _distDonut = null;
+
+function classifyAnesthesia(raw) {
+  const s = String(raw || '').toLowerCase().trim();
+  if (!s) return 'mac';
+  if (/\bgeta\b|\bgeneral\b|\bga\b|\bet\b/.test(s)) return 'general';
+  const hasMod = /versed|midazolam|fentanyl|v\d+mg|f\d+mc?g/.test(s);
+  const hasGA = /geta|general|\bga\b/.test(s);
+  const hasMAC = /\bmac\b/.test(s);
+  if (hasMod && !hasGA && !hasMAC) return 'mod_sed';
+  if (/local/.test(s) && !hasMod && !hasGA) return 'local';
+  if (/\bmac\b/.test(s) || hasMod) return 'mac';
+  return 'mac';
+}
+
+function setChartRange(val) {
+  localStorage.setItem('rc_dash_chart_months', String(val));
+  renderDashboard();
+}
+
+function toggleStatPicker(e) {
+  e.stopPropagation();
+  const panel = document.getElementById('statPickerPanel');
+  if (panel) panel.classList.toggle('open');
+}
+document.addEventListener('click', () => {
+  const panel = document.getElementById('statPickerPanel');
+  if (panel) panel.classList.remove('open');
+});
+
+function toggleStat(key, checked) {
+  let hidden = [];
+  try { hidden = JSON.parse(localStorage.getItem('rc_dash_stats_hidden') || '[]'); } catch(e) {}
+  if (checked) { hidden = hidden.filter(k => k !== key); }
+  else {
+    if (!hidden.includes(key)) hidden.push(key);
+  }
+  localStorage.setItem('rc_dash_stats_hidden', JSON.stringify(hidden));
+  // Re-render without closing picker
+  renderDashboard();
+  // Reopen picker after re-render
+  requestAnimationFrame(() => {
+    const panel = document.getElementById('statPickerPanel');
+    if (panel) panel.classList.add('open');
+  });
+}
+
+function toggleAcgme() {
+  const hidden = localStorage.getItem('rc_acgme_hidden') === '1';
+  const newHidden = !hidden;
+  localStorage.setItem('rc_acgme_hidden', newHidden ? '1' : '0');
+  const grid = document.getElementById('acgmeGrid');
+  const btn = document.getElementById('acgmeToggleBtn');
+  if (grid) grid.style.display = newHidden ? 'none' : '';
+  if (btn) btn.textContent = newHidden ? 'Show' : 'Hide';
+}
+
 function renderDashboard() {
   const el = document.getElementById('dashboardView');
   const now = new Date();
-  const thisMonth = all.filter(c => {
-    const d = c['Date'];
-    return d && d.substring(0,7) === now.toISOString().substring(0,7);
-  }).length;
-  const thisYear = all.filter(c => {
-    const d = c['Date'];
-    return d && d.substring(0,4) === String(now.getFullYear());
-  }).length;
+  const thisMonthKey = now.toISOString().substring(0,7);
+  const thisYearStr = String(now.getFullYear());
+
+  const thisMonth = all.filter(c => (c['Date']||'').substring(0,7) === thisMonthKey).length;
+  const thisYear  = all.filter(c => (c['Date']||'').substring(0,4) === thisYearStr).length;
   const uniqueProcs = new Set(all.map(c => c['Procedure']).filter(Boolean)).size;
+
+  // Fluoro / radiation / case time totals
+  let fluoTotal = 0, doseTotal = 0, caseTimeTotal = 0, caseTimeCount = 0;
+  all.forEach(c => {
+    fluoTotal  += parseFloat(c['Fluoro Time (min)']    || 0) || 0;
+    doseTotal  += parseFloat(c['Radiation Dose (mGy)'] || 0) || 0;
+    const ct    = parseFloat(c['Case Time (min)']      || 0) || 0;
+    if (ct > 0) { caseTimeTotal += ct; caseTimeCount++; }
+  });
+  const fluoHrs   = fluoTotal  > 0 ? (fluoTotal  / 60).toFixed(1) : null;
+  const doseGy    = doseTotal  > 0 ? (doseTotal  / 1000).toFixed(2) : null;
+  const avgCaseMin = caseTimeCount > 0 ? Math.round(caseTimeTotal / caseTimeCount) : null;
 
   // ACGME category counts
   const acgmeCounts = {};
@@ -1388,26 +1539,134 @@ function renderDashboard() {
     if (mapped && acgmeCounts.hasOwnProperty(mapped)) acgmeCounts[mapped]++;
   });
 
-  // Monthly histogram (last 12 months)
+  // Chart range preference
+  const chartRangePref = localStorage.getItem('rc_dash_chart_months') || '12';
+  let numChartMonths;
+  if (chartRangePref === 'all') {
+    const dates = all.map(c => c['Date']).filter(Boolean).sort();
+    if (dates.length) {
+      const earliest = new Date(dates[0]);
+      numChartMonths = (now.getFullYear() - earliest.getFullYear()) * 12 + (now.getMonth() - earliest.getMonth()) + 1;
+    } else { numChartMonths = 12; }
+  } else {
+    numChartMonths = parseInt(chartRangePref) || 12;
+  }
+  numChartMonths = Math.max(1, Math.min(numChartMonths, 120));
+
+  // Monthly histogram
   const months = [];
-  for (let i = 11; i >= 0; i--) {
+  for (let i = numChartMonths - 1; i >= 0; i--) {
     const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
     const key = d.toISOString().substring(0,7);
-    const label = d.toLocaleString('default', { month: 'short' });
-    const count = all.filter(c => (c['Date']||'').substring(0,7) === key).length;
-    months.push({ key, label, count });
+    const label = numChartMonths <= 24
+      ? d.toLocaleString('default', { month: 'short' })
+      : (i % 3 === 0 ? d.toLocaleString('default', { month: 'short', year: '2-digit' }) : '');
+    months.push({ key, label });
   }
-  const maxMonth = Math.max(...months.map(m => m.count), 1);
+
+  // Category distribution
+  const catCounts = {};
+  all.forEach(c => {
+    const cat = ((c['ACGME Procedure Category'] || '').trim()) || 'Other';
+    catCounts[cat] = (catCounts[cat] || 0) + 1;
+  });
+  const catEntries = Object.entries(catCounts).sort((a,b) => b[1]-a[1]);
+  const CHART_COLORS = ['#14b8a6','#3b82f6','#a855f7','#f59e0b','#ef4444','#22c55e','#06b6d4','#f97316','#8b5cf6','#ec4899','#84cc16','#0ea5e9'];
+  const TOP_N = Math.min(8, catEntries.length);
+  const topCats = catEntries.slice(0, TOP_N).map(e => e[0]);
+  const catColorMap = {};
+  topCats.forEach((cat, i) => { catColorMap[cat] = CHART_COLORS[i % CHART_COLORS.length]; });
+  const maxCatCount = catEntries[0]?.[1] || 1;
+
+  // ── wRVU estimates ──
+  let rvuTotal = 0, rvuThisYear = 0, rvuThisMonth = 0;
+  const rvuByMonth = new Array(months.length).fill(0);
+  const rvuByProc = {};   // proc name → { count, totalRvu, wrvu, cpt }
+  all.forEach(c => {
+    const match = (typeof computeCaseRvu === 'function') ? computeCaseRvu(c) : null;
+    if (!match) return;
+    const rvu = match.wrvu;
+    rvuTotal += rvu;
+    const key = (c['Date']||'').substring(0,7);
+    if ((c['Date']||'').substring(0,4) === thisYearStr) rvuThisYear += rvu;
+    if (key === thisMonthKey) rvuThisMonth += rvu;
+    const mi = months.findIndex(m => m.key === key);
+    if (mi !== -1) rvuByMonth[mi] += rvu;
+    const pname = c['Procedure'] || c['ACGME Procedure Category'] || 'Unknown';
+    if (!rvuByProc[pname]) rvuByProc[pname] = { count: 0, totalRvu: 0, wrvu: match.wrvu, cpt: match.cpt };
+    rvuByProc[pname].count++;
+    rvuByProc[pname].totalRvu += rvu;
+  });
+  const topRvuProcs = Object.entries(rvuByProc)
+    .sort((a,b) => b[1].totalRvu - a[1].totalRvu).slice(0, 10);
+  const maxRvu = topRvuProcs[0]?.[1].totalRvu || 1;
+  const rvuMatchCount = Object.values(rvuByProc).reduce((s,v) => s + v.count, 0);
+  const rvuCoverage = all.length ? Math.round(rvuMatchCount / all.length * 100) : 0;
+
+  // Anesthesia breakdown
+  const anesBreak = { mac: 0, general: 0, local: 0, mod_sed: 0 };
+  all.forEach(c => { const cls = classifyAnesthesia(c['Anesthetic Dose']); anesBreak[cls] = (anesBreak[cls] || 0) + 1; });
+  const anesTot = all.length || 1;
+
+  // Top 5 procedures
+  const procCounts = {};
+  all.forEach(c => { if (c['Procedure']) procCounts[c['Procedure']] = (procCounts[c['Procedure']] || 0) + 1; });
+  const topProcs = Object.entries(procCounts).sort((a,b) => b[1]-a[1]).slice(0,5);
+  const maxProcCount = topProcs[0]?.[1] || 1;
+
+  const acgmeHidden = localStorage.getItem('rc_acgme_hidden') === '1';
+
+  // Stat card definitions
+  const ALL_STATS = [
+    { key:'totalCases',  label:'Total Cases',      val: all.length,                                                  color:'var(--teal)',   sfx:'' },
+    { key:'thisMonth',   label:'This Month',        val: thisMonth,                                                   color:'var(--teal)',   sfx:'' },
+    { key:'thisYear',    label:'This Year',          val: thisYear,                                                    color:'var(--teal)',   sfx:'' },
+    { key:'uniqueProcs', label:'Unique Procs',       val: uniqueProcs,                                                 color:'var(--teal)',   sfx:'' },
+    { key:'fluoHrs',     label:'Fluoro Total',       val: fluoHrs || '—',                                              color:'var(--purple)', sfx: fluoHrs ? 'h' : '' },
+    { key:'doseGy',      label:'Radiation',          val: doseGy  || '—',                                              color:'var(--amber)',  sfx: doseGy  ? 'Gy' : '' },
+    { key:'avgCase',     label:'Avg Case Time',      val: avgCaseMin || '—',                                           color:'var(--green)',  sfx: avgCaseMin ? ' min' : '' },
+    { key:'rvuTotal',    label:'Total wRVUs',        val: rvuTotal.toFixed(1),                                         color:'#ec4899',       sfx:'' },
+    { key:'rvuYear',     label:'wRVUs This Year',    val: rvuThisYear.toFixed(1),                                      color:'#ec4899',       sfx:'' },
+    { key:'rvuMonth',    label:'wRVUs This Month',   val: rvuThisMonth.toFixed(1),                                     color:'#ec4899',       sfx:'' },
+  ];
+  let hiddenStats = [];
+  try { hiddenStats = JSON.parse(localStorage.getItem('rc_dash_stats_hidden') || '[]'); } catch(e) {}
+  const visibleStats = ALL_STATS.filter(s => !hiddenStats.includes(s.key));
+
+  const rangePills = ['3','6','12','24','all'].map(v =>
+    `<button class="range-pill${chartRangePref===v?' active':''}" onclick="setChartRange('${v}')">${v==='all'?'All':v+'M'}</button>`
+  ).join('');
 
   el.innerHTML = `
-    <div class="dash-summary">
-      <div class="dash-stat"><div class="dash-stat-val">${all.length}</div><div class="dash-stat-label">Total Cases</div></div>
-      <div class="dash-stat"><div class="dash-stat-val">${thisMonth}</div><div class="dash-stat-label">This Month</div></div>
-      <div class="dash-stat"><div class="dash-stat-val">${thisYear}</div><div class="dash-stat-label">This Year</div></div>
-      <div class="dash-stat"><div class="dash-stat-val">${uniqueProcs}</div><div class="dash-stat-label">Unique Procedures</div></div>
+    <!-- STAT CARDS -->
+    <div class="stat-summary-hdr">
+      <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)">Summary</div>
+      <div class="stat-customize-wrap">
+        <button class="stat-customize-btn" onclick="toggleStatPicker(event)">⚙ Customize</button>
+        <div class="stat-picker" id="statPickerPanel">
+          <div class="stat-picker-title">Show / Hide Stats</div>
+          ${ALL_STATS.map(s => `
+            <label class="stat-picker-item">
+              <input type="checkbox" ${hiddenStats.includes(s.key)?'':'checked'} onchange="toggleStat('${s.key}',this.checked)">
+              ${s.label}
+            </label>`).join('')}
+        </div>
+      </div>
     </div>
-    <div class="dash-section-title">ACGME IR Independent Categories</div>
-    <div class="acgme-grid">
+    <div class="dash-summary" style="grid-template-columns:repeat(${visibleStats.length},1fr);margin-bottom:24px">
+      ${visibleStats.map(s => `
+        <div class="dash-stat">
+          <div class="dash-stat-val" style="color:${s.color}">${s.val}${s.sfx ? `<span style="font-size:14px;font-weight:400">${s.sfx}</span>` : ''}</div>
+          <div class="dash-stat-label">${s.label}</div>
+        </div>`).join('')}
+    </div>
+
+    <!-- ACGME SECTION -->
+    <div class="dash-section-hdr">
+      <div class="dash-section-title">ACGME IR Independent Categories</div>
+      <button class="acgme-toggle" id="acgmeToggleBtn" onclick="toggleAcgme()">${acgmeHidden ? 'Show' : 'Hide'}</button>
+    </div>
+    <div id="acgmeGrid" class="acgme-grid" style="${acgmeHidden ? 'display:none' : ''}">
       ${ACGME_IR_CATEGORIES.map(cat => {
         const count = acgmeCounts[cat.name] || 0;
         const target = cat.minCases || 0;
@@ -1421,14 +1680,291 @@ function renderDashboard() {
         </div>`;
       }).join('')}
     </div>
-    <div class="dash-section-title">Cases Per Month (Last 12 Months)</div>
-    <div class="monthly-grid">
-      ${months.map(m => `<div class="month-bar-col">
-        <div class="month-bar-wrap"><div class="month-bar" style="height:${Math.round(m.count/maxMonth*100)}%"></div></div>
-        <div class="month-label">${m.label}</div>
-      </div>`).join('')}
+
+    <!-- MONTHLY STACKED CHART -->
+    <div class="dash-card" style="padding:16px 20px;margin-bottom:24px">
+      <div class="dash-card-title-row">
+        <div class="dash-card-title"><div class="dash-card-dot" style="background:var(--teal)"></div>Cases Per Month</div>
+        <div class="range-pills">${rangePills}</div>
+      </div>
+      <canvas id="monthlyChart" height="110"></canvas>
+    </div>
+
+    <!-- DISTRIBUTION + ANESTHESIA -->
+    <div class="dash-row-2">
+      <div class="dash-card">
+        <div class="dash-card-title"><div class="dash-card-dot" style="background:var(--teal)"></div>Procedure Distribution</div>
+        <div style="display:flex;gap:16px;align-items:flex-start">
+          <div style="position:relative;width:180px;height:180px;flex-shrink:0;overflow:visible">
+            <canvas id="distDonut" width="180" height="180"></canvas>
+          </div>
+          <div style="flex:1;max-height:160px;overflow-y:auto;font-size:11px;padding-top:2px">
+            ${catEntries.slice(0,10).map((e,i) => `
+              <div style="display:flex;align-items:center;gap:6px;padding:3px 0">
+                <div style="width:8px;height:8px;border-radius:2px;flex-shrink:0;background:${CHART_COLORS[i%CHART_COLORS.length]}"></div>
+                <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--slate-light)">${esc(e[0])}</span>
+                <span style="color:var(--muted)">${e[1]}</span>
+              </div>`).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-title"><div class="dash-card-dot" style="background:#0d7377"></div>Anesthesia Breakdown</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="background:rgba(20,184,166,0.08);border:1px solid rgba(20,184,166,0.2);border-radius:10px;padding:14px;text-align:center">
+            <div style="font-size:24px;font-weight:700;color:var(--teal)">${Math.round(anesBreak.mac/anesTot*100)}%</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">MAC</div>
+            <div style="font-size:10px;color:var(--muted)">${anesBreak.mac} cases</div>
+          </div>
+          <div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:10px;padding:14px;text-align:center">
+            <div style="font-size:24px;font-weight:700;color:#3b82f6">${Math.round(anesBreak.general/anesTot*100)}%</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">General</div>
+            <div style="font-size:10px;color:var(--muted)">${anesBreak.general} cases</div>
+          </div>
+          <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:10px;padding:14px;text-align:center">
+            <div style="font-size:24px;font-weight:700;color:var(--green)">${Math.round(anesBreak.local/anesTot*100)}%</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">Local</div>
+            <div style="font-size:10px;color:var(--muted)">${anesBreak.local} cases</div>
+          </div>
+          <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);border-radius:10px;padding:14px;text-align:center">
+            <div style="font-size:24px;font-weight:700;color:var(--purple)">${Math.round(anesBreak.mod_sed/anesTot*100)}%</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">Mod Sedation</div>
+            <div style="font-size:10px;color:var(--muted)">${anesBreak.mod_sed} cases</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOP CATEGORIES + TOP PROCEDURES -->
+    <div class="dash-row-2">
+      <div class="dash-card">
+        <div class="dash-card-title"><div class="dash-card-dot" style="background:var(--teal)"></div>Top Categories</div>
+        ${catEntries.slice(0,5).map((e,i) => `
+          <div style="margin-bottom:8px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
+              <div style="width:18px;height:18px;border-radius:5px;background:var(--teal-light);color:var(--teal);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${i+1}</div>
+              <span style="font-size:11px;color:var(--slate-light);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(e[0])}</span>
+              <span style="font-size:11px;color:var(--muted)">${e[1]}</span>
+            </div>
+            <div style="height:3px;background:var(--border);border-radius:2px;margin-left:26px">
+              <div style="height:100%;background:var(--teal);border-radius:2px;width:${Math.round(e[1]/maxCatCount*100)}%"></div>
+            </div>
+          </div>`).join('')}
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-title"><div class="dash-card-dot" style="background:#3b82f6"></div>Top Procedures</div>
+        ${topProcs.map((e,i) => `
+          <div style="margin-bottom:8px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
+              <div style="width:18px;height:18px;border-radius:5px;background:rgba(59,130,246,0.1);color:#3b82f6;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${i+1}</div>
+              <span style="font-size:11px;color:var(--slate-light);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(e[0])}</span>
+              <span style="font-size:11px;color:var(--muted)">${e[1]}</span>
+            </div>
+            <div style="height:3px;background:var(--border);border-radius:2px;margin-left:26px">
+              <div style="height:100%;background:#3b82f6;border-radius:2px;width:${Math.round(e[1]/maxProcCount*100)}%"></div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <!-- RVU SECTION -->
+    <div class="dash-section-hdr" style="margin-top:8px">
+      <div class="dash-section-title">Estimated wRVUs</div>
+      <span style="font-size:10px;color:var(--muted)">CPT matched: ${rvuCoverage}% of cases</span>
+    </div>
+    <div class="dash-summary" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px">
+      <div class="dash-stat"><div class="dash-stat-val" style="color:#ec4899">${rvuTotal.toFixed(1)}</div><div class="dash-stat-label">Total wRVUs</div></div>
+      <div class="dash-stat"><div class="dash-stat-val" style="color:#ec4899">${rvuThisYear.toFixed(1)}</div><div class="dash-stat-label">This Year</div></div>
+      <div class="dash-stat"><div class="dash-stat-val" style="color:#ec4899">${rvuThisMonth.toFixed(1)}</div><div class="dash-stat-label">This Month</div></div>
+    </div>
+
+    <div class="dash-row-2">
+      <!-- wRVU BY MONTH CHART -->
+      <div class="dash-card">
+        <div class="dash-card-title-row">
+          <div class="dash-card-title"><div class="dash-card-dot" style="background:#ec4899"></div>wRVUs Per Month</div>
+          <div class="range-pills">${rangePills}</div>
+        </div>
+        <canvas id="rvuMonthlyChart" height="140"></canvas>
+      </div>
+      <!-- TOP PROCEDURES BY wRVU -->
+      <div class="dash-card">
+        <div class="dash-card-title"><div class="dash-card-dot" style="background:#ec4899"></div>Top Procedures by wRVU Contribution</div>
+        <div style="overflow-y:auto;max-height:220px">
+          ${topRvuProcs.map(([name, d], i) => `
+            <div style="margin-bottom:7px">
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">
+                <div style="width:16px;height:16px;border-radius:4px;background:rgba(236,72,153,0.12);color:#ec4899;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${i+1}</div>
+                <span style="font-size:11px;color:var(--slate-light);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(name)}">${esc(name)}</span>
+                <span style="font-size:10px;color:#ec4899;font-weight:600;white-space:nowrap">${d.totalRvu.toFixed(1)} RVU</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;margin-left:22px">
+                <div style="flex:1;height:3px;background:var(--border);border-radius:2px">
+                  <div style="height:100%;background:#ec4899;border-radius:2px;width:${Math.round(d.totalRvu/maxRvu*100)}%"></div>
+                </div>
+                <span style="font-size:9px;color:var(--muted);white-space:nowrap">${d.count}× · ${d.wrvu} ea · CPT ${d.cpt}</span>
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- DISCLAIMER -->
+    <div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:10px 14px;margin-bottom:24px;font-size:11px;color:var(--muted);line-height:1.5">
+      <strong style="color:var(--amber)">Estimate Only:</strong>
+      RVU values are based on CMS 2025 Physician Fee Schedule (work RVU component) and SIR 2026 CPT coding guidance.
+      These estimates may not reflect payer-specific reimbursement, local fee schedules, modifiers, bundled services, facility vs. professional fees, or employer compensation formulas.
+      CPT mapping is automated from procedure name text and may be inaccurate for complex or combination procedures.
+      CPT codes are sourced from the SIR/ACR 2026 Interventional Radiology Coding Update.
     </div>
   `;
+
+  // Draw stacked monthly bar chart
+  requestAnimationFrame(() => {
+    if (typeof Chart === 'undefined') return;
+    if (_dashChart) { _dashChart.destroy(); _dashChart = null; }
+    if (_distDonut) { _distDonut.destroy(); _distDonut = null; }
+
+    const canvas = document.getElementById('monthlyChart');
+    if (canvas) {
+      // Pre-compute monthly counts per category
+      const monthlyByCat = {};
+      [...topCats, '__other__'].forEach(cat => { monthlyByCat[cat] = new Array(12).fill(0); });
+      all.forEach(c => {
+        const key = (c['Date']||'').substring(0,7);
+        const mi = months.findIndex(m => m.key === key);
+        if (mi === -1) return;
+        const rawCat = ((c['ACGME Procedure Category']||'').trim()) || 'Other';
+        const cat = topCats.includes(rawCat) ? rawCat : '__other__';
+        monthlyByCat[cat][mi]++;
+      });
+
+      const datasets = topCats.map((cat, i) => ({
+        label: cat,
+        data: monthlyByCat[cat],
+        backgroundColor: catColorMap[cat],
+        borderWidth: 0,
+        borderRadius: 2,
+      }));
+      if (topCats.length < catEntries.length) {
+        datasets.push({ label: 'Other', data: monthlyByCat['__other__'], backgroundColor: '#475569', borderWidth: 0, borderRadius: 2 });
+      }
+
+      _dashChart = new Chart(canvas, {
+        type: 'bar',
+        data: { labels: months.map(m => m.label), datasets },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: { display: true, position: 'bottom', labels: { color: '#94a3b8', font: { size: 10 }, boxWidth: 10, padding: 10 } },
+            tooltip: {
+              callbacks: {
+                footer: items => 'Total: ' + items.reduce((s,i) => s + i.raw, 0)
+              }
+            }
+          },
+          scales: {
+            x: { stacked: true, grid: { display: false }, ticks: { color: '#64748b', font: { size: 10 } } },
+            y: { stacked: true, beginAtZero: true, grid: { color: 'rgba(30,39,55,0.8)' }, ticks: { color: '#64748b', font: { size: 10 }, precision: 0 } }
+          }
+        }
+      });
+    }
+
+    const donutCanvas = document.getElementById('distDonut');
+    if (donutCanvas) {
+      const donutData = catEntries.slice(0,10);
+      _distDonut = new Chart(donutCanvas, {
+        type: 'doughnut',
+        data: {
+          labels: donutData.map(e => e[0]),
+          datasets: [{ data: donutData.map(e => e[1]), backgroundColor: donutData.map((_,i) => CHART_COLORS[i%CHART_COLORS.length]), borderWidth: 2, borderColor: '#111620', hoverOffset: 4 }]
+        },
+        options: {
+          responsive: false,
+          layout: { padding: 14 },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              position: 'nearest',
+              callbacks: {
+                title: ctx => ctx[0]?.label || '',
+                label: ctx => {
+                  const tot = ctx.dataset.data.reduce((a,b)=>a+b,0);
+                  return `  ${ctx.parsed} cases (${Math.round(ctx.parsed/tot*100)}%)`;
+                }
+              }
+            }
+          },
+          cutout: '62%'
+        }
+      });
+    }
+
+    // wRVU monthly line chart
+    const rvuCanvas = document.getElementById('rvuMonthlyChart');
+    if (rvuCanvas) {
+      new Chart(rvuCanvas, {
+        type: 'bar',
+        data: {
+          labels: months.map(m => m.label),
+          datasets: [{
+            label: 'wRVUs',
+            data: rvuByMonth.map(v => parseFloat(v.toFixed(1))),
+            backgroundColor: 'rgba(236,72,153,0.5)',
+            borderColor: '#ec4899',
+            borderWidth: 1,
+            borderRadius: 3,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: ctx => ` ${ctx.raw} wRVU` } }
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { color: '#64748b', font: { size: 10 } } },
+            y: { beginAtZero: true, grid: { color: 'rgba(30,39,55,0.8)' }, ticks: { color: '#64748b', font: { size: 10 }, precision: 1 } }
+          }
+        }
+      });
+    }
+  });
+}
+
+/* ── Case Form helpers ── */
+let _cptAutofilled = false;
+
+function autofillCpt(procName) {
+  if (!procName || typeof estimateWrvu !== 'function') return;
+  const match = estimateWrvu(procName);
+  const cptInput = document.getElementById('cfCptCodes');
+  const hint = document.getElementById('cfCptHint');
+  if (match) {
+    if (_cptAutofilled || !cptInput.value) {
+      cptInput.value = match.cpt;
+      _cptAutofilled = true;
+    }
+    hint.textContent = `Suggested: ${match.cpt} — ${match.desc} (${match.wrvu} wRVU)`;
+    hint.style.color = 'var(--teal)';
+  } else {
+    if (_cptAutofilled) { cptInput.value = ''; _cptAutofilled = false; }
+    hint.textContent = '';
+  }
+}
+
+function toggleAttendingMe(cb) {
+  const field = document.getElementById('cfAttending');
+  if (cb.checked) {
+    const saved = localStorage.getItem('rc_my_attending') || '';
+    field.value = saved;
+    if (!saved) { field.focus(); field.placeholder = 'Type your name, it will be saved'; }
+  } else {
+    field.value = '';
+  }
 }
 
 /* ── Case Form ── */
@@ -1438,12 +1974,11 @@ function openCaseForm(caseData) {
   editingCaseId = caseData?._id || null;
   document.getElementById('caseFormTitle').textContent = editingCaseId ? 'Edit Case' : 'Log a New Case';
 
-  // Populate dropdowns
-  const hospSelect = document.getElementById('cfHospital');
-  if (hospSelect.options.length <= 1) {
-    const hospitals = [...new Set(all.map(c => c['Hospital']).filter(Boolean))].sort();
-    hospitals.forEach(h => { const opt = document.createElement('option'); opt.value = h; opt.textContent = h; hospSelect.appendChild(opt); });
-  }
+  // Populate hospital datalist from existing log entries
+  const hospList = document.getElementById('cfHospitalList');
+  hospList.innerHTML = '';
+  const hospitals = [...new Set(all.map(c => c['Hospital']).filter(Boolean))].sort();
+  hospitals.forEach(h => { const opt = document.createElement('option'); opt.value = h; hospList.appendChild(opt); });
 
   const acgmeSelect = document.getElementById('cfAcgme');
   if (acgmeSelect.options.length <= 1) {
@@ -1464,7 +1999,12 @@ function openCaseForm(caseData) {
   document.getElementById('cfAcgme').value = caseData?.['ACGME Procedure Category'] || '';
   document.getElementById('cfCptCodes').value = caseData?.['CPT Codes'] || '';
   document.getElementById('cfTechnique').value = caseData?.['Technique'] || '';
-  document.getElementById('cfAttending').value = caseData?.['Attending'] || '';
+  const attendingVal = caseData?.['Attending'] || '';
+  document.getElementById('cfAttending').value = attendingVal;
+  const myName = localStorage.getItem('rc_my_attending') || '';
+  document.getElementById('cfAttendingMe').checked = !!(attendingVal && myName && attendingVal === myName);
+  document.getElementById('cfCptHint').textContent = '';
+  _cptAutofilled = false;
   document.getElementById('cfAccession').value = caseData?.['Accession'] || '';
   document.getElementById('cfImplants').value = caseData?.['Implant(s)'] || '';
   document.getElementById('cfCaseTime').value = caseData?.['Case Time (min)'] || '';
@@ -1491,6 +2031,12 @@ document.getElementById('caseForm').addEventListener('submit', async (e) => {
   const btn = document.getElementById('cfSubmitBtn');
   btn.disabled = true;
   btn.textContent = 'Saving...';
+
+  // Save "Me" attending name for future sessions
+  if (document.getElementById('cfAttendingMe').checked) {
+    const myName = document.getElementById('cfAttending').value.trim();
+    if (myName) localStorage.setItem('rc_my_attending', myName);
+  }
 
   const caseData = {
     'Date': document.getElementById('cfDate').value,
@@ -1741,5 +2287,6 @@ function exportPDF(cases, includeCpt) {
   setTimeout(() => { wrap.style.display = 'none'; wrap.innerHTML = ''; }, 500);
 }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </body>
 </html>

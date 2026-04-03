@@ -1469,11 +1469,15 @@ body.home-active footer { display: none; }
 <nav id="sidebar">
   <!-- PRO TOOLS — shown only when signed in -->
   <div class="nav-section" id="nav-pro-section" style="display:none">
-    <div class="nav-group-label" style="color:var(--teal)">Pro Tools</div>
-    <div class="nav-item" onclick="window.location.href='case-log.html'"><span class="nav-dot" style="background:var(--green)"></span>Procedure Log</div>
-    <div class="nav-item" onclick="window.location.href='differential.html'"><span class="nav-dot" style="background:var(--purple)"></span>Differential Dx</div>
-    <div class="nav-item" onclick="window.location.href='case-deck.html'"><span class="nav-dot" style="background:var(--teal)"></span>Case Deck</div>
-    <div class="nav-item" onclick="downloadAllMacros()"><span class="nav-dot" style="background:var(--amber)"></span>Download All Macros</div>
+    <div class="nav-item nav-has-sub open" id="nav-pro-toggle" onclick="this.classList.toggle('open');document.getElementById('nav-pro-list').classList.toggle('open')">
+      <span class="nav-dot" style="background:var(--teal)"></span>Pro Tools<span class="nav-arrow">›</span>
+    </div>
+    <div class="nav-sub-tree open" id="nav-pro-list">
+      <div class="nav-sub-item" onclick="window.location.href='case-log.html'">Procedure Log</div>
+      <div class="nav-sub-item" onclick="window.location.href='differential.html'">Differential Dx</div>
+      <div class="nav-sub-item" onclick="window.location.href='case-deck.html'">Case Deck</div>
+      <div class="nav-sub-item" onclick="downloadAllMacros()">Download All Macros</div>
+    </div>
   </div>
 
   <div class="nav-section">
@@ -1489,6 +1493,16 @@ body.home-active footer { display: none; }
       <span class="nav-arrow">›</span>
     </div>
     <div class="nav-sub-tree open" id="nav-fav-list"></div>
+  </div>
+
+  <!-- SCRATCHPAD — shown only when signed in -->
+  <div class="nav-section" id="nav-scratch-section" style="display:none">
+    <div class="nav-item nav-has-sub" id="nav-scratch-toggle" onclick="this.classList.toggle('open');document.getElementById('nav-scratch-body').classList.toggle('open')">
+      <span class="nav-dot"></span>Scratchpad<span class="nav-arrow">›</span>
+    </div>
+    <div class="nav-sub-tree" id="nav-scratch-body">
+      <textarea id="scratch-text" placeholder="Notes, links, reminders…" style="width:100%;min-height:90px;background:transparent;border:none;border-top:1px solid var(--border);color:var(--text3);font-family:var(--font);font-size:12px;resize:vertical;padding:8px 16px;outline:none;line-height:1.5;" oninput="try{localStorage.setItem('rc_scratchpad',this.value)}catch(e){}"></textarea>
+    </div>
   </div>
 
   <div class="nav-section">
@@ -4324,7 +4338,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const userNav   = document.getElementById('hdr-user-nav');
     const explorBtn = document.getElementById('hdr-explore-btn');
     const signinBtn = document.getElementById('hdr-signin-btn');
-    const proSection = document.getElementById('nav-pro-section');
+    const proSection   = document.getElementById('nav-pro-section');
+    const scratchSection = document.getElementById('nav-scratch-section');
     function _applyHeaderAuth(user) {
       if (user) {
         // Logged in: close auth modal if open, show email + logout, show sidebar pro tools
@@ -4336,15 +4351,21 @@ document.addEventListener('DOMContentLoaded', () => {
             <button onclick="window.RadCallAuth.signOut().then(()=>location.reload())" style="padding:4px 10px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--text3);font-size:12px;font-family:var(--font);cursor:pointer;transition:all 0.15s" onmouseover="this.style.color='var(--text)';this.style.borderColor='var(--border2)'" onmouseout="this.style.color='var(--text3)'">Logout</button>
           `;
         }
-        if (explorBtn)  explorBtn.style.display = 'none';
-        if (signinBtn)  signinBtn.style.display = 'none';
-        if (proSection) proSection.style.display = '';
+        if (explorBtn)    explorBtn.style.display = 'none';
+        if (signinBtn)    signinBtn.style.display = 'none';
+        if (proSection)   proSection.style.display = '';
+        if (scratchSection) {
+          scratchSection.style.display = '';
+          const ta = document.getElementById('scratch-text');
+          if (ta) try { ta.value = localStorage.getItem('rc_scratchpad') || ''; } catch(e) {}
+        }
       } else {
         // Logged out: show explore pro + sign in, hide pro tools
-        if (userNav)    { userNav.style.display = 'none'; userNav.innerHTML = ''; }
-        if (explorBtn)  explorBtn.style.display = '';
-        if (signinBtn)  signinBtn.style.display = '';
-        if (proSection) proSection.style.display = 'none';
+        if (userNav)      { userNav.style.display = 'none'; userNav.innerHTML = ''; }
+        if (explorBtn)    explorBtn.style.display = '';
+        if (signinBtn)    signinBtn.style.display = '';
+        if (proSection)   proSection.style.display = 'none';
+        if (scratchSection) scratchSection.style.display = 'none';
       }
     }
     _applyHeaderAuth(window.RadCallAuth ? window.RadCallAuth.getUser() : null);
