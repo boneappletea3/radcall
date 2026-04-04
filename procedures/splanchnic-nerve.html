@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Splanchnic Nerve Block / Ablation — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(239,68,68,.12); color: #fecaca; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .pitfall { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(239,68,68,.18); background: linear-gradient(180deg, rgba(239,68,68,.08), rgba(239,68,68,.03)); }
+    .pitfall-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(239,68,68,.18); color: #fecaca; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Reference table ── */
+    .ref-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .ref-table th, .ref-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .ref-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .ref-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Playbook &mdash; Pain Management</div>
+      <h1>Splanchnic Nerve Block / Ablation</h1>
+      <p class="subhead">CT-guided block or radiofrequency ablation (RFA) / cryoablation of the greater, lesser, and least splanchnic nerves at the T10&ndash;T12 paravertebral level &mdash; targeted alternative to celiac plexus neurolysis with lower paralysis risk.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">Moderate / MAC</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--success)">Low (SIR Cat 2)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Pneumothorax &middot; Orthostatic hypotension</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Not routine</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">BP check at discharge &middot; Pain reassessment 2 wks</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#supplies">4. Supplies &amp; Setup</a></li>
+          <li><a href="#steps">5. Procedure Steps</a></li>
+          <li><a href="#troubleshooting">6. Troubleshooting</a></li>
+          <li><a href="#complications">7. Complications</a></li>
+          <li><a href="#postprocedure">8. Post-Procedure</a></li>
+          <li><a href="#resources">9. References</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications &amp; Contraindications</h3><div class="section-subtitle">When to choose splanchnic nerve over celiac plexus approach</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:16px;">
+              <div class="panel" style="border-color:rgba(56,189,248,.15);background:rgba(56,189,248,.03);">
+                <h4 style="color:#93dcff;">Indications</h4>
+                <ul class="list">
+                  <li>Same spectrum as celiac plexus: pancreatic cancer pain, chronic pancreatitis, upper abdominal malignancy</li>
+                  <li><strong>Preferred over celiac plexus when:</strong> distorted celiac anatomy from tumor encasement prevents safe retrocrural/anterocrural access</li>
+                  <li>Failed celiac plexus block &mdash; splanchnic approach targets the nerves proximal to the plexus</li>
+                  <li>Operator preference to avoid anterocrural approach near the aorta</li>
+                  <li>Splanchnic nerve ablation (RFA/cryo) offers more durable pain relief than chemical neurolysis in selected patients</li>
+                </ul>
+              </div>
+              <div class="panel" style="border-color:rgba(239,68,68,.15);background:rgba(239,68,68,.03);">
+                <h4 style="color:#fecaca;">Contraindications</h4>
+                <ul class="list">
+                  <li>Coagulopathy (INR &gt;1.5, platelets &lt;50K)</li>
+                  <li>Inability to tolerate prone positioning</li>
+                  <li>Aortic aneurysm extending to T11&ndash;T12 level (proximity to target)</li>
+                  <li>Prior pneumothorax or compromised ipsilateral lung function (relative)</li>
+                  <li>Bowel or lung interposition in planned needle path</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel" style="border-color:rgba(245,158,11,.15);background:rgba(245,158,11,.03);">
+              <h4 style="color:#fcd58e;">Splanchnic vs. Celiac Plexus: Key Comparison</h4>
+              <table class="ref-table" style="margin-top:8px;">
+                <thead><tr><th>Feature</th><th>Celiac Plexus</th><th>Splanchnic Nerve</th></tr></thead>
+                <tbody>
+                  <tr><td>Target level</td><td>T12&ndash;L1 (anterolateral aorta)</td><td>T11&ndash;T12 paravertebral</td></tr>
+                  <tr><td>Paralysis risk</td><td>&lt;1% (anterior spinal artery proximity)</td><td>Lower (approach above aortic level)</td></tr>
+                  <tr><td>Pneumothorax risk</td><td>Low</td><td>Higher (proximity to pleural space)</td></tr>
+                  <tr><td>Distorted anatomy</td><td>Tumor encasement = higher risk</td><td>More accessible when celiac anatomy obscured</td></tr>
+                  <tr><td>Ablation modality</td><td>Chemical (ethanol/phenol) or cryoneurolysis</td><td>RFA, cryoablation, or chemical</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Planning</h3><div class="section-subtitle">Imaging, labs, modality selection, patient prep</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:16px;">
+              <div class="panel">
+                <h4>Imaging Review</h4>
+                <ul class="list">
+                  <li>CT chest and abdomen: identify T11&ndash;T12 paravertebral space, rib heads, pleural reflection, proximal lung parenchyma</li>
+                  <li>Plan bilateral posterolateral approach to T11&ndash;T12 paravertebral fat anterior to vertebral body</li>
+                  <li>Identify diaphragmatic attachment level &mdash; target is at or just above the diaphragmatic crus</li>
+                  <li>Assess for pleural adhesions, effusions, or prior pneumothorax (relative contraindication)</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Labs &amp; Patient Prep</h4>
+                <ul class="list">
+                  <li>CBC, PT/INR (INR &le;1.5), platelets &ge;50K</li>
+                  <li>IV access &times;2; NPO 6h for moderate sedation / MAC</li>
+                  <li>1 L NS IV pre-procedure (orthostatic hypotension prevention)</li>
+                  <li>Confirm ablation modality: RFA probe, cryoprobe, or 22G Chiba (chemical block)</li>
+                  <li>For RFA: confirm grounding pads available (not required for cryoablation or chemical)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>CT reviewed.</strong> T11&ndash;T12 paravertebral access window confirmed bilateral. Pleural reflection and lung base noted.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Coagulopathy corrected.</strong> INR &le;1.5, platelets &ge;50K.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Ablation system confirmed.</strong> RFA unit or cryosystem available, probes tested before patient positioning.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent obtained.</strong> Key risks discussed: pneumothorax, orthostatic hypotension, intercostal nerve injury, diarrhea, back pain.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Chest tube setup available</strong> at bedside if pneumothorax risk is elevated (prior pleural procedures, emphysema, bilateral approach).</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3><div class="section-subtitle">Splanchnic nerve course, paravertebral space, T11&ndash;T12 target</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:16px;">
+              <div class="panel">
+                <h4>Splanchnic Nerve Origins</h4>
+                <ul class="list">
+                  <li><strong>Greater splanchnic nerve:</strong> arises from T5&ndash;T9 sympathetic ganglia; carries preganglionic fibers from the thoracic sympathetic trunk</li>
+                  <li><strong>Lesser splanchnic nerve:</strong> arises from T10&ndash;T11 sympathetic ganglia</li>
+                  <li><strong>Least splanchnic nerve:</strong> arises from T12 sympathetic ganglion (inconstant)</li>
+                  <li>All three nerves converge caudally to form the celiac plexus at T12&ndash;L1</li>
+                  <li>Interrupting at T11&ndash;T12 blocks visceral pain transmission before the plexus is formed</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Paravertebral Target Space</h4>
+                <ul class="list">
+                  <li>Target: T11&ndash;T12 paravertebral fat space, <strong>anteromedial to the rib head</strong>, anterior to the vertebral body</li>
+                  <li>Nerves run in a groove between the vertebral body and the rib head at this level</li>
+                  <li>Needle tip should be in the paravertebral fat <strong>anterior to the rib head / costovertebral junction</strong></li>
+                  <li>Diaphragmatic crus runs just caudal to this level; the splanchnic nerves cross under the crus to reach the celiac plexus</li>
+                  <li>Pleural reflection is immediately adjacent &mdash; monitor for apical spread of contrast or ice ball toward pleural space</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. SUPPLIES ═══ -->
+        <section class="section" id="supplies">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>Supplies &amp; Setup</h3><div class="section-subtitle">Chemical block vs. RFA vs. cryoablation setup</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div style="margin-bottom:14px;">
+              <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#x2398; Copy List</button>
+              <button class="export-btn" onclick="downloadSupplyList()" title="Download supply list">&#x2193; Download</button>
+            </div>
+            <div class="three-col" style="margin-bottom:14px;">
+              <div class="panel">
+                <h4>Chemical Block Setup</h4>
+                <ul class="list" id="supplies-chemical">
+                  <li>22G Chiba needles &times;2 (15 cm)</li>
+                  <li>Extension tubing &times;2</li>
+                  <li>Dilute iodinated contrast (30:1 saline:contrast) for test injection</li>
+                  <li>Bupivacaine 0.25% &mdash; 5&ndash;10 mL per side (block)</li>
+                  <li>Absolute ethanol 100% or phenol 6&ndash;10% &mdash; 5&ndash;10 mL per side (neurolysis)</li>
+                  <li>10 mL syringes &times;4</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>RFA / Cryoablation Setup</h4>
+                <ul class="list" id="supplies-ablation">
+                  <li><strong>RFA:</strong> 17&ndash;18G RFA probe (e.g., Cool-Tip or VIVA RF); grounding pads &times;2; RF generator</li>
+                  <li><strong>Cryoablation:</strong> 17G cryoprobe &times;2 (one per side); argon/helium gas system</li>
+                  <li>RFA protocol: 80&ndash;90&deg;C &times; 90 sec per probe position</li>
+                  <li>Cryoablation protocol: freeze&ndash;thaw&ndash;freeze cycle (2 &times; 8&ndash;10 min freezes, 5 min passive thaw)</li>
+                  <li>Standard sterile procedural tray, drapes, lidocaine 1%</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Medications (Peri-procedure)</h4>
+                <ul class="list" id="supplies-meds">
+                  <li>IV fentanyl 50&ndash;100 mcg if chemical neurolysis planned</li>
+                  <li>Midazolam 1&ndash;2 mg IV for moderate sedation</li>
+                  <li>1 L NS IV pre-procedure; continue at 100 mL/h during case</li>
+                  <li>Loperamide (Imodium) 2 mg PRN &mdash; discharge prescription</li>
+                  <li>Tylenol 975 mg PO q8h post-procedure for back pain</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. PROCEDURE STEPS ═══ -->
+        <section class="section" id="steps">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Procedure Steps</h3><div class="section-subtitle">CT-guided bilateral T11&ndash;T12 paravertebral approach (RFA / cryoablation)</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="step-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div>
+                  <h4>CT Planning at T11&ndash;T12</h4>
+                  <div class="muted">Review CT for bilateral posterolateral approach to T11&ndash;T12 paravertebral space. Identify the rib head / costovertebral junction as a landmark. Plan entry point posterior to the rib to angle probe anteriorly into the paravertebral fat anterior to the vertebral body. Note pleural reflection level and lung base position to avoid pneumothorax.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div>
+                  <h4>Prone Positioning &amp; Sterile Prep</h4>
+                  <div class="muted">Patient prone on CT table. Arms at sides or slightly elevated. Standard sterile prep over bilateral posterolateral thorax / upper back. Lidocaine 1% infiltration from skin to rib periosteum. If RFA: apply grounding pads bilaterally to thighs before draping.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div>
+                  <h4>Probe / Needle Advancement to T11&ndash;T12 Paravertebral Space</h4>
+                  <div class="muted">Advance probe or 22G Chiba needle posterolaterally under CT guidance. Target: anterolateral T11&ndash;T12 vertebral body, <strong>anterior to rib head / costovertebral junction</strong>. Tip should be in paravertebral fat. Avoid advancing through pleural space. Confirm position on CT axial and coronal reformats.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div>
+                  <h4>CT Confirmation of Probe Position</h4>
+                  <div class="muted">CT to confirm probe tip at paravertebral fat, anterior to rib head, adjacent to vertebral body at T11&ndash;T12. Verify no pleural transgression (pneumothorax would show as air anterior to the probe on CT). Bilateral probe positions confirmed before energy delivery.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">5</div>
+                <div>
+                  <h4>Test Injection (Chemical Technique) or Pre-ablation Check</h4>
+                  <div class="muted"><strong>Chemical technique:</strong> inject 1 mL dilute contrast per side &mdash; confirm paravertebral spread along the T11&ndash;T12 level; confirm no intravascular injection; confirm no pleural spread (contrast into pleural space indicates pleural puncture &mdash; do NOT inject neurolytic agent). &mdash; <strong>Ablation technique:</strong> proceed to energy delivery once position confirmed.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">6</div>
+                <div>
+                  <h4>Energy Delivery / Neurolytic Injection</h4>
+                  <div class="muted"><strong>RFA:</strong> activate at 80&ndash;90&deg;C for 90 seconds per probe position bilaterally. Multiple overlapping positions may be used along the nerve course. &mdash; <strong>Cryoablation:</strong> two freeze cycles (8&ndash;10 min each) separated by a 5-min passive thaw; monitor ice ball on CT to confirm coverage of T11&ndash;T12 paravertebral fat and confirm no pleural extension. &mdash; <strong>Chemical neurolysis:</strong> inject 5&ndash;10 mL ethanol or phenol per side after confirming test spread.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">7</div>
+                <div>
+                  <h4>Post-ablation CT &amp; Withdrawal</h4>
+                  <div class="muted">Final CT to document ablation zone, confirm no pneumothorax, no hematoma. Withdraw probes/needles. Apply pressure at skin entry. Immediate BP check on the table &mdash; orthostatic hypotension from sympathectomy can occur rapidly.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <div style="margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.06);">
+              <h4 style="margin:0 0 14px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-size:.85rem;">Community Cards</h4>
+              <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+              <div id="community-cards" class="cards-grid">
+                <div class="muted" id="cards-loading" style="padding:20px;text-align:center;">Sign in to view and create community cards</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Troubleshooting</h3><div class="section-subtitle">Pneumothorax, intercostal vessel injury, inadequate position</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Pleural Transgression / Pneumothorax</div>
+              <h4>Probe Enters Pleural Space During Advancement</h4>
+              <p class="muted">If CT shows probe has entered the pleural space, withdraw immediately to the chest wall. Do not inject any neurolytic agent with pleural access. Small pneumothorax from needle passage: observe, supplemental O2. If patient becomes symptomatic: pause procedure, determine pneumothorax size on CT. Small and asymptomatic: complete contralateral side and monitor. Large or symptomatic: place pigtail catheter before completing procedure.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Intercostal Vessel Injury</div>
+              <h4>Blood Aspirated from Probe or Hematoma Visible on CT</h4>
+              <p class="muted">Intercostal neurovascular bundle runs along the inferior border of each rib. Advance probe above the rib (superior border) to avoid the bundle. If blood aspirated: withdraw to subcutaneous fat, apply pressure. Small hematoma usually self-limited. Monitor vitals. For expanding hematoma or active extravasation: IR arteriography and embolization of intercostal artery.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Inadequate Paravertebral Position</div>
+              <h4>Probe Too Posterior or Too Lateral</h4>
+              <p class="muted">Probe tip posterior to rib head will not reliably reach the splanchnic nerve. Advance tip under CT guidance to a position anterior to the costovertebral junction. For chemical technique, inadequate spread on test injection: reposition needle tip more anteriorly into the paravertebral fat and repeat test injection.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Apical Ice Ball Extension (Cryo)</div>
+              <h4>Cryoablation Ice Ball Extends Toward Pleural Space</h4>
+              <p class="muted">Monitor ice ball continuously on CT during freeze cycles. If ice ball extends within 5 mm of pleural reflection: terminate freeze cycle, allow passive thaw, reposition probe 1&ndash;2 cm caudally, resume freeze. Do not allow ice ball to extend through pleural reflection &mdash; risk of pleural frostbite and pneumothorax.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Complications</h3><div class="section-subtitle">Pneumothorax, autonomic effects, nerve injury</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Common / Expected Side Effects</h4>
+                <ul class="list">
+                  <li><strong>Orthostatic hypotension</strong> &mdash; same mechanism as celiac plexus; splanchnic sympathectomy; usually 24&ndash;48h duration; IV fluid, fall precautions</li>
+                  <li><strong>Diarrhea</strong> &mdash; parasympathetic release from sympathetic denervation; loperamide PRN; typically 2&ndash;5 days</li>
+                  <li><strong>Back and flank pain</strong> &mdash; post-procedure; related to needle access and local tissue response; Tylenol/NSAIDs</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Serious Complications</h4>
+                <ul class="list">
+                  <li><strong>Pneumothorax</strong> &mdash; most feared; higher incidence than celiac plexus due to proximity of pleural space; post-procedure CT mandatory; treat symptomatically vs chest tube</li>
+                  <li><strong>Intercostal neuralgia</strong> &mdash; injury to intercostal nerve during probe placement; burning pain in dermatome distribution; usually resolves weeks to months</li>
+                  <li><strong>Retroperitoneal hematoma</strong> &mdash; from vessel injury; rare; monitor BP and hematocrit</li>
+                  <li class="success"><strong>Paralysis:</strong> significantly lower risk than celiac plexus approach (approach is above the aorta and anterior spinal artery territory)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. POST-PROCEDURE ═══ -->
+        <section class="section" id="postprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Post-Procedure Care &amp; Pearls</h3><div class="section-subtitle">Recovery, pneumothorax surveillance, pain reassessment</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:16px;">
+              <div class="panel">
+                <h4>Recovery</h4>
+                <ul class="list">
+                  <li>Post-procedure CT before leaving the CT suite &mdash; mandatory to exclude pneumothorax</li>
+                  <li>BP monitoring q15 min &times; 2h; IV fluid continued</li>
+                  <li>Assisted first ambulation; fall precautions for orthostatic hypotension</li>
+                  <li>Discharge when BP stable and no pneumothorax on CT</li>
+                  <li>Pain response: expect improvement within 24&ndash;72h; reassess at 2 weeks</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Discharge Instructions</h4>
+                <ul class="list">
+                  <li>Rise slowly from supine/sitting for 3&ndash;5 days</li>
+                  <li>Loperamide 2 mg PRN for diarrhea</li>
+                  <li>Return precautions: shortness of breath, chest pain &rarr; ER immediately (late pneumothorax possible)</li>
+                  <li>Leg weakness or numbness &rarr; ER (rare somatic nerve involvement)</li>
+                  <li>Pain reassessment follow-up at 2 weeks</li>
+                </ul>
+              </div>
+            </div>
+            <h4 style="margin:0 0 12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-size:.84rem;">Technique Pearls</h4>
+            <div class="pearls">
+              <div class="pearl">
+                <div class="pearl-mark">✦</div>
+                <div><strong>Lower paralysis risk than celiac plexus</strong> is the key advantage of the splanchnic nerve approach. The T11&ndash;T12 paravertebral space is above the origin of the anterior spinal artery (Artery of Adamkiewicz, usually T9&ndash;T12 left-sided). Still use careful technique and aspiration checks.</div>
+              </div>
+              <div class="pearl">
+                <div class="pearl-mark">✦</div>
+                <div>Always confirm no intravascular injection before chemical neurolysis. Ethanol injection into an intercostal vessel can cause peripheral ischemia of the spinal cord via the intercostal artery-to-segmental artery pathway.</div>
+              </div>
+              <div class="pearl">
+                <div class="pearl-mark">✦</div>
+                <div>For cryoablation: the ice ball is directly visible on CT. Use this to your advantage &mdash; monitor in real time and adjust freeze cycles to optimize coverage of the T11&ndash;T12 paravertebral fat without extending to the pleural space.</div>
+              </div>
+              <div class="pearl">
+                <div class="pearl-mark">✦</div>
+                <div>Preliminary nerve block with bupivacaine at T11&ndash;T12 (same-session or prior visit) predicts patient response. A patient who achieves &ge;50% pain reduction with block is a good candidate for RFA or cryoablation for durable relief.</div>
+              </div>
+              <div class="pearl">
+                <div class="pearl-mark">✦</div>
+                <div>Advance needle/probe along the superior border of the rib to reliably avoid the intercostal neurovascular bundle (inferior border). Critical reminder especially when the entry angle is steep.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. REFERENCES ═══ -->
+        <section class="section" id="resources">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>References &amp; Resources</h3><div class="section-subtitle">Primary sources, related procedures, cryoneurolysis literature</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:16px;">
+              <div class="panel">
+                <h4>Related Procedures</h4>
+                <ul class="list">
+                  <li><a href="celiac-plexus.html" style="color:var(--accent);">Celiac Plexus Block / Neurolysis</a> &mdash; anterior target at T12&ndash;L1; chemical neurolysis or cryoneurolysis</li>
+                  <li><a href="sacroplasty.html" style="color:var(--accent);">Sacroplasty</a> &mdash; bone cement stabilization for sacral insufficiency fractures</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Cryoneurolysis Literature</h4>
+                <ul class="list">
+                  <li>Prologo JD, Zabala ZE (Chapter 12): CT-guided cryoneurolysis of involved nerve roots; two 8&ndash;10 min freeze cycles; important for motor nerve injury counseling</li>
+                  <li>Moussa AM, Santos E, Camacho JC (Chapter 13): cryoneurolysis without direct nerve involvement; intercostal cryoneurolysis; preliminary nerve block as predictive test</li>
+                  <li>Bittman RW et al. Percutaneous image-guided cryoneurolysis. <em>AJR Am J Roentgenol</em>. 2018;210(2):454&ndash;465.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel">
+              <h4>Primary References</h4>
+              <ul class="list" style="font-size:.92rem;">
+                <li>Prologo JD, Ray CE Jr., eds. <em>Advanced Pain Management in Interventional Radiology: A Case-Based Approach</em>. Thieme; 2024. DOI: 10.1055/b000000387</li>
+                <li>Nitschke AM, Ray CE Jr. Percutaneous neurolytic celiac plexus block. <em>Semin Intervent Radiol</em>. 2013;30(3):318&ndash;321.</li>
+                <li>Prologo JD, Patel I, Buethe J, Bohnert N. Ablation zones and weight-bearing bones: points of caution for the palliative interventionalist. <em>J Vasc Interv Radiol</em>. 2014;25(5):769&ndash;775.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Ref: Prologo JD, Ray CE Jr., eds. Advanced Pain Management in Interventional Radiology. Thieme; 2024 &middot; Bittman RW et al. AJR 2018 &middot; Nitschke AM, Ray CE Jr. Semin Intervent Radiol 2013.</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My Splanchnic Nerve Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;17G cryoprobe x2&#10;22G Chiba needle x2&#10;Extension tubing x2&#10;Dilute contrast (30:1)"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;CT plan at T11-T12&#10;Prone; bilateral posterolateral approach&#10;Probe tip anterior to rib head&#10;Confirm no pleural transgression&#10;Cryo: 10-min freeze x2, 5-min thaw"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <label>Your Name</label>
+      <input type="text" id="card-author-name" placeholder="Your name (shown on card)" />
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" id="save-card-btn" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'splanchnic-nerve';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _myVotes = {};
+  let _cardSearch = '';
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    await loadVotes();
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!document.getElementById('card-search-wrap')) {
+      const wrap = document.createElement('div');
+      wrap.id = 'card-search-wrap';
+      wrap.style.cssText = 'margin-bottom:12px';
+      wrap.innerHTML = '<input id="card-search" type="text" placeholder="Search community cards\u2026" style="width:100%;padding:8px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:inherit;font-family:inherit;font-size:13px;outline:none;" oninput="_cardSearch=this.value.toLowerCase();renderCards()">';
+      container.parentElement.insertBefore(wrap, container);
+    }
+    const q = _cardSearch.trim();
+    const visible = q ? _cards.filter(c => [c.title||'',c.display_name||'',...(c.supplies||[]),...(c.steps||[]),...(c.pearls||[])].join(' ').toLowerCase().includes(q)) : _cards;
+    if (!visible.length) {
+      loading.textContent = q ? 'No cards match your search.' : 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      container.innerHTML = '';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = visible.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      const myVote = _myVotes[c.id];
+      const votes = c.net_votes || 0;
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}" data-card-id="${c.id}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:5px;flex-shrink:0">
+              <button onclick="voteCard('${c.id}','up')" title="Helpful" style="background:none;border:1px solid ${myVote==='up'?'#22c55e':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='up'?'#22c55e':'inherit'};transition:.15s">${myVote==='up'?'▲':'△'}${votes>0?' '+votes:''}</button>
+              <button onclick="voteCard('${c.id}','down')" title="Not helpful" style="background:none;border:1px solid ${myVote==='down'?'#ef4444':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='down'?'#ef4444':'inherit'};transition:.15s">${myVote==='down'?'▼':'▽'}</button>
+              ${isOwn ? `<button onclick="editCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Edit</button><button onclick="deleteCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Delete</button>` : ''}
+            </div>
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  async function loadVotes() {
+    const sb = _sb(); const user = _user();
+    if (!sb || !user) return;
+    const { data } = await sb.from('procedure_card_votes').select('card_id,vote').eq('user_id', user.id);
+    _myVotes = {};
+    if (data) for (const v of data) _myVotes[v.card_id] = v.vote;
+  }
+
+  async function voteCard(cardId, dir) {
+    const sb = _sb(); const user = _user();
+    if (!user || !sb) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    const existing = _myVotes[cardId];
+    const card = _cards.find(c => c.id === cardId);
+    if (!card) return;
+    if (existing === dir) {
+      await sb.from('procedure_card_votes').delete().match({ user_id: user.id, card_id: cardId });
+      delete _myVotes[cardId];
+      card.net_votes = (card.net_votes || 0) + (dir === 'up' ? -1 : 1);
+    } else {
+      await sb.from('procedure_card_votes').upsert({ user_id: user.id, card_id: cardId, vote: dir }, { onConflict: 'user_id,card_id' });
+      const prev = existing ? (existing === 'up' ? -1 : 1) : 0;
+      card.net_votes = (card.net_votes || 0) + prev + (dir === 'up' ? 1 : -1);
+      _myVotes[cardId] = dir;
+    }
+    await sb.from('procedure_cards').update({ net_votes: card.net_votes }).eq('id', cardId);
+    renderCards();
+  }
+
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    const nameInput = document.getElementById('card-author-name');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      if (nameInput) nameInput.value = card.display_name || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+      if (nameInput && !nameInput.value.trim()) {
+        const u = _user();
+        if (nameInput && !nameInput.value) nameInput.value = (u && u.email) ? u.email.split('@')[0] : '';
+        if (window.RadCallAuth && window.RadCallAuth.getProfile) {
+          window.RadCallAuth.getProfile().then(p => {
+            if (nameInput && !nameInput.value.trim()) nameInput.value = (p && p.display_name) || '';
+          }).catch(() => {});
+        }
+      }
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    if (!sb) { alert('Connection error \u2014 please reload and try again.'); return; }
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title.'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const authorInput = document.getElementById('card-author-name');
+    const displayName = (authorInput && authorInput.value.trim()) || (user.email ? user.email.split('@')[0] : 'Anonymous');
+    const saveBtn = document.getElementById('save-card-btn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving\u2026'; }
+    try {
+      if (editId) {
+        _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() } : c);
+        renderCards(); closeCardModal();
+        const { error } = await sb.from('procedure_cards').update({ title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() }).eq('id', editId);
+        if (error) console.error('Card update error:', error);
+      } else {
+        const tmpId = 'tmp-' + Date.now();
+        const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0, created_at: new Date().toISOString() };
+        _cards.unshift(newCard);
+        renderCards(); closeCardModal();
+        const { data, error } = await sb.from('procedure_cards')
+          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0 })
+          .select().single();
+        if (error) {
+          console.error('Card insert error:', error);
+          _cards = _cards.filter(c => c.id !== tmpId);
+          renderCards();
+          alert('Could not save card: ' + (error.message || 'Unknown error. Check your connection and try again.'));
+        } else if (data) {
+          _cards = _cards.map(c => c.id === tmpId ? data : c);
+        }
+      }
+      try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    } catch(err) {
+      console.error('saveCard exception:', err);
+      alert('Something went wrong saving your card. Please try again.');
+    } finally {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Card'; }
+    }
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  function exportSupplyList() {
+    const items = [];
+    document.querySelectorAll('#supplies-chemical li, #supplies-ablation li, #supplies-meds li').forEach(li => {
+      items.push(li.textContent.trim());
+    });
+    const text = 'Splanchnic Nerve Block/Ablation Supply List\n' + '\u2550'.repeat(42) + '\n' + items.map(s => '\u2610 ' + s).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const items = [];
+    document.querySelectorAll('#supplies-chemical li, #supplies-ablation li, #supplies-meds li').forEach(li => {
+      items.push(li.textContent.trim());
+    });
+    const text = 'Splanchnic Nerve Block/Ablation Supply List\n' + '\u2550'.repeat(42) + '\n' + items.map(s => '\u2610 ' + s).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'splanchnic-nerve-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  } else {
+    window.addEventListener('load', () => { setTimeout(loadCards, 800); });
+  }
+  </script>
+</body>
+</html>

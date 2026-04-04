@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Facet Joint Injection / Medial Branch Block — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Reference / data table ── */
+    .ref-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .ref-table th, .ref-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .ref-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .ref-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    /* ── Approach sub-header ── */
+    .approach-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: var(--accent); font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin: 16px 0 10px; }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Playbook &mdash; Spine / Pain</div>
+      <h1>Facet Joint Injection / Medial Branch Block</h1>
+      <p class="subhead">Fluoroscopy or CT-guided injection of corticosteroid ± local anesthetic into the zygapophyseal (facet) joint or onto the medial branch nerve for diagnosis and treatment of axial spinal pain.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">Local only</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--success)">Minimal (SIR Cat 1)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value" style="font-size:.88rem">Intravascular · Infection · Pain flare</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Not routine</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value" style="font-size:.88rem">Pain diary 2 wks · RFA decision 4–6 wks</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#troubleshooting">5. Troubleshooting</a></li>
+          <li><a href="#complications">6. Complications</a></li>
+          <li><a href="#postprocedure">7. Post-Procedure</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#references">9. References</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications / Contraindications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Indications</h4>
+              <ul class="list">
+                <li><strong>Axial spinal pain</strong> (cervical, thoracic, lumbar) attributed to facet arthropathy — characteristically worse with extension and rotation; without significant radicular component</li>
+                <li><strong>Diagnostic medial branch block (MBB)</strong> to confirm facet origin before radiofrequency ablation (RFA)</li>
+                <li><strong>Therapeutic intra-articular injection</strong> — short-to-medium term pain relief</li>
+                <li>Failed conservative management ≥ 6 weeks</li>
+                <li><strong>Clinical criteria favoring facet origin:</strong> age &gt;50, no radiation below the knee, pain not worsened with walking, relieved with sitting</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Contraindications</h4>
+              <ul class="list">
+                <li><strong>Absolute:</strong> Active spinal infection · Uncorrectable coagulopathy · Allergy to contrast or corticosteroids</li>
+                <li><strong>Relative:</strong> Anticoagulation (hold per SIR Cat 1 guidelines before proceeding) · Uncontrolled diabetes (steroid-related glucose spike) · Prior RFA at same level without adequate washout</li>
+                <li><strong>Note:</strong> SIR Category 1 — routine coagulation correction not required; targeted hold for therapeutic anticoagulation</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Review MRI.</strong> Look for facet hypertrophy, joint space narrowing, subarticular bone marrow edema on STIR sequences. Identify target level(s). Most common lumbar levels: L3-4, L4-5, L5-S1. Most common cervical: C3-4 through C6-7.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Fluoroscopy planning.</strong> Confirm C-arm availability. Identify approach: oblique view for intra-articular vs. AP for medial branch block.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Goal clarification.</strong> Diagnostic MBB (short-acting agent only, 0.5 mL per nerve) vs. therapeutic intra-articular injection (steroid + longer-acting anesthetic). This determines needle, agent, and outcome interpretation.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Anticoagulation hold.</strong> SIR Cat 1. Heparin: hold 4–6h; LMWH: hold 24h; Warfarin: hold 5d (INR &lt;2.0); DOACs: hold 24–48h; Aspirin/NSAIDs: typically continue.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent.</strong> Discuss: post-injection pain flare (10–20%, resolves 1–3 days), infection (&lt;1%), intravascular injection (rare but catastrophic with particulate steroid), nerve root injury, epidural spread, limited steroid injections (3 per year per anatomic region).</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Diabetic patients.</strong> Warn about transient glucose elevation post-steroid. Check recent HbA1c if possible. Arrange blood glucose monitoring for 24–48h after injection.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Facet Joint</h4>
+                <ul class="list">
+                  <li>Zygapophyseal joint — articulation between the <strong>superior articular process</strong> of the vertebra below and the <strong>inferior articular process</strong> of the vertebra above</li>
+                  <li>True synovial joint with joint capsule; capacity <strong>1–2 mL</strong> — overfilling causes capsular rupture and epidural spread</li>
+                  <li>Lumbar facets oriented sagittally (resist rotation); cervical facets oriented obliquely</li>
+                  <li>On oblique fluoroscopy: "Scottie dog" — ear = superior articular process (SAP), eye = pedicle, nose = transverse process, front leg = inferior articular process</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Medial Branch Nerve Targets</h4>
+                <ul class="list">
+                  <li>Each facet joint is innervated by the <strong>medial branch of the dorsal ramus</strong> from TWO levels — the level above and the level of the joint itself</li>
+                  <li><strong>Lumbar L1–L4 medial branch:</strong> crosses at junction of transverse process and superior articular process — target is the "waist" or "neck" of the Scottie dog</li>
+                  <li><strong>L5 dorsal ramus:</strong> courses in groove between sacral ala and S1 SAP — slightly different target than L1–L4</li>
+                  <li><strong>Cervical medial branch:</strong> targeted at midpoint of articular pillar (C3–C7)</li>
+                  <li><strong>Rule:</strong> To block a facet at level X, block the medial branches at level X and X-1</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. HOW I DO IT ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">Default RadCall approach + community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <!-- Default RadCall card -->
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#x1F4CB; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#x2B07; Download</button></h4>
+              <div class="chip-row card-supplies">
+                <span class="chip">22G or 25G spinal needle</span>
+                <span class="chip">C-arm fluoroscopy</span>
+                <span class="chip">Omnipaque 180 (contrast)</span>
+                <span class="chip">1 mL + 3 mL syringes</span>
+                <span class="chip">Extension tubing (primed)</span>
+                <span class="chip">1% lidocaine or 0.25% bupivacaine</span>
+                <span class="chip">Methylprednisolone 40 mg or Triamcinolone 40 mg</span>
+                <span class="chip">ChloraPrep</span>
+                <span class="chip">Sterile drape</span>
+                <span class="chip">Sterile dressing</span>
+              </div>
+
+              <!-- Intra-articular approach -->
+              <div class="approach-label">Approach A — Intra-Articular Injection</div>
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Position + fluoroscopy setup</h4><div class="muted">Patient prone. Rotate C-arm to ipsilateral oblique 30–45° to open the joint — the targeted facet joint space should appear as a clear lucent line on the image.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Skin entry + needle advance</h4><div class="muted">Local anesthesia at skin. Advance 22G spinal needle toward inferior recess of the joint under continuous fluoroscopy. Needle tip should track along the joint line.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Confirm position AP + lateral</h4><div class="muted">Obtain AP and lateral fluoroscopic views. On AP: needle tip overlies joint space. On lateral: tip projects within the posterior joint at the level of the interlaminar space.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Contrast arthrogram</h4><div class="muted">Gentle injection of 0.3–0.5 mL contrast under live fluoroscopy. Confirm intra-articular position — contrast should outline the joint capsule (ovoid or crescent shape). STOP if contrast flows linearly into a vessel or spreads widely epidurally.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Inject medication</h4><div class="muted">Once intra-articular confirmed: inject 1 mL corticosteroid (methylprednisolone 40 mg or triamcinolone 40 mg) + 0.5 mL local anesthetic (0.25% bupivacaine). Total volume ≤1.5 mL to avoid capsule rupture.</div></div></div>
+              </div>
+
+              <!-- Medial branch block approach -->
+              <div class="approach-label" style="margin-top:20px;">Approach B — Medial Branch Block (MBB)</div>
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Identify target levels</h4><div class="muted">To block a facet at level X, you must block medial branches at X-1 AND X. For L4-5 facet: block L3 and L4 medial branches. For L5-S1: block L4 medial branch and L5 dorsal ramus (at sacral ala).</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>AP fluoroscopy — needle to target</h4><div class="muted">AP view. For L1–L4 medial branches: advance 25G needle to the junction of the superior articular process and transverse process ("waist of the Scottie dog"). For L5 dorsal ramus: target the groove between sacral ala and S1 SAP.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Lateral view depth confirmation</h4><div class="muted">Obtain lateral view. Needle tip should project at the posterior cortex of the junction, approximately halfway between the spinous process and the posterior vertebral body line. Do not advance anterior to this.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Contrast check</h4><div class="muted">Inject 0.2–0.3 mL contrast under live fluoroscopy. Confirm no intravascular uptake (no linear flow in vessels). Small local spread is acceptable.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Inject local anesthetic ± steroid</h4><div class="muted"><strong>Diagnostic MBB:</strong> 0.5 mL 1% lidocaine per nerve (short-acting — 2–4h; ideal for diagnostic confirmation before RFA). <strong>Therapeutic MBB:</strong> 0.5–1 mL local anesthetic + 0.5 mL corticosteroid. Repeat at each level required. Document volumes precisely.</div></div></div>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Intravascular contrast uptake on test injection</h4>
+              <p class="muted"><strong>Likely cause:</strong> Needle tip in epidural venous plexus or periforaminal vessel — more common at cervical and thoracic levels.</p>
+              <p class="success"><strong>Next step:</strong> Withdraw needle 1–2 mm and re-aspirate. Redirect slightly. Repeat contrast injection under live fluoroscopy before any medication. If vascular uptake persists, abort and reposition needle. Never inject particulate steroid with active vascular uptake.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Cannot access joint — too narrow or degenerated</h4>
+              <p class="muted"><strong>Likely cause:</strong> Advanced facet arthropathy with complete joint space obliteration; osteophytes blocking entry.</p>
+              <p class="success"><strong>Next step:</strong> Increase oblique angle. Try inferior recess first (often most patent). If still inaccessible, target medial branch block instead — equally effective for diagnostic purposes. Consider CT guidance for C7-T1 or severely degenerated joints.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Contrast spreads widely / epidural pattern instead of intra-articular</h4>
+              <p class="muted"><strong>Likely cause:</strong> Needle tip through posterior joint capsule into epidural or paraspinal space; or existing capsular defect from prior injections.</p>
+              <p class="success"><strong>Next step:</strong> Withdraw needle to re-enter joint proper. If a capsular defect allows medication to track epidurally, reduce volume to 1 mL total. Document the finding — epidural spread may still be therapeutic but the procedure is technically a pericapsular injection.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Difficult C7-T1 access</h4>
+              <p class="muted"><strong>Likely cause:</strong> Shoulder overlap blocks oblique fluoroscopic view at the cervicothoracic junction.</p>
+              <p class="success"><strong>Next step:</strong> Use CT guidance for C7-T1 and T1-2. Alternatively, use a "swimmer's" lateral fluoroscopic view. Pull shoulders caudally with traction during AP/oblique views. Consider prone lateral approach under CT.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Immediate / Periprocedural</h4>
+              <ul class="list danger">
+                <li><strong>Post-injection flare</strong> (10–20%) — transient pain increase 1–3 days post; resolves spontaneously; ice/NSAIDs helpful; warn patient before discharge</li>
+                <li><strong>Intravascular steroid injection</strong> — particulate steroid into radicular artery → spinal cord infarct (catastrophic but rare); use live fluoroscopy + contrast mandatory before every injection</li>
+                <li><strong>Epidural spread</strong> (inadvertent) — from capsular defect or excessive volume; monitor for lower extremity weakness or sensory changes before discharge</li>
+                <li><strong>Vasovagal reaction</strong> — common; supine positioning, fluids, atropine if needed</li>
+                <li><strong>Nerve root injury</strong> — rare; usually transient paresthesias from needle contact; reposition immediately</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Delayed</h4>
+              <ul class="list">
+                <li><strong>Infection / Septic arthritis</strong> (&lt;0.1%) — fever, worsening pain, elevated WBC; spine MRI with contrast; broad-spectrum antibiotics; IR or surgical drainage if abscess forms</li>
+                <li><strong>Corticosteroid side effects</strong> — hyperglycemia (warn diabetics, 24-48h monitoring), adrenal suppression (limit to 3 injections per region per year), Cushing features with repeated use</li>
+                <li><strong>Skin/subcutaneous atrophy</strong> — from superficial steroid deposition; use deep, confirmed intra-articular injection</li>
+                <li><strong>Hematoma</strong> — rare (Cat 1 procedure); usually self-limited</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. POST-PROCEDURE ═══ -->
+        <section class="section" id="postprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Post-Procedure Care</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Same Day</h4>
+              <ul class="list">
+                <li>Observe 20–30 min — check for inadvertent epidural spread (leg weakness) and vasovagal recovery</li>
+                <li>Pain diary: instruct patient to document degree and duration of relief starting immediately post-procedure</li>
+                <li>Patient must have a driver if local anesthetic was used near neural structures</li>
+                <li>Ice application to injection site for discomfort</li>
+                <li>Resume normal activity as tolerated — light activity day of, no strenuous exercise for 24h</li>
+                <li>Diabetic patients: check blood glucose at home for 24–48h</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Follow-up + Decision Points</h4>
+              <ul class="list">
+                <li><strong>Pain diary review at 2 weeks.</strong> Document: degree of relief (%), duration of relief (hours/days)</li>
+                <li><strong>Positive diagnostic MBB:</strong> ≥50–80% pain relief for ≥6 hours with short-acting agent → proceed to RFA workup</li>
+                <li><strong>Dual diagnostic blocks:</strong> Two positive MBBs (lidocaine then bupivacaine, separate visits) before RFA improves specificity and reduces RFA failure rates</li>
+                <li><strong>Therapeutic injection assessment at 4–6 weeks.</strong> If &gt;50% relief — document and consider repeat if relapse. If inadequate — reassess diagnosis; consider alternative source (SI joint, disc, myofascial)</li>
+                <li><strong>Steroid limit:</strong> Maximum 3 injections per anatomic region per year</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Live fluoroscopy + contrast before EVERY steroid injection.</strong> Intravascular injection of particulate steroid (methylprednisolone, triamcinolone) into a radicular artery causes spinal cord infarction. Never skip this step. Use real-time fluoroscopy — not just a static spot film — to confirm no vascular uptake before injecting.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Diagnostic MBB is the gatekeeper to RFA.</strong> Use short-acting lidocaine for initial diagnostic block. Confirm ≥50–80% relief for ≥6 hours. Use dual sequential blocks (lidocaine then bupivacaine) to increase specificity. RFA without adequate diagnostic confirmation has high failure rates.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Small volumes for diagnostic MBB.</strong> Use 0.5 mL per nerve only. Larger volumes spread to adjacent structures (epidural space, adjacent medial branches), producing false-positive diagnostic blocks and contaminating data for RFA planning.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Block BOTH medial branches supplying the joint.</strong> Each facet joint is innervated from two levels. To block the L4-5 facet: block the L3 medial branch AND the L4 medial branch. Missing one branch produces incomplete analgesia and an equivocal diagnostic result.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>L5 dorsal ramus target is unique.</strong> Unlike L1–L4 medial branches, the L5 dorsal ramus is targeted in the groove at the sacral ala / S1 SAP junction — not at the transverse process. Confusing this target is a common error that leads to failed diagnostic blocks at L5-S1.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Post-injection flare is common and expected.</strong> Warn the patient before they leave: 10–20% experience a temporary pain increase for 1–3 days due to the needle itself and crystalline steroid. This does not mean the injection failed. The therapeutic benefit from the steroid begins 2–5 days later and peaks at 1–2 weeks.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. REFERENCES ═══ -->
+        <section class="section" id="references">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>References &amp; Medial Branch Level Guide</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div style="margin-bottom: 20px;">
+              <div class="panel" style="margin-bottom:14px;">
+                <h4>Medial Branch Nerve Supply by Facet Level</h4>
+                <table class="ref-table">
+                  <thead>
+                    <tr>
+                      <th>Facet Joint</th>
+                      <th>Medial Branch Block Targets</th>
+                      <th>Special Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><strong>C3-4</strong></td><td>C3 medial branch (deep) + C4 medial branch — articular pillar midpoint</td><td>Third occipital nerve for C2-3; 3rd occipital headache pattern</td></tr>
+                    <tr><td><strong>C4-5</strong></td><td>C4 + C5 medial branches</td><td>Articular pillar midpoint; lateral approach preferred</td></tr>
+                    <tr><td><strong>C5-6</strong></td><td>C5 + C6 medial branches</td><td>Most common cervical level treated</td></tr>
+                    <tr><td><strong>C6-7</strong></td><td>C6 + C7 medial branches</td><td>C7-T1 access often requires CT guidance</td></tr>
+                    <tr><td><strong>L1-2 to L3-4</strong></td><td>Level above + same level medial branches (e.g., L3-4: block L2 + L3 MB)</td><td>Junction of TP and SAP ("waist of Scottie dog")</td></tr>
+                    <tr><td><strong>L4-5</strong></td><td>L3 medial branch + L4 medial branch</td><td>Most commonly treated lumbar level</td></tr>
+                    <tr><td><strong>L5-S1</strong></td><td>L4 medial branch + L5 dorsal ramus</td><td>L5 DR target: sacral ala / S1 SAP groove — different from other levels</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="panel">
+                <h4>Citations</h4>
+                <ul class="list" style="gap:12px;">
+                  <li>Prologo JD, Ray CE Jr., eds. <em>Advanced Pain Management in Interventional Radiology: A Case-Based Approach</em>. Thieme; 2024. DOI: 10.1055/b000000387</li>
+                  <li>Filippiadis DK, Kelekis A. A review of current trends in spinal interventional procedures for the management of chronic spinal pain. <em>Quant Imaging Med Surg</em>. 2017;7(6):651–659.</li>
+                  <li>Manchikanti L, et al. Comprehensive evidence-based guidelines for facet joint interventions in the management of chronic spinal pain. <em>Pain Physician</em>. 2020;23(3):S1–S127.</li>
+                  <li>Bogduk N. International Spine Intervention Society. <em>Practice Guidelines for Spinal Diagnostic and Treatment Procedures</em>. 2nd ed. ISIS; 2013.</li>
+                  <li>SIR Standards of Practice Committee. Consensus Guidelines for Periprocedural Management of Coagulation Status. <em>J Vasc Interv Radiol</em>. 2012;23(6):727–736.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Ref: Prologo &amp; Ray, Advanced Pain Management in IR (Thieme, 2024) · Filippiadis &amp; Kelekis, Quant Imaging Med Surg 2017 · SIR Consensus Guidelines</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My L4-5 Facet Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;25G spinal needle&#10;Omnipaque 180&#10;Triamcinolone 40mg"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;Prone position&#10;Oblique fluoroscopy to open joint&#10;Advance needle to inferior recess"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <label>Your Name</label>
+      <input type="text" id="card-author-name" placeholder="Your name (shown on card)" />
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" id="save-card-btn" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'facet-injection';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _myVotes = {};
+  let _cardSearch = '';
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  // ── Load cards ──
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    await loadVotes();
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!document.getElementById('card-search-wrap')) {
+      const wrap = document.createElement('div');
+      wrap.id = 'card-search-wrap';
+      wrap.style.cssText = 'margin-bottom:12px';
+      wrap.innerHTML = '<input id="card-search" type="text" placeholder="Search community cards…" style="width:100%;padding:8px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:inherit;font-family:inherit;font-size:13px;outline:none;" oninput="_cardSearch=this.value.toLowerCase();renderCards()">';
+      container.parentElement.insertBefore(wrap, container);
+    }
+    const q = _cardSearch.trim();
+    const visible = q ? _cards.filter(c => [c.title||'',c.display_name||'',...(c.supplies||[]),...(c.steps||[]),...(c.pearls||[])].join(' ').toLowerCase().includes(q)) : _cards;
+    if (!visible.length) {
+      loading.textContent = q ? 'No cards match your search.' : 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      container.innerHTML = '';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = visible.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      const myVote = _myVotes[c.id];
+      const votes = c.net_votes || 0;
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}" data-card-id="${c.id}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:5px;flex-shrink:0">
+              <button onclick="voteCard('${c.id}','up')" title="Helpful" style="background:none;border:1px solid ${myVote==='up'?'#22c55e':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='up'?'#22c55e':'inherit'};transition:.15s">${myVote==='up'?'▲':'△'}${votes>0?' '+votes:''}</button>
+              <button onclick="voteCard('${c.id}','down')" title="Not helpful" style="background:none;border:1px solid ${myVote==='down'?'#ef4444':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='down'?'#ef4444':'inherit'};transition:.15s">${myVote==='down'?'▼':'▽'}</button>
+              ${isOwn ? `<button onclick="editCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Edit</button><button onclick="deleteCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Delete</button>` : ''}
+            </div>
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  async function loadVotes() {
+    const sb = _sb(); const user = _user();
+    if (!sb || !user) return;
+    const { data } = await sb.from('procedure_card_votes').select('card_id,vote').eq('user_id', user.id);
+    _myVotes = {};
+    if (data) for (const v of data) _myVotes[v.card_id] = v.vote;
+  }
+
+  async function voteCard(cardId, dir) {
+    const sb = _sb(); const user = _user();
+    if (!user || !sb) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    const existing = _myVotes[cardId];
+    const card = _cards.find(c => c.id === cardId);
+    if (!card) return;
+    if (existing === dir) {
+      await sb.from('procedure_card_votes').delete().match({ user_id: user.id, card_id: cardId });
+      delete _myVotes[cardId];
+      card.net_votes = (card.net_votes || 0) + (dir === 'up' ? -1 : 1);
+    } else {
+      await sb.from('procedure_card_votes').upsert({ user_id: user.id, card_id: cardId, vote: dir }, { onConflict: 'user_id,card_id' });
+      const prev = existing ? (existing === 'up' ? -1 : 1) : 0;
+      card.net_votes = (card.net_votes || 0) + prev + (dir === 'up' ? 1 : -1);
+      _myVotes[cardId] = dir;
+    }
+    await sb.from('procedure_cards').update({ net_votes: card.net_votes }).eq('id', cardId);
+    renderCards();
+  }
+
+  // ── Card CRUD ──
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    const nameInput = document.getElementById('card-author-name');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      if (nameInput) nameInput.value = card.display_name || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+      if (nameInput && !nameInput.value.trim()) {
+        const u = _user();
+        if (nameInput && !nameInput.value) nameInput.value = (u && u.email) ? u.email.split('@')[0] : '';
+        if (window.RadCallAuth && window.RadCallAuth.getProfile) {
+          window.RadCallAuth.getProfile().then(p => {
+            if (nameInput && !nameInput.value.trim()) nameInput.value = (p && p.display_name) || '';
+          }).catch(() => {});
+        }
+      }
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    if (!sb) { alert('Connection error — please reload and try again.'); return; }
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title.'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const authorInput = document.getElementById('card-author-name');
+    const displayName = (authorInput && authorInput.value.trim()) || (user.email ? user.email.split('@')[0] : 'Anonymous');
+    const saveBtn = document.getElementById('save-card-btn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving…'; }
+    try {
+      if (editId) {
+        _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() } : c);
+        renderCards(); closeCardModal();
+        const { error } = await sb.from('procedure_cards').update({ title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() }).eq('id', editId);
+        if (error) console.error('Card update error:', error);
+      } else {
+        const tmpId = 'tmp-' + Date.now();
+        const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0, created_at: new Date().toISOString() };
+        _cards.unshift(newCard);
+        renderCards(); closeCardModal();
+        const { data, error } = await sb.from('procedure_cards')
+          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0 })
+          .select().single();
+        if (error) {
+          console.error('Card insert error:', error);
+          _cards = _cards.filter(c => c.id !== tmpId);
+          renderCards();
+          alert('Could not save card: ' + (error.message || 'Unknown error. Check your connection and try again.'));
+        } else if (data) {
+          _cards = _cards.map(c => c.id === tmpId ? data : c);
+        }
+      }
+      try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    } catch(err) {
+      console.error('saveCard exception:', err);
+      alert('Something went wrong saving your card. Please try again.');
+    } finally {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Card'; }
+    }
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  // ── Helpers ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Facet Joint Injection / Medial Branch Block — Supply List\n' + '═'.repeat(50) + '\n' + supplies.map(s => '☐ ' + s).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Facet Joint Injection / Medial Branch Block — Supply List\n' + '═'.repeat(50) + '\n' + supplies.map(s => '☐ ' + s).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'facet-injection-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  // ── Init ──
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+    function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('open'); }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>

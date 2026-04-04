@@ -1985,7 +1985,7 @@ async function _loadSection(id) {
   // Show spinner
   sec.innerHTML = '<div class="lazy-spinner"><div class="lazy-dot"></div><div class="lazy-dot"></div><div class="lazy-dot"></div></div>';
   try {
-    const r = await fetch('sections/' + id + '.html?v=28');
+    const r = await fetch('sections/' + id + '.html?v=29');
     if (!r.ok) throw new Error('HTTP ' + r.status);
     sec.innerHTML = await r.text();
     sec.dataset.loaded = '1';
@@ -2555,6 +2555,17 @@ const searchIndex = [
   { q: 'TACE transarterial chemoembolization cTACE DEB-TACE lipiodol doxorubicin Child-Pugh HCC hepatocellular carcinoma mRECIST', section: 'ir', topic: 'ir-proc-library', label: 'TACE — IR Procedure' },
   { q: 'HCC ablation hepatocellular carcinoma percutaneous microwave cryoablation Milan criteria BCLC LI-RADS TR ablation margin', section: 'ir', topic: 'ir-proc-library', label: 'HCC Percutaneous Ablation — IR Procedure' },
   { q: 'RCC ablation renal cell carcinoma percutaneous microwave RFA cryoablation T1a T1b hydrodissection D5W collecting system', section: 'ir', topic: 'ir-proc-library', label: 'RCC Percutaneous Ablation — IR Procedure' },
+  { q: 'celiac plexus block neurolysis pancreatic cancer chronic pancreatitis ethanol phenol upper abdominal pain CT-guided bilateral', section: 'ir', topic: 'ir-proc-library', label: 'Celiac Plexus Block / Neurolysis — IR Procedure' },
+  { q: 'splanchnic nerve block ablation RFA cryoablation T11 T12 paravertebral upper abdominal pain pancreatic cancer', section: 'ir', topic: 'ir-proc-library', label: 'Splanchnic Nerve Block / Ablation — IR Procedure' },
+  { q: 'vertebroplasty PMMA cement osteoporotic compression fracture vertebral body augmentation transpedicular kyphoplasty', section: 'ir', topic: 'ir-proc-library', label: 'Vertebroplasty — IR Procedure' },
+  { q: 'kyphoplasty balloon tamp vertebral height restoration PMMA cement osteoporotic fracture augmentation', section: 'ir', topic: 'ir-proc-library', label: 'Balloon Kyphoplasty — IR Procedure' },
+  { q: 'SpineJack vertebral augmentation titanium implant height restoration osteoporotic fracture bilateral transpedicular', section: 'ir', topic: 'ir-proc-library', label: 'SpineJack — IR Procedure' },
+  { q: 'spine ablation vertebral metastasis microwave RFA cryoablation lytic sclerotic myeloma osteoid osteoma SINS score thermal protection', section: 'ir', topic: 'ir-proc-library', label: 'Spine Ablation — IR Procedure' },
+  { q: 'facet injection medial branch block zygapophyseal axial back pain fluoroscopy intra-articular steroid RFA diagnostic', section: 'ir', topic: 'ir-proc-library', label: 'Facet Injection / Medial Branch Block — IR Procedure' },
+  { q: 'LESI lumbar epidural steroid injection transforaminal interlaminar radiculopathy sciatica disc herniation fluoroscopy', section: 'ir', topic: 'ir-proc-library', label: 'Lumbar Epidural Steroid Injection (LESI) — IR Procedure' },
+  { q: 'sacroplasty sacral insufficiency fracture PMMA cement Denis zone H-fracture Honda sign osteoporotic CT-guided', section: 'ir', topic: 'ir-proc-library', label: 'Sacroplasty — IR Procedure' },
+  { q: 'pudendal nerve block ablation cryoablation ischial spine Alcock canal pudendal neuralgia perineal pain Nantes criteria', section: 'ir', topic: 'ir-proc-library', label: 'Pudendal Nerve Block / Ablation — IR Procedure' },
+  { q: 'sciatic nerve block ablation cryoablation subgluteal CT-guided sciatica oncologic leg pain phantom limb piriformis', section: 'ir', topic: 'ir-proc-library', label: 'Sciatic Nerve Block / Ablation — IR Procedure' },
   { q: 'contrast reaction anaphylaxis epinephrine treatment', section: 'contrast', label: 'Contrast Reactions — Contrast & Drugs' },
   { q: 'premedication prednisone methylprednisolone diphenhydramine', section: 'contrast', label: 'Premedication — Contrast & Drugs' },
   { q: 'iodinated contrast renal function egfr pc-aki cin', section: 'contrast', label: 'Renal & Iodinated Contrast — Contrast & Drugs' },
@@ -4258,7 +4269,7 @@ async function _preIndexBackground() {
     if (!sec || sec.dataset.searchIndexed) continue;
     if (sec.dataset.loaded) { _indexSectionContent(id, sec); continue; }
     try {
-      const r = await fetch('sections/' + id + '.html?v=28');
+      const r = await fetch('sections/' + id + '.html?v=29');
       if (!r.ok) continue;
       const tmp = document.createElement('div');
       tmp.innerHTML = await r.text();

@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sacroplasty — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(239,68,68,.12); color: #fecaca; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .pitfall { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(239,68,68,.18); background: linear-gradient(180deg, rgba(239,68,68,.08), rgba(239,68,68,.03)); }
+    .pitfall-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(239,68,68,.18); color: #fecaca; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Reference table ── */
+    .ref-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .ref-table th, .ref-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .ref-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .ref-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Procedure Playbook &mdash; Pain Management</div>
+      <h1>Sacroplasty</h1>
+      <p class="subhead">CT/fluoroscopy-guided percutaneous injection of PMMA bone cement into sacral insufficiency fractures for pain relief and stabilization &mdash; analogous to vertebroplasty for the sacrum.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">MAC / Local</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--success)">Low (SIR Cat 2)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value">Cement leak into foramina &middot; Neural injury</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Not routine</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value">Ambulate day of &middot; Pain score 24&ndash;48h</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#supplies">4. Supplies &amp; Setup</a></li>
+          <li><a href="#steps">5. Procedure Steps</a></li>
+          <li><a href="#troubleshooting">6. Troubleshooting</a></li>
+          <li><a href="#complications">7. Complications</a></li>
+          <li><a href="#postprocedure">8. Post-Procedure</a></li>
+          <li><a href="#resources">9. References</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications &amp; Contraindications</h3><div class="section-subtitle">Fracture types, Denis zones, patient selection</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:16px;">
+              <div class="panel" style="border-color:rgba(56,189,248,.15);background:rgba(56,189,248,.03);">
+                <h4 style="color:#93dcff;">Indications</h4>
+                <ul class="list">
+                  <li><strong>Sacral insufficiency fractures</strong> (most common indication) &mdash; Denis Zone I (alar), Zone II (foraminal), Zone III (central body)</li>
+                  <li><strong>Osteoporotic insufficiency fractures</strong> &mdash; postmenopausal women, long-term steroid use, low BMD</li>
+                  <li><strong>Radiation-induced insufficiency fractures</strong> &mdash; after pelvic or cervical cancer radiotherapy; 21&ndash;34% prevalence in irradiated patients</li>
+                  <li><strong>Pathologic fractures</strong> &mdash; metastatic disease, myeloma (combined with ablation as needed)</li>
+                  <li>Failure of conservative management (&ge;4&ndash;6 weeks): pain control, bed rest, progressive weight-bearing inadequate</li>
+                </ul>
+              </div>
+              <div class="panel" style="border-color:rgba(239,68,68,.15);background:rgba(239,68,68,.03);">
+                <h4 style="color:#fecaca;">Contraindications</h4>
+                <ul class="list">
+                  <li>Active infection (sacral osteomyelitis, discitis, surrounding soft tissue infection)</li>
+                  <li>Sacral tumor without concurrent ablation plan</li>
+                  <li>Fracture with retropulsion causing neurologic deficit &mdash; requires surgical decompression first</li>
+                  <li>Uncorrectable coagulopathy</li>
+                  <li>Unstable fracture with spino-pelvic dissociation requiring surgical fixation</li>
+                  <li>Patient unable to tolerate prone positioning</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel">
+              <h4>Denis Zone Classification</h4>
+              <table class="ref-table" style="margin-top:8px;">
+                <thead><tr><th>Zone</th><th>Location</th><th>Frequency</th><th>Neurologic Risk</th><th>Sacroplasty</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Zone I</strong></td><td>Sacral alar (lateral to foramina)</td><td>50% (most common)</td><td>Low (L5 root at risk)</td><td><strong style="color:#bbf7d0;">Ideal — long-axis approach</strong></td></tr>
+                  <tr><td><strong>Zone II</strong></td><td>Sacral foramina (S1&ndash;S4)</td><td>34%</td><td>28% neurologic deficit</td><td><strong style="color:#fcd58e;">High risk — CT guidance mandatory; extreme caution</strong></td></tr>
+                  <tr><td><strong>Zone III</strong></td><td>Central sacral body / spinal canal</td><td>16% (least common)</td><td>58% neurologic deficit</td><td><strong style="color:#fecaca;">Very rare indication; surgical consultation</strong></td></tr>
+                </tbody>
+              </table>
+              <p class="muted" style="margin:12px 0 0;font-size:.9rem;"><strong>H-fracture (Honda sign):</strong> bilateral vertical Zone I fractures connected by horizontal Zone III fracture &mdash; classic osteoporotic pattern; bilateral sacroplasty required.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Planning</h3><div class="section-subtitle">MRI/CT confirmation, fracture mapping, active edema check</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:16px;">
+              <div class="panel">
+                <h4>Imaging Requirements</h4>
+                <ul class="list">
+                  <li><strong>MRI sacrum with STIR sequence:</strong> STIR hyperintensity = bone marrow edema = active fracture = treat now. No STIR edema = old/healed fracture = no benefit from sacroplasty</li>
+                  <li>CT sacrum: fracture morphology, Denis zone mapping, foraminal anatomy, trajectory planning (multiplanar reformats)</li>
+                  <li>MRI also identifies: retropulsion, epidural tumor, neural foraminal compromise (all may alter management)</li>
+                  <li>Bone scan (SPECT-CT): if MRI unavailable or contraindicated; H-sign = bilateral Zone I fractures on nuclear medicine</li>
+                  <li>Plain radiographs: low sensitivity (20&ndash;38%); multiple views required; CT preferred</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Labs &amp; Patient Prep</h4>
+                <ul class="list">
+                  <li>CBC, PT/INR (INR &le;1.5), platelets &ge;50K</li>
+                  <li>Bone density (DEXA) &mdash; obtain if not recent; post-procedure osteoporosis management planning</li>
+                  <li>NPO 4&ndash;6h (MAC sedation)</li>
+                  <li>IV access; blood pressure monitoring</li>
+                  <li>Fluoroscopy suite or CT suite setup &mdash; biplanar fluoroscopy strongly preferred for cement injection monitoring</li>
+                  <li>Cement batch prepared and tested prior to starting (PMMA viscosity and working time are temperature-dependent)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>MRI STIR reviewed.</strong> Active bone marrow edema confirmed at fracture site &mdash; proceed. No edema = defer sacroplasty.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Denis zone mapped on CT.</strong> Zone I bilateral = standard technique. Zone II present = CT-guided mandatory, heightened caution with cement near foramina.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>H-fracture pattern identified.</strong> If H-fracture: bilateral sacroplasty planned; both sides addressed in same session.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>No neurologic deficit.</strong> Baseline motor and sensory exam documented. Any new deficit pre-procedure = CT/MRI to rule out retropulsion before proceeding.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>PMMA cement confirmed.</strong> High-viscosity formulation (e.g., Kyphon, Confidence) available. Cement is mixed to "toothpaste" consistency before injection.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent obtained.</strong> Risks discussed: neural injury (foot drop, bladder/bowel dysfunction), cement leak, venous embolism, infection, further fracture.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3><div class="section-subtitle">Sacral foramina, Denis zones, nerve root exits, iliac vessels</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:16px;">
+              <div class="panel">
+                <h4>Sacral Structure &amp; Nerve Roots</h4>
+                <ul class="list">
+                  <li>Sacrum: main stabilizer of posterior pelvic wall; transmits axial loads from trunk to lower limbs; protects lumbosacral plexus and iliac vessels</li>
+                  <li><strong>S1 nerve root:</strong> exits through S1 foramen (foraminal zone); most at risk from Zone II fractures and cement leak</li>
+                  <li>S2&ndash;S4 nerve roots: sacral parasympathetic fibers; injury = bowel/bladder dysfunction</li>
+                  <li>Sacral foramina (anterior and posterior): S1&ndash;S4 nerve roots exit; must be identified and avoided on pre-procedure CT</li>
+                  <li>Iliac vessels: medially adjacent to sacral ala; course identified on CT to plan safe Zone I approach</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Needle Access Approaches</h4>
+                <ul class="list">
+                  <li><strong>Long-axis (caudo-cephalic):</strong> standard preferred approach; needle inserted in cauda-to-cephalad direction along Zone I alar axis; allows complete fracture line filling; developed by Smith &amp; Dix 2006</li>
+                  <li><strong>Short-axis (posterior-anterior):</strong> older technique; less predictable intramedullary placement; higher cement extravasation rate; largely replaced by long-axis</li>
+                  <li><strong>Transiliac approach:</strong> needle through iliac bone traversing SI joint; alternative for difficult access; rarely used</li>
+                  <li>Long-axis approach: needle enters through posterior sacral surface, angled medial-lateral and caudo-cranially into the alar intramedullary space, staying lateral to S1 foramen</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. SUPPLIES ═══ -->
+        <section class="section" id="supplies">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>Supplies &amp; Setup</h3><div class="section-subtitle">Bone trocar, PMMA cement, fluoroscopy/CT</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div style="margin-bottom:14px;">
+              <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#x2398; Copy List</button>
+              <button class="export-btn" onclick="downloadSupplyList()" title="Download supply list">&#x2193; Download</button>
+            </div>
+            <div class="three-col" style="margin-bottom:14px;">
+              <div class="panel">
+                <h4>Bone Access</h4>
+                <ul class="list" id="supplies-bone">
+                  <li>11G or 13G vertebroplasty trocar (e.g., Cook Osteo-Site, Stryker) &mdash; 10&ndash;15 cm working length</li>
+                  <li>Standard spinal needle (25G) for skin and periosteal local anesthesia</li>
+                  <li>Mallet for trocar advancement into sacral bone (11G requires mallet; 13G may be hand-advanced)</li>
+                  <li>Extension tubing for cement injection syringe</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Cement System</h4>
+                <ul class="list" id="supplies-cement">
+                  <li>High-viscosity PMMA cement: Kyphon, Confidence, or equivalent radiopaque formulation</li>
+                  <li>10 mL bone cement syringe</li>
+                  <li>Cement mixing system per manufacturer protocol</li>
+                  <li>Target volume: 2&ndash;4 mL per Zone I alar fracture (2&ndash;8 mL range per literature); bilateral = 4&ndash;8 mL total</li>
+                  <li>Saline flush (10 mL) to create interosseous venogram before cementing</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Imaging &amp; Medications</h4>
+                <ul class="list" id="supplies-imaging">
+                  <li>Fluoroscopy suite (biplanar preferred: AP + lateral simultaneously) OR CT fluoroscopy</li>
+                  <li>Iodinated contrast for interosseous venogram (identifies extravasation risk)</li>
+                  <li>Lidocaine 1% + bupivacaine 0.5% (Marcaine): skin, subcutaneous, and periosteum infiltration (10 mL Marcaine for periosteal elevation)</li>
+                  <li>MAC sedation medications: propofol, fentanyl, midazolam per anesthesia</li>
+                  <li>Toradol 30 mg IV (post-procedure pain) + ondansetron 4 mg IV</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. PROCEDURE STEPS ═══ -->
+        <section class="section" id="steps">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Procedure Steps</h3><div class="section-subtitle">CT/fluoro-guided long-axis sacroplasty technique</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="step-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div>
+                  <h4>Prone Positioning &amp; CT/Fluoro Planning</h4>
+                  <div class="muted">Patient prone on fluoroscopy table or CT gantry. AP and lateral views obtained. CT: obtain multiplanar reformats for trajectory planning. Identify the Zone I fracture line (sacral alar), the S1 foramen (stay lateral to it), and the medial wall of the sacroiliac joint (stay medial to it). Plan long-axis (caudo-cephalic, medial-lateral trajectory) approach.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div>
+                  <h4>Local Anesthesia &amp; Periosteal Elevation</h4>
+                  <div class="muted">Standard sterile prep. 25G spinal needle: infiltrate skin, subcutaneous tissue, and advance to posterior sacral cortex. Inject 10 mL bupivacaine 0.5% (Marcaine) generously at periosteum &mdash; periosteal elevation reduces procedural pain significantly. Wait 3&ndash;5 min before trocar advancement.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div>
+                  <h4>Trocar Insertion &mdash; Long-Axis Technique</h4>
+                  <div class="muted">Advance 11G (or 13G) vertebroplasty trocar through the posterior sacral cortex into the sacral alar intramedullary space using the long-axis (caudo-cephalic) trajectory. Angle medial-lateral and caudo-cranially. Use mallet for 11G cortical penetration. Advance under intermittent fluoroscopy (AP and lateral) or CT to confirm intramedullary position throughout the alar zone. On prone CT: note that left alar fracture appears on image right (patient is prone).</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div>
+                  <h4>Biplanar Fluoroscopic or CT Confirmation of Trocar Position</h4>
+                  <div class="muted">Confirm on biplanar fluoroscopy (AP and lateral): trocar tip is within the sacral alar intramedullary space, <strong>medial to the sacroiliac joint</strong>, <strong>lateral to the S1 foramen</strong>. CT: confirm tip in intramedullary space, no cortical breach, no proximity to foramina. Trocar should be eased half-way through the sacrum along the fracture line.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">5</div>
+                <div>
+                  <h4>Interosseous Venogram</h4>
+                  <div class="muted">Remove inner stylet. Flush trocar with sterile saline (aids in injecting air into interosseous veins). Inject iodinated contrast through trocar under live fluoroscopy to obtain interosseous venogram. Assess for extravasation from the sacrum confirming fracture site. Analyze venous drainage pattern &mdash; rapid contrast runoff into large veins indicates a high-flow venous channel (cement embolism risk if injection too forceful).</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">6</div>
+                <div>
+                  <h4>PMMA Cement Injection</h4>
+                  <div class="muted">Mix PMMA to <strong>"toothpaste" consistency</strong> &mdash; too liquid risks venous migration and pulmonary embolism; too thick risks inability to inject. Inject cement <strong>distal to proximal</strong> (from deep to superficial, i.e., from cephalad end of alar toward trocar entry) under live biplanar fluoroscopy. Inject 2&ndash;4 mL per side slowly. <strong>STOP immediately</strong> if cement: (1) approaches sacral foramina, (2) exits posterior sacral cortex, or (3) patient reports new leg pain or radicular symptoms.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">7</div>
+                <div>
+                  <h4>Contralateral Side (Bilateral for H-Fracture)</h4>
+                  <div class="muted">For bilateral Zone I / H-fracture: repeat steps 3&ndash;6 on contralateral side. If a contralateral fracture is identified incidentally during the procedure (common with insufficiency fractures), address in the same session. Confirm bilateral cement fill on final fluoroscopy.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">8</div>
+                <div>
+                  <h4>Trocar Removal &amp; Post-Procedure Assessment</h4>
+                  <div class="muted">Allow cement to cure (2&ndash;3 min after completion). Remove trocars. Apply pressure at entry sites. Obtain post-procedure CT or fluoroscopy to confirm: adequate cement fill across fracture line, no foraminal cement leak, no posterior cortical breach, no cement into SI joint. Document cement volumes injected. Allow patient to roll supine; assess motor function of both lower extremities before transfer.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <div style="margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.06);">
+              <h4 style="margin:0 0 14px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-size:.85rem;">Community Cards</h4>
+              <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+              <div id="community-cards" class="cards-grid">
+                <div class="muted" id="cards-loading" style="padding:20px;text-align:center;">Sign in to view and create community cards</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Troubleshooting</h3><div class="section-subtitle">Cement leak, nerve root irritation, trocar positioning errors</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="danger-label">Cement Leak Toward Foramina</div>
+              <h4>Cement Appears to Track Toward S1&ndash;S4 Foramina on Fluoroscopy</h4>
+              <p class="muted">Stop injection immediately. Wait for cement to harden (2&ndash;3 min). Obtain CT to assess exact location and relationship to foramina. If cement is in the foramen: assess neurologic function; if deficit present, urgent decompression consultation. If cement is approaching but has not entered foramen and patient is asymptomatic: cease injection on that side, address contralateral if needed. Do NOT continue injecting in hope cement will redirect away from foramina.</p>
+            </div>
+            <div class="problem">
+              <div class="danger-label">New Leg Pain or Radicular Symptoms During Injection</div>
+              <h4>Patient Reports Radicular Pain or New Numbness During Cement Injection</h4>
+              <p class="muted">Stop cement injection immediately. This is the critical clinical signal for foraminal cement leak or nerve root thermal injury from exothermic PMMA curing reaction. Obtain CT immediately. Assess for foraminal cement. If symptoms persist post-procedure: orthopedic or neurosurgery consultation urgently for possible decompression. Incidence of surgical decompression requirement: 0.3%.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Trocar Not in Intramedullary Space</div>
+              <h4>Trocar Appears to Be in Cortical Bone or Extraosseous on CT</h4>
+              <p class="muted">Do not inject cement. Partially withdraw trocar under CT guidance. Redirect using adjusted medial-lateral and caudo-cranial angle. Confirm intramedullary position with CT before proceeding. The long-axis technique requires accurate angling &mdash; initial entry angle is the most critical step; small angular errors compound over the length of the alar.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Cement Too Liquid</div>
+              <h4>Cement Consistency Is Too Thin at Time of Injection</h4>
+              <p class="muted">Wait for cement to polymerize to "toothpaste" consistency before injecting. Test consistency by extruding a small amount on the sterile field &mdash; it should hold its shape when pressed. Too-liquid cement risks: rapid venous migration, pulmonary embolism, and uncontrolled spread to foramina. If cement has already hardened beyond injectable viscosity: abort injection for that trocar; clinical outcomes acceptable with partial fracture fill in most cases.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Complications</h3><div class="section-subtitle">Neural injury, cement embolism, infection, further fracture</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Cement-Related Complications</h4>
+                <ul class="list">
+                  <li class="danger"><strong>Sacral nerve root injury</strong> &mdash; cement in foramina; S1 = foot drop; S2&ndash;S4 = bowel/bladder dysfunction; most serious complication; requires urgent decompression if symptomatic</li>
+                  <li><strong>Cement into SI joint</strong> &mdash; may cause chronic pain; usually asymptomatic; avoid by maintaining medial to SI joint on fluoroscopy</li>
+                  <li><strong>Venous cement embolism</strong> &mdash; rare but potentially fatal; pulmonary embolism from IV injection of liquid cement; prevention: toothpaste consistency, slow injection, stop at any venous runoff</li>
+                  <li><strong>Cement extravasation through posterior cortex</strong> &mdash; usually asymptomatic; rarely causes pain at entry site</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>General Complications</h4>
+                <ul class="list">
+                  <li><strong>Infection / osteomyelitis</strong> &mdash; rare with percutaneous technique; sterile prep mandatory; foreign body (PMMA) perpetuates infection if it occurs</li>
+                  <li><strong>Further sacral fracture</strong> &mdash; underlying osteoporotic bone; contralateral fracture from altered load transfer; address with bilateral sacroplasty and bone density treatment</li>
+                  <li><strong>Incomplete pain relief</strong> &mdash; usually from incomplete fracture fill or untreated contralateral fracture; reassess imaging</li>
+                  <li><strong>Cement leakage rate</strong> &mdash; up to 55% with standard technique; reduced to 22% with balloon-assisted (balloon sacroplasty) technique</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. POST-PROCEDURE ═══ -->
+        <section class="section" id="postprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Post-Procedure Care &amp; Pearls</h3><div class="section-subtitle">Ambulation, pain response timeline, bone health management</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:16px;">
+              <div class="panel">
+                <h4>Recovery &amp; Discharge</h4>
+                <ul class="list">
+                  <li>Motor exam immediately post-procedure: confirm no new lower extremity weakness or sensory deficit before discharge</li>
+                  <li>Ambulate 1&ndash;2h post-procedure with assistance; most patients ambulate day of procedure</li>
+                  <li>Pain response: 24&ndash;72h for initial response; 90% of patients report pain reduction at 1 year (Frey et al 2008)</li>
+                  <li>Protective brace: some centers recommend for up to 3 months; patient and surgeon preference</li>
+                  <li>Discharge same day for most patients; overnight for elderly patients with monitoring needs</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Follow-up</h4>
+                <ul class="list">
+                  <li>Pain score at 24&ndash;48h (call or clinic): expected VAS reduction from ~8/10 to ~3.5/10</li>
+                  <li>Plain radiograph at 1 month: confirm cement position, no hardware failure</li>
+                  <li><strong>Bone density (DEXA):</strong> if not already on treatment &rarr; bisphosphonate or denosumab therapy; essential for fracture prevention</li>
+                  <li>Assess for contralateral fracture at follow-up (Honda sign; bilateral fracture common)</li>
+                  <li>Full spine assessment: lateral spine films and DEXA; concurrent vertebral compression fractures common in this population</li>
+                </ul>
+              </div>
+            </div>
+            <h4 style="margin:0 0 12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-size:.84rem;">Technique Pearls</h4>
+            <div class="pearls" style="margin-bottom:20px;">
+              <div class="pearl">
+                <div class="pearl-mark">✦</div>
+                <div><strong>MRI STIR edema = treat now.</strong> The presence of STIR hyperintensity at the fracture site confirms the fracture is active and painful &mdash; this is the single most important imaging criterion. A fracture without STIR edema is healed and will not benefit from sacroplasty.</div>
+              </div>
+              <div class="pearl">
+                <div class="pearl-mark">✦</div>
+                <div><strong>Cement consistency must be "toothpaste."</strong> Too liquid = venous migration risk. Test on sterile field before injection. If in doubt, wait. Cement working time varies by temperature &mdash; cold room = longer working time; warm room = faster.</div>
+              </div>
+              <div class="pearl">
+                <div class="pearl-mark">✦</div>
+                <div><strong>Bilateral Zone I sacroplasty for H-fracture.</strong> H-fracture = bilateral vertical Zone I fractures + horizontal Zone III. Both sides must be treated in the same session &mdash; incomplete treatment leaves the patient at high risk for further displacement and continued pain.</div>
+              </div>
+              <div class="pearl">
+                <div class="pearl-mark">✦</div>
+                <div>Long-axis approach is superior to short-axis: allows complete fracture line filling, more predictable intramedullary position, and lower cement extravasation rates. Entry angle at the caudal aspect is critical &mdash; plan on CT and stay committed to the planned trajectory.</div>
+              </div>
+              <div class="pearl">
+                <div class="pearl-mark">✦</div>
+                <div><strong>Insufficiency fracture + prior radiation = cement is needed.</strong> Post-radiation bone has impaired healing capacity. These fractures will not heal without mechanical stabilization from cement. Bone density treatment alone is insufficient.</div>
+              </div>
+            </div>
+            <h4 style="margin:0 0 12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-size:.84rem;">Critical Pitfalls</h4>
+            <div class="pearls">
+              <div class="pitfall">
+                <div class="pitfall-mark">!</div>
+                <div><strong>NEVER inject cement near Zone II foramina without CT guidance.</strong> Fluoroscopy alone cannot reliably identify the foraminal margin &mdash; CT is mandatory for Zone II approaches. Even a small amount of cement in a sacral foramen can cause permanent neurologic injury from thermal compression.</div>
+              </div>
+              <div class="pitfall">
+                <div class="pitfall-mark">!</div>
+                <div><strong>Stop at any radicular pain during injection.</strong> New leg pain or tingling during cement injection = foraminal leak until proven otherwise. Stop. CT. Do not continue injecting to "complete" the case.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. REFERENCES ═══ -->
+        <section class="section" id="resources">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>References &amp; Resources</h3><div class="section-subtitle">Sacroplasty vs vertebroplasty comparison, primary literature</div></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:16px;">
+              <div class="panel">
+                <h4>Related Procedures</h4>
+                <ul class="list">
+                  <li><a href="celiac-plexus.html" style="color:var(--accent);">Celiac Plexus Block / Neurolysis</a> &mdash; upper abdominal cancer pain management</li>
+                  <li><a href="splanchnic-nerve.html" style="color:var(--accent);">Splanchnic Nerve Block / Ablation</a> &mdash; T11&ndash;T12 paravertebral pain interruption</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Sacroplasty vs Vertebroplasty</h4>
+                <table class="ref-table" style="margin-top:8px;">
+                  <thead><tr><th>Feature</th><th>Vertebroplasty</th><th>Sacroplasty</th></tr></thead>
+                  <tbody>
+                    <tr><td>Target bone</td><td>Vertebral body</td><td>Sacral alar (Zone I)</td></tr>
+                    <tr><td>Primary risk</td><td>Cement into spinal canal / disc</td><td>Cement into sacral foramina / SI joint</td></tr>
+                    <tr><td>Guidance</td><td>Biplanar fluoroscopy (standard)</td><td>CT preferred (especially Zone II)</td></tr>
+                    <tr><td>Trocar size</td><td>10&ndash;13G</td><td>11&ndash;13G</td></tr>
+                    <tr><td>Cement volume</td><td>2&ndash;6 mL per vertebra</td><td>2&ndash;4 mL per Zone I alar (bilateral)</td></tr>
+                    <tr><td>Pain response timeline</td><td>24&ndash;72h</td><td>24&ndash;72h (VAS 8.3 &rarr; 3.6 at 24&ndash;48h)</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="panel">
+              <h4>Primary References</h4>
+              <ul class="list" style="font-size:.92rem;">
+                <li>Prologo JD, Ray CE Jr., eds. <em>Advanced Pain Management in Interventional Radiology: A Case-Based Approach</em>. Thieme; 2024. DOI: 10.1055/b000000387</li>
+                <li>Chandra V, Wajswol E, Shukla P, Contractor S, Kumar A. Safety and efficacy of sacroplasty for sacral fractures: a systematic review and meta-analysis. <em>J Vasc Interv Radiol</em>. 2019;30(11):1845&ndash;1854. [Meta-analysis, 19 studies: significant VAS reduction at 24&ndash;48h, 6 months, 12 months; major complications 0.3%]</li>
+                <li>Frey ME, DePalma MJ, Cifu DX, et al. Percutaneous sacroplasty for osteoporotic sacral insufficiency fractures: a prospective, multicenter, observational pilot study. <em>Spine J</em>. 2008;8(2):367&ndash;373.</li>
+                <li>Frey ME, Warner C, Thomas SM, et al. Sacroplasty: a ten-year analysis of prospective patients. <em>Pain Physician</em>. 2017;20(7):E1063&ndash;E1072. [90% pain reduction at 1 year]</li>
+                <li>Smith DK, Dix JE. Percutaneous sacroplasty: long-axis injection technique. <em>AJR Am J Roentgenol</em>. 2006;186(5):1252&ndash;1255. [Original long-axis technique description]</li>
+                <li>Denis F, Davis S, Comfort T. Sacral fractures: an important problem. Retrospective analysis of 236 cases. <em>Clin Orthop Relat Res</em>. 1988;227:67&ndash;81. [Denis Zone classification]</li>
+                <li>Lyders EM, Whitlow CT, Baker MD, Morris PP. Imaging and treatment of sacral insufficiency fractures. <em>AJNR Am J Neuroradiol</em>. 2010;31(2):201&ndash;210.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Ref: Prologo JD, Ray CE Jr., eds. Advanced Pain Management in Interventional Radiology. Thieme; 2024 &middot; Chandra V et al. J Vasc Interv Radiol 2019 (meta-analysis) &middot; Smith DK, Dix JE. AJR 2006 &middot; Denis F et al. Clin Orthop 1988.</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My Sacroplasty Technique" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;11G vertebroplasty trocar&#10;Kyphon PMMA cement&#10;10 mL bone cement syringe&#10;Biplanar fluoroscopy"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;CT plan: map Denis zones, mark S1 foramen&#10;Prone; long-axis approach Zone I&#10;Periosteal Marcaine 10 mL&#10;11G trocar caudo-cephalic into alar&#10;Interosseous venogram&#10;Inject cement toothpaste consistency 2-4 mL per side under live fluoro&#10;STOP if cement approaches foramina or leg pain"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <label>Your Name</label>
+      <input type="text" id="card-author-name" placeholder="Your name (shown on card)" />
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" id="save-card-btn" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'sacroplasty';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _myVotes = {};
+  let _cardSearch = '';
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    await loadVotes();
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!document.getElementById('card-search-wrap')) {
+      const wrap = document.createElement('div');
+      wrap.id = 'card-search-wrap';
+      wrap.style.cssText = 'margin-bottom:12px';
+      wrap.innerHTML = '<input id="card-search" type="text" placeholder="Search community cards\u2026" style="width:100%;padding:8px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:inherit;font-family:inherit;font-size:13px;outline:none;" oninput="_cardSearch=this.value.toLowerCase();renderCards()">';
+      container.parentElement.insertBefore(wrap, container);
+    }
+    const q = _cardSearch.trim();
+    const visible = q ? _cards.filter(c => [c.title||'',c.display_name||'',...(c.supplies||[]),...(c.steps||[]),...(c.pearls||[])].join(' ').toLowerCase().includes(q)) : _cards;
+    if (!visible.length) {
+      loading.textContent = q ? 'No cards match your search.' : 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      container.innerHTML = '';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = visible.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      const myVote = _myVotes[c.id];
+      const votes = c.net_votes || 0;
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}" data-card-id="${c.id}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:5px;flex-shrink:0">
+              <button onclick="voteCard('${c.id}','up')" title="Helpful" style="background:none;border:1px solid ${myVote==='up'?'#22c55e':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='up'?'#22c55e':'inherit'};transition:.15s">${myVote==='up'?'▲':'△'}${votes>0?' '+votes:''}</button>
+              <button onclick="voteCard('${c.id}','down')" title="Not helpful" style="background:none;border:1px solid ${myVote==='down'?'#ef4444':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='down'?'#ef4444':'inherit'};transition:.15s">${myVote==='down'?'▼':'▽'}</button>
+              ${isOwn ? `<button onclick="editCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Edit</button><button onclick="deleteCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Delete</button>` : ''}
+            </div>
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  async function loadVotes() {
+    const sb = _sb(); const user = _user();
+    if (!sb || !user) return;
+    const { data } = await sb.from('procedure_card_votes').select('card_id,vote').eq('user_id', user.id);
+    _myVotes = {};
+    if (data) for (const v of data) _myVotes[v.card_id] = v.vote;
+  }
+
+  async function voteCard(cardId, dir) {
+    const sb = _sb(); const user = _user();
+    if (!user || !sb) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    const existing = _myVotes[cardId];
+    const card = _cards.find(c => c.id === cardId);
+    if (!card) return;
+    if (existing === dir) {
+      await sb.from('procedure_card_votes').delete().match({ user_id: user.id, card_id: cardId });
+      delete _myVotes[cardId];
+      card.net_votes = (card.net_votes || 0) + (dir === 'up' ? -1 : 1);
+    } else {
+      await sb.from('procedure_card_votes').upsert({ user_id: user.id, card_id: cardId, vote: dir }, { onConflict: 'user_id,card_id' });
+      const prev = existing ? (existing === 'up' ? -1 : 1) : 0;
+      card.net_votes = (card.net_votes || 0) + prev + (dir === 'up' ? 1 : -1);
+      _myVotes[cardId] = dir;
+    }
+    await sb.from('procedure_cards').update({ net_votes: card.net_votes }).eq('id', cardId);
+    renderCards();
+  }
+
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    const nameInput = document.getElementById('card-author-name');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      if (nameInput) nameInput.value = card.display_name || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+      if (nameInput && !nameInput.value.trim()) {
+        const u = _user();
+        if (nameInput && !nameInput.value) nameInput.value = (u && u.email) ? u.email.split('@')[0] : '';
+        if (window.RadCallAuth && window.RadCallAuth.getProfile) {
+          window.RadCallAuth.getProfile().then(p => {
+            if (nameInput && !nameInput.value.trim()) nameInput.value = (p && p.display_name) || '';
+          }).catch(() => {});
+        }
+      }
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    if (!sb) { alert('Connection error \u2014 please reload and try again.'); return; }
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title.'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const authorInput = document.getElementById('card-author-name');
+    const displayName = (authorInput && authorInput.value.trim()) || (user.email ? user.email.split('@')[0] : 'Anonymous');
+    const saveBtn = document.getElementById('save-card-btn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving\u2026'; }
+    try {
+      if (editId) {
+        _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() } : c);
+        renderCards(); closeCardModal();
+        const { error } = await sb.from('procedure_cards').update({ title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() }).eq('id', editId);
+        if (error) console.error('Card update error:', error);
+      } else {
+        const tmpId = 'tmp-' + Date.now();
+        const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0, created_at: new Date().toISOString() };
+        _cards.unshift(newCard);
+        renderCards(); closeCardModal();
+        const { data, error } = await sb.from('procedure_cards')
+          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0 })
+          .select().single();
+        if (error) {
+          console.error('Card insert error:', error);
+          _cards = _cards.filter(c => c.id !== tmpId);
+          renderCards();
+          alert('Could not save card: ' + (error.message || 'Unknown error. Check your connection and try again.'));
+        } else if (data) {
+          _cards = _cards.map(c => c.id === tmpId ? data : c);
+        }
+      }
+      try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    } catch(err) {
+      console.error('saveCard exception:', err);
+      alert('Something went wrong saving your card. Please try again.');
+    } finally {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Card'; }
+    }
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  function exportSupplyList() {
+    const items = [];
+    document.querySelectorAll('#supplies-bone li, #supplies-cement li, #supplies-imaging li').forEach(li => {
+      items.push(li.textContent.trim());
+    });
+    const text = 'Sacroplasty Supply List\n' + '\u2550'.repeat(30) + '\n' + items.map(s => '\u2610 ' + s).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const items = [];
+    document.querySelectorAll('#supplies-bone li, #supplies-cement li, #supplies-imaging li').forEach(li => {
+      items.push(li.textContent.trim());
+    });
+    const text = 'Sacroplasty Supply List\n' + '\u2550'.repeat(30) + '\n' + items.map(s => '\u2610 ' + s).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'sacroplasty-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  } else {
+    window.addEventListener('load', () => { setTimeout(loadCards, 800); });
+  }
+  </script>
+</body>
+</html>
