@@ -228,13 +228,13 @@
             </div>
             <div class="two-col">
               <div class="panel" style="border-color: rgba(56,189,248,.15); background: rgba(56,189,248,.03);">
-                <h4 style="color: #93dcff;">TheraSphere (Glass — MDS Nordion)</h4>
+                <h4 style="color: #93dcff;">TheraSphere (Glass — Theraspheres)</h4>
                 <ul class="list">
                   <li>FDA approved for HCC (HDE designation)</li>
                   <li>~2.5 million spheres per dose</li>
                   <li>Higher specific activity per sphere</li>
                   <li><strong>FDA-approved for HCC with portal vein thrombosis</strong> — major advantage over TACE</li>
-                  <li>Dosimetry: BSA method or partition model</li>
+                  <li>Dosimetry: MIRD or Partition</li>
                 </ul>
               </div>
               <div class="panel" style="border-color: rgba(245,158,11,.15); background: rgba(245,158,11,.03);">
@@ -243,8 +243,8 @@
                   <li>FDA approved for metastatic CRC with floxuridine (FUDR)</li>
                   <li>~40–60 million spheres per dose</li>
                   <li>Lower specific activity per sphere, higher sphere count</li>
-                  <li>Dosimetry: MIRD/quadrant approach</li>
-                  <li>More spheres = different flow dynamics during infusion</li>
+                  <li>Dosimetry: BSA or Partition (want high T:N)</li>
+                  <li>More spheres = different flow dynamics during infusion (more embolic)</li>
                 </ul>
               </div>
             </div>
@@ -263,14 +263,14 @@
               <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Recent cross-sectional imaging (within 4 weeks).</strong> CT or MRI liver with contrast — assess tumor burden, identify dominant tumor, confirm portal vein patency, plan treatment territory (lobar vs selective).</div></div>
               <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Labs.</strong> CBC, CMP (LFTs, bilirubin, albumin, creatinine), coagulation panel, tumor markers (AFP for HCC, CEA for mCRC). Assess Child-Pugh score. Bilirubin &gt;2 = relative to absolute contraindication.</div></div>
               <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Nuclear medicine coordination (24–48h ahead).</strong> Order Tc-99m MAA for mapping day. MAA must be prepared and ready for injection at time of angiogram — coordinate with NM department directly.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Identify vessels requiring coil protection.</strong> Right gastric artery (#1 cause of GI ulceration — must be coil-embolized if in treatment field), GDA if at risk, cystic artery (if gallbladder in field), falciform artery.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Identify vessels requiring coil protection.</strong> Right gastric artery (#1 cause of GI ulceration — must be coil-embolized if in treatment field), GDA if at risk, cystic artery (if gallbladder in field), falciform artery. In general, protective coil embolization is falling out of favor unless significant supply to treatment field.</div></div>
               <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Plan treatment territory.</strong> Lobar (right or left lobe) vs selective (single feeding vessel) vs whole liver based on tumor location, liver function, and anatomy.</div></div>
             </div>
 
             <div class="phase-badge treat">Visit 2 — Treatment Session (Week 2–4)</div>
             <div class="checklist">
               <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Review MAA scan results.</strong> Confirm LSF &lt;20%. Confirm hepatic distribution matches treatment plan. Any extrahepatic uptake (gastric, duodenal, pulmonary) must be resolved before treatment.</div></div>
-              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Dosimetry calculation completed.</strong> Activity (GBq) determined by radiation oncology or physics using BSA method, partition model, or MIRD approach. Confirm ordered activity with radiation safety.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Dosimetry calculation completed.</strong> Activity (GBq) determined by AU using BSA method, partition model, or MIRD approach. Confirm ordered activity with radiation safety.</div></div>
               <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Radiation safety precautions.</strong> Y-90 is a pure beta emitter. Minimal external exposure hazard but institutional protocol in effect. Radiation safety officer notified. Appropriate shielding in IR suite.</div></div>
               <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Confirm coil-protected vessels still occluded.</strong> Re-angiogram at start of treatment session to confirm protected vessels remain occluded and anatomy is unchanged from mapping.</div></div>
             </div>
@@ -284,27 +284,16 @@
             <span class="collapse-arrow">&#x25BE;</span>
           </div>
           <div class="section-body">
-            <div class="two-col">
-              <div class="panel">
-                <h4>Hepatic Arterial Supply</h4>
-                <ul class="list">
-                  <li><strong>Normal:</strong> Celiac trunk &rarr; common hepatic artery &rarr; proper hepatic artery &rarr; right + left hepatic arteries (bifurcation at porta hepatis)</li>
-                  <li><strong>HCC vascularity:</strong> 90%+ from hepatic artery (vs. normal liver: 70% portal vein). This differential vascularity allows selective tumor delivery.</li>
-                  <li><strong>Metastases:</strong> Variable — mCRC generally hypovascular; NET hypervascular. Y-90 works regardless (radiation effect, not embolization).</li>
-                  <li><strong>Replaced right hepatic from SMA:</strong> ~15% of patients — very common. Must catheterize separately for right lobe treatment. Missing this = undertreated right lobe.</li>
-                  <li><strong>Replaced left hepatic from left gastric:</strong> ~5%. Must identify and coil-protect (LGA branches can deliver spheres to stomach).</li>
-                </ul>
-              </div>
-              <div class="panel">
-                <h4>Critical Vessels to Protect</h4>
-                <ul class="list">
-                  <li><strong style="color: #fca5a5;">Right gastric artery — #1 GI complication source.</strong> Arises from proper hepatic or right hepatic artery. Courses along lesser curvature. Even small GI dose causes gastropathy/ulceration. MUST coil on every mapping angiogram if in treatment field.</li>
-                  <li><strong>Gastroduodenal artery (GDA):</strong> Coil if in field or at risk from reflux</li>
-                  <li><strong>Cystic artery:</strong> Coil if gallbladder in treatment field — cholecystitis</li>
-                  <li><strong>Falciform artery:</strong> Small branch to anterior abdominal wall — skin/fat radiation injury if missed</li>
-                  <li><strong>Accessory hepatic vessels:</strong> Check for 3-vessel bifurcation (middle hepatic artery variant)</li>
-                </ul>
-              </div>
+            <div class="panel">
+              <h4>Hepatic Arterial Supply</h4>
+              <ul class="list">
+                <li><strong>Normal:</strong> Celiac trunk &rarr; common hepatic artery &rarr; proper hepatic artery &rarr; right + left hepatic arteries (bifurcation at porta hepatis)</li>
+                <li><strong>HCC vascularity:</strong> 90%+ from hepatic artery (vs. normal liver: 70% portal vein). This differential vascularity allows selective tumor delivery.</li>
+                <li><strong>Metastases:</strong> Variable — mCRC generally hypovascular; NET hypervascular. Y-90 works regardless (radiation effect, not embolization).</li>
+                <li><strong>Replaced right hepatic from SMA:</strong> ~15% of patients — very common. Must catheterize separately for right lobe treatment. Missing this = undertreated right lobe.</li>
+                <li><strong>Replaced left hepatic from left gastric:</strong> ~5%. Must identify and coil-protect (LGA branches can deliver spheres to stomach).</li>
+                <li><strong>Dome Lesions</strong> — Can recruit supply from the inferior phrenic.</li>
+              </ul>
             </div>
           </div>
         </section>
@@ -327,37 +316,34 @@
 
               <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Mapping Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#128203; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#8595; Download</button></h4>
               <div class="chip-row card-supplies">
-                <span class="chip">5 Fr sheath</span>
-                <span class="chip">Flush catheter</span>
-                <span class="chip">Cobra C2 catheter</span>
-                <span class="chip">Simmons catheter</span>
-                <span class="chip">2.7 Fr microcatheter</span>
-                <span class="chip">0.014&quot; microwire</span>
+                <span class="chip">5 Fr slender sheath</span>
+                <span class="chip">RAVI MG1</span>
+                <span class="chip">180 cm Benson</span>
+                <span class="chip">150 cm 2.8 fr Progreat</span>
+                <span class="chip">Asahi Meister</span>
                 <span class="chip">Tc-99m MAA (coordinate 24–48h ahead)</span>
-                <span class="chip">Microcoils (vessel protection)</span>
+                <span class="chip">Microcoils if needed (vessel protection)</span>
                 <span class="chip">Heparinized saline</span>
-                <span class="chip">Omnipaque contrast</span>
+                <span class="chip">Radial Cocktail (5,000u Heparin, 2.5 mg Verapamil, 500mcg Nitroglycerin)</span>
               </div>
 
               <h4 style="margin: 14px 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Mapping Steps</h4>
               <div class="step-list" style="margin-bottom: 20px;">
-                <div class="step"><div class="step-num">1</div><div><h4>CFA arterial access + heparin</h4><div class="muted">Standard common femoral artery access, 5 Fr sheath. Administer systemic heparin (2,500–5,000 units IV). Flush catheter aortogram if first time (survey hepatic supply).</div></div></div>
-                <div class="step"><div class="step-num">2</div><div><h4>Celiac + SMA angiogram</h4><div class="muted">Celiac in AP and lateral views — identify hepatic bifurcation, variant anatomy. SMA angiogram — identify replaced right hepatic artery (present in ~15%). Document all findings.</div></div></div>
-                <div class="step"><div class="step-num">3</div><div><h4>Selective hepatic angiogram</h4><div class="muted">Map tumor hypervascularity and feeding vessels. Identify all vessels at risk for non-target embolization. Confirm planned treatment territory corresponds to tumor location.</div></div></div>
-                <div class="step"><div class="step-num">4</div><div><h4>Vessel protection — coil embolization</h4><div class="muted">Advance microcatheter superselectively into each vessel at risk. Right gastric artery: protect on EVERY case if in field. GDA, cystic, falciform as needed. 1–2 coils per vessel. Confirm occlusion with injection. This step is non-negotiable — it prevents GI ulceration.</div></div></div>
-                <div class="step"><div class="step-num">5</div><div><h4>MAA injection (lung shunt scan)</h4><div class="muted">Position microcatheter in planned treatment position (same location as Y-90 will be infused). Inject Tc-99m MAA (ordered dose, typically 4 mCi). Patient goes immediately to nuclear medicine for planar + SPECT imaging. Do NOT move catheter position between MAA dose and confirmation of injection.</div></div></div>
-                <div class="step"><div class="step-num">6</div><div><h4>Review MAA scan</h4><div class="muted">Calculate LSF = lung counts / (liver + lung counts) &times; 100%. LSF &lt;10%: proceed normally; 10–15%: reduce dose; 15–20%: consider further dose reduction; &gt;20%: CONTRAINDICATION — cannot treat. Also check for gastric, duodenal, or other extrahepatic uptake → if present, return for additional vessel protection before treatment.</div></div></div>
+                <div class="step"><div class="step-num">1</div><div><h4>Left Radial arterial access</h4><div class="muted">Standard radial access. Place 5fr slender sheath. RAVI MG1 and Benson to get down to SMA.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Celiac + SMA angiogram</h4><div class="muted">Celiac in AP and oblique views — identify hepatic bifurcation, variant anatomy. SMA angiogram — identify replaced right hepatic artery (present in ~15%). Document all findings.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Selective hepatic angiogram</h4><div class="muted">Microcatheter and wire to map tumor hypervascularity and feeding vessels. Identify all vessels at risk for non-target embolization. Confirm planned treatment territory corresponds to tumor location. Use cone-beam CT (CBCT) to confirm complete coverage and identify non-target supply.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>MAA injection (lung shunt scan)</h4><div class="muted">Position microcatheter in planned treatment position (same location as Y-90 will be infused). Save fluoro store. Inject Tc-99m MAA (ordered dose, typically 4 mCi). Patient goes immediately to nuclear medicine for planar + SPECT imaging.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Review MAA scan</h4><div class="muted">Calculate LSF = lung counts / (liver + lung counts) &times; 100%. LSF &lt;10%: proceed normally; 10–15%: reduce dose; 15–20%: consider further dose reduction; &gt;20%: CONTRAINDICATION — cannot treat. Also check for gastric, duodenal, or other extrahepatic uptake → if present, return for additional vessel protection before treatment.</div></div></div>
               </div>
 
               <div class="phase-badge treat">Visit 2 — Treatment Session</div>
 
               <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Treatment Steps</h4>
               <div class="step-list">
-                <div class="step"><div class="step-num">1</div><div><h4>Re-angiogram — confirm anatomy</h4><div class="muted">Repeat hepatic angiogram to confirm protected vessels remain occluded, anatomy unchanged from mapping visit. Any new vessel identified must be assessed for risk before infusion.</div></div></div>
-                <div class="step"><div class="step-num">2</div><div><h4>Position catheter in treatment vessel</h4><div class="muted">Advance to identical position used for MAA injection. Confirm with DSA. Stability is critical — catheter movement changes dosimetry distribution.</div></div></div>
+                <div class="step"><div class="step-num">1</div><div><h4>Re-angiogram — confirm anatomy</h4><div class="muted">Repeat hepatic angiogram to confirm anatomy.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Position catheter in treatment vessel</h4><div class="muted">Advance to identical position used for MAA injection. Confirm with DSA. Stability is critical — catheter movement changes dosimetry distribution. Use CBCT to confirm accurate position and complete tumor coverage.</div></div></div>
                 <div class="step"><div class="step-num">3</div><div><h4>Y-90 delivery</h4><div class="muted">TheraSphere: delivered via sealed infusion set connected to vial; infused under fluoroscopy per manufacturer protocol. SIR-Spheres: vial delivery with water/contrast flush. Follow radiation safety protocol strictly. Infuse slowly with continuous fluoroscopic monitoring for flow — stop if any reflux observed.</div></div></div>
-                <div class="step"><div class="step-num">4</div><div><h4>Post-infusion angiogram</h4><div class="muted">Confirm flow maintained, no reflux, no new filling defects. Document final catheter position.</div></div></div>
-                <div class="step"><div class="step-num">5</div><div><h4>Post-Y90 imaging (optional)</h4><div class="muted">Bremsstrahlung SPECT or PET-CT can confirm hepatic distribution of Y-90 spheres. Bremsstrahlung = low-energy photon emission from Y-90 beta decay — confirms treatment territory corresponds to plan.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Post-Y90 imaging</h4><div class="muted">Bremsstrahlung SPECT or PET-CT can confirm hepatic distribution of Y-90 spheres. Bremsstrahlung = low-energy photon emission from Y-90 beta decay — confirms treatment territory corresponds to plan.</div></div></div>
               </div>
             </div>
 
@@ -385,14 +371,8 @@
             <div class="problem">
               <div class="problem-label">Problem</div>
               <h4>GI uptake on MAA scan</h4>
-              <p class="muted"><strong>Likely cause:</strong> Non-target vessels not adequately protected — right gastric, GDA, or other GI feeding vessel still patent.</p>
-              <p class="success"><strong>Next step:</strong> Return to angiography for additional coil embolization. Repeat MAA scan from same catheter position before scheduling treatment. DO NOT treat with GI uptake on scan — GI radiation injury is dose-limiting and severe.</p>
-            </div>
-            <div class="problem">
-              <div class="problem-label">Problem</div>
-              <h4>Right gastric artery anatomy confusing</h4>
-              <p class="muted"><strong>Likely cause:</strong> Small vessel, variable origin, not always seen on standard views.</p>
-              <p class="success"><strong>Next step:</strong> Use Simmons or small Cobra catheter from celiac &rarr; proper hepatic &rarr; carefully trace origin of right gastric. Oblique views often better than AP for right gastric. Use rotational DSA if available. Do not proceed to MAA injection until confident in right gastric anatomy and protection.</p>
+              <p class="muted"><strong>Likely cause:</strong> Non-target vessels in treatment field — right gastric, GDA, or other GI feeding vessel.</p>
+              <p class="success"><strong>Next step:</strong> Return to angiography for coil embolization. Repeat MAA scan from same catheter position before scheduling treatment. DO NOT treat with GI uptake on scan — GI radiation injury is dose-limiting and severe.</p>
             </div>
             <div class="problem">
               <div class="problem-label">Problem</div>
@@ -444,7 +424,7 @@
                 <h4>After Mapping Angiogram</h4>
                 <ul class="list">
                   <li>Radiation precautions minimal (patient minimally radioactive from MAA — no meaningful restrictions)</li>
-                  <li>Standard post-arterial access care (groin check, ambulation at 4–6h)</li>
+                  <li>Standard post-arterial access care depending on access site</li>
                   <li>Schedule treatment visit at 2–4 weeks</li>
                   <li>Communicate LSF result and plan to referring oncologist</li>
                 </ul>
@@ -488,7 +468,7 @@
           <div class="section-body pearls">
             <div class="pearl"><div class="pearl-mark">✦</div><div><strong>RIGHT GASTRIC ARTERY is the #1 cause of Y-90 GI complications.</strong> Identify and coil-embolize on EVERY mapping angiogram where it could be in the treatment field. It is a small vessel often arising from the proper hepatic in an oblique view — do not miss it. Use oblique angiographic views specifically to find it.</div></div>
             <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Lung shunt fraction &gt;20% = absolute contraindication.</strong> Always perform MAA scan. Do not rely on CT/MRI alone to estimate shunting. The scan is non-negotiable — this is the safety gate that prevents fatal radiation pneumonitis.</div></div>
-            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Two separate visits is non-negotiable for safety.</strong> The mapping session exists specifically so you can identify and fix problems (unprotected GI vessels, high LSF, unexpected anatomy) before you are holding 3+ GBq of live Y-90 in the room. Never compress this into a single session.</div></div>
+            <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Two separate visits is non-negotiable for safety.</strong> The mapping session exists specifically so you can identify and fix problems (unprotected GI vessels, high LSF, unexpected anatomy) before you are holding 3+ GBq of live Y-90 in the room. Never compress this into a single session. Some high volume centers are moving towards same day treatment but this is still not widespread.</div></div>
             <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Replaced right hepatic from SMA in ~15% of patients.</strong> If treating the right lobe and you miss the rRHA on SMA angiogram, you will undertreate the right lobe and potentially miss protecting GI vessels in that territory. SMA angiogram is mandatory on every case.</div></div>
             <div class="pearl"><div class="pearl-mark">✦</div><div><strong>BCLC C (portal vein thrombosis) — TheraSphere is approved.</strong> This is a major clinical advantage over TACE, which is generally contraindicated with portal vein thrombosis. Y-90 does not rely on portal vein flow for safety, making it the preferred locoregional therapy in this setting.</div></div>
             <div class="pearl"><div class="pearl-mark">✦</div><div><strong>Response assessment: use mRECIST, not RECIST 1.1.</strong> Size-based criteria systematically underestimate Y-90 response. Tumors can show necrosis and decreased enhancement (true response) while maintaining or even increasing in size initially. mRECIST uses arterial enhancement; LI-RADS TR criteria also acceptable for HCC.</div></div>
@@ -535,8 +515,8 @@
                 <h4>MAA Scan Interpretation Checklist</h4>
                 <ul class="list">
                   <li>Hepatic distribution matches planned treatment territory (lobar vs selective)</li>
-                  <li>No gastric uptake (right gastric artery not protected)</li>
-                  <li>No duodenal uptake (GDA not protected)</li>
+                  <li>No gastric uptake</li>
+                  <li>No duodenal uptake</li>
                   <li>No pulmonary uptake exceeding thresholds above</li>
                   <li>LSF calculated and documented</li>
                   <li>Any extrahepatic activity quantified and source identified</li>
