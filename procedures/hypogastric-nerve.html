@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Superior Hypogastric Nerve Block / Neurolysis — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Reference / data table ── */
+    .ref-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .ref-table th, .ref-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .ref-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .ref-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    /* ── Approach sub-header ── */
+    .approach-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: var(--accent); font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin: 16px 0 10px; }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Interventional Radiology &middot; Pain Management</div>
+      <h1>Superior Hypogastric Nerve Block / Neurolysis</h1>
+      <p class="subhead">CT-guided retroperitoneal block or neurolysis of the superior hypogastric plexus at L5–S1 for refractory visceral pelvic pain from oncologic and non-oncologic causes; also covers caudal block and ganglion impar block for perineal pain.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">Local ± light IV</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--success)">Low (SIR Cat 1–2)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value" style="font-size:.88rem">Vascular injury · Bowel perf · Ethanol neuritis</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value" style="font-size:.88rem">If devitalized tissue; cefazolin for transdiscal</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value" style="font-size:.88rem">Reassess pain 2 wks · Neurolysis repeat 3–6 mo</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#landmarks">5. CT Landmarks</a></li>
+          <li><a href="#troubleshooting">6. Troubleshooting</a></li>
+          <li><a href="#complications">7. Complications</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#references">9. References</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications &amp; Patient Selection</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Indications</h4>
+              <ul class="list">
+                <li><strong>Refractory visceral pelvic pain</strong> from pelvic organs — cervical, endometrial, or ovarian cancer; bladder cancer; rectal cancer; locally advanced prostate cancer</li>
+                <li><strong>Non-oncologic pelvic pain</strong> — endometriosis, interstitial cystitis, chronic prostatitis, uterine fibroids (peri-embolization)</li>
+                <li><strong>Superior hypogastric plexus (SHP)</strong> mediates afferent pain from pelvic viscera below the peritoneal reflection; blockade interrupts this pathway</li>
+                <li><strong>Diagnostic / therapeutic block:</strong> lidocaine or bupivacaine ± steroid → assess response; if &ge;50% relief → proceed to neurolysis</li>
+                <li><strong>Neurolysis:</strong> 6–10% absolute ethanol or 6–10% phenol for durable relief in cancer pain (&ge;3–6 months)</li>
+                <li><strong>Caudal block</strong> (sacral hiatus approach): perineal pain, tailbone pain, S2–S5 radiculopathy; useful in diffuse sacral metastatic disease</li>
+                <li><strong>Ganglion impar block:</strong> perianal, perineal burning/sitting-induced pain — coccydynia or anorectal cancer pain</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Contraindications &amp; Workup</h4>
+              <ul class="list">
+                <li><strong>Absolute contraindications:</strong> active pelvic infection, uncorrectable coagulopathy, allergy to contrast or phenol</li>
+                <li><strong>Relative:</strong> bowel loops in planned needle trajectory (CT mandatory to identify and avoid), anatomic aberrancy precluding safe access</li>
+                <li><strong>Pre-procedure workup:</strong> characterize pain (visceral burning/pressure vs. somatic/radicular), VAS score baseline, prior pelvic CT or MRI to review iliac vessel course and bowel position</li>
+                <li><strong>Pain quality guiding target:</strong> diffuse visceral pelvic pain → SHP; perineal/perianal burning → ganglion impar; sacral radiculopathy → caudal epidural</li>
+                <li><strong>Diagnostic block first:</strong> always confirm &ge;50% relief with local anesthetic block before committing to irreversible neurolysis</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Imaging review.</strong> Review CT or MRI pelvis to locate L5-S1 disc, common iliac bifurcation, iliac vessel course, and any bowel loops in the planned bilateral paravertebral trajectory. Confirm no large retroperitoneal mass blocking access.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Guidance modality.</strong> CT guidance preferred (essential for safe bilateral approach). Fluoroscopy acceptable for transdiscal or anterior approach. Confirm CT suite availability and room for prone positioning.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Needles.</strong> Two 22G Chiba needles (15–20 cm) for bilateral posterior paravertebral approach. 22–25G needle for transdiscal approach. 22G spinal needle for ganglion impar or caudal block.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Block solution.</strong> Diagnostic/therapeutic: 10 mL 0.5% bupivacaine + 4 mg dexamethasone per side (bilateral = 20 mL total bupivacaine + 8 mg dexamethasone). Draw up and label separately.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Neurolysis solution (if planned).</strong> 5–8 mL absolute ethanol (98%) per side OR 5–8 mL 10% phenol per side. Warn patient of expected transient burning warmth sensation during ethanol injection. Confirm positive prior diagnostic block (&ge;50% relief) is documented.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Contrast.</strong> Iohexol 300 (Omnipaque) for test injection — 2 mL per side to confirm retroperitoneal position before therapeutic injection.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Positioning.</strong> Prone with pillow under the pelvis/iliac crests to open the L5-S1 disc space. Confirm patient tolerance (respiratory, pain). IV access placed.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Local anesthesia.</strong> 1% lidocaine for skin and subcutaneous tract at each needle entry site.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Antibiotics.</strong> Not routine for standard posterior approach. Administer cefazolin 1 g IV for transdiscal approach (50 mg intradiscal on withdrawal) to prevent discitis. Consider prophylactic antibiotics if devitalized tissue is nearby.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent.</strong> Discuss: burning sensation with ethanol neurolysis, transient bladder dysfunction, lower extremity weakness (rare), infection, vascular injury, bowel perforation (rare), and that neurolysis effect lasts 3–6 months and may require repeat procedures.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Superior Hypogastric Plexus (SHP)</h4>
+                <ul class="list">
+                  <li><strong>Location:</strong> Retroperitoneal sympathetic plexus at the <strong>L5–S1 level</strong>, anterior to the L5-S1 intervertebral disc and the bifurcation of the common iliac vessels</li>
+                  <li>Lies <strong>between the common iliac arteries</strong> at their bifurcation into external and internal iliac arteries; ureters run just lateral</li>
+                  <li><strong>Afferent pain signals from:</strong> uterus, cervix, upper vagina, bladder, prostate, sigmoid colon, rectum — all viscera below the peritoneal reflection</li>
+                  <li>Does <strong>not</strong> carry pain from ovaries and fallopian tubes (celiac/inferior mesenteric plexus via T10–L2)</li>
+                  <li>Receives fibers from celiac and inferior mesenteric plexuses, arising from L4 to S1</li>
+                  <li><strong>Key surgical landmark:</strong> the aortic bifurcation is at L4; the common iliac bifurcation into external/internal iliacs is at L5-S1 — this is the SHP target</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Related Structures: Ganglion Impar &amp; Caudal Canal</h4>
+                <ul class="list">
+                  <li><strong>Ganglion impar:</strong> most caudal sympathetic ganglion; single midline structure located in the retroperitoneum at the <strong>sacrococcygeal junction</strong>, anterior to the sacrum, posterior to the rectum</li>
+                  <li>Carries pain from perineum, anus, distal rectum, distal urethra, vulva — <em>burning, sitting-induced perianal pain</em> is the hallmark</li>
+                  <li>Blockade via single midline needle through the sacrococcygeal ligament; contrast shows <strong>comma-shaped</strong> presacral spread</li>
+                  <li><strong>Sacral canal (caudal epidural space):</strong> extends from the sacral hiatus (midline gap at caudal sacrum between the sacral cornua) cephalad; contains S1–S5 nerve roots, dural sac ending at S2</li>
+                  <li>Caudal epidural injection covers S2–S5 nerve roots — useful for perineal pain, sacral metastatic disease, pudendal neuralgia</li>
+                  <li><strong>Inferior hypogastric plexus:</strong> mixed sympathetic/parasympathetic; innervates bladder, urethra, corpora cavernosa; not purely sympathetic — transsacral blockade described for refractory pelvic pain</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. HOW I DO IT ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">CT-guided bilateral posterior paravertebral approach + community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+
+            <!-- Default RadCall card -->
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#x1F4CB; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#x2B07; Download</button></h4>
+              <div class="chip-row card-supplies">
+                <span class="chip">Two 22G Chiba needles (15–20 cm)</span>
+                <span class="chip">CT guidance</span>
+                <span class="chip">Iohexol 300 (Omnipaque)</span>
+                <span class="chip">1% lidocaine (skin/subcut)</span>
+                <span class="chip">0.5% bupivacaine</span>
+                <span class="chip">Dexamethasone 4 mg/mL</span>
+                <span class="chip">Absolute ethanol 98% (for neurolysis)</span>
+                <span class="chip">10% phenol (alternative neurolytic)</span>
+                <span class="chip">3 mL and 10 mL syringes</span>
+                <span class="chip">Extension tubing (primed)</span>
+                <span class="chip">ChloraPrep</span>
+                <span class="chip">Sterile drape</span>
+                <span class="chip">Sterile dressing</span>
+              </div>
+
+              <!-- CT-guided bilateral posterior approach -->
+              <div class="approach-label">Approach A — CT-Guided Bilateral Posterior Paravertebral (Standard)</div>
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Position &amp; scout CT</h4><div class="muted">Patient prone with pillow under iliac crests. Obtain CT scout through the L4-S1 region. Identify: L5-S1 intervertebral disc, common iliac bifurcation, iliac vessel positions, and any bowel loops overlying the planned trajectory. Plan bilateral skin entry points.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Bilateral skin entry — L4-L5 level, lateral to L5 transverse process</h4><div class="muted">Mark two skin entry points at the L4–L5 level, just lateral to the L5 transverse process on each side (lateral to the facet column, medial to the iliac crest). Inject 1% lidocaine at skin and along planned tract bilaterally.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Advance Chiba needles anteromedially</h4><div class="muted">Advance 22G Chiba needles bilateral, angling anteromedially toward the anterior surface of the L5-S1 junction. The two needles form a "V" shape converging at the L5-S1 anterior space. Use intermittent CT to guide trajectory.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>CT confirmation of retroperitoneal tip position</h4><div class="muted">Confirm on CT: needle tips positioned in retroperitoneal fat space anterior to L5-S1 disc, between and anterior to the bifurcation of the common iliac vessels. Tips should not be in iliac vein, artery, or bowel lumen.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Aspirate — no blood or bowel content</h4><div class="muted">Aspirate each needle carefully. No blood, no bowel content. If blood returns: withdraw, replan trajectory on CT to avoid vessel. Never inject with active blood return.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>Test injection — iohexol contrast</h4><div class="muted">Inject 2 mL iohexol 300 per side under CT. Confirm: contrast spreads in a diffuse retroperitoneal cloud anterior to L5-S1, between iliac vessels. Reject if: contrast opacifies bowel lumen, flows into vessel, or tracks along nerve roots cephalad.</div></div></div>
+                <div class="step"><div class="step-num">7</div><div><h4>Inject block solution</h4><div class="muted">Diagnostic/therapeutic block: inject 5–10 mL 0.5% bupivacaine + 2 mg dexamethasone per side (bilateral total: 10–20 mL bupivacaine). Slow injection over 60–90 seconds per side. Reassess CT for appropriate retroperitoneal spread.</div></div></div>
+                <div class="step"><div class="step-num">8</div><div><h4>Neurolysis (if indicated)</h4><div class="muted">Neurolysis (after confirmed &ge;50% relief from prior diagnostic block): inject 5–8 mL absolute ethanol (98%) per side slowly. Warn patient before injection — they will feel transient burning warmth in the pelvis; this is expected and lasts 30–60 seconds. Alternatively, 5–8 mL 10% phenol per side.</div></div></div>
+                <div class="step"><div class="step-num">9</div><div><h4>Remove needles &amp; monitor</h4><div class="muted">Remove needles with steady withdrawal. Apply pressure. Observe patient 30–60 minutes. Assess pain score, lower extremity motor/sensory function, bladder sensation. Discharge with companion when stable.</div></div></div>
+              </div>
+
+              <!-- Fluoroscopic alternative -->
+              <div class="approach-label" style="margin-top:20px;">Approach B — Fluoroscopic Posterior Paravertebral</div>
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Prone position; identify L5 junction</h4><div class="muted">Patient prone. Use lateral fluoroscopy to identify the L5-S1 disc space. Use AP view to identify the L5 transverse process and plan needle entry lateral to it on each side.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Oblique fluoroscopy needle advance</h4><div class="muted">Advance 22G Chiba needles bilaterally under oblique fluoroscopy (30–45°) to align the needle shaft with its target trajectory. Advance to contact L5 vertebral body anterolateral margin, then walk off anteriorly into retroperitoneal space.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>AP + lateral confirmation; contrast spread</h4><div class="muted">Confirm on AP: needle tips at L5-S1 junction. On lateral: tips anterior to vertebral body cortex. Inject contrast: diffuse retroperitoneal spread anterior to L5 confirms correct extravascular retroperitoneal position.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Inject therapeutic solution</h4><div class="muted">After aspiration and confirmed contrast spread: inject bupivacaine ± steroid or neurolytic per above volumes. Document fluoroscopic images. Monitor 30 min.</div></div></div>
+              </div>
+
+              <!-- Transdiscal approach -->
+              <div class="approach-label" style="margin-top:20px;">Approach C — Transdiscal (Single-Needle, Fluoroscopic)</div>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Prone position with pillow under iliac crest</h4><div class="muted">Pillow under iliac crest to open the L5-S1 disc space. Essential for this approach. Use lateral fluoroscopy to confirm disc space opening.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Advance needle through L5-S1 disc midline</h4><div class="muted">Advance 22–25G needle through the center of the L5-S1 disc under lateral fluoroscopy until resistance is lost (disc exits into retroperitoneal space). Aspirate to confirm no blood.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Contrast confirmation</h4><div class="muted">Inject water-soluble contrast to confirm retroperitoneal position anterior to disc. Spread along anterior psoas margin and anterior disc surface = correct position.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Inject and withdraw with intradiscal cefazolin</h4><div class="muted">Inject 5–8 mL bupivacaine (or neurolytic). On withdrawal, inject 50 mg cefazolin intradiscally to prevent discitis — this is essential for transdiscal approach.</div></div></div>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. CT LANDMARKS ═══ -->
+        <section class="section" id="landmarks">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>CT Landmarks &amp; Caudal Block Technique</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:18px;">
+              <div class="panel">
+                <h4>SHP Target — CT Anatomy</h4>
+                <ul class="list">
+                  <li><strong>Primary target:</strong> retroperitoneal fat space directly anterior to the L5-S1 intervertebral disc, medial to the common iliac artery bifurcation</li>
+                  <li><strong>Bilateral needle configuration:</strong> two Chiba needles form a "V" with tips converging at the L5-S1 anterior disc/junction</li>
+                  <li><strong>Correct contrast spread:</strong> diffuse retroperitoneal cloud anterior to L5-S1 disc, spreading laterally between the common iliac arteries — no bowel opacification, no intravascular linear flow</li>
+                  <li><strong>Aortic bifurcation vs. iliac bifurcation:</strong> aorta bifurcates at L4; the common iliacs bifurcate into external/internal iliacs at L5-S1 — the SHP lies at this lower (L5-S1) bifurcation</li>
+                  <li><strong>Depth guide:</strong> on axial CT, tips should be in the retroperitoneal fat immediately anterior to the psoas and vertebral body, posterior to the iliac vessels</li>
+                  <li><strong>Avoid:</strong> iliac vein (posterior to artery), ureter (lateral to plexus), bowel loops (replan if any are in path)</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Ganglion Impar — CT/Fluoroscopic Landmarks</h4>
+                <ul class="list">
+                  <li><strong>Target:</strong> retroperitoneal space at the <strong>sacrococcygeal junction</strong> anteriorly — between the anterior sacrum/coccyx and the posterior rectum</li>
+                  <li><strong>Needle approach:</strong> single midline needle through the sacrococcygeal ligament/junction, just anterior to the sacrococcygeal disc — on lateral fluoroscopy, tip just beyond the ventral cortex of the bone</li>
+                  <li><strong>Correct contrast pattern:</strong> comma-shaped spread in the presacral retroperitoneum on lateral projection</li>
+                  <li><strong>Indication:</strong> perianal and perineal burning pain, sitting-induced pain, coccydynia, anorectal cancer pain — distinct from visceral pelvic organ pain treated by SHP block</li>
+                  <li><strong>Injection:</strong> 3–5 mL 0.5% bupivacaine + 1 mL dexamethasone 4 mg for diagnostic/therapeutic; absolute ethanol 3–5 mL for neurolysis</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Caudal block subsection -->
+            <div class="panel">
+              <h4>Caudal Block Technique (Sacral Hiatus Approach)</h4>
+              <div class="step-list" style="margin-top:12px;">
+                <div class="step"><div class="step-num">1</div><div><h4>Position &amp; identify sacral hiatus</h4><div class="muted">Patient prone. Palpate the sacral hiatus — the midline sacral gap between the sacral cornua at the caudal end of the sacrum. Confirm with lateral fluoroscopy or CT: a midline opening at the base of the sacrum, visible as a gap in the posterior sacral cortex.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Needle insertion</h4><div class="muted">Use 18G or 20G angiocath or Tuohy needle. Insert at 45° angle into the sacral hiatus. Advance until a "pop" or loss of resistance is felt as the sacrococcygeal ligament is traversed and the caudal epidural space is entered.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Confirm epidural position</h4><div class="muted">Loss of resistance to saline confirms caudal epidural space. Aspirate: no blood (would indicate intravascular), no clear CSF (would indicate intrathecal — dural sac typically ends at S2). Inject 2 mL contrast under fluoroscopy: epidural contrast should spread cephalad along the sacral nerve roots in the epidural space, not in a vessel or intrathecally.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Inject therapeutic solution</h4><div class="muted">Confirm fluoroscopic spread to S2–S5 level (10–15 mL volume typically needed). Inject: 5 mL 0.5% bupivacaine + 1 mL dexamethasone 4 mg (or methylprednisolone 40 mg). For more cephalad coverage, larger volumes (10–20 mL) can reach L3–L4 in selected cases. Monitor 30 min for inadvertent intrathecal spread (bilateral leg weakness, hypotension).</div></div></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Blood return on aspiration — needle in iliac vessel</h4>
+              <p class="muted"><strong>Likely cause:</strong> Needle tip has traversed the iliac vein (which lies posterior to the artery) or the common iliac artery. The iliac vein is particularly susceptible as it lies immediately posterior and lateral to the artery.</p>
+              <p class="success"><strong>Next step:</strong> Withdraw the needle without injecting. Obtain CT to re-plan needle trajectory — adjust the angle to pass more medially or at a different craniocaudal level to avoid the vessel. Reassess for any expanding retroperitoneal hematoma before proceeding. CT guidance essential; intravascular injection of ethanol is catastrophic.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Bowel loop in needle path on CT planning</h4>
+              <p class="muted"><strong>Likely cause:</strong> Sigmoid colon, small bowel, or redundant descending colon overlies the planned bilateral paravertebral trajectory — more common on the left. Mobile bowel can shift with positioning.</p>
+              <p class="success"><strong>Next step:</strong> Adjust needle trajectory angle on CT planning — try a more lateral entry or slightly different craniocaudal level to find a bowel-free window. Consider repositioning the patient slightly oblique. If the anterior transabdominal approach is used, bowel preparation prior to procedure and Trendelenburg positioning can displace bowel. Reserve transrectal approaches for rare cases with no posterior access.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Inadequate retroperitoneal contrast spread on test injection</h4>
+              <p class="muted"><strong>Likely cause:</strong> Needle tip not sufficiently anterior — still in muscle or posterior to anterior vertebral cortex; or tip has exited the retroperitoneal fat plane.</p>
+              <p class="success"><strong>Next step:</strong> Re-confirm CT position. Advance needle slightly more anteriorly until tip is clearly in retroperitoneal fat anterior to the disc. Increase test injection volume to 3–4 mL. If spread is still inadequate or loculated, consider slightly redirecting the needle tip medially or laterally to find less-resistive tissue.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>No pain relief after neurolysis</h4>
+              <p class="muted"><strong>Likely cause:</strong> Pain may have a somatic or radicular component not mediated by the SHP (e.g., bony metastases, sacral nerve root involvement, leptomeningeal disease); or the pain generator is the perineum/anus (ganglion impar territory rather than SHP territory).</p>
+              <p class="success"><strong>Next step:</strong> Reassess pain quality — is there a burning, sitting-induced, perianal component? If yes, consider ganglion impar block/neurolysis at sacrococcygeal junction. If pain has radicular features (radiation down leg, dermatomal distribution), reassess for nerve root involvement with MRI and consider targeted epidural steroid or nerve root block. Caudal block if diffuse sacral nerve root pain.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Contrast flows intravascularly on test injection</h4>
+              <p class="muted"><strong>Likely cause:</strong> Needle tip in epidural venous plexus or peri-iliac vascular plexus — venous structures in this region are thin-walled and easily entered without blood return on aspiration.</p>
+              <p class="success"><strong>Next step:</strong> Withdraw needle 2–3 mm, reaspirate, and retest with 1 mL contrast under real-time CT or fluoroscopy. Never inject therapeutic solution — and especially never inject ethanol — with any intravascular contrast flow. Reposition needle until clean retroperitoneal spread is confirmed.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Immediate / Periprocedural</h4>
+              <ul class="list danger">
+                <li><strong>Vascular injury (common iliac artery or vein):</strong> most serious immediate risk; avoided with CT guidance and aspiration before every injection. If significant hemorrhage suspected post-procedure, obtain CT and manage per vascular surgery protocol.</li>
+                <li><strong>Intravascular injection of ethanol or phenol:</strong> catastrophic — causes acute vessel wall injury, thrombosis, or embolic events. Mandatory: aspirate + contrast confirmation before ANY neurolytic injection.</li>
+                <li><strong>Bowel perforation:</strong> rare with CT guidance; if suspected (fever, peritoneal signs post-procedure), obtain CT abdomen/pelvis with contrast. Antibiotic prophylaxis if bowel entry suspected. Usually managed conservatively if single needle pass and no bowel contents aspirated.</li>
+                <li><strong>Bladder dysfunction (temporary urinary retention or urgency):</strong> from sympathetic blockade of the bladder; usually resolves within 24–48 hours. Monitor voiding before discharge.</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Delayed</h4>
+              <ul class="list">
+                <li><strong>Ethanol neuritis:</strong> burning pain in the pelvis/lower back for 1–7 days post-neurolysis — warn patient before discharge. Treat with NSAIDs, short gabapentin course (300–600 mg TID for 5–7 days), or brief opioid taper if severe.</li>
+                <li><strong>Lower extremity weakness or numbness:</strong> rare; from spread of neurolytic agent to lumbar plexus or L4-L5 nerve roots. Use minimum effective volume (5–8 mL per side) to reduce risk. Usually transient if from local anesthetic; potentially prolonged if from ethanol. Neurology consultation if persistent.</li>
+                <li><strong>Retroperitoneal abscess / infection:</strong> very rare with posterior CT-guided approach. More common with transdiscal approach if intradiscal cefazolin is omitted. Presents with fever, back pain, elevated inflammatory markers 1–2 weeks post-procedure. CT-guided drainage if fluid collection identified.</li>
+                <li><strong>Discitis (transdiscal approach):</strong> prevented by intradiscal cefazolin 50 mg on needle withdrawal. Risk of diskitis is the primary reason CT-guided posterior paravertebral approach is preferred over transdiscal.</li>
+                <li><strong>Sexual dysfunction:</strong> rare; from sympathetic blockade — usually transient with block, may be more lasting with neurolysis. Counsel patients with preserved sexual function before neurolysis.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>SHP block is ideal for visceral pelvic cancer pain.</strong> The classic indication is burning, pressure-type pelvic pain from bladder, rectal, cervical, or endometrial cancer that is poorly controlled with opioids. If the pain is described as visceral and diffuse — not sharp, dermatomal, or radicular — the SHP is the right target. Plancarte's original 1990 case series reported excellent relief in 28 oncology patients; subsequent 227-patient validation confirmed durable efficacy.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Always perform diagnostic block before neurolysis.</strong> Confirm &ge;50% pain relief from a local anesthetic block before committing to permanent neurolysis with ethanol or phenol. Ethanol neurolysis is irreversible — a failed neurolysis in a patient whose pain was not SHP-mediated provides no benefit and causes additional morbidity (ethanol neuritis, risk of off-target injury).</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>CT guidance is essential — not optional.</strong> The L5-S1 common iliac bifurcation anatomy is variable; iliac vessels and bowel position differ significantly between patients. Fluoroscopy alone cannot reliably identify bowel in the needle path or confirm true retroperitoneal tip position. CT-guided posterior paravertebral approach is the gold standard for safe bilateral plexus access.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Bilateral approach for complete plexus coverage.</strong> The SHP is a bilateral structure spanning the L5-S1 anterior space. Unilateral injection provides incomplete coverage and risks missing pain fibers crossing from the contralateral side. Use bilateral approach with 5–10 mL per side (10–20 mL total). The two needle tips should form a "V" converging at the L5-S1 junction.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Ganglion impar for perianal/perineal burning pain.</strong> If the patient's pain is burning, sitting-worsened, or perianal — rather than diffuse pelvic organ pain — the target is the ganglion impar at the sacrococcygeal junction, not the SHP. The comma-shaped presacral contrast spread on lateral fluoroscopy confirms correct ganglion impar position. Coccydynia with a statistically significant response persisting up to 6 months post-block is well-documented.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Repeat procedures are safe and expected.</strong> Therapeutic steroid blocks for non-oncologic indications last 4–8 weeks; neurolysis typically provides 3–6 months of relief in cancer pain. Repeat procedures are safe and can be planned when benefit wanes. For benign pelvic pain (endometriosis, fibroids), repeated steroid blocks may precede or replace neurolysis, which should be reserved for refractory cases or cancer pain given its permanent nature.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>SHP block reduces opioid requirements after uterine fibroid embolization.</strong> Intraprocedural SHP block during UAE has been shown in randomized trials to significantly reduce post-procedural pain scores and opiate usage, enabling same-day discharge. The block can be performed using the angiographic catheter as a fluoroscopic landmark for the aortic bifurcation/L4-L5 level.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. REFERENCES ═══ -->
+        <section class="section" id="references">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>References</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div style="margin-bottom: 20px;">
+              <div class="panel" style="margin-bottom:14px;">
+                <h4>Approach Comparison</h4>
+                <table class="ref-table">
+                  <thead>
+                    <tr>
+                      <th>Approach</th>
+                      <th>Guidance</th>
+                      <th>Needles</th>
+                      <th>Key Advantage</th>
+                      <th>Key Risk</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><strong>Posterior paravertebral (bilateral)</strong></td><td>CT (preferred) or fluoro</td><td>Two 22G Chiba</td><td>Complete bilateral coverage; avoids disc</td><td>Vascular injury; bowel in path</td></tr>
+                    <tr><td><strong>Transdiscal</strong></td><td>Fluoroscopy or CT</td><td>One 22–25G needle</td><td>Single needle; shorter procedure time</td><td>Discitis risk — give intradiscal cefazolin</td></tr>
+                    <tr><td><strong>Anterior transabdominal</strong></td><td>CT or ultrasound</td><td>22G needle infraumbilical</td><td>Less technically demanding; useful if posterior access blocked</td><td>Bowel/mesenteric injury; prep bowel first</td></tr>
+                    <tr><td><strong>Ganglion impar (sacrococcygeal)</strong></td><td>Fluoroscopy or CT</td><td>One 22G spinal needle midline</td><td>Targets perineal/perianal pain specifically</td><td>Rectal perforation (rare)</td></tr>
+                    <tr><td><strong>Caudal block (sacral hiatus)</strong></td><td>Fluoroscopy or CT</td><td>18–20G angiocath or Tuohy</td><td>Covers S2–S5; useful for sacral met disease</td><td>Intrathecal injection if dura punctured</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="panel">
+                <h4>Citations</h4>
+                <ul class="list" style="gap:12px;">
+                  <li>Prologo JD, Ray CE Jr., eds. <em>Advanced Pain Management in Interventional Radiology: A Case-Based Approach</em>. Thieme; 2024. Ch. 44–46 (Williams R, Murphy T; Gilyard S, Nezami N, Kokabi N).</li>
+                  <li>Plancarte R, Amescua C, Patt RB, Aldrete JA. Superior hypogastric plexus block for pelvic cancer pain. <em>Anesthesiology</em>. 1990;73(2):236–239.</li>
+                  <li>Plancarte R, de Leon-Casasola OA, El-Helaly M, Allende S, Lema MJ. Neurolytic superior hypogastric plexus block for chronic pelvic pain associated with cancer. <em>Reg Anesth</em>. 1997;22(6):562–568.</li>
+                  <li>Gamal G, Helaly M, Labib YM. Superior hypogastric block: transdiscal versus classic posterior approach in pelvic cancer pain. <em>Clin J Pain</em>. 2006;22(6):544–547.</li>
+                  <li>Pereira K, Morel-Ovalle LM, Taghipour M, et al. Superior hypogastric nerve block (SHNB) for pain control after uterine fibroid embolization (UFE): technique and troubleshooting. <em>CVIR Endovasc</em>. 2020;3(1):50.</li>
+                  <li>Pereira K, Morel-Ovalle LM, Wiemken TL, et al. Intraprocedural superior hypogastric nerve block allows same-day discharge following uterine artery embolization. <em>J Vasc Interv Radiol</em>. 2020;31(3):388–392.</li>
+                  <li>Kanazi GE, Perkins FM, Thakur R, Dotson E. New technique for superior hypogastric plexus block. <em>Reg Anesth Pain Med</em>. 1999;24(5):473–476.</li>
+                  <li>Erdine S, Yucel A, Celik M, Talu GK. Transdiscal approach for hypogastric plexus block. <em>Reg Anesth Pain Med</em>. 2003;28(4):304–308.</li>
+                  <li>Yang X, You J, Tao S, et al. Computed tomography-guided superior hypogastric plexus block for secondary dysmenorrhea in perimenopausal women. <em>Med Sci Monit</em>. 2018;24:5132–5138.</li>
+                  <li>Choi JW, Kim WH, Lee CJ, et al. The optimal approach for a superior hypogastric plexus block. <em>Pain Pract</em>. 2018;18(3):314–321.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Ref: Prologo &amp; Ray, Advanced Pain Management in IR (Thieme, 2024) &middot; Plancarte et al, Anesthesiology 1990 &middot; Pereira et al, JVIR 2020</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My SHP Block Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;22G Chiba needle x2&#10;Omnipaque 300&#10;0.5% bupivacaine 20mL"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;Prone position with pillow under pelvis&#10;CT scout to plan bilateral trajectories&#10;Advance Chiba needles to L5-S1 anterior space"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <label>Your Name</label>
+      <input type="text" id="card-author-name" placeholder="Your name (shown on card)" />
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" id="save-card-btn" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'hypogastric-nerve';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _myVotes = {};
+  let _cardSearch = '';
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  // ── Load cards ──
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    await loadVotes();
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!document.getElementById('card-search-wrap')) {
+      const wrap = document.createElement('div');
+      wrap.id = 'card-search-wrap';
+      wrap.style.cssText = 'margin-bottom:12px';
+      wrap.innerHTML = '<input id="card-search" type="text" placeholder="Search community cards\u2026" style="width:100%;padding:8px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:inherit;font-family:inherit;font-size:13px;outline:none;" oninput="_cardSearch=this.value.toLowerCase();renderCards()">';
+      container.parentElement.insertBefore(wrap, container);
+    }
+    const q = _cardSearch.trim();
+    const visible = q ? _cards.filter(c => [c.title||'',c.display_name||'',...(c.supplies||[]),...(c.steps||[]),...(c.pearls||[])].join(' ').toLowerCase().includes(q)) : _cards;
+    if (!visible.length) {
+      loading.textContent = q ? 'No cards match your search.' : 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      container.innerHTML = '';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = visible.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      const myVote = _myVotes[c.id];
+      const votes = c.net_votes || 0;
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}" data-card-id="${c.id}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:5px;flex-shrink:0">
+              <button onclick="voteCard('${c.id}','up')" title="Helpful" style="background:none;border:1px solid ${myVote==='up'?'#22c55e':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='up'?'#22c55e':'inherit'};transition:.15s">${myVote==='up'?'&#x25B2;':'&#x25B3;'}${votes>0?' '+votes:''}</button>
+              <button onclick="voteCard('${c.id}','down')" title="Not helpful" style="background:none;border:1px solid ${myVote==='down'?'#ef4444':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='down'?'#ef4444':'inherit'};transition:.15s">${myVote==='down'?'&#x25BC;':'&#x25BD;'}</button>
+              ${isOwn ? `<button onclick="editCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Edit</button><button onclick="deleteCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Delete</button>` : ''}
+            </div>
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  async function loadVotes() {
+    const sb = _sb(); const user = _user();
+    if (!sb || !user) return;
+    const { data } = await sb.from('procedure_card_votes').select('card_id,vote').eq('user_id', user.id);
+    _myVotes = {};
+    if (data) for (const v of data) _myVotes[v.card_id] = v.vote;
+  }
+
+  async function voteCard(cardId, dir) {
+    const sb = _sb(); const user = _user();
+    if (!user || !sb) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    const existing = _myVotes[cardId];
+    const card = _cards.find(c => c.id === cardId);
+    if (!card) return;
+    if (existing === dir) {
+      await sb.from('procedure_card_votes').delete().match({ user_id: user.id, card_id: cardId });
+      delete _myVotes[cardId];
+      card.net_votes = (card.net_votes || 0) + (dir === 'up' ? -1 : 1);
+    } else {
+      await sb.from('procedure_card_votes').upsert({ user_id: user.id, card_id: cardId, vote: dir }, { onConflict: 'user_id,card_id' });
+      const prev = existing ? (existing === 'up' ? -1 : 1) : 0;
+      card.net_votes = (card.net_votes || 0) + prev + (dir === 'up' ? 1 : -1);
+      _myVotes[cardId] = dir;
+    }
+    await sb.from('procedure_cards').update({ net_votes: card.net_votes }).eq('id', cardId);
+    renderCards();
+  }
+
+  // ── Card CRUD ──
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    const nameInput = document.getElementById('card-author-name');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      if (nameInput) nameInput.value = card.display_name || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+      if (nameInput && !nameInput.value.trim()) {
+        const u = _user();
+        if (nameInput && !nameInput.value) nameInput.value = (u && u.email) ? u.email.split('@')[0] : '';
+        if (window.RadCallAuth && window.RadCallAuth.getProfile) {
+          window.RadCallAuth.getProfile().then(p => {
+            if (nameInput && !nameInput.value.trim()) nameInput.value = (p && p.display_name) || '';
+          }).catch(() => {});
+        }
+      }
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    if (!sb) { alert('Connection error — please reload and try again.'); return; }
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title.'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const authorInput = document.getElementById('card-author-name');
+    const displayName = (authorInput && authorInput.value.trim()) || (user.email ? user.email.split('@')[0] : 'Anonymous');
+    const saveBtn = document.getElementById('save-card-btn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving\u2026'; }
+    try {
+      if (editId) {
+        _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() } : c);
+        renderCards(); closeCardModal();
+        const { error } = await sb.from('procedure_cards').update({ title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() }).eq('id', editId);
+        if (error) console.error('Card update error:', error);
+      } else {
+        const tmpId = 'tmp-' + Date.now();
+        const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0, created_at: new Date().toISOString() };
+        _cards.unshift(newCard);
+        renderCards(); closeCardModal();
+        const { data, error } = await sb.from('procedure_cards')
+          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0 })
+          .select().single();
+        if (error) {
+          console.error('Card insert error:', error);
+          _cards = _cards.filter(c => c.id !== tmpId);
+          renderCards();
+          alert('Could not save card: ' + (error.message || 'Unknown error. Check your connection and try again.'));
+        } else if (data) {
+          _cards = _cards.map(c => c.id === tmpId ? data : c);
+        }
+      }
+      try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    } catch(err) {
+      console.error('saveCard exception:', err);
+      alert('Something went wrong saving your card. Please try again.');
+    } finally {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Card'; }
+    }
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  // ── Helpers ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Superior Hypogastric Nerve Block / Neurolysis \u2014 Supply List\n' + '\u2550'.repeat(50) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Superior Hypogastric Nerve Block / Neurolysis \u2014 Supply List\n' + '\u2550'.repeat(50) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'hypogastric-nerve-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  // ── Init ──
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+    function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('open'); }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>

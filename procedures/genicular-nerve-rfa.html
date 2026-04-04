@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Genicular Nerve Radiofrequency Ablation — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Reference / data table ── */
+    .ref-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .ref-table th, .ref-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .ref-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .ref-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    /* ── Approach sub-header ── */
+    .approach-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: var(--accent); font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin: 16px 0 10px; }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Interventional Radiology &middot; Pain Management</div>
+      <h1>Genicular Nerve Radiofrequency Ablation</h1>
+      <p class="subhead">Fluoroscopy-guided radiofrequency ablation of the superior medial, superior lateral, and inferior medial genicular nerves for chronic knee osteoarthritis pain — performed after confirmatory diagnostic genicular nerve block.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">Local ± mild</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--success)">Minimal (SIR Cat 1)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value" style="font-size:.88rem">Neuritis · Saphenous / Peroneal injury</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Not routine</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value" style="font-size:.88rem">Pain score 2–4 wks · Repeat at 6 mo</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#landmarks">5. Fluoro Landmarks</a></li>
+          <li><a href="#troubleshooting">6. Troubleshooting</a></li>
+          <li><a href="#complications">7. Complications</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#references">9. References</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications &amp; Patient Selection</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Indications</h4>
+              <ul class="list">
+                <li><strong>Chronic knee osteoarthritis (OA) pain</strong> — Kellgren-Lawrence (KL) grade II–IV, failed conservative therapy (NSAIDs, physical therapy, injections × 3 months)</li>
+                <li><strong>Positive diagnostic genicular nerve block (GNB)</strong> — ≥50% pain relief on diagnostic block is required and is the strongest predictor of successful RFA</li>
+                <li><strong>Post-total knee arthroplasty (TKA) persistent pain</strong> — genicular nerves may remain intact and continue to mediate pain after arthroplasty</li>
+                <li><strong>Failed intra-articular injections</strong> — patients with ongoing pain despite corticosteroid or hyaluronic acid injections</li>
+                <li><strong>Pain ≥ 6 months</strong> duration with functional impairment</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Contraindications &amp; Workup</h4>
+              <ul class="list">
+                <li><strong>Absolute:</strong> Active knee joint infection · Uncorrectable coagulopathy · Planned TKA within 3 months · Pacemaker without cardiology clearance (bipolar RFA mode can be used with pacemaker after clearance)</li>
+                <li><strong>Relative:</strong> Prior ipsilateral knee surgery altering anatomy · Prior RFA at same site without adequate washout (≥6 months)</li>
+                <li><strong>Workup:</strong> Weight-bearing knee X-ray (KL grading) · Baseline VAS pain score · Functional assessment (WOMAC or KOOS) · Confirm pain ≥6 months · INR / anticoagulation status</li>
+                <li><strong>Note:</strong> OA grade does NOT predict RFA response — even KL IV patients can have excellent relief; response is predicted by GNB result, not imaging</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Confirm positive diagnostic GNB.</strong> Patient must have had a prior diagnostic genicular nerve block with ≥50% pain relief. Document the degree and duration of relief. RFA without a positive GNB has significantly worse outcomes.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Fluoroscopy (C-arm) setup.</strong> Patient supine on fluoroscopy table. Feet and ankles can be taped to the table to ensure leg immobility. C-arm in AP orientation. Confirm bilateral condyles can be superimposed on lateral view.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>RF equipment.</strong> Confirm RF generator availability (Halyard Coolief, Avanos, or Stryker Sievert). Set up 18G RF cannulas with 10-mm active tip × 3. Introducer needles if required by system. Confirm generator settings: 80°C × 90 sec (conventional) or 55°C × 150 sec (cooled tip).</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Three-target protocol.</strong> Plan for three target nerves: Superior Medial Genicular (SMG), Superior Lateral Genicular (SLG), Inferior Medial Genicular (IMG). Mark targets on the pre-procedure fluoroscopic scout image. Review knee X-ray to appreciate bone landmarks.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Medications prepared.</strong> 1% lidocaine for skin entry (local anesthesia at 3 sites). 2% lidocaine 0.5 mL per site for pre-ablation anesthesia. Dexamethasone 4 mg + bupivacaine 0.5% for post-ablation injection at each site (reduces neuritis).</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Anticoagulation hold.</strong> SIR Category 1 procedure. Heparin: hold 4–6h; LMWH: hold 24h; Warfarin: hold 5d (INR &lt;2.0); DOACs: hold 24–48h. Aspirin may be continued. Confirm INR if applicable.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Sedation decision.</strong> Diagnostic GNB: no sedation required. RFA: mild IV sedation (midazolam 1–2 mg ± fentanyl 25–100 mcg) acceptable if patient prefers; fully awake is also feasible. Patient must be able to report sensory stimulation findings during nerve testing.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Three-Nerve Target Protocol</h4>
+                <ul class="list">
+                  <li><strong>Superior Medial Genicular Nerve (SMG):</strong> Runs along periosteum at the junction of the medial femoral condyle and medial femoral shaft — the "metaphyseal junction" on the medial side. Target: center of the notch between shaft and condyle on AP fluoroscopy.</li>
+                  <li><strong>Superior Lateral Genicular Nerve (SLG):</strong> Junction of the lateral femoral condyle and lateral femoral shaft. Analogous position laterally. Note proximity to recurrent fibular (peroneal) nerve — do not target too far lateral or inferior.</li>
+                  <li><strong>Inferior Medial Genicular Nerve (IMG):</strong> Junction of the medial tibial condyle and medial tibial shaft, just distal to the medial joint line. Most commonly under-targeted in failed RFA cases.</li>
+                  <li><strong>Key rule:</strong> All three nerves run along periosteum at the epiphysis-diaphysis junction ("metaphyseal junction"). Periosteal contact = correct depth.</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>At-Risk Structures</h4>
+                <ul class="list">
+                  <li><strong>Saphenous nerve</strong> — runs medially near the SMG target; provides sensory innervation to the medial knee and distal leg. Injury (SMG too posterior) → medial knee and calf numbness.</li>
+                  <li><strong>Recurrent fibular nerve (superficial peroneal branch)</strong> — near the SLG; injury → foot drop. Avoid ablating too far lateral or inferior at the SLG target.</li>
+                  <li><strong>5-nerve extension protocols</strong> add the Inferior Lateral Genicular nerve and Middle Genicular nerve — only recommended in experienced hands given increased peroneal nerve risk.</li>
+                  <li><strong>Sensory stimulation (50 Hz, &lt;0.5V)</strong> is the safety mechanism to confirm nerve location before ablation. Motor stimulation (2 Hz) rules out motor nerve proximity.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. HOW I DO IT ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">Default RadCall approach + community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <!-- Default RadCall card -->
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#x1F4CB; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#x2B07; Download</button></h4>
+              <div class="chip-row card-supplies">
+                <span class="chip">C-arm fluoroscopy unit</span>
+                <span class="chip">18G RF cannula, 10-mm active tip × 3</span>
+                <span class="chip">RF generator (Halyard Coolief / Avanos / Stryker)</span>
+                <span class="chip">22G spinal needle × 3 (for diagnostic GNB)</span>
+                <span class="chip">1% lidocaine (skin entry)</span>
+                <span class="chip">2% lidocaine 0.5 mL per site (pre-ablation)</span>
+                <span class="chip">Dexamethasone 4 mg</span>
+                <span class="chip">Bupivacaine 0.5% 0.5 mL per site (post-ablation)</span>
+                <span class="chip">ChloraPrep</span>
+                <span class="chip">Sterile drape</span>
+                <span class="chip">Sterile dressing</span>
+              </div>
+
+              <!-- Phase A -->
+              <div class="approach-label">Phase A — Diagnostic Genicular Nerve Block (separate visit)</div>
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Position and C-arm setup</h4><div class="muted">Patient supine, knee slightly flexed. Tape feet/ankles to table to prevent movement. C-arm in AP orientation. Confirm condyles are superimposed on lateral view before beginning.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Identify three targets under fluoroscopy</h4><div class="muted">AP view: SMG at medial femoral shaft-condyle junction (metaphyseal junction, medial side). SLG at lateral femoral shaft-condyle junction. IMG at medial tibial shaft-condyle junction, just distal to the medial joint line.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Advance 22G needle to periosteum</h4><div class="muted">Local skin wheal with 1–2 mL 1% lidocaine at each entry site (avoid the target nerve). Advance 22G spinal needle to periosteum at each of the three target sites under AP fluoroscopy. Confirm periosteal contact — needle should "bounce" off bone.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Inject lidocaine — small volume</h4><div class="muted">Inject 0.5–1.0 mL 1% lidocaine per site (total ≤ 2 mL per nerve). Keep volumes small to avoid spread to adjacent structures and false-positive block. Total: 3 sites.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Assess pain relief at 30 min</h4><div class="muted">Patient records VAS pain score pre- and 30 min post-block. ≥50% improvement = positive GNB → proceed to RFA. Document result formally before scheduling RFA.</div></div></div>
+              </div>
+
+              <!-- Phase B -->
+              <div class="approach-label" style="margin-top:20px;">Phase B — Radiofrequency Ablation (if GNB positive)</div>
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Position — same as diagnostic block</h4><div class="muted">Patient supine, knee slightly flexed. C-arm AP. Same three target sites as the diagnostic block: SMG, SLG, IMG at their respective periosteal metaphyseal junctions.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Place 18G RF cannula to periosteum</h4><div class="muted">Local skin wheal (1% lidocaine) at each of three entry sites. Advance 18G RF cannula (10-mm active tip) to periosteum at each target under AP fluoroscopy. Confirm with lateral view — tip should be at mid-depth of condyle, not anterior capsule or posterior.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Sensory stimulation — 50 Hz</h4><div class="muted">Sensory stimulation at 50 Hz. Paresthesia reproduced in the knee at &lt;0.5V = correct location (nerve confirmed). No paresthesia at &gt;0.5V = off-target → withdraw and redirect. Do NOT ablate at off-target location.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Motor stimulation — 2 Hz</h4><div class="muted">Motor stimulation at 2 Hz. Confirm no motor response at &lt;2× the sensory threshold. This is especially important at the SMG (near saphenous nerve) and SLG (near recurrent fibular/peroneal nerve). If motor response present → reposition before ablating.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Pre-ablation anesthesia</h4><div class="muted">Inject 0.5 mL 2% lidocaine through the RF cannula at each confirmed target site. Wait 60 seconds for anesthetic effect before ablation.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>Radiofrequency ablation</h4><div class="muted">Ablate each target sequentially. Conventional RF: 80°C × 90 seconds per site. Cooled-tip alternative (Coolief): 55–60°C × 150 seconds per site (larger lesion size). Treat all three targets: SMG, SLG, IMG. Total procedure time approximately 30–45 min.</div></div></div>
+                <div class="step"><div class="step-num">7</div><div><h4>Post-ablation injection at each site</h4><div class="muted">After ablation at each site, inject 1 mL dexamethasone 4 mg + 0.5 mL bupivacaine 0.5% through the cannula before removal. This significantly reduces post-procedure neuritis (Gonzalez et al. data).</div></div></div>
+              </div>
+
+              <div style="margin-top: 16px; padding: 12px 16px; border-radius: 12px; background: rgba(245,158,11,.07); border: 1px solid rgba(245,158,11,.15);">
+                <span style="color:#fcd58e; font-weight:700; font-size:.88rem;">NOTE — 5-Nerve Protocol:</span>
+                <span class="muted" style="font-size:.9rem;"> Some protocols extend to 5 nerves by adding the Inferior Lateral Genicular nerve and Middle Genicular nerve. Outcomes are similar to the 3-nerve protocol in published data. The 5-nerve approach is not recommended for less experienced operators given increased risk to the peroneal nerve at the inferior lateral target.</span>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. FLUOROSCOPIC LANDMARKS ═══ -->
+        <section class="section" id="landmarks">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Fluoroscopic Landmarks</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="panel" style="margin-bottom:14px;">
+              <h4>Target Localization by View</h4>
+              <table class="ref-table">
+                <thead>
+                  <tr>
+                    <th>Target Nerve</th>
+                    <th>AP View Landmark</th>
+                    <th>Lateral View Confirmation</th>
+                    <th>Key Pitfall</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Superior Medial Genicular (SMG)</strong></td>
+                    <td>Medial femur — center of the "notch" between the femoral shaft and medial femoral condyle (metaphyseal junction)</td>
+                    <td>Mid-depth of condyle; not anterior capsule, not posterior</td>
+                    <td>Too posterior → saphenous nerve → medial numbness</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Superior Lateral Genicular (SLG)</strong></td>
+                    <td>Lateral femur — analogous junction of lateral femoral shaft and lateral femoral condyle</td>
+                    <td>Mid-depth of condyle laterally</td>
+                    <td>Too lateral/inferior → peroneal nerve → foot drop risk</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Inferior Medial Genicular (IMG)</strong></td>
+                    <td>Medial tibia — junction of medial tibial shaft and medial tibial condyle, just distal to the medial joint line</td>
+                    <td>Anterior to fibular head level, mid-depth of tibial condyle</td>
+                    <td>Most commonly missed target — ensure cannula is distal enough</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="two-col">
+              <div class="panel">
+                <h4>AP View Essentials</h4>
+                <ul class="list">
+                  <li>All three metaphyseal junctions are visible on a single AP view of the knee</li>
+                  <li>SMG and IMG are on the medial side; SLG on the lateral side</li>
+                  <li>The RF cannula tip should overlay the periosteum at the junction — not on the joint space, not on the shaft alone</li>
+                  <li>Confirm position at each of the three sites before moving to lateral confirmation</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Lateral View Essentials</h4>
+                <ul class="list">
+                  <li>Superimpose condyles on lateral view for accurate depth assessment</li>
+                  <li>Tip should project at the mid-depth of the condyle</li>
+                  <li>Too anterior = anterior fat pad / anterior capsule — incorrect</li>
+                  <li>Too posterior = posterior capsule, popliteal vessels, neural structures — incorrect and dangerous</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Paresthesia down leg or foot during sensory stimulation</h4>
+              <p class="muted"><strong>Likely cause:</strong> RF cannula too posterior — near saphenous nerve (medial, leg paresthesia) or near recurrent fibular / peroneal nerve (lateral, foot or dorsum paresthesia).</p>
+              <p class="success"><strong>Next step:</strong> Stop stimulation immediately. Withdraw cannula 2–3 mm and redirect anteriorly and slightly superiorly. Repeat sensory stimulation. Do NOT ablate until knee-specific paresthesia is reproduced at &lt;0.5V. If paresthesia persists in the foot or lower leg, reposition significantly before retesting.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Motor response at low voltage during 2 Hz stimulation</h4>
+              <p class="muted"><strong>Likely cause:</strong> RF cannula near a motor nerve — most often peroneal nerve at the SLG target (ankle dorsiflexion or eversion), or saphenous-adjacent motor branch at SMG.</p>
+              <p class="success"><strong>Next step:</strong> Reposition cannula before ablation. Acceptable motor threshold = no motor response at &lt;2× the sensory threshold. If motor firing occurs below this margin, redirect and retest both sensory and motor stimulation before proceeding.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Incomplete or short-lived pain relief after RFA</h4>
+              <p class="muted"><strong>Likely cause:</strong> Most commonly the IMG was under-targeted (too proximal on the tibia, missing the metaphyseal junction). Less commonly, inadequate sensory stimulation confirmation before ablation.</p>
+              <p class="success"><strong>Next step:</strong> Review fluoroscopic images — confirm IMG was at the medial tibial shaft-condyle junction distal to the joint line. Consider repeat RFA targeting 5 nerves (adding inferior lateral genicular and middle genicular). Repeat RFA is safe at ≥6 months.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Post-procedure pain flare (days 1–14)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Neuritis from thermal ablation of genicular nerve fibers — occurs in approximately 10–15% of patients; self-limited.</p>
+              <p class="success"><strong>Next step:</strong> Reassure patient this is expected and transient. Manage with NSAIDs and ice. Resolves within 2 weeks in most patients. Post-ablation dexamethasone injection (at time of procedure) significantly reduces the incidence. Do not interpret early pain flare as procedure failure.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Immediate / Periprocedural</h4>
+              <ul class="list danger">
+                <li><strong>Neuritis / post-procedure pain flare</strong> (10–15%) — most common complication; thermal reaction around ablated nerve; self-limited, resolves within 2 weeks; mitigated by post-ablation dexamethasone + bupivacaine injection</li>
+                <li><strong>Saphenous nerve injury</strong> — SMG cannula placed too posterior → medial knee and calf numbness / dysesthesia; usually temporary; avoid by confirming no leg paresthesia at sensory stimulation and maintaining anterior trajectory</li>
+                <li><strong>Peroneal nerve injury / foot drop</strong> — SLG cannula placed too lateral or inferior → ankle dorsiflexion weakness; most serious complication; avoid by strict motor stimulation threshold testing and conservative SLG targeting</li>
+                <li><strong>Skin burn</strong> — rare with proper technique; RF tip must not contact dermis; ensure adequate needle depth before ablation</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Delayed</h4>
+              <ul class="list">
+                <li><strong>Infection</strong> — rare (&lt;1%); sterile technique essential; present as worsening pain, warmth, fever; treat with antibiotics; joint aspiration and culture if septic arthritis suspected</li>
+                <li><strong>Incomplete ablation</strong> — inadequate lesion size (too low temperature or too short duration); protocol-compliant technique (80°C × 90 sec or cooled tip 55°C × 150 sec) minimizes this; repeat RFA safe at ≥6 months</li>
+                <li><strong>Limited duration of effect</strong> — nerves regenerate over 6–12 months; pain recurrence expected; repeat RFA is safe and effective and can be offered when pain returns</li>
+                <li><strong>Hematoma</strong> — rare; SIR Category 1 procedure; usually self-limited; compressive dressing and observation</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>ALWAYS perform diagnostic GNB first — it is the gatekeeper to RFA.</strong> A positive GNB (≥50% pain relief) is the strongest predictor of successful RFA outcomes. Proceeding to RFA without a confirmatory block leads to significantly worse results. This is not optional — it is the standard of care.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Sensory stimulation confirms target position — ≤0.5V is the threshold.</strong> Paresthesia in the knee at &lt;0.5V = correct location (nerve confirmed). Threshold &gt;0.5V = off-target → reposition before ablating. Never skip stimulation testing. It is both a safety and an efficacy step.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Post-ablation dexamethasone + bupivacaine significantly reduces neuritis.</strong> Inject 1 mL dexamethasone 4 mg + 0.5 mL bupivacaine 0.5% at each site after ablation before removing the cannula. This is supported by Gonzalez et al. data and should be routine. It also improves immediate post-procedure comfort and reduces callbacks.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Duration of effect is 6–12 months; repeat RFA is safe and effective.</strong> Genicular nerves regenerate. Patients should be counseled that pain relief is not permanent. Repeat RFA at ≥6 months can restore the same degree of relief. Frame this as a maintenance procedure rather than a cure — sets realistic expectations and improves patient satisfaction.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>OA grade does not predict RFA response — GNB does.</strong> Even patients with severe radiographic OA (KL grade IV) can achieve excellent pain relief with genicular nerve RFA. Do not exclude patients based on X-ray findings alone. Select based on clinical presentation, duration of pain, failed conservative therapy, and most importantly — a positive diagnostic GNB.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>IMG is the most commonly missed target in failed RFA cases.</strong> The inferior medial genicular nerve target on the medial tibial condyle is frequently under-targeted — the cannula is placed too proximally (at or above the joint line) rather than distal to it at the metaphyseal junction. Review lateral fluoroscopic views carefully for IMG depth and position at the time of the procedure.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. REFERENCES ═══ -->
+        <section class="section" id="references">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>References &amp; Community Cards</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div style="margin-bottom: 20px;">
+              <div class="panel" style="margin-bottom:14px;">
+                <h4>Outcome Data Summary</h4>
+                <table class="ref-table">
+                  <thead>
+                    <tr>
+                      <th>Timepoint</th>
+                      <th>KOOS Score</th>
+                      <th>WOMAC Score</th>
+                      <th>VAS Pain</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><strong>Baseline</strong></td><td>16.7</td><td>23</td><td>9–10</td></tr>
+                    <tr><td><strong>2 weeks</strong></td><td>81</td><td>65</td><td>4</td></tr>
+                    <tr><td><strong>1 month</strong></td><td>84</td><td>65</td><td>2</td></tr>
+                    <tr><td><strong>3 months</strong></td><td>86</td><td>65</td><td>1</td></tr>
+                    <tr><td><strong>6 months</strong></td><td>91</td><td>82</td><td>0</td></tr>
+                  </tbody>
+                </table>
+                <p class="muted" style="font-size:.82rem; margin: 8px 0 0;">Data from Gonzalez FM, Broida SE, Kokabi N (Prologo &amp; Ray, Thieme 2024) — cooled RFA, SIFK patient. KOOS = Knee Injury and Osteoarthritis Outcome Score; WOMAC = Western Ontario and McMaster Universities Osteoarthritis Index; VAS = Visual Analog Scale.</p>
+              </div>
+              <div class="panel">
+                <h4>Citations</h4>
+                <ul class="list" style="gap:12px;">
+                  <li>Prologo JD, Ray CE Jr., eds. <em>Advanced Pain Management in Interventional Radiology: A Case-Based Approach</em>. Thieme; 2024. Ch. 34: Gonzalez FM, Broida SE, Kokabi N — Nerve Ablations I (Genicular RF).</li>
+                  <li>Choi WJ, Hwang SJ, Song JG, et al. Radiofrequency treatment relieves chronic knee osteoarthritis pain: a double-blind randomized controlled trial. <em>Pain</em>. 2011;152(3):481–487.</li>
+                  <li>Jamison DE, Cohen SP. Radiofrequency techniques to treat chronic knee pain: a comprehensive review of anatomy, effectiveness, treatment parameters, and patient selection. <em>J Pain Res</em>. 2018;11:1879–1888.</li>
+                  <li>Sayyid S, Younan Y, Sharma G, et al. Subchondral insufficiency fracture of the knee: grading, risk factors, and outcome. <em>Skeletal Radiology</em>. 2019;48(12):1961–1974.</li>
+                  <li>SIR Standards of Practice Committee. Consensus Guidelines for Periprocedural Management of Coagulation Status. <em>J Vasc Interv Radiol</em>. 2012;23(6):727–736.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Community cards section for references -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards-ref" class="cards-grid"></div>
+          </div>
+        </section>
+
+        <p class="footer-note">Ref: Prologo &amp; Ray, Advanced Pain Management in IR (Thieme, 2024) · Choi WJ et al., Pain 2011;152:481–487 · Jamison &amp; Cohen, J Pain Res 2018</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My Genicular RFA Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;18G RF cannula 10mm active tip&#10;Coolief system&#10;Dexamethasone 4mg"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;Supine, knee flexed, C-arm AP&#10;Target SMG at medial femoral metaphysis&#10;Sensory stim 50Hz confirm &lt;0.5V&#10;Ablate 80°C × 90sec"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <label>Your Name</label>
+      <input type="text" id="card-author-name" placeholder="Your name (shown on card)" />
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" id="save-card-btn" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'genicular-nerve-rfa';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _myVotes = {};
+  let _cardSearch = '';
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  // ── Load cards ──
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    await loadVotes();
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!document.getElementById('card-search-wrap')) {
+      const wrap = document.createElement('div');
+      wrap.id = 'card-search-wrap';
+      wrap.style.cssText = 'margin-bottom:12px';
+      wrap.innerHTML = '<input id="card-search" type="text" placeholder="Search community cards…" style="width:100%;padding:8px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:inherit;font-family:inherit;font-size:13px;outline:none;" oninput="_cardSearch=this.value.toLowerCase();renderCards()">';
+      container.parentElement.insertBefore(wrap, container);
+    }
+    const q = _cardSearch.trim();
+    const visible = q ? _cards.filter(c => [c.title||'',c.display_name||'',...(c.supplies||[]),...(c.steps||[]),...(c.pearls||[])].join(' ').toLowerCase().includes(q)) : _cards;
+    if (!visible.length) {
+      loading.textContent = q ? 'No cards match your search.' : 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      container.innerHTML = '';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = visible.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      const myVote = _myVotes[c.id];
+      const votes = c.net_votes || 0;
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}" data-card-id="${c.id}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:5px;flex-shrink:0">
+              <button onclick="voteCard('${c.id}','up')" title="Helpful" style="background:none;border:1px solid ${myVote==='up'?'#22c55e':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='up'?'#22c55e':'inherit'};transition:.15s">${myVote==='up'?'▲':'△'}${votes>0?' '+votes:''}</button>
+              <button onclick="voteCard('${c.id}','down')" title="Not helpful" style="background:none;border:1px solid ${myVote==='down'?'#ef4444':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='down'?'#ef4444':'inherit'};transition:.15s">${myVote==='down'?'▼':'▽'}</button>
+              ${isOwn ? `<button onclick="editCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Edit</button><button onclick="deleteCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Delete</button>` : ''}
+            </div>
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  async function loadVotes() {
+    const sb = _sb(); const user = _user();
+    if (!sb || !user) return;
+    const { data } = await sb.from('procedure_card_votes').select('card_id,vote').eq('user_id', user.id);
+    _myVotes = {};
+    if (data) for (const v of data) _myVotes[v.card_id] = v.vote;
+  }
+
+  async function voteCard(cardId, dir) {
+    const sb = _sb(); const user = _user();
+    if (!user || !sb) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    const existing = _myVotes[cardId];
+    const card = _cards.find(c => c.id === cardId);
+    if (!card) return;
+    if (existing === dir) {
+      await sb.from('procedure_card_votes').delete().match({ user_id: user.id, card_id: cardId });
+      delete _myVotes[cardId];
+      card.net_votes = (card.net_votes || 0) + (dir === 'up' ? -1 : 1);
+    } else {
+      await sb.from('procedure_card_votes').upsert({ user_id: user.id, card_id: cardId, vote: dir }, { onConflict: 'user_id,card_id' });
+      const prev = existing ? (existing === 'up' ? -1 : 1) : 0;
+      card.net_votes = (card.net_votes || 0) + prev + (dir === 'up' ? 1 : -1);
+      _myVotes[cardId] = dir;
+    }
+    await sb.from('procedure_cards').update({ net_votes: card.net_votes }).eq('id', cardId);
+    renderCards();
+  }
+
+  // ── Card CRUD ──
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    const nameInput = document.getElementById('card-author-name');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      if (nameInput) nameInput.value = card.display_name || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+      if (nameInput && !nameInput.value.trim()) {
+        const u = _user();
+        if (nameInput && !nameInput.value) nameInput.value = (u && u.email) ? u.email.split('@')[0] : '';
+        if (window.RadCallAuth && window.RadCallAuth.getProfile) {
+          window.RadCallAuth.getProfile().then(p => {
+            if (nameInput && !nameInput.value.trim()) nameInput.value = (p && p.display_name) || '';
+          }).catch(() => {});
+        }
+      }
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    if (!sb) { alert('Connection error — please reload and try again.'); return; }
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title.'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const authorInput = document.getElementById('card-author-name');
+    const displayName = (authorInput && authorInput.value.trim()) || (user.email ? user.email.split('@')[0] : 'Anonymous');
+    const saveBtn = document.getElementById('save-card-btn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving…'; }
+    try {
+      if (editId) {
+        _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() } : c);
+        renderCards(); closeCardModal();
+        const { error } = await sb.from('procedure_cards').update({ title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() }).eq('id', editId);
+        if (error) console.error('Card update error:', error);
+      } else {
+        const tmpId = 'tmp-' + Date.now();
+        const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0, created_at: new Date().toISOString() };
+        _cards.unshift(newCard);
+        renderCards(); closeCardModal();
+        const { data, error } = await sb.from('procedure_cards')
+          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0 })
+          .select().single();
+        if (error) {
+          console.error('Card insert error:', error);
+          _cards = _cards.filter(c => c.id !== tmpId);
+          renderCards();
+          alert('Could not save card: ' + (error.message || 'Unknown error. Check your connection and try again.'));
+        } else if (data) {
+          _cards = _cards.map(c => c.id === tmpId ? data : c);
+        }
+      }
+      try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    } catch(err) {
+      console.error('saveCard exception:', err);
+      alert('Something went wrong saving your card. Please try again.');
+    } finally {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Card'; }
+    }
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  // ── Helpers ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Genicular Nerve Radiofrequency Ablation — Supply List\n' + '═'.repeat(50) + '\n' + supplies.map(s => '☐ ' + s).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Genicular Nerve Radiofrequency Ablation — Supply List\n' + '═'.repeat(50) + '\n' + supplies.map(s => '☐ ' + s).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'genicular-nerve-rfa-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  // ── Init ──
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+    function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('open'); }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>

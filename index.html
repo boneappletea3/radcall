@@ -1985,7 +1985,7 @@ async function _loadSection(id) {
   // Show spinner
   sec.innerHTML = '<div class="lazy-spinner"><div class="lazy-dot"></div><div class="lazy-dot"></div><div class="lazy-dot"></div></div>';
   try {
-    const r = await fetch('sections/' + id + '.html?v=29');
+    const r = await fetch('sections/' + id + '.html?v=30');
     if (!r.ok) throw new Error('HTTP ' + r.status);
     sec.innerHTML = await r.text();
     sec.dataset.loaded = '1';
@@ -2566,6 +2566,16 @@ const searchIndex = [
   { q: 'sacroplasty sacral insufficiency fracture PMMA cement Denis zone H-fracture Honda sign osteoporotic CT-guided', section: 'ir', topic: 'ir-proc-library', label: 'Sacroplasty — IR Procedure' },
   { q: 'pudendal nerve block ablation cryoablation ischial spine Alcock canal pudendal neuralgia perineal pain Nantes criteria', section: 'ir', topic: 'ir-proc-library', label: 'Pudendal Nerve Block / Ablation — IR Procedure' },
   { q: 'sciatic nerve block ablation cryoablation subgluteal CT-guided sciatica oncologic leg pain phantom limb piriformis', section: 'ir', topic: 'ir-proc-library', label: 'Sciatic Nerve Block / Ablation — IR Procedure' },
+  { q: 'osteoid osteoma RFA ablation nidus nocturnal pain aspirin relief CT halo sign reactive sclerosis transpedicular bone drill pediatric', section: 'ir', topic: 'ir-proc-library', label: 'Osteoid Osteoma Ablation — IR Procedure' },
+  { q: 'genicular nerve RFA radiofrequency ablation knee osteoarthritis OA SMG SLG IMG metaphyseal junction diagnostic block WOMAC', section: 'ir', topic: 'ir-proc-library', label: 'Genicular Nerve RFA — IR Procedure' },
+  { q: 'genicular artery embolization GAE knee osteoarthritis synovial neovascularization microspheres popliteal DSA GENESIS trial', section: 'ir', topic: 'ir-proc-library', label: 'Genicular Artery Embolization — IR Procedure' },
+  { q: 'sacroiliac joint injection SI joint axial low back pain oblique fluoroscopy triamcinolone arthrogram ankylosing spondylitis post-fusion', section: 'ir', topic: 'ir-proc-library', label: 'Sacroiliac Joint Injection — IR Procedure' },
+  { q: 'basivertebral nerve ablation Intracept BVN vertebrogenic low back pain Modic type I II endplate transpedicular RF 85 degrees', section: 'ir', topic: 'ir-proc-library', label: 'Basivertebral Nerve Ablation (Intracept) — IR Procedure' },
+  { q: 'pelvic congestion syndrome ovarian vein embolization PCS dyspareunia varicosities coils STS foam bilateral internal iliac nutcracker', section: 'ir', topic: 'ir-proc-library', label: 'Pelvic Congestion Syndrome — IR Procedure' },
+  { q: 'superior hypogastric nerve block neurolysis SHP plexus pelvic cancer pain L5 S1 CT-guided ethanol phenol bilateral paravertebral ganglion impar', section: 'ir', topic: 'ir-proc-library', label: 'Superior Hypogastric Nerve Block — IR Procedure' },
+  { q: 'cryoneurolysis CT-guided peripheral nerve freeze thaw intercostal LFCN meralgia paresthetica ice ball Wallerian degeneration oncologic', section: 'ir', topic: 'ir-proc-library', label: 'Cryoneurolysis — IR Procedure' },
+  { q: 'image-guided joint injection hip shoulder knee ankle fluoroscopy ultrasound triamcinolone arthrography hyaluronic acid PRP aspiration', section: 'ir', topic: 'ir-proc-library', label: 'Image-Guided Joint Injections — IR Procedure' },
+  { q: 'peripheral nerve block CT-guided LFCN genitofemoral ilioinguinal iliohypogastric obturator cluneal PFCN meralgia paresthetica inguinal pain', section: 'ir', topic: 'ir-proc-library', label: 'CT-Guided Peripheral Nerve Blocks — IR Procedure' },
   { q: 'contrast reaction anaphylaxis epinephrine treatment', section: 'contrast', label: 'Contrast Reactions — Contrast & Drugs' },
   { q: 'premedication prednisone methylprednisolone diphenhydramine', section: 'contrast', label: 'Premedication — Contrast & Drugs' },
   { q: 'iodinated contrast renal function egfr pc-aki cin', section: 'contrast', label: 'Renal & Iodinated Contrast — Contrast & Drugs' },
@@ -4269,7 +4279,7 @@ async function _preIndexBackground() {
     if (!sec || sec.dataset.searchIndexed) continue;
     if (sec.dataset.loaded) { _indexSectionContent(id, sec); continue; }
     try {
-      const r = await fetch('sections/' + id + '.html?v=29');
+      const r = await fetch('sections/' + id + '.html?v=30');
       if (!r.ok) continue;
       const tmp = document.createElement('div');
       tmp.innerHTML = await r.text();

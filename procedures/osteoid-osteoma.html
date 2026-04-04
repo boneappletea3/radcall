@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Osteoid Osteoma Ablation — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Reference / data table ── */
+    .ref-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .ref-table th, .ref-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .ref-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .ref-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    /* ── Approach sub-header ── */
+    .approach-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: var(--accent); font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin: 16px 0 10px; }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Interventional Radiology &middot; Pain Management</div>
+      <h1>Osteoid Osteoma Ablation</h1>
+      <p class="subhead">CT-guided percutaneous radiofrequency ablation of the nidus for definitive treatment of osteoid osteoma — high technical success (&gt;95%) with same-day discharge in most patients.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">GA preferred</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Guidance</span><div class="snapshot-value">CT (preferred)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value" style="font-size:.88rem">Incomplete ablation · Skin burn · Neuro injury</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value" style="font-size:.88rem">Cefazolin 1g IV</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value" style="font-size:.88rem">Same-day discharge · Clinical review 1 mo</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#landmarks">5. CT Landmarks</a></li>
+          <li><a href="#troubleshooting">6. Troubleshooting</a></li>
+          <li><a href="#complications">7. Complications</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#references">9. References</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications &amp; Patient Selection</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:14px;">
+              <div class="panel">
+                <h4>Classic Presentation</h4>
+                <ul class="list">
+                  <li><strong>Nocturnal pain</strong> relieved by aspirin or NSAIDs — highly characteristic; driven by elevated prostaglandins (PGE2/PGI2) in the nidus</li>
+                  <li><strong>Age 5–30 years;</strong> male predominance (~4:1 male-to-female ratio)</li>
+                  <li><strong>Locations:</strong> long bones (femur/tibia ~50%), spine (posterior elements), small bones of hands and feet; ischium, patella, skull are atypical</li>
+                  <li><strong>Painful scoliosis</strong> in adolescents — consider spinal OO</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Imaging Workup</h4>
+                <ul class="list">
+                  <li><strong>CT (thin-slice, ≤1 mm):</strong> lucent nidus (&lt;2 cm) surrounded by dense reactive cortical sclerosis — "halo sign"; central mineralized focus may be present</li>
+                  <li><strong>Bone scan (Tc-99m MDP):</strong> near 100% sensitivity; "double density" sign with focal uptake in nidus + surrounding halo</li>
+                  <li><strong>MRI:</strong> less sensitive for nidus but demonstrates perilesional marrow edema (STIR hyperintensity) and joint effusion; useful for spinal lesions</li>
+                  <li><strong>Radiographs:</strong> may be normal or show only reactive thickening; not reliable for nidus identification</li>
+                </ul>
+              </div>
+            </div>
+            <div class="two-col">
+              <div class="panel">
+                <h4>Indications for Ablation</h4>
+                <ul class="list">
+                  <li>Failed conservative therapy (NSAIDs) ≥6 months — up to 75% respond to NSAIDs alone; ablation reserved for those who do not</li>
+                  <li>Intolerable pain significantly impairing daily activity or sleep</li>
+                  <li>Spinal lesions with neurologic risk or scoliosis progression</li>
+                  <li>Patient preference for definitive treatment over long-term NSAID use</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Contraindications</h4>
+                <ul class="list">
+                  <li><strong>Nidus &gt;2 cm</strong> — consider osteoblastoma or other diagnosis; surgical consultation preferred</li>
+                  <li><strong>Proximity to bowel or major neurovascular structures</strong> without thermal protection strategy</li>
+                  <li><strong>Pregnancy</strong></li>
+                  <li><strong>Active infection</strong> at access site or suspected osteomyelitis</li>
+                  <li><strong>Uncorrectable coagulopathy</strong></li>
+                  <li>Articular cartilage within ablation zone (relative; consider cryo)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>NPO 6 hours.</strong> General anesthesia is strongly preferred — periosteal drilling is extremely painful and patient movement during probe placement risks displacement. Coordinate with anesthesia team; for pediatric patients, involve pediatric anesthesia.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Review thin-slice CT (≤1 mm slices).</strong> Confirm nidus location, size, and depth. Identify reactive sclerosis — the true nidus is the central lucency, not the surrounding sclerosis. Plan percutaneous access trajectory.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Guidance modality.</strong> CT is preferred for precise nidus targeting. Fluoroscopy alone is generally inadequate for nidus identification. Consider CT-fluoroscopy for real-time needle guidance.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Equipment.</strong> Bone access needle: Bonopty&#174; or Ostycut&#174; 11G coaxial system (or equivalent 13G Osteo-Site&#174;). RFA probe: single-tine or cooled-tip (Cool-tip&#174; Medtronic); 1-cm active tip standard for nidus ≤1 cm; 2-cm tip for larger lesions. Confirm diamond-tip drill availability for sclerotic bone.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Local anesthesia.</strong> Generous lidocaine infiltration from skin to periosteum — periosteum is highly innervated and extremely sensitive. Do not underestimate the amount needed even under GA.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Labs.</strong> CBC, CMP, INR. Bone procedures are SIR Category 2 (moderate bleeding risk) — correct INR to &lt;1.5 and platelets &gt;50K before proceeding.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Antibiotic prophylaxis.</strong> Cefazolin 1g IV (weight-based dosing in pediatric patients) at induction. Bone procedures carry infection risk; prophylaxis is standard practice.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Spinal lesions.</strong> If near neural structures: arrange temperature monitoring probe or plan thermal protection (D5W epidural cooling or CO2 pneumodissection). Confirm probe tip will be ≥1 cm from spinal canal on planning CT.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Bone scan (optional but useful).</strong> Helpful if nidus is not clearly identifiable on CT alone. Correlate bone scan uptake with CT for lesion localization. Nuclear medicine probe guidance available at some centers.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent.</strong> Discuss: pain flare (expected, 1–3 days), skin burn risk (subperiosteal lesions), infection/osteomyelitis (&lt;1%), incomplete ablation/recurrence (~5–10%), neurologic risk (spinal, &lt;1% with protection), pathologic fracture (if cortex &gt;50% involved — weightbearing restriction).</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:14px;">
+              <div class="panel">
+                <h4>Nidus Structure</h4>
+                <ul class="list">
+                  <li><strong>Inner nidus:</strong> central vascularized fibrous stroma containing osteoid trabeculae with osteoblasts — highly metabolically active; contains prostaglandins 100–1000× normal bone levels</li>
+                  <li><strong>Outer reactive zone:</strong> thickened woven and lamellar bone — the dense sclerotic rim seen on CT; this is NOT the target</li>
+                  <li><strong>Size:</strong> nidus characteristically &lt;2 cm (usually 5–15 mm); lesions &gt;2 cm raise concern for osteoblastoma</li>
+                  <li>Nidus on CT: rounded or ovoid lucency ± dense central mineralized focus; high T2/STIR signal on MRI with surrounding edema</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Location-Specific Anatomy</h4>
+                <ul class="list">
+                  <li><strong>Cortical (intracortical):</strong> most common; within bony cortex of diaphysis or meta-diaphysis — dense surrounding sclerosis makes drilling challenging</li>
+                  <li><strong>Cancellous:</strong> medullary location; easier needle passage but nidus may be less conspicuous</li>
+                  <li><strong>Subperiosteal:</strong> beneath periosteum, no cortex to drill; highest risk of skin burn from superficial location</li>
+                  <li><strong>Intra-articular:</strong> near articular cartilage — risk of chondral thermal injury; cryo preferred</li>
+                  <li><strong>Spinal:</strong> posterior elements (pedicle, lamina, facet joint); proximity to spinal canal and nerve roots is the key hazard</li>
+                </ul>
+              </div>
+            </div>
+            <div class="two-col">
+              <div class="panel">
+                <h4>Proximity Hazards by Location</h4>
+                <ul class="list">
+                  <li><strong>Proximal femur:</strong> femoral vessels and nerve; periarticular lesions risk femoral head avascular necrosis</li>
+                  <li><strong>Spine:</strong> spinal cord, nerve roots, dural sac; epidural vessels</li>
+                  <li><strong>Intra-articular (hip, knee, ankle):</strong> articular cartilage — limit thermal spread</li>
+                  <li><strong>Hand/foot small bones:</strong> digital nerves and tendons in close proximity</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Periosteum</h4>
+                <ul class="list">
+                  <li>Highly innervated — primary source of pain during needle placement and drilling</li>
+                  <li>Generous local anesthesia required from skin to periosteum regardless of general anesthesia</li>
+                  <li>Subperiosteal lesions: periosteum elevation can spread ablation heat superficially → skin burn risk → hydrodissection with saline or D5W recommended</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. HOW I DO IT ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">Default RadCall approach + community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <!-- Default RadCall card -->
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#x1F4CB; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#x2B07; Download</button></h4>
+              <div class="chip-row card-supplies">
+                <span class="chip">CT guidance (preferred)</span>
+                <span class="chip">Bonopty&#174; or Ostycut&#174; 11G coaxial bone needle</span>
+                <span class="chip">RFA probe (1-cm active tip — cooled or single-tine)</span>
+                <span class="chip">Diamond-tip drill bit (for dense sclerosis)</span>
+                <span class="chip">1% lidocaine — generous amount</span>
+                <span class="chip">Cefazolin 1g IV</span>
+                <span class="chip">ChloraPrep / sterile drape</span>
+                <span class="chip">Hemostatic plug (optional)</span>
+                <span class="chip">D5W or saline for hydrodissection</span>
+                <span class="chip">Temperature monitoring probe (spinal lesions)</span>
+                <span class="chip">Sterile dressing</span>
+              </div>
+
+              <div class="approach-label">CT-Guided RFA — Standard Protocol</div>
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Position and CT planning scan</h4><div class="muted">Position patient prone or supine depending on nidus location. Obtain high-resolution CT planning scan (0.6–1 mm slices) to confirm nidus center. Place localizing grid on skin for entry point planning. Identify the true lucent nidus — do not mistake surrounding reactive sclerosis for the target.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Skin prep and local anesthesia</h4><div class="muted">ChloraPrep prep and sterile drape. Mark skin entry site. Infiltrate generous lidocaine from skin to periosteum — periosteum is the most pain-sensitive structure. Even under GA, adequate local infiltration reduces intraoperative hemodynamic responses (expect transient hypertension/tachycardia from prostaglandin release during ablation).</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Advance bone access needle to nidus</h4><div class="muted">Under CT fluoroscopic guidance, advance the Bonopty&#174;/Ostycut&#174; trocar needle through soft tissue to the periosteum. Confirm position on CT. Advance through reactive cortical sclerosis toward the nidus center — this requires firm pressure and often a twisting motion. If sclerosis is too dense, use the diamond-tip drill bit. Confirm needle tip within the central lucency on CT (within 1 mm of nidus center).</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Coaxial access and biopsy (optional)</h4><div class="muted">Remove inner stylet. If concurrent biopsy is desired (recommended for histologic confirmation), obtain biopsy sample via the trocar. Then advance the coaxial 11G needle through the trocar to create channel for the RFA probe. Remove the 11G needle while leaving the trocar in place.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Insert RFA probe</h4><div class="muted">Insert RFA probe (1-cm active tip) through the trocar coaxially. Advance until the active tip is centered within the nidus. Confirm probe position on CT — active tip should span the nidus. For nidus &gt;8 mm: use a 2-cm active tip or plan two overlapping ablation cycles.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>Ablation</h4><div class="muted">Perform RFA: heat to 90–95°C for 4–6 minutes (standard protocol). For bipolar probes (Cool-tip&#174;): grounding pads unnecessary; follow manufacturer settings. Expect patient hemodynamic response (transient hypertension/tachycardia) at ablation onset due to prostaglandin release — warn anesthesia team. Repeat cycle if nidus &gt;8 mm or if first cycle target temperature was not achieved. For spinal lesions near neural structures: monitor temperature probe; maintain &lt;45°C at neural elements.</div></div></div>
+                <div class="step"><div class="step-num">7</div><div><h4>Probe removal and hemostasis</h4><div class="muted">Allow probe to cool per manufacturer protocol before removal. Remove probe and coaxial trocar. Apply hemostatic plug at tract if desired. Apply sterile dressing.</div></div></div>
+                <div class="step"><div class="step-num">8</div><div><h4>Post-procedure CT</h4><div class="muted">Obtain immediate post-procedure CT to confirm probe position, assess the ablation zone (gas foci in bone = expected), and exclude complications (hematoma, pneumothorax for rib/thoracic lesions, cortical fracture).</div></div></div>
+                <div class="step"><div class="step-num">9</div><div><h4>Recovery and discharge</h4><div class="muted">Monitor in recovery 1–2 hours. Discharge same day in most cases (pediatric patients at some institutions are admitted overnight). Discharge with NSAIDs ± short acetaminophen course for expected post-procedure pain flare. Non-weight-bearing 4–6 weeks if &gt;50% cortex involved (fracture risk).</div></div></div>
+              </div>
+
+              <!-- Modality comparison -->
+              <div style="margin-top: 20px;">
+                <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Ablation Modality Comparison</h4>
+                <table class="ref-table">
+                  <thead>
+                    <tr>
+                      <th>Modality</th>
+                      <th>Mechanism</th>
+                      <th>Advantages</th>
+                      <th>Considerations</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>RFA</strong> (standard)</td>
+                      <td>Alternating current → ionic oscillation → heat</td>
+                      <td>Most evidence base; predictable 90–95°C zone; cooled probes reduce charring</td>
+                      <td>Cannot use near implanted metal; limited by carbonization at high temps</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Microwave (MWA)</strong></td>
+                      <td>2.45 GHz EM field → water molecule oscillation → heat</td>
+                      <td>Higher temperatures more rapidly; less affected by heat sink; promising early data</td>
+                      <td>Less literature for OO specifically; requires shorter ablation cycles (30W × 3 min)</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Cryoablation</strong></td>
+                      <td>Pressurized gas expansion → lethal freezing</td>
+                      <td>Preferred near articular cartilage and neural structures; visible iceball on CT</td>
+                      <td>Requires larger access needle; ice ball less predictable in cortical bone; limited OO-specific series</td>
+                    </tr>
+                    <tr>
+                      <td><strong>LITT (Laser)</strong></td>
+                      <td>Laser energy → photothermal tissue destruction</td>
+                      <td>MRI-compatible; very precise small zone; useful in difficult locations</td>
+                      <td>Requires MRI guidance suite; less commonly available; less OO-specific data</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div style="margin-top:14px; padding:12px 16px; border-radius:12px; border:1px solid rgba(56,189,248,.15); background:rgba(56,189,248,.05); font-size:.92rem;">
+                <strong>Note — Drilling Through Sclerotic Bone:</strong> Dense reactive sclerosis surrounding the nidus frequently resists standard needle advancement. Options: (1) diamond-tip drill bit attachment for the coaxial system, (2) manual bone drill with controlled force, (3) high-speed power drill. Avoid excessive torque that can deflect the needle away from the nidus. Concurrent drill biopsy of the nidus for histology is recommended when the lesion is being drilled.
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. CT LANDMARKS ═══ -->
+        <section class="section" id="landmarks">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Fluoroscopy / CT Landmarks</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Key CT Findings</h4>
+                <ul class="list">
+                  <li><strong>"Halo sign":</strong> dense reactive sclerosis surrounding the central lucent nidus — the sclerosis is the conspicuous finding; the nidus is within it</li>
+                  <li><strong>Nidus:</strong> rounded or ovoid lucency; may contain a dense central calcified focus (mineralized osteoid). Average diameter 5–15 mm</li>
+                  <li><strong>Central mineralized focus</strong> within the lucency should not be confused with the reactive sclerosis — the probe tip targets the lucent nidus around it</li>
+                  <li><strong>MRI correlation:</strong> STIR hyperintensity extending beyond nidus indicates perilesional edema — confirms active lesion</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Probe Positioning Targets</h4>
+                <ul class="list">
+                  <li><strong>Probe tip within 1 mm of nidus center</strong> — required for adequate ablation; minor displacement significantly reduces efficacy</li>
+                  <li><strong>Active tip length must match nidus size:</strong> 1-cm tip for nidus ≤1 cm; 2-cm tip for larger nidus; overlap two 1-cm burns for nidus &gt;1 cm if 2-cm probe unavailable</li>
+                  <li><strong>Spinal lesions:</strong> confirm probe tip is ≥1 cm from posterior spinal canal on axial CT; ≥5 mm from nerve root foramina</li>
+                  <li><strong>Articular lesions:</strong> confirm distance from articular cartilage surface; &lt;1 cm warrants reduced power or cryoablation</li>
+                  <li><strong>Post-ablation CT:</strong> gas foci within the nidus confirm adequate heating; lack of gas may indicate incomplete ablation</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Sclerotic bone prevents needle or drill advance</h4>
+              <p class="muted"><strong>Likely cause:</strong> Dense reactive perilesional sclerosis in cortical intracortical OO — common in long-standing lesions.</p>
+              <p class="success"><strong>Next step:</strong> Switch to diamond-tip drill bit attachment on coaxial system. Apply firm steady pressure with rotational motion — avoid excessive torque that can deviate trajectory. Consider manual bone drill as backup. If biopsy is indicated, perform concurrent drill biopsy of nidus material. Confirm trajectory on CT before fully advancing.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Cannot identify or confirm nidus on CT</h4>
+              <p class="muted"><strong>Likely cause:</strong> Nidus very small (&lt;5 mm), heavily calcified, or reactive sclerosis is overwhelming. Suboptimal CT technique (thick slices).</p>
+              <p class="success"><strong>Next step:</strong> Correlate with bone scan — site of maximum uptake corresponds to nidus. Consider nuclear medicine probe (gamma probe) guidance in the procedure suite. Request MRI-guided ablation if available (LITT). If still uncertain after correlation, target the area of maximum bone scan activity within the sclerotic zone.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Probe tip near articular cartilage</h4>
+              <p class="muted"><strong>Likely cause:</strong> Intra-articular or periarticular OO at hip, knee, or ankle — relatively common; up to 13% of OO are intra-articular.</p>
+              <p class="success"><strong>Next step:</strong> Reduce power setting and shorten ablation cycle duration to minimize thermal spread. Inject saline or D5W into the joint to create a heat-sink buffer. If ≤1 cm from cartilage, strongly consider cryoablation — iceball is visible on CT and cryo preserves cartilage better than heat-based modalities.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Spinal lesion near nerve root or spinal canal</h4>
+              <p class="muted"><strong>Likely cause:</strong> Posterior element OO (pedicle, lamina, facet) — proximity to epidural space or neural foramen is the critical risk.</p>
+              <p class="success"><strong>Next step:</strong> Place temperature monitoring probe adjacent to neural structures; abort if &gt;45°C reached. Perform D5W epidural cooling via separately placed epidural needle (D5W does not stimulate neural tissue at low temperatures). CO2 pneumodissection can physically separate the nidus from the neural structures. Consider cryoablation — cryo is better characterized near neural structures and the iceball is visible.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Hemodynamic response during ablation (hypertension / tachycardia)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Expected — osteoid osteomas contain prostaglandins at 100–1,000× normal levels; ablation releases these, causing transient cardiovascular stimulation.</p>
+              <p class="success"><strong>Next step:</strong> Warn anesthesia team before ablation begins. This is a recognized phenomenon — manage with short-acting antihypertensives or beta-blockers as needed. Symptoms resolve when ablation is turned off. Document and reassure.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Periprocedural / Early</h4>
+              <ul class="list danger">
+                <li><strong>Post-procedure pain flare</strong> (expected, not a complication per se) — typically 1–3 days of increased pain; managed with NSAIDs + short course of acetaminophen; warn patient before discharge</li>
+                <li><strong>Skin burn</strong> — risk with subperiosteal lesions; prevent with hydrodissection (saline or D5W) between nidus and skin; treat with standard wound care</li>
+                <li><strong>Intraosseous bleeding / hematoma</strong> — usually self-limited; hemostatic plug at access tract reduces risk</li>
+                <li><strong>Hemodynamic instability</strong> (transient hypertension/tachycardia) — prostaglandin-mediated; resolves with ablation cessation; coordinate with anesthesia</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Delayed / Major</h4>
+              <ul class="list">
+                <li><strong>Incomplete ablation / Recurrence (~5–10%)</strong> — persistent or recurrent symptoms after initial apparent success; repeat RFA is usually successful; correlate with repeat CT and bone scan at 3–6 months</li>
+                <li><strong>Infection / Osteomyelitis</strong> — rare (&lt;1%); cefazolin prophylaxis is standard; fever + worsening pain post-procedure → MRI + ID consultation</li>
+                <li><strong>Pathologic fracture</strong> — risk if &gt;50% cortical involvement; restrict weight-bearing 4–6 weeks for high-risk lesions; prophylactic fixation rarely required</li>
+                <li><strong>Neurologic injury</strong> — &lt;1% with appropriate thermal protection for spinal lesions; presents as new radiculopathy or weakness; MRI workup; usually resolves with conservative management</li>
+                <li><strong>Growth plate injury</strong> — pediatric patients; avoid ablation zone crossing open physis; confirm safe distance on pre-procedure CT</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Confirm the nidus — reactive sclerosis is not the target.</strong> The dense sclerotic halo is conspicuous on CT and easy to mistake for the lesion. The true nidus is the central lucency within the sclerosis. Always identify and center the probe tip in the lucent zone, not the dense bone. Correlate with bone scan if the lucency is unclear.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>General anesthesia is strongly preferred.</strong> Periosteal drilling is one of the most painful procedures in IR. Inadequate anesthesia leads to patient movement during probe placement, which displaces the probe from the nidus and causes incomplete ablation or injury. Conscious sedation is an option in cooperative adults but GA is the standard — particularly for pediatric patients.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Match the active tip to the nidus size.</strong> Use a 1-cm active tip for nidus ≤1 cm. Use a 2-cm tip or two overlapping 1-cm burns for nidus &gt;1 cm. Undersizing the ablation zone is the leading cause of incomplete ablation and recurrence. Measure the nidus diameter on pre-procedure CT.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Spinal osteoid osteoma requires posterior entry and neural protection.</strong> Posterior element lesions (pedicle, lamina, facet) are accessed via a posterior approach. Confirm probe tip ≥1 cm from the spinal canal on axial CT before ablation. Use CO2 pneumodissection or D5W epidural cooling to protect nerve roots. Temperature monitoring is mandatory at these sites.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Pediatric-specific considerations.</strong> Use shortest possible anesthesia duration. Confirm probe trajectory does not cross the open physis — document growth plate clearance on pre-procedure CT. Use weight-based cefazolin dosing. Overnight observation is appropriate at many pediatric institutions. These patients have excellent outcomes and near-immediate symptom relief when successful.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Outcomes: technical success &gt;95%, symptom relief &gt;90% at 1 year.</strong> Rosenthal et al. established the foundational data for percutaneous RFA in osteoid osteoma (Radiology, 1998), with subsequent series confirming durable results. Recurrence (~5–10%) is managed successfully with repeat ablation in most cases. Image-guided ablation has replaced surgical resection as the primary treatment modality.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. REFERENCES ═══ -->
+        <section class="section" id="references">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>References</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="panel">
+              <h4>Citations</h4>
+              <ul class="list" style="gap:12px;">
+                <li>Prologo JD, Ray CE Jr., eds. <em>Advanced Pain Management in Interventional Radiology: A Case-Based Approach</em>. Thieme; 2024. Chapters 37–38 (Macha V, Devane AM, Gunn AJ). DOI: 10.1055/b000000387</li>
+                <li>Rosenthal DI, Hornicek FJ, Wolfe MW, Jennings LC, Gebhardt MC, Mankin HJ. Percutaneous radiofrequency coagulation of osteoid osteoma compared with operative treatment. <em>J Bone Joint Surg Am</em>. 1998;80(6):815–821.</li>
+                <li>Rosenthal DI, Hornicek FJ, Torriani M, Gebhardt MC, Mankin HJ. Osteoid osteoma: percutaneous treatment with radiofrequency energy. <em>Radiology</em>. 2003;229(1):171–175.</li>
+                <li>Kransdorf MJ, Stull MA, Gilkey FW, Moser RP Jr. Osteoid osteoma. <em>Radiographics</em>. 1991;11(4):671–696.</li>
+                <li>Chai JW, Hong SH, Choi JY, et al. Radiologic diagnosis of osteoid osteoma: from simple to challenging findings. <em>Radiographics</em>. 2010;30(3):737–749.</li>
+                <li>Lindner NJ, Ozaki T, Roedl R, Gosheger G, Winkelmann W, Wörtler K. Percutaneous radiofrequency ablation in osteoid osteoma. <em>J Bone Joint Surg Br</em>. 2001;83(3):391–396.</li>
+                <li>Coupal TM, Mallinson PI, Munk PL, et al. CT-guided percutaneous cryoablation for osteoid osteoma: initial experience in adults. <em>AJR Am J Roentgenol</em>. 2014;202(5):1136–1139.</li>
+                <li>Vanderschueren GM, Taminiau AH, Obermann WR, Bloem JL. Osteoid osteoma: clinical results with thermocoagulation. <em>Radiology</em>. 2002;224(1):82–86.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Ref: Prologo &amp; Ray, Advanced Pain Management in IR (Thieme, 2024) Chs. 37–38 &middot; Rosenthal DI et al., Radiology 1998 &middot; Rosenthal DI et al., Radiology 2003</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My Osteoid Osteoma RFA Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;Bonopty 11G coaxial system&#10;Cool-tip RFA probe 1-cm tip&#10;Cefazolin 1g IV"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;Prone position, CT planning scan&#10;Generous lidocaine to periosteum&#10;Advance Bonopty to nidus center"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <label>Your Name</label>
+      <input type="text" id="card-author-name" placeholder="Your name (shown on card)" />
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" id="save-card-btn" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'osteoid-osteoma';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _myVotes = {};
+  let _cardSearch = '';
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  // ── Load cards ──
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    await loadVotes();
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!document.getElementById('card-search-wrap')) {
+      const wrap = document.createElement('div');
+      wrap.id = 'card-search-wrap';
+      wrap.style.cssText = 'margin-bottom:12px';
+      wrap.innerHTML = '<input id="card-search" type="text" placeholder="Search community cards…" style="width:100%;padding:8px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:inherit;font-family:inherit;font-size:13px;outline:none;" oninput="_cardSearch=this.value.toLowerCase();renderCards()">';
+      container.parentElement.insertBefore(wrap, container);
+    }
+    const q = _cardSearch.trim();
+    const visible = q ? _cards.filter(c => [c.title||'',c.display_name||'',...(c.supplies||[]),...(c.steps||[]),...(c.pearls||[])].join(' ').toLowerCase().includes(q)) : _cards;
+    if (!visible.length) {
+      loading.textContent = q ? 'No cards match your search.' : 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      container.innerHTML = '';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = visible.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      const myVote = _myVotes[c.id];
+      const votes = c.net_votes || 0;
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}" data-card-id="${c.id}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:5px;flex-shrink:0">
+              <button onclick="voteCard('${c.id}','up')" title="Helpful" style="background:none;border:1px solid ${myVote==='up'?'#22c55e':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='up'?'#22c55e':'inherit'};transition:.15s">${myVote==='up'?'▲':'△'}${votes>0?' '+votes:''}</button>
+              <button onclick="voteCard('${c.id}','down')" title="Not helpful" style="background:none;border:1px solid ${myVote==='down'?'#ef4444':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='down'?'#ef4444':'inherit'};transition:.15s">${myVote==='down'?'▼':'▽'}</button>
+              ${isOwn ? `<button onclick="editCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Edit</button><button onclick="deleteCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Delete</button>` : ''}
+            </div>
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  async function loadVotes() {
+    const sb = _sb(); const user = _user();
+    if (!sb || !user) return;
+    const { data } = await sb.from('procedure_card_votes').select('card_id,vote').eq('user_id', user.id);
+    _myVotes = {};
+    if (data) for (const v of data) _myVotes[v.card_id] = v.vote;
+  }
+
+  async function voteCard(cardId, dir) {
+    const sb = _sb(); const user = _user();
+    if (!user || !sb) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    const existing = _myVotes[cardId];
+    const card = _cards.find(c => c.id === cardId);
+    if (!card) return;
+    if (existing === dir) {
+      await sb.from('procedure_card_votes').delete().match({ user_id: user.id, card_id: cardId });
+      delete _myVotes[cardId];
+      card.net_votes = (card.net_votes || 0) + (dir === 'up' ? -1 : 1);
+    } else {
+      await sb.from('procedure_card_votes').upsert({ user_id: user.id, card_id: cardId, vote: dir }, { onConflict: 'user_id,card_id' });
+      const prev = existing ? (existing === 'up' ? -1 : 1) : 0;
+      card.net_votes = (card.net_votes || 0) + prev + (dir === 'up' ? 1 : -1);
+      _myVotes[cardId] = dir;
+    }
+    await sb.from('procedure_cards').update({ net_votes: card.net_votes }).eq('id', cardId);
+    renderCards();
+  }
+
+  // ── Card CRUD ──
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    const nameInput = document.getElementById('card-author-name');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      if (nameInput) nameInput.value = card.display_name || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+      if (nameInput && !nameInput.value.trim()) {
+        const u = _user();
+        if (nameInput && !nameInput.value) nameInput.value = (u && u.email) ? u.email.split('@')[0] : '';
+        if (window.RadCallAuth && window.RadCallAuth.getProfile) {
+          window.RadCallAuth.getProfile().then(p => {
+            if (nameInput && !nameInput.value.trim()) nameInput.value = (p && p.display_name) || '';
+          }).catch(() => {});
+        }
+      }
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    if (!sb) { alert('Connection error — please reload and try again.'); return; }
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title.'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const authorInput = document.getElementById('card-author-name');
+    const displayName = (authorInput && authorInput.value.trim()) || (user.email ? user.email.split('@')[0] : 'Anonymous');
+    const saveBtn = document.getElementById('save-card-btn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving…'; }
+    try {
+      if (editId) {
+        _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() } : c);
+        renderCards(); closeCardModal();
+        const { error } = await sb.from('procedure_cards').update({ title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() }).eq('id', editId);
+        if (error) console.error('Card update error:', error);
+      } else {
+        const tmpId = 'tmp-' + Date.now();
+        const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0, created_at: new Date().toISOString() };
+        _cards.unshift(newCard);
+        renderCards(); closeCardModal();
+        const { data, error } = await sb.from('procedure_cards')
+          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0 })
+          .select().single();
+        if (error) {
+          console.error('Card insert error:', error);
+          _cards = _cards.filter(c => c.id !== tmpId);
+          renderCards();
+          alert('Could not save card: ' + (error.message || 'Unknown error. Check your connection and try again.'));
+        } else if (data) {
+          _cards = _cards.map(c => c.id === tmpId ? data : c);
+        }
+      }
+      try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    } catch(err) {
+      console.error('saveCard exception:', err);
+      alert('Something went wrong saving your card. Please try again.');
+    } finally {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Card'; }
+    }
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  // ── Helpers ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Osteoid Osteoma Ablation — Supply List\n' + '═'.repeat(50) + '\n' + supplies.map(s => '☐ ' + s).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Osteoid Osteoma Ablation — Supply List\n' + '═'.repeat(50) + '\n' + supplies.map(s => '☐ ' + s).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'osteoid-osteoma-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  // ── Init ──
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+    function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('open'); }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>

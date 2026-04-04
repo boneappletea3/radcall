@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image-Guided Joint Injections — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Reference / data table ── */
+    .ref-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .ref-table th, .ref-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .ref-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .ref-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    /* ── Approach sub-header ── */
+    .approach-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: var(--accent); font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin: 16px 0 10px; }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Interventional Radiology &middot; Musculoskeletal</div>
+      <h1>Image-Guided Joint Injections</h1>
+      <p class="subhead">Fluoroscopy- or ultrasound-guided intra-articular injection for diagnostic arthrography, aspiration, and therapeutic delivery (corticosteroid, hyaluronic acid, PRP) across hip, shoulder, knee, ankle, wrist, and elbow.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">Local only</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--success)">Minimal (SIR Cat 1)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value" style="font-size:.88rem">Infection · Post-injection flare · Steroid arthropathy</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Not routine</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value" style="font-size:.88rem">Clinical review 4–6 wks; repeat if relapse</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Anatomy by Joint</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#landmarks">5. Fluoro / US Landmarks</a></li>
+          <li><a href="#troubleshooting">6. Troubleshooting</a></li>
+          <li><a href="#complications">7. Complications</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#references">9. References</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications &amp; Patient Selection</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col" style="margin-bottom:14px;">
+              <div class="panel">
+                <h4>Procedure Types</h4>
+                <ul class="list">
+                  <li><strong>Diagnostic:</strong> Arthrography (MR or CT) — inject contrast ± dilute gadolinium intra-articularly to distend the joint and outline labrum, cartilage, and ligaments</li>
+                  <li><strong>Diagnostic:</strong> Aspiration — obtain synovial fluid for cell count, crystal analysis, Gram stain / culture</li>
+                  <li><strong>Therapeutic steroid:</strong> Acute inflammatory flare, severe osteoarthritis, RA/gout, adhesive capsulitis</li>
+                  <li><strong>Viscosupplementation (HA):</strong> Moderate OA (primarily knee); 1–3 weekly injections or single-injection formulations; effect 3–6 months; coverage varies by insurer</li>
+                  <li><strong>PRP (emerging):</strong> Tendinopathy and OA; off-label; centrifuge 30–60 mL autologous blood → 3–5 mL PRP; see Pearl section</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Common Joints &amp; Indications</h4>
+                <ul class="list">
+                  <li><strong>Hip</strong> — most common IR referral; OA, AVN, post-surgical pain, pre-arthroplasty diagnostic injection, MR arthrography</li>
+                  <li><strong>Shoulder</strong> — OA, adhesive capsulitis (frozen shoulder), rotator cuff tendinopathy, MR arthrography for labral tears</li>
+                  <li><strong>Knee</strong> — OA, RA flare, effusion aspiration, viscosupplementation</li>
+                  <li><strong>Ankle / Wrist / Elbow</strong> — inflammatory arthritis, post-traumatic pain, arthrography</li>
+                </ul>
+              </div>
+            </div>
+            <div class="two-col">
+              <div class="panel">
+                <h4>Contraindications</h4>
+                <ul class="list">
+                  <li><strong>Absolute:</strong> Active joint infection (septic arthritis) — aspiration YES, steroid injection NO; overlying cellulitis or bacteremia</li>
+                  <li><strong>Absolute:</strong> Allergy to injectate (contrast, corticosteroid, local anesthetic)</li>
+                  <li><strong>Relative:</strong> Uncontrolled diabetes (steroid glucose spike); coagulopathy; prosthetic joint (higher infection risk — use strict sterile technique)</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Pre-Procedure Workup</h4>
+                <ul class="list">
+                  <li>X-ray of target joint — baseline; assess joint space, osteophytes, AVN, articular congruity</li>
+                  <li>Prior MRI/CT — identify labral tears, cartilage defects, effusion, synovitis</li>
+                  <li>Labs — WBC/ESR/CRP if infection concern; HbA1c in diabetics; coagulation if anticoagulated</li>
+                  <li>Confirm clinical indication — therapeutic vs. diagnostic vs. arthrogram; steroid vs. HA vs. PRP</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Guidance modality.</strong> Fluoroscopy (hip, ankle, wrist, elbow — deep joints or bone-on-bone); Ultrasound (shoulder, knee, superficial ankle); CT (last resort for severely degenerated or inaccessible joints). US probe: linear 10–12 MHz for shoulder/knee/ankle; curvilinear 5–8 MHz for hip.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Needle selection.</strong> Hip: 20–22G, 3.5–5" spinal needle. Shoulder: 20–22G. Knee: 21–23G. Ankle/Wrist: 22–25G. For aspiration of thick fluid: 18G needle + 20–60 mL syringe. Always use 22G or finer for therapeutic injection to minimize cartilage injury.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Standard steroid injectate.</strong> Triamcinolone 40 mg (1 mL) + bupivacaine 0.5% (2–3 mL). Total volume scaled to joint size — hip/shoulder: 10–15 mL; knee: 5–10 mL; ankle/wrist: 3–6 mL / 1–3 mL.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Arthrogram contrast.</strong> Iohexol 180 or 300 (0.5 mL test dose to confirm intra-articular). For MR arthrography: dilute gadolinium (0.4 mL Gd + 10 mL iohexol 300, total 12–15 mL for hip). For CT arthrography: undiluted or 50:50 iohexol 300.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Aspiration setup.</strong> 18G needle, 20–60 mL syringe. Send fluid to lab: cell count + differential, LDH, glucose, Gram stain/culture, crystal analysis (polarized microscopy for gout/pseudogout). Label tubes immediately.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Sterile technique.</strong> Full sterile prep (ChloraPrep, sterile drape) for hip, shoulder, and arthrography. Clean but not strictly sterile acceptable for US-guided peripheral joints (knee, ankle) per many protocols — confirm institutional standard.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent.</strong> Post-injection flare (5–10%), infection (&lt;0.001%), glucose elevation (diabetics), skin depigmentation if steroid tracks superficially, tendon rupture (avoid direct tendon injection), articular cartilage injury.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Diabetic patients.</strong> Warn of transient glucose elevation 24–48h post-steroid. Check recent HbA1c. Home glucose monitoring recommended.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Anatomy by Joint</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="panel" style="margin-bottom:14px;">
+              <h4>Joint Access Summary</h4>
+              <table class="ref-table">
+                <thead>
+                  <tr>
+                    <th>Joint</th>
+                    <th>Volume</th>
+                    <th>Approach</th>
+                    <th>Landmark</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Hip</strong></td>
+                    <td>10–20 mL (MR arthro: 12–15 mL)</td>
+                    <td>Anterior or lateral; fluoroscopy preferred</td>
+                    <td>Femoral head-neck junction (lateral) or anterior capsule (anterior approach)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Shoulder</strong></td>
+                    <td>10–15 mL</td>
+                    <td>Posterior, anterior, or lateral (US-guided)</td>
+                    <td>Glenohumeral joint posterior: infraspinatus / teres minor interval; needle tip to posterior joint capsule at glenoid labrum</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Knee</strong></td>
+                    <td>5–10 mL</td>
+                    <td>Lateral suprapatellar (US) or anteromedial approach</td>
+                    <td>Lateral joint line (fluoroscopy); suprapatellar pouch (US) — visualize in real-time</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Ankle</strong></td>
+                    <td>3–6 mL</td>
+                    <td>Anteromedial (fluoroscopy or US)</td>
+                    <td>Between tibialis anterior tendon and medial malleolus; tibiotalar joint space</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Wrist</strong></td>
+                    <td>1–3 mL</td>
+                    <td>Dorsal (radiocarpal or DRUJ)</td>
+                    <td>Lister's tubercle as dorsal reference; radiocarpal joint just distal to radius on AP fluoroscopy</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Elbow</strong></td>
+                    <td>3–5 mL</td>
+                    <td>Lateral (radiohumeral)</td>
+                    <td>Triangle formed by lateral epicondyle, radial head, and capitellum — lateral approach with elbow flexed 90°</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="two-col">
+              <div class="panel">
+                <h4>Hip Anatomy Notes</h4>
+                <ul class="list">
+                  <li>Deep joint — requires 3.5–5" spinal needle; superficial US probes (linear) cannot image hip joint in most adults</li>
+                  <li>Curvilinear 5–8 MHz probe for US-guided hip if BMI normal; fluoroscopy preferred in obese patients or severe OA</li>
+                  <li>Anterior approach: needle enters anterior capsule between femoral artery laterally and femoral nerve (both medial to needle — keep lateral to midline)</li>
+                  <li>Iliopectineal bursa communicates with hip joint in ~15% — contrast tracking superiorly into bursa is acceptable (intra-articular)</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Shoulder Anatomy Notes</h4>
+                <ul class="list">
+                  <li>Glenohumeral joint: posterior approach — probe placed over posterior shoulder; identify humeral head, glenoid, and posterior labrum on US</li>
+                  <li>Rotator cuff interval (anterior approach): between supraspinatus and subscapularis — used for anterior glenohumeral access</li>
+                  <li>Adhesive capsulitis: joint capacity severely reduced (&lt;5 mL); injection with gentle hydraulic distension (hydrodilation) therapeutic</li>
+                  <li>Acromioclavicular (AC) joint: separate tiny joint (1–2 mL); access superiorly between acromion and clavicle</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. HOW I DO IT ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">Default RadCall approach + community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <!-- Default RadCall card -->
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#x1F4CB; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#x2B07; Download</button></h4>
+              <div class="chip-row card-supplies">
+                <span class="chip">22G 3.5–5" spinal needle (hip)</span>
+                <span class="chip">22G needle (shoulder/knee)</span>
+                <span class="chip">18G needle + large syringe (aspiration)</span>
+                <span class="chip">C-arm fluoroscopy or US probe</span>
+                <span class="chip">Iohexol 180 or 300 (contrast)</span>
+                <span class="chip">Triamcinolone 40 mg</span>
+                <span class="chip">Bupivacaine 0.5%</span>
+                <span class="chip">1 mL + 3 mL + 10 mL syringes</span>
+                <span class="chip">Extension tubing (primed)</span>
+                <span class="chip">ChloraPrep</span>
+                <span class="chip">Sterile drape</span>
+                <span class="chip">Sterile dressing</span>
+              </div>
+
+              <!-- Hip fluoroscopic approach -->
+              <div class="approach-label">Approach A — Hip Fluoroscopic Anterior Approach (Primary)</div>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Position + scout fluoroscopy</h4><div class="muted">Supine positioning with hip in neutral rotation. AP fluoroscopy of hip. Identify femoral head-neck junction. Mark skin entry point over the femoral neck, lateral to the femoral vessels.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Sterile prep + needle advance</h4><div class="muted">Full sterile prep and drape. Skin and subcutaneous local anesthesia with 1% lidocaine. Advance 22G 3.5" spinal needle (5" for obese patients) toward lateral femoral neck under continuous fluoroscopy. Maintain lateral approach — stay lateral to avoid femoral vessels.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Contact femoral neck periosteum</h4><div class="muted">Advance needle until firm periosteal contact at the femoral neck. This is the definitive endpoint — "walking" the needle onto bone confirms depth and prevents over-advancement into joint proper.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Contrast arthrogram — confirm intra-articular</h4><div class="muted">Inject 0.5–1 mL iohexol under live fluoroscopy. <strong>Ring sign:</strong> contrast flows around the femoral head as a circumferential ring = confirmed intra-articular. Contrast pooling only at needle tip without joint fill = not yet intra-articular; redirect.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Therapeutic injection (steroid)</h4><div class="muted">Inject 1 mL triamcinolone 40 mg + 2 mL bupivacaine 0.5%. Flush with 1–2 mL saline. Remove needle, apply pressure, then sterile dressing.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>MR arthrography variant</h4><div class="muted">After confirming intra-articular position with iohexol: inject dilute gadolinium solution (0.4 mL gadolinium contrast + 10 mL iohexol 300, total 12–15 mL). Patient proceeds immediately to MRI — do not delay &gt;30 minutes.</div></div></div>
+              </div>
+
+              <!-- Shoulder US approach -->
+              <div class="approach-label" style="margin-top:20px;">Approach B — Shoulder US-Guided Posterior Approach</div>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Position + probe placement</h4><div class="muted">Patient seated with arm in neutral or slight internal rotation. Place linear US probe (12 MHz) over posterior shoulder, transverse to identify humeral head and glenoid. Identify the infraspinatus tendon and posterior labrum.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>In-plane needle approach</h4><div class="muted">In-plane technique: advance 22G needle from lateral aspect toward the posterior joint capsule at the infraspinatus/teres minor interval. Target: tip at posterior capsule just adjacent to glenoid labrum.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Confirm intra-articular position</h4><div class="muted">Inject 1–2 mL saline or contrast under real-time US. Confirm: fluid tracks into glenohumeral joint with visible joint distension. If fluid tracks into muscle or tendon, reposition.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Inject therapeutic</h4><div class="muted">Inject triamcinolone 40 mg + 3 mL bupivacaine 0.5%. For adhesive capsulitis (hydrodilation): larger volume (10–15 mL) to distend contracted capsule. Withdraw and dress.</div></div></div>
+              </div>
+
+              <!-- Knee US approach -->
+              <div class="approach-label" style="margin-top:20px;">Approach C — Knee US-Guided Lateral Suprapatellar</div>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Position + probe</h4><div class="muted">Supine, knee extended or slightly flexed (towel roll beneath popliteal fossa). Place linear US probe over lateral suprapatellar pouch in longitudinal orientation.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Aspirate first if effusion</h4><div class="muted">If effusion present: switch to 18G needle + 20–60 mL syringe. Aspirate all fluid before injecting steroid — reduces dilution and provides diagnostic specimen. For thick fluid: dilute with 5 mL normal saline to loosen.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>In-plane needle to suprapatellar pouch</h4><div class="muted">Advance 22G from lateral through quadriceps fat pad into the suprapatellar pouch under real-time US visualization. Confirm: needle tip visible within the anechoic pouch space.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Inject therapeutic or viscosupplement</h4><div class="muted">Steroid: triamcinolone 40 mg + 3 mL bupivacaine 0.5%. HA (viscosupplementation): 1–3 mL Synvisc / Hyalgan / Monovisc. Visualize fluid spreading within pouch on US during injection.</div></div></div>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. LANDMARKS ═══ -->
+        <section class="section" id="landmarks">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Fluoroscopic / US Landmarks</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="three-col">
+              <div class="panel">
+                <h4>Hip — Fluoroscopy</h4>
+                <ul class="list">
+                  <li><strong>"Ring sign"</strong> — contrast circumferentially outlining the femoral head = confirmed intra-articular. This is the gold standard endpoint.</li>
+                  <li>Contrast tracking superiorly into iliopectineal bursa = intra-articular (bursa communicates with joint in ~15%) — still acceptable</li>
+                  <li>Contrast pooling only at needle tip = extracapsular — reposition</li>
+                  <li>Lateral fluoroscopy: confirm needle depth relative to femoral neck before injection</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Shoulder — Ultrasound</h4>
+                <ul class="list">
+                  <li>Posterior approach US: needle tip appears as hyperechoic point between humeral head (convex) and posterior glenoid labrum (triangular echogenic structure)</li>
+                  <li>On injection: anechoic fluid tracks anteriorly into glenohumeral joint — confirms intra-articular position in real-time</li>
+                  <li>Rotator cuff interval (anterior approach): needle passes through supraspinatus-subscapularis interval into anterior joint</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Knee — Ultrasound</h4>
+                <ul class="list">
+                  <li>Lateral suprapatellar pouch visible as anechoic space between quadriceps tendon and femur on longitudinal US</li>
+                  <li>Needle enters from lateral and tip visualized within the pouch in real-time — avoid the hyperechoic quadriceps tendon</li>
+                  <li>During injection: watch for fluid spread within the pouch — uniform filling confirms intra-articular position</li>
+                  <li>Effusion makes knee the most straightforward joint to access with US</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Bone contact only — no joint entry</h4>
+              <p class="muted"><strong>Likely cause:</strong> Needle tip is on periosteum rather than within joint space; common with severe OA and reduced joint space.</p>
+              <p class="success"><strong>Next step:</strong> Slightly withdraw the needle 2–3 mm and redirect with small angulation changes. Use small test injection of contrast to map location. Confirm intra-articular position with arthrogram before injecting steroid — never inject based on position alone.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Contrast extravasation outside joint</h4>
+              <p class="muted"><strong>Likely cause:</strong> Needle tip in periarticular bursa, capsule tear, or periarticular soft tissue.</p>
+              <p class="success"><strong>Next step:</strong> Reposition needle. Note: contrast tracking into an adjacent bursa (e.g., iliopsoas bursa for hip, subdeltoid bursa for shoulder) may still be therapeutic for concurrent bursitis. Document location and adjust clinical expectations accordingly.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Aspiration: thick fluid won't aspirate</h4>
+              <p class="muted"><strong>Likely cause:</strong> Viscous effusion (inflammatory or post-hemorrhagic), or needle too small.</p>
+              <p class="success"><strong>Next step:</strong> Upsize to 18G needle. Dilute with 5 mL normal saline injected into joint, then aspirate together — loosens viscous fluid. Apply steady suction rather than sharp pulls. If still no flow: rotate needle bevel, adjust depth slightly.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Joint not accessible — severe OA (bone-on-bone)</h4>
+              <p class="muted"><strong>Likely cause:</strong> Advanced joint space narrowing with osteophyte bridging; particularly challenging at hip and ankle.</p>
+              <p class="success"><strong>Next step:</strong> Fluoroscopy may succeed when US fails in bone-on-bone joints — use oblique views to find remnant joint space. CT-guided injection is the last resort and provides the greatest precision. A periarticular injection (into the capsule adjacent to the joint) may still provide clinical relief.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Immediate / Periprocedural</h4>
+              <ul class="list danger">
+                <li><strong>Post-injection flare</strong> (5–10%) — transient pain increase 24–48h after injection due to crystalline steroid; reassure patient; ice, NSAIDs; resolves spontaneously. Warn the patient before discharge.</li>
+                <li><strong>Vasovagal reaction</strong> — position supine; IV fluids; atropine if significant bradycardia. More common with anxious patients or prone positioning.</li>
+                <li><strong>Tendon rupture</strong> — avoid direct tendon injection; inject around tendon, not into it; use real-time US to confirm needle position relative to tendon.</li>
+                <li><strong>Articular cartilage injury</strong> — use fine needle (22G or smaller); avoid multiple punctures in the same session; confirm intra-articular before injecting.</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Delayed</h4>
+              <ul class="list">
+                <li><strong>Septic arthritis</strong> (&lt;0.001%) — fever, severe worsening joint pain, elevated WBC/ESR/CRP within days to weeks; aspiration mandatory; broad-spectrum antibiotics; orthopaedic or IR drainage if abscess; sterile technique is paramount.</li>
+                <li><strong>Steroid-related glucose elevation</strong> — inform diabetic patients; monitor home glucose 24–48h; usually resolves within 48–72h.</li>
+                <li><strong>Skin depigmentation / subcutaneous atrophy</strong> — occurs if steroid tracks to dermis; confirm intra-articular injection; use minimum volume; do not inject while withdrawing needle.</li>
+                <li><strong>Steroid arthropathy</strong> — degenerative joint changes with repeated injections; limit to 3–4 per joint per year; document each injection.</li>
+                <li><strong>Contrast allergy</strong> (for arthrography) — use low-osmolar water-soluble contrast; gadolinium for MR arthrography in iodine-allergic patients; pre-medicate if prior mild reaction.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Always confirm intra-articular position before injecting steroid.</strong> Blind injections miss the joint 30–40% of the time. Always confirm with contrast arthrogram (fluoroscopy) or real-time US visualization. The ring sign for hip arthrograms and real-time fluid tracking for US-guided injections are non-negotiable confirmation steps.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Hip requires specialized imaging — fluoroscopy or curvilinear US.</strong> Superficial linear probes (12 MHz) cannot image the hip joint in most adult patients. Deep anatomy requires a 3.5–5" spinal needle. For obese patients or severe OA, fluoroscopy is more reliable than US for hip access. Never attempt hip injection with standard short needles.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Maximum steroid frequency: 3–4 injections per joint per year.</strong> Repeated corticosteroid injection beyond this limit causes steroid arthropathy (cartilage thinning, subchondral bone loss). Document every injection with date and drug. If a patient reports frequent prior injections elsewhere, check records before proceeding.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Aspirate first if there is effusion.</strong> Aspiration before injection serves two purposes: (1) reduces steroid dilution, improving efficacy; (2) provides diagnostic synovial fluid for analysis. This is especially important when infection or crystal arthropathy is on the differential. Never inject steroid into a joint you suspect may be septic.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>PRP preparation and emerging indications.</strong> Centrifuge 30–60 mL autologous whole blood at 1500–3000 rpm for 8–10 minutes to yield 3–5 mL platelet-rich plasma (buffy coat / platelet-rich layer). Knee OA: multiple RCTs show PRP superior to hyaluronic acid for pain at 6–12 months. Shoulder rotator cuff tendinopathy: emerging data favorable. Off-label; insurance coverage variable; document informed consent.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Viscosupplementation (hyaluronic acid) — knee OA protocol.</strong> Synvisc (3 × weekly), Hyalgan (3–5 × weekly), or Monovisc / Synvisc-One (single injection). Total HA volume: 1–3 mL. Inject intra-articularly — confirm with US or fluoroscopy. Effect lasts 3–6 months. Not covered by all insurance plans; confirm coverage before scheduling. Avoid in active effusion — aspirate first.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. REFERENCES ═══ -->
+        <section class="section" id="references">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>References &amp; Community Cards</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div style="margin-bottom: 20px;">
+              <div class="panel" style="margin-bottom:14px;">
+                <h4>Citations</h4>
+                <ul class="list" style="gap:12px;">
+                  <li>Prologo JD, Ray CE Jr., eds. <em>Advanced Pain Management in Interventional Radiology: A Case-Based Approach</em>. Thieme; 2024. Ch. 39–40 (Filippiadis D, Kelekis A; Wadhwa V, Thakur U, Pezeshk P, Chhabra A).</li>
+                  <li>Guo JJ, Mu W, Niu X, et al. Accuracy of ultrasound- versus fluoroscopy-guided hip injection. <em>Clin Rheumatol</em>. 2015;34(1):35–40.</li>
+                  <li>Filippiadis DK, Kelekis A. A review of current trends in spinal and musculoskeletal interventional procedures for pain management. <em>Quant Imaging Med Surg</em>. 2017;7(6):651–659.</li>
+                  <li>Bannuru RR, et al. OARSI guidelines for the non-surgical management of knee, hip, and polyarticular osteoarthritis. <em>Osteoarthritis Cartilage</em>. 2019;27(11):1578–1589.</li>
+                  <li>Doria C, et al. Intra-articular injection with platelet-rich plasma versus hyaluronic acid in knee OA: a systematic review. <em>Int Orthop</em>. 2017;41(12):2403–2412.</li>
+                  <li>SIR Standards of Practice Committee. Consensus Guidelines for Periprocedural Management of Coagulation Status. <em>J Vasc Interv Radiol</em>. 2012;23(6):727–736.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards-refs" class="cards-grid">
+              <div class="muted" id="cards-loading-refs" style="padding:20px; text-align:center; display:none;"></div>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Ref: Prologo &amp; Ray, Advanced Pain Management in IR (Thieme, 2024) &middot; Guo et al., Clin Rheumatol 2015 &middot; SIR Consensus Guidelines</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My Hip Injection Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;22G spinal needle&#10;Iohexol 300&#10;Triamcinolone 40mg"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;Supine position&#10;AP fluoroscopy of hip&#10;Advance needle to femoral neck"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <label>Your Name</label>
+      <input type="text" id="card-author-name" placeholder="Your name (shown on card)" />
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" id="save-card-btn" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'joint-injections';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _myVotes = {};
+  let _cardSearch = '';
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  // ── Load cards ──
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    await loadVotes();
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!document.getElementById('card-search-wrap')) {
+      const wrap = document.createElement('div');
+      wrap.id = 'card-search-wrap';
+      wrap.style.cssText = 'margin-bottom:12px';
+      wrap.innerHTML = '<input id="card-search" type="text" placeholder="Search community cards…" style="width:100%;padding:8px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:inherit;font-family:inherit;font-size:13px;outline:none;" oninput="_cardSearch=this.value.toLowerCase();renderCards()">';
+      container.parentElement.insertBefore(wrap, container);
+    }
+    const q = _cardSearch.trim();
+    const visible = q ? _cards.filter(c => [c.title||'',c.display_name||'',...(c.supplies||[]),...(c.steps||[]),...(c.pearls||[])].join(' ').toLowerCase().includes(q)) : _cards;
+    if (!visible.length) {
+      loading.textContent = q ? 'No cards match your search.' : 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      container.innerHTML = '';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = visible.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      const myVote = _myVotes[c.id];
+      const votes = c.net_votes || 0;
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}" data-card-id="${c.id}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:5px;flex-shrink:0">
+              <button onclick="voteCard('${c.id}','up')" title="Helpful" style="background:none;border:1px solid ${myVote==='up'?'#22c55e':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='up'?'#22c55e':'inherit'};transition:.15s">${myVote==='up'?'▲':'△'}${votes>0?' '+votes:''}</button>
+              <button onclick="voteCard('${c.id}','down')" title="Not helpful" style="background:none;border:1px solid ${myVote==='down'?'#ef4444':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='down'?'#ef4444':'inherit'};transition:.15s">${myVote==='down'?'▼':'▽'}</button>
+              ${isOwn ? `<button onclick="editCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Edit</button><button onclick="deleteCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Delete</button>` : ''}
+            </div>
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  async function loadVotes() {
+    const sb = _sb(); const user = _user();
+    if (!sb || !user) return;
+    const { data } = await sb.from('procedure_card_votes').select('card_id,vote').eq('user_id', user.id);
+    _myVotes = {};
+    if (data) for (const v of data) _myVotes[v.card_id] = v.vote;
+  }
+
+  async function voteCard(cardId, dir) {
+    const sb = _sb(); const user = _user();
+    if (!user || !sb) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    const existing = _myVotes[cardId];
+    const card = _cards.find(c => c.id === cardId);
+    if (!card) return;
+    if (existing === dir) {
+      await sb.from('procedure_card_votes').delete().match({ user_id: user.id, card_id: cardId });
+      delete _myVotes[cardId];
+      card.net_votes = (card.net_votes || 0) + (dir === 'up' ? -1 : 1);
+    } else {
+      await sb.from('procedure_card_votes').upsert({ user_id: user.id, card_id: cardId, vote: dir }, { onConflict: 'user_id,card_id' });
+      const prev = existing ? (existing === 'up' ? -1 : 1) : 0;
+      card.net_votes = (card.net_votes || 0) + prev + (dir === 'up' ? 1 : -1);
+      _myVotes[cardId] = dir;
+    }
+    await sb.from('procedure_cards').update({ net_votes: card.net_votes }).eq('id', cardId);
+    renderCards();
+  }
+
+  // ── Card CRUD ──
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    const nameInput = document.getElementById('card-author-name');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      if (nameInput) nameInput.value = card.display_name || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+      if (nameInput && !nameInput.value.trim()) {
+        const u = _user();
+        if (nameInput && !nameInput.value) nameInput.value = (u && u.email) ? u.email.split('@')[0] : '';
+        if (window.RadCallAuth && window.RadCallAuth.getProfile) {
+          window.RadCallAuth.getProfile().then(p => {
+            if (nameInput && !nameInput.value.trim()) nameInput.value = (p && p.display_name) || '';
+          }).catch(() => {});
+        }
+      }
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    if (!sb) { alert('Connection error — please reload and try again.'); return; }
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title.'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const authorInput = document.getElementById('card-author-name');
+    const displayName = (authorInput && authorInput.value.trim()) || (user.email ? user.email.split('@')[0] : 'Anonymous');
+    const saveBtn = document.getElementById('save-card-btn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving…'; }
+    try {
+      if (editId) {
+        _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() } : c);
+        renderCards(); closeCardModal();
+        const { error } = await sb.from('procedure_cards').update({ title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() }).eq('id', editId);
+        if (error) console.error('Card update error:', error);
+      } else {
+        const tmpId = 'tmp-' + Date.now();
+        const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0, created_at: new Date().toISOString() };
+        _cards.unshift(newCard);
+        renderCards(); closeCardModal();
+        const { data, error } = await sb.from('procedure_cards')
+          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0 })
+          .select().single();
+        if (error) {
+          console.error('Card insert error:', error);
+          _cards = _cards.filter(c => c.id !== tmpId);
+          renderCards();
+          alert('Could not save card: ' + (error.message || 'Unknown error. Check your connection and try again.'));
+        } else if (data) {
+          _cards = _cards.map(c => c.id === tmpId ? data : c);
+        }
+      }
+      try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    } catch(err) {
+      console.error('saveCard exception:', err);
+      alert('Something went wrong saving your card. Please try again.');
+    } finally {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Card'; }
+    }
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  // ── Helpers ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Image-Guided Joint Injections — Supply List\n' + '═'.repeat(50) + '\n' + supplies.map(s => '☐ ' + s).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Image-Guided Joint Injections — Supply List\n' + '═'.repeat(50) + '\n' + supplies.map(s => '☐ ' + s).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'joint-injections-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  // ── Init ──
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+    function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('open'); }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>

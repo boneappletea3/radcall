@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pelvic Congestion Syndrome — Ovarian Vein Embolization — RadCall Procedure Guide</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --border: #243041;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --chip: #1e293b;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font);
+      background: radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%), linear-gradient(180deg, #08101b 0%, var(--bg) 22%, #0b1220 100%);
+      color: var(--text); line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: var(--max); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 10px; display: grid; place-items: center; color: var(--accent); font-weight: 800; box-shadow: 0 0 0 4px rgba(56,189,248,.08); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .header-card { background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.95)); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: #c6ecff; font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.03em; }
+    .subhead { margin: 12px 0 0; color: var(--muted); max-width: 780px; font-size: 1.03rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .snapshot-card { background: rgba(15,23,42,.85); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .snapshot-label { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .snapshot-value { font-size: 1rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .sidebar { position: sticky; top: 20px; background: rgba(15,23,42,.9); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+    .sidebar h2 { font-size: .95rem; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .toc a { text-decoration: none; display: block; padding: 9px 12px; border-radius: 10px; color: #dbe4ee; background: transparent; border: 1px solid transparent; transition: .18s ease; font-size: .92rem; }
+    .toc a:hover, .toc a:focus { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.2); color: white; outline: none; }
+    .content { display: grid; gap: 18px; }
+
+    /* ── Sections ── */
+    .section { background: linear-gradient(180deg, rgba(17,24,39,.96), rgba(15,23,42,.96)); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.05); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); cursor: pointer; user-select: none; }
+    .section-header:hover { background: rgba(56,189,248,.03); }
+    .section-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .section-index { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; font-size: .92rem; flex: 0 0 auto; }
+    .section h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+    .section-subtitle { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+    .collapse-arrow { color: var(--muted); transition: transform .2s; font-size: 1.2rem; }
+    .section.collapsed .collapse-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    /* ── Components ── */
+    .two-col, .three-col { display: grid; gap: 14px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px; }
+    .panel h4 { margin: 0 0 8px; font-size: .94rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .list li { padding-left: 18px; position: relative; }
+    .list li::before { content: ""; position: absolute; left: 0; top: .64em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); opacity: .8; transform: translateY(-50%); }
+    .checklist { display: grid; gap: 10px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .checkbox { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--accent-2); flex: 0 0 auto; cursor: pointer; transition: background .15s; }
+    .checkbox.checked { background: var(--accent-2); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.08); background: var(--chip); color: #dbe4ee; padding: 8px 11px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .step-list { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .step-num { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(56,189,248,.12); color: var(--accent); font-weight: 800; }
+    .step h4, .problem h4 { margin: 0 0 4px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .problem-grid { display: grid; gap: 12px; }
+    .problem { border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); padding: 16px; }
+    .problem-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(245,158,11,.12); color: #fcd58e; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .danger { color: #fecaca; }
+    .success { color: #bbf7d0; }
+    .pearls { display: grid; gap: 10px; }
+    .pearl { display: flex; gap: 12px; padding: 14px; border-radius: 16px; border: 1px solid rgba(245,158,11,.18); background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(245,158,11,.03)); }
+    .pearl-mark { width: 26px; height: 26px; border-radius: 999px; background: rgba(245,158,11,.18); color: #fcd58e; display: grid; place-items: center; font-size: .9rem; flex: 0 0 auto; margin-top: 2px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+    .footer-note { color: var(--muted); font-size: .92rem; text-align: center; margin-top: 8px; }
+
+    /* ── Reference / data table ── */
+    .ref-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .ref-table th, .ref-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .ref-table th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .ref-table tr:hover td { background: rgba(56,189,248,.04); }
+
+    /* ── Cards system ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .procedure-card { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 18px; }
+    .procedure-card.own-card { border-color: rgba(56,189,248,.25); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .card-author { font-weight: 700; font-size: .95rem; }
+    .card-actions { margin-left: auto; display: flex; gap: 8px; }
+    .card-actions button { background: none; border: 1px solid rgba(255,255,255,.1); color: var(--muted); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; transition: .15s; }
+    .card-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .card-actions .delete-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .card-supplies { margin-bottom: 12px; }
+    .card-steps { list-style: none; padding: 0; margin: 0 0 12px; counter-reset: cardstep; }
+    .card-steps li { padding: 8px 0 8px 32px; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .93rem; }
+    .card-steps li::before { counter-increment: cardstep; content: counter(cardstep); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 7px; background: rgba(56,189,248,.12); color: var(--accent); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
+    .card-pearls li::before { background: rgba(245,158,11,.15); color: #fcd58e; content: "✦"; font-size: .7rem; }
+    .create-card-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: 2px dashed rgba(56,189,248,.3); background: rgba(56,189,248,.05); color: var(--accent); font-weight: 700; font-size: .95rem; cursor: pointer; transition: .18s; margin-bottom: 16px; }
+    .create-card-btn:hover { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.5); }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; place-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: grid; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); width: 90%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px; }
+    .modal h2 { margin: 0 0 20px; font-size: 1.3rem; }
+    .modal label { display: block; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; font-weight: 600; }
+    .modal input, .modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-family: var(--font); font-size: .95rem; margin-bottom: 16px; }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .modal-btns button { padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) !important; }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .help-text { font-size: .82rem; color: var(--muted); margin: -10px 0 16px; }
+
+    /* ── Export supply button ── */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: var(--muted); font-size: .84rem; font-weight: 600; cursor: pointer; transition: .15s; margin-left: 12px; }
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+
+    /* ── Approach sub-header ── */
+    .approach-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: rgba(56,189,248,.1); color: var(--accent); font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin: 16px 0 10px; }
+
+    @media (max-width: 1080px) { .snapshot-grid { grid-template-columns: repeat(3, 1fr); } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 760px) { .snapshot-grid, .two-col, .three-col, .cards-grid { grid-template-columns: 1fr; } .header-card, .section-body, .section-header { padding-left: 16px; padding-right: 16px; } .shell { padding-left: 14px; padding-right: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">R</div>
+        <div>RadCall Procedure Guide</div>
+      </a>
+      <a class="back-link" href="../index.html">&larr; Back to RadCall</a>
+    </div>
+
+    <header class="header-card" id="top">
+      <div class="eyebrow">Interventional Radiology &middot; Pain Management</div>
+      <h1>Pelvic Congestion Syndrome &mdash; Ovarian Vein Embolization</h1>
+      <p class="subhead">Transcatheter embolization of incompetent ovarian veins and pelvic varicosities to treat chronic pelvic pain from pelvic venous hypertension in premenopausal women.</p>
+      <div class="snapshot-grid">
+        <div class="snapshot-card"><span class="snapshot-label">Sedation</span><div class="snapshot-value">Conscious (IV midazolam/fentanyl)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Bleeding Risk</span><div class="snapshot-value" style="color:var(--success)">Low (venous access)</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Key Risk</span><div class="snapshot-value" style="font-size:.88rem">Coil migration · Non-target embolization · Recurrence</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Antibiotics</span><div class="snapshot-value">Not routine</div></div>
+        <div class="snapshot-card"><span class="snapshot-label">Follow-up</span><div class="snapshot-value" style="font-size:.88rem">VAS score 1 mo · Pelvic US 3 mo</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Jump to</h2>
+        <ul class="toc">
+          <li><a href="#indications">1. Indications</a></li>
+          <li><a href="#preprocedure">2. Pre-Procedure</a></li>
+          <li><a href="#anatomy">3. Anatomy</a></li>
+          <li><a href="#technique">4. How I Do It</a></li>
+          <li><a href="#venographic">5. Venographic Landmarks</a></li>
+          <li><a href="#troubleshooting">6. Troubleshooting</a></li>
+          <li><a href="#complications">7. Complications</a></li>
+          <li><a href="#pearls">8. Critical Pearls</a></li>
+          <li><a href="#references">9. References</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <!-- ═══ 1. INDICATIONS ═══ -->
+        <section class="section" id="indications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">1</div><div><h3>Indications &amp; Patient Selection</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Indications</h4>
+              <ul class="list">
+                <li><strong>Pelvic Congestion Syndrome (PCS):</strong> chronic pelvic pain (&ge;6 months) caused by pelvic varicosities from ovarian vein and/or internal iliac vein incompetence</li>
+                <li><strong>Demographics:</strong> multiparous women aged 20&ndash;45 years; dilated pelvic veins (ovarian vein &gt;5 mm, pelvic varicosities &gt;4 mm)</li>
+                <li><strong>Classic symptoms:</strong> dull aching pelvic pain worsened by prolonged standing/sitting, after intercourse (dyspareunia), and premenstrually; characteristically relieved by lying down</li>
+                <li><strong>Associated findings:</strong> vulvar varicosities, left flank/leg varicosities</li>
+                <li><strong>Diagnosis:</strong> pelvic US with duplex for reflux; MRI/MRV pelvis; catheter venography (gold standard); Valsalva maneuver uncovers reflux on static imaging</li>
+                <li><strong>Workup before referral:</strong> gynecology consultation to exclude endometriosis, ovarian cysts, and PID; VAS pelvic pain score; sexual/functional impact assessment</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Contraindications</h4>
+              <ul class="list">
+                <li><strong>Absolute:</strong> Active pelvic infection &middot; Pregnancy &middot; Severe uncorrectable coagulopathy &middot; IVC thrombosis or atresia precluding venous access</li>
+                <li><strong>Relative:</strong> Postmenopausal (PCS less likely; pain frequently subsides after menopause) &middot; No hemodynamic reflux demonstrated on venography (do not embolize anatomically dilated veins without confirmed reflux)</li>
+                <li><strong>Note:</strong> Dilated pelvic veins on imaging are not sufficient for treatment — hemodynamic reflux must be confirmed at catheter venography before embolization</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 2. PRE-PROCEDURE ═══ -->
+        <section class="section" id="preprocedure">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">2</div><div><h3>Pre-Procedure Checklist</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="checklist">
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Access planning.</strong> Right internal jugular (RIJ) approach preferred for left ovarian vein (direct coaxial angle to left renal vein). Right common femoral approach is an acceptable alternative. Plan 6Fr sheath at RIJ or 5Fr sheath at CFA.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Catheter and wire selection.</strong> 5Fr Cobra or Berenstein catheter for initial navigation; Reverse-curve catheter (RIM, Simmons) as backup for difficult left ovarian vein takeoff. Microcatheter (2.7Fr Progreat) for distal ovarian vein branch embolization.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Embolic materials.</strong> Coils: Nester 0.035&rdquo; fibered coils or 0.018&rdquo; microcoils sized to ovarian vein diameter. Sclerosant: 3% sodium tetradecyl sulfate (STS) foam (Tessari technique: mix 1:4 STS:air) or polidocanol foam. Both agents should be available.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Contrast and imaging.</strong> Iohexol 300 for venography. Confirm fluoroscopy table and DSA capability (subtraction mask for venograms). Review pre-procedure MRI pelvis for varicosity distribution and identify nutcracker anatomy.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Sedation.</strong> IV midazolam + fentanyl (conscious sedation). Patient can be awake and perform Valsalva during venography &mdash; this is an advantage. Confirm NPO status and IV access.</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Baseline pain score.</strong> Document VAS pelvic pain score before the procedure. Confirm gynecology evaluation has excluded other pelvic pathology (endometriosis, ovarian cysts, PID).</div></div>
+              <div class="check-item"><div class="checkbox" onclick="this.classList.toggle('checked')"></div><div><strong>Consent points.</strong> Discuss: post-embolization syndrome (common, 2&ndash;5 days), coil migration risk, non-target embolization, 20&ndash;30% partial recurrence at 2 years, possible need for bilateral treatment and internal iliac embolization in same session.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 3. ANATOMY ═══ -->
+        <section class="section" id="anatomy">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">3</div><div><h3>Relevant Anatomy</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Ovarian Vein Drainage</h4>
+                <ul class="list">
+                  <li><strong>Left ovarian vein:</strong> drains into the left renal vein at a right angle; longer course than the right; higher reflux rate because absence of valves is found in 13&ndash;15% of women on the left vs. 6% on the right</li>
+                  <li><strong>Right ovarian vein:</strong> drains directly into the IVC on the right lateral wall at an oblique angle; smaller ostium; less commonly incompetent but significant reflux occurs in ~41% of symptomatic patients</li>
+                  <li><strong>Valvular incompetence:</strong> reflux occurs in 43% of symptomatic patients; 31% left, 41% right (Ahlberg et al.)</li>
+                  <li><strong>Pregnancy effect:</strong> hormonal changes cause massive dilation up to 60x normal diameter; significant distention may persist 6 months postpartum and worsen with subsequent gestations</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Pelvic Varicosity Distribution</h4>
+                <ul class="list">
+                  <li><strong>Reflux pathway:</strong> ovarian vein reflux &rarr; broad ligament veins &rarr; parametrial, uterine, and vaginal varicosities; cross-filling to contralateral pelvis is common</li>
+                  <li><strong>Internal iliac tributaries:</strong> uterine and vaginal branches of bilateral internal iliac veins are a second independent source of reflux; must be assessed and treated if contributing</li>
+                  <li><strong>Vulvar and leg varicosities:</strong> pelvic varicosities may extend to vulva and upper thigh; these typically regress after ovarian vein embolization within 2&ndash;3 months</li>
+                  <li><strong>Venographic diagnosis criteria:</strong> tortuous pelvic vein &gt;4 mm diameter, poor flow (&lt;3 cm/s), distended communicating veins, retrograde filling on Valsalva</li>
+                </ul>
+              </div>
+            </div>
+            <div style="margin-top: 14px;">
+              <div class="panel">
+                <h4>Nutcracker Syndrome (Secondary PCS)</h4>
+                <ul class="list">
+                  <li><strong>Mechanism:</strong> compression of the left renal vein between the superior mesenteric artery (SMA) and aorta &rarr; left renal venous hypertension &rarr; retrograde flow into left ovarian vein &rarr; secondary valvular incompetence</li>
+                  <li><strong>Recognition:</strong> LRV diameter &lt;6 mm at the aorto-mesenteric segment; pressure gradient &gt;3 mmHg across compression; contrast reflux into left ovarian vein seen spontaneously without Valsalva</li>
+                  <li><strong>Treatment implication:</strong> if LRV compression is severe, stenting the left renal vein may be the definitive treatment rather than ovarian vein embolization alone; ovarian vein embolization alone may not control reflux if the underlying venous hypertension persists</li>
+                  <li><strong>Anatomy diagram concept:</strong> Left ovarian vein takeoff from LRV &rarr; descends in retroperitoneum &rarr; enters pelvic basin &rarr; broad ligament varicosity plexus &rarr; cross-fills contralateral parametrial and uterine veins</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 4. HOW I DO IT ═══ -->
+        <section class="section" id="technique">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">4</div><div><h3>How I Do It</h3><p class="section-subtitle">Default RadCall approach + community cards</p></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <!-- Default RadCall card -->
+            <div class="procedure-card" style="margin-bottom: 20px; border-color: rgba(56,189,248,.3); background: linear-gradient(180deg, rgba(56,189,248,.04), rgba(56,189,248,.01));">
+              <div class="card-meta">
+                <span class="card-author">RadCall Standard</span>
+                <span class="badge">Default</span>
+              </div>
+
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Supplies <button class="export-btn" onclick="exportSupplyList()" title="Copy supply list to clipboard">&#x1F4CB; Copy</button><button class="export-btn" onclick="downloadSupplyList()" title="Download supply list as text file">&#x2B07; Download</button></h4>
+              <div class="chip-row card-supplies">
+                <span class="chip">6Fr RIJ sheath (or 5Fr CFA sheath)</span>
+                <span class="chip">5Fr Cobra catheter</span>
+                <span class="chip">5Fr Berenstein catheter</span>
+                <span class="chip">RIM / Simmons reverse-curve catheter</span>
+                <span class="chip">2.7Fr Progreat microcatheter</span>
+                <span class="chip">0.035&rdquo; Nester fibered coils (8&ndash;20 mm)</span>
+                <span class="chip">0.018&rdquo; microcoils (if using microcatheter)</span>
+                <span class="chip">3% STS foam (Tessari technique, 1:4 STS:air)</span>
+                <span class="chip">Iohexol 300 contrast</span>
+                <span class="chip">IV midazolam + fentanyl</span>
+                <span class="chip">5 mL + 10 mL syringes</span>
+                <span class="chip">3-way stopcock (for foam preparation)</span>
+                <span class="chip">ChloraPrep / sterile drape</span>
+              </div>
+
+              <div class="approach-label">Standard Technique — Ovarian Vein Embolization</div>
+              <h4 style="margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem;">Steps</h4>
+              <div class="step-list">
+                <div class="step"><div class="step-num">1</div><div><h4>Vascular access</h4><div class="muted">Place 6Fr sheath at right internal jugular vein (preferred) or 5Fr sheath at right common femoral vein. Advance wire and catheter to IVC under fluoroscopy. RIJ approach provides the most direct coaxial angle to the left renal vein and left ovarian vein takeoff.</div></div></div>
+                <div class="step"><div class="step-num">2</div><div><h4>Left renal vein catheterization and nutcracker assessment</h4><div class="muted">Advance Cobra catheter to the left renal vein. Perform DSA venogram. Assess for nutcracker anatomy: left renal vein compression at the aorto-mesenteric segment. If contrast spontaneously refluxes into the left ovarian vein during LRV injection, nutcracker is present. Measure LRV diameter and pressure gradient if clinically suspected.</div></div></div>
+                <div class="step"><div class="step-num">3</div><div><h4>Left ovarian vein cannulation and diagnostic venogram</h4><div class="muted">Cannulate the left ovarian vein from the left renal vein using the Cobra catheter (gooseneck angulation at the LRV-LOV junction). Advance catheter to the pelvic basin. Perform diagnostic venogram: record ovarian vein diameter, degree of reflux into pelvic varicosities, and whether cross-filling to the contralateral pelvis is present. Have patient perform Valsalva to maximize reflux demonstration.</div></div></div>
+                <div class="step"><div class="step-num">4</div><div><h4>Microcatheter placement to distal varicosity plexus</h4><div class="muted">Advance 2.7Fr microcatheter through the Cobra to the most distal extent of the ovarian vein within the pelvic basin, into the varicosity plexus. Position should be within the broad ligament varicosities, distal to the main ovarian vein trunk.</div></div></div>
+                <div class="step"><div class="step-num">5</div><div><h4>Sclerosant foam embolization of varicosity plexus</h4><div class="muted">Prepare 3% STS foam using Tessari technique (1:4 STS:air, mixed vigorously through 3-way stopcock until uniform consistency). Inject 2&ndash;4 mL aliquots under live fluoroscopy, waiting for slow flow confirmation before each injection. Confirm contrast stagnation indicating foam is filling the plexus. Stop if foam is seen tracking centrally toward the IVC.</div></div></div>
+                <div class="step"><div class="step-num">6</div><div><h4>Coil embolization — distal to proximal</h4><div class="muted">Withdraw microcatheter. Deploy coils from the distal ovarian vein working proximally to the takeoff from the left renal vein. Coil the entire length of the left ovarian vein. Size coils to 20&ndash;30% oversizing relative to vein diameter. Use multiple coils to ensure dense packing. Coils prevent reflux; foam destroys the varicosity walls &mdash; the combination is superior to either alone.</div></div></div>
+                <div class="step"><div class="step-num">7</div><div><h4>Right ovarian vein assessment and embolization</h4><div class="muted">Re-catheterize from IVC to the right ovarian vein (directly from the IVC right lateral wall using Berenstein or C2 catheter; small oblique ostium). Perform diagnostic venogram with Valsalva. If reflux is confirmed, repeat the same distal-to-proximal coil + foam embolization sequence on the right side. Do not skip right-sided assessment even if left-dominant disease was present.</div></div></div>
+                <div class="step"><div class="step-num">8</div><div><h4>Internal iliac vein assessment</h4><div class="muted">Catheterize bilateral internal iliac veins. Selectively cannulate uterine and vaginal tributaries. Perform venograms. If reflux is present or if pelvic varicosities are not fully accounted for by ovarian vein reflux alone, embolize the contributing tributaries with coils and/or sclerosant foam.</div></div></div>
+                <div class="step"><div class="step-num">9</div><div><h4>Final venogram and hemostasis</h4><div class="muted">Perform a completion venogram of the left renal vein region and IVC to confirm: (1) bilateral ovarian vein occlusion; (2) no residual varicosity filling; (3) no coil migration. Remove sheath. Achieve hemostasis at access site. RIJ access: manual pressure 5&ndash;10 min. CFA: manual compression or closure device per standard protocol.</div></div></div>
+              </div>
+
+              <div style="margin-top:16px; padding:12px 14px; border-radius:12px; background: rgba(245,158,11,.07); border: 1px solid rgba(245,158,11,.18); font-size:.93rem;">
+                <strong style="color:#fcd58e;">Key principle:</strong> Treat ALL sources of reflux in the same session. Untreated contralateral ovarian vein reflux or internal iliac tributaries is the #1 cause of treatment failure and recurrence.
+              </div>
+            </div>
+
+            <!-- Community cards section -->
+            <button class="create-card-btn" onclick="openCardModal()">+ Create My Card</button>
+            <div id="community-cards" class="cards-grid">
+              <div class="muted" id="cards-loading" style="padding:20px; text-align:center;">Sign in to view and create community cards</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 5. VENOGRAPHIC LANDMARKS ═══ -->
+        <section class="section" id="venographic">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">5</div><div><h3>Venographic Landmarks</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="panel">
+                <h4>Left Ovarian Vein</h4>
+                <ul class="list">
+                  <li><strong>Takeoff from LRV:</strong> gooseneck angulation at the LRV-LOV junction; best approached coaxially from RIJ; catheter should point inferiorly to engage the ostium</li>
+                  <li><strong>Diameter:</strong> 5&ndash;8 mm with reflux; normal is &lt;5 mm</li>
+                  <li><strong>Reflux pattern:</strong> contrast flows retrograde into broad ligament and parametrial plexus during Valsalva or spontaneously in severe cases</li>
+                  <li><strong>Nutcracker sign:</strong> spontaneous reflux into left ovarian vein during LRV injection without Valsalva; LRV diameter &lt;6 mm at aorto-mesenteric segment</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4>Right Ovarian Vein and Internal Iliac Tributaries</h4>
+                <ul class="list">
+                  <li><strong>Right ovarian vein takeoff:</strong> directly from IVC right lateral wall; oblique/caudal orientation; small ostium; Berenstein or C2 catheter usually required from femoral approach; may be absent or atrophic if not a dominant reflux source</li>
+                  <li><strong>Internal iliac tributaries:</strong> catheterize off bilateral internal iliac veins; uterine and vaginal branches are the most common contributing tributaries; assess if pelvic varicosities are not fully explained by ovarian vein reflux</li>
+                  <li><strong>Cross-filling pattern:</strong> contrast refluxing across midline from left to right pelvis on left ovarian venogram indicates bilateral pelvic involvement</li>
+                  <li><strong>Pressure gradient:</strong> nutcracker confirmed if LRV-IVC pressure gradient &gt;3 mmHg</li>
+                </ul>
+              </div>
+            </div>
+            <div style="margin-top: 14px;">
+              <div class="panel">
+                <h4>Venographic Criteria for PCS Diagnosis</h4>
+                <table class="ref-table">
+                  <thead>
+                    <tr>
+                      <th>Finding</th>
+                      <th>Threshold</th>
+                      <th>Significance</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Ovarian vein diameter</td><td>&gt;5 mm</td><td>Suggests incompetence; &gt;8 mm highly specific</td></tr>
+                    <tr><td>Pelvic varicosity diameter</td><td>&gt;4 mm</td><td>Venographic diagnostic criterion (Beard et al.)</td></tr>
+                    <tr><td>Pelvic venous flow velocity</td><td>&lt;3 cm/s</td><td>Poor drainage; venographic criterion for PCS</td></tr>
+                    <tr><td>Reflux on Valsalva</td><td>Any retrograde flow</td><td>Confirms valvular incompetence; embolization indicated</td></tr>
+                    <tr><td>Nutcracker gradient</td><td>&gt;3 mmHg LRV-IVC</td><td>Indicates significant LRV compression; consider stenting</td></tr>
+                    <tr><td>Distended communicating veins</td><td>Present</td><td>Confirms pelvic varicosity plexus; third diagnostic criterion</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 6. TROUBLESHOOTING ═══ -->
+        <section class="section" id="troubleshooting">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">6</div><div><h3>Troubleshooting</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body problem-grid">
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Cannot catheterize left ovarian vein from LRV</h4>
+              <p class="muted"><strong>Likely cause:</strong> Acute angulation at LRV-LOV junction; small or atrophic ostium; catheter too straight.</p>
+              <p class="success"><strong>Next step:</strong> The left renal vein is your guide landmark. Switch to a reverse-curve catheter (RIM or Simmons 1) to engage the downward-oriented left ovarian vein ostium. Have the patient perform a Valsalva maneuver to increase venous pressure and open the ostium. If still unsuccessful from RIJ, attempt from femoral approach with a cobra or reversed catheter configuration.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Right ovarian vein not visualized or not accessible</h4>
+              <p class="muted"><strong>Likely cause:</strong> Right ovarian vein may be very small, atrophic, or not a dominant contributor to pelvic reflux. The IVC ostium can be difficult to engage from femoral approach.</p>
+              <p class="success"><strong>Next step:</strong> If no reflux is demonstrated on venography with Valsalva, the right ovarian vein is not a significant contributor — do not embolize. Ensure you have performed an adequate venogram; a Berenstein or C2 catheter from the femoral approach, or a Cobra from the RIJ, improves engagement. If access truly fails but reflux was seen on pre-procedure imaging, note for possible second-session evaluation.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Sclerosant foam migrates centrally toward IVC</h4>
+              <p class="muted"><strong>Likely cause:</strong> Injection volume too large; flow rate in varicosity plexus is brisk and not stagnant; microcatheter not positioned far enough distally.</p>
+              <p class="success"><strong>Next step:</strong> Use smaller aliquots (1&ndash;2 mL instead of 3&ndash;4 mL). Confirm sluggish or stagnant contrast flow in the varicosity before each foam injection. Re-advance microcatheter more distally. Deploy a coil or two proximal to the injection site to slow antegrade flow before foam injection. Stop foam injection immediately if foam is seen tracking centrally.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Pelvic pain not improving at follow-up</h4>
+              <p class="muted"><strong>Likely cause:</strong> Missed internal iliac tributaries contributing to varicosity filling; incomplete bilateral ovarian vein embolization; residual cross-filling from contralateral pelvis.</p>
+              <p class="success"><strong>Next step:</strong> Obtain follow-up pelvic US or MRV at 3 months to assess for residual varicosities. If residual disease is present, plan a second session to evaluate and embolize bilateral internal iliac uterine/vaginal tributaries. Confirm right ovarian vein was adequately treated at the initial procedure.</p>
+            </div>
+            <div class="problem">
+              <div class="problem-label">Problem</div>
+              <h4>Coil malposition or migration</h4>
+              <p class="muted"><strong>Likely cause:</strong> Coil undersized relative to vein diameter; deployed in a location without adequate landing zone; pushed distally during deployment.</p>
+              <p class="success"><strong>Next step:</strong> If coil is in a hemostatic position even if not ideal, assess clinically and consider leaving. If coil has migrated to pulmonary vasculature (check chest radiograph post-procedure), small peripheral coils in distal PA branches may be observed. Large coils or centrally positioned PA coils require snare retrieval in the cardiac catheterization lab. Prevention: size coils 20&ndash;30% oversized to vessel diameter.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 7. COMPLICATIONS ═══ -->
+        <section class="section" id="complications">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">7</div><div><h3>Complications</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body two-col">
+            <div class="panel">
+              <h4>Periprocedural / Early (&lt;1 week)</h4>
+              <ul class="list danger">
+                <li><strong>Post-embolization syndrome (common):</strong> pelvic pain, low-grade fever, nausea/vomiting 2&ndash;5 days post-procedure; managed with NSAIDs, anti-emetics, and oral hydration; discharge with pain management plan; warn patients this is expected and does not indicate a complication</li>
+                <li><strong>Non-target embolization:</strong> sciatic nerve, bladder, or bowel injury from foam sclerosant tracking outside the target veins; avoid foam injection when flow is brisk centrally; use small aliquots and confirm stasis before each injection</li>
+                <li><strong>Coil migration to pulmonary vasculature:</strong> rare; prevent by sizing coils 20&ndash;30% oversized; if small coil migrates to distal PA, may observe; central PA migration requires snare retrieval</li>
+                <li><strong>Venous access complications:</strong> RIJ hematoma, pneumothorax (RIJ access); CFA hematoma (femoral access); standard post-procedure monitoring and hemostasis protocols apply</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h4>Delayed / Long-Term</h4>
+              <ul class="list">
+                <li><strong>Recurrence / treatment failure:</strong> 20&ndash;30% partial recurrence at 2 years; most commonly due to untreated contralateral ovarian vein or internal iliac tributaries; re-treatment with second-session internal iliac embolization often successful</li>
+                <li><strong>Ovarian vein thrombophlebitis:</strong> very rare; treated with NSAIDs and anticoagulation if significant</li>
+                <li><strong>Ovarian failure:</strong> theoretical concern only; ovarian blood supply is entirely arterial (ovarian artery); venous embolization has not been associated with ovarian failure or hormonal disruption in published literature</li>
+                <li><strong>Outcomes:</strong> 70&ndash;80% subjective improvement at 1&ndash;2 years (Williams &amp; Murphy; Kim HS et al. JVIR 2006); 85% reduction in dyspareunia; mean success rate ~75% across published series (Daniels et al. JVIR 2016)</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ 8. CRITICAL PEARLS ═══ -->
+        <section class="section" id="pearls">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">8</div><div><h3>Critical Pearls</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body pearls">
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Treat ALL sources of reflux in a single session.</strong> Embolize bilateral ovarian veins AND internal iliac tributaries (uterine/vaginal branches) at the time of the initial procedure. Failure to treat the contralateral ovarian vein or internal iliac tributaries is the single most common cause of recurrence. Do not stop after treating only the left ovarian vein, even in left-dominant disease.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Coils + sclerosant foam = superior outcomes.</strong> Coils alone prevent antegrade reflux but do not destroy the varicosity wall; foam sclerosant alone may migrate centrally. The combined approach leverages mechanical occlusion (coils) with chemical ablation of the varicosity endothelium (foam), producing durable results superior to either agent alone. Always use both.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Do NOT embolize without confirmed hemodynamic reflux.</strong> Dilated pelvic veins on MRI or CT are common and can be incidental. The PCS diagnosis must be confirmed hemodynamically at catheter venography — reflux must be demonstrated during Valsalva or spontaneously. Treating anatomically dilated veins without proven reflux risks complications without benefit and does not treat the patient's pain.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Recognize and address nutcracker anatomy.</strong> If the left renal vein is severely compressed (LRV diameter &lt;6 mm at aorto-mesenteric segment, gradient &gt;3 mmHg), the root cause is elevated LRV pressure rather than primary ovarian valve incompetence. In these cases, LRV stenting may be the definitive treatment. Ovarian vein embolization alone may recur because the driving venous hypertension persists.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Outcome counseling: vulvar and leg varicosities regress slowly.</strong> Counsel patients that vulvar varicosities and upper leg varicosities from pelvic reflux typically regress over 2&ndash;3 months following successful embolization. Do not declare treatment failure based on persistent external varicosities in the immediate post-procedure period. Pelvic pain improvement is the primary endpoint to assess at 1-month follow-up.</div></div>
+            <div class="pearl"><div class="pearl-mark">&#x2736;</div><div><strong>Published outcomes: 70&ndash;80% improvement at 1&ndash;2 years.</strong> Kim HS et al. (JVIR 2006) demonstrated 70&ndash;80% subjective improvement and 85% reduction in dyspareunia at long-term follow-up with bilateral ovarian vein embolization. Daniels et al. (JVIR 2016) systematic review confirmed mean success rate ~75% across all published embolization series. Set realistic expectations with patients before the procedure.</div></div>
+          </div>
+        </section>
+
+        <!-- ═══ 9. REFERENCES ═══ -->
+        <section class="section" id="references">
+          <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="section-title-wrap"><div class="section-index">9</div><div><h3>References</h3></div></div>
+            <span class="collapse-arrow">&#x25BE;</span>
+          </div>
+          <div class="section-body">
+            <div style="margin-bottom: 20px;">
+              <div class="panel">
+                <h4>Citations</h4>
+                <ul class="list" style="gap:12px;">
+                  <li>Prologo JD, Ray CE Jr., eds. <em>Advanced Pain Management in Interventional Radiology: A Case-Based Approach</em>. Thieme; 2024. Chapter 43 (Williams R, Murphy T): Pelvic Congestion Syndrome.</li>
+                  <li>Kim HS, Malhotra AD, Rowe PC, Lee JM, Venbrux AC. Embolotherapy for pelvic congestion syndrome: long-term results. <em>J Vasc Interv Radiol</em>. 2006;17(2):289&ndash;297.</li>
+                  <li>Daniels JP, Champaneria R, Shah L, Gupta JK, Birch J, Moss JG. Effectiveness of embolization or sclerotherapy of pelvic veins for reducing chronic pelvic pain: a systematic review. <em>J Vasc Interv Radiol</em>. 2016;27(10):1478&ndash;1486.</li>
+                  <li>Tu FF, Hahn D, Steege JF. Pelvic congestion syndrome-associated pelvic pain: a systematic review of diagnosis and management. <em>Obstet Gynecol Surv</em>. 2010;65(5):332&ndash;340.</li>
+                  <li>Beard RW, Highman JH, Pearce S, Reginald PW. Diagnosis of pelvic varicosities in women with chronic pelvic pain. <em>Lancet</em>. 1984;2(8409):946&ndash;949.</li>
+                  <li>Scultetus AH, Villavicencio JL, Gillespie DL. The nutcracker syndrome: its role in the pelvic venous disorders. <em>J Vasc Surg</em>. 2001;34(5):812&ndash;819.</li>
+                  <li>Edwards RD, Robertson IR, MacLean AB, Hemingway AP. Case report: pelvic pain syndrome &mdash; successful treatment of a case by ovarian vein embolization. <em>Clin Radiol</em>. 1993;47(6):429&ndash;431. (First reported case of bilateral OVE for PCS.)</li>
+                  <li>Capasso P, Simons C, Trotteur G, Dondelinger RF, Henroteaux D, Gaspard U. Treatment of symptomatic pelvic varices by ovarian vein embolization. <em>Cardiovasc Intervent Radiol</em>. 1997;20(2):107&ndash;111.</li>
+                  <li>Liddle AD, Davies AH. Pelvic congestion syndrome: chronic pelvic pain caused by ovarian and internal iliac varices. <em>Phlebology</em>. 2007;22(3):100&ndash;104.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <p class="footer-note">Ref: Prologo &amp; Ray, Advanced Pain Management in IR (Thieme, 2024) Ch. 43 (Williams &amp; Murphy) &middot; Kim HS et al., JVIR 2006 &middot; Daniels et al., JVIR 2016</p>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ CARD MODAL ═══ -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <h2 id="modal-title">Create My Card</h2>
+      <label>Card Title</label>
+      <input type="text" id="card-title" placeholder="e.g. My OVE Approach" />
+      <label>Supplies</label>
+      <textarea id="card-supplies" placeholder="One supply per line&#10;e.g.&#10;6Fr RIJ sheath&#10;Cobra catheter&#10;Nester coils 10mm"></textarea>
+      <div class="help-text">One item per line. These will display as tags.</div>
+      <label>Steps</label>
+      <textarea id="card-steps" placeholder="One step per line&#10;e.g.&#10;RIJ access, 6Fr sheath&#10;Catheterize left renal vein&#10;Cannulate left ovarian vein"></textarea>
+      <div class="help-text">One step per line. These will be auto-numbered.</div>
+      <label>Pearls (optional)</label>
+      <textarea id="card-pearls" placeholder="One pearl per line (optional)"></textarea>
+      <label>Your Name</label>
+      <input type="text" id="card-author-name" placeholder="Your name (shown on card)" />
+      <input type="hidden" id="editing-card-id" value="" />
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+        <button class="btn-primary" id="save-card-btn" onclick="saveCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-auth.js"></script>
+  <script>
+  const PROCEDURE_SLUG = 'pelvic-congestion';
+  const LS_KEY = 'rc_cards_' + PROCEDURE_SLUG;
+  let _cards = [];
+  let _myVotes = {};
+  let _cardSearch = '';
+  let _currentUser = null;
+
+  function _sb() { return window.RadCallAuth && window.RadCallAuth.supabase ? window.RadCallAuth.supabase : null; }
+  function _user() { return window.RadCallAuth ? window.RadCallAuth.getUser() : null; }
+
+  // ── Load cards ──
+  async function loadCards() {
+    _currentUser = _user();
+    const sb = _sb();
+    if (!sb || !_currentUser) {
+      document.getElementById('cards-loading').textContent = 'Sign in to view and create community cards';
+      return;
+    }
+    document.getElementById('cards-loading').textContent = 'Loading cards...';
+    const { data, error } = await sb.from('procedure_cards')
+      .select('*')
+      .eq('procedure_slug', PROCEDURE_SLUG)
+      .order('created_at', { ascending: false });
+    if (!error && data) {
+      _cards = data;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+    } else {
+      try { _cards = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e) { _cards = []; }
+    }
+    await loadVotes();
+    renderCards();
+  }
+
+  function renderCards() {
+    const container = document.getElementById('community-cards');
+    const loading = document.getElementById('cards-loading');
+    if (!document.getElementById('card-search-wrap')) {
+      const wrap = document.createElement('div');
+      wrap.id = 'card-search-wrap';
+      wrap.style.cssText = 'margin-bottom:12px';
+      wrap.innerHTML = '<input id="card-search" type="text" placeholder="Search community cards\u2026" style="width:100%;padding:8px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:inherit;font-family:inherit;font-size:13px;outline:none;" oninput="_cardSearch=this.value.toLowerCase();renderCards()">';
+      container.parentElement.insertBefore(wrap, container);
+    }
+    const q = _cardSearch.trim();
+    const visible = q ? _cards.filter(c => [c.title||'',c.display_name||'',...(c.supplies||[]),...(c.steps||[]),...(c.pearls||[])].join(' ').toLowerCase().includes(q)) : _cards;
+    if (!visible.length) {
+      loading.textContent = q ? 'No cards match your search.' : 'No community cards yet. Be the first to create one!';
+      loading.style.display = 'block';
+      container.innerHTML = '';
+      return;
+    }
+    loading.style.display = 'none';
+    const uid = _currentUser ? _currentUser.id : null;
+    container.innerHTML = visible.map(c => {
+      const isOwn = uid && c.user_id === uid;
+      const supplies = (c.supplies || []);
+      const steps = (c.steps || []);
+      const pearls = (c.pearls || []);
+      const myVote = _myVotes[c.id];
+      const votes = c.net_votes || 0;
+      return `
+        <div class="procedure-card ${isOwn ? 'own-card' : ''}" data-card-id="${c.id}">
+          <div class="card-meta">
+            <span class="card-author">${esc(c.display_name || 'Anonymous')}</span>
+            <span class="badge">${timeAgo(c.created_at)}</span>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:5px;flex-shrink:0">
+              <button onclick="voteCard('${c.id}','up')" title="Helpful" style="background:none;border:1px solid ${myVote==='up'?'#22c55e':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='up'?'#22c55e':'inherit'};transition:.15s">${myVote==='up'?'▲':'△'}${votes>0?' '+votes:''}</button>
+              <button onclick="voteCard('${c.id}','down')" title="Not helpful" style="background:none;border:1px solid ${myVote==='down'?'#ef4444':'rgba(255,255,255,.12)'};border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:${myVote==='down'?'#ef4444':'inherit'};transition:.15s">${myVote==='down'?'▼':'▽'}</button>
+              ${isOwn ? `<button onclick="editCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Edit</button><button onclick="deleteCard('${c.id}')" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;color:inherit">Delete</button>` : ''}
+            </div>
+          </div>
+          ${supplies.length ? `<div class="chip-row card-supplies">${supplies.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+          ${steps.length ? `<ol class="card-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+          ${pearls.length ? `<ol class="card-steps card-pearls">${pearls.map(p => `<li>${esc(p)}</li>`).join('')}</ol>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  async function loadVotes() {
+    const sb = _sb(); const user = _user();
+    if (!sb || !user) return;
+    const { data } = await sb.from('procedure_card_votes').select('card_id,vote').eq('user_id', user.id);
+    _myVotes = {};
+    if (data) for (const v of data) _myVotes[v.card_id] = v.vote;
+  }
+
+  async function voteCard(cardId, dir) {
+    const sb = _sb(); const user = _user();
+    if (!user || !sb) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    const existing = _myVotes[cardId];
+    const card = _cards.find(c => c.id === cardId);
+    if (!card) return;
+    if (existing === dir) {
+      await sb.from('procedure_card_votes').delete().match({ user_id: user.id, card_id: cardId });
+      delete _myVotes[cardId];
+      card.net_votes = (card.net_votes || 0) + (dir === 'up' ? -1 : 1);
+    } else {
+      await sb.from('procedure_card_votes').upsert({ user_id: user.id, card_id: cardId, vote: dir }, { onConflict: 'user_id,card_id' });
+      const prev = existing ? (existing === 'up' ? -1 : 1) : 0;
+      card.net_votes = (card.net_votes || 0) + prev + (dir === 'up' ? 1 : -1);
+      _myVotes[cardId] = dir;
+    }
+    await sb.from('procedure_cards').update({ net_votes: card.net_votes }).eq('id', cardId);
+    renderCards();
+  }
+
+  // ── Card CRUD ──
+  function openCardModal(cardId) {
+    const user = _user();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal(); return; }
+    document.getElementById('card-modal').classList.add('active');
+    const nameInput = document.getElementById('card-author-name');
+    if (cardId) {
+      const card = _cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('modal-title').textContent = 'Edit Card';
+      document.getElementById('card-title').value = card.title || '';
+      if (nameInput) nameInput.value = card.display_name || '';
+      document.getElementById('card-supplies').value = (card.supplies || []).join('\n');
+      document.getElementById('card-steps').value = (card.steps || []).join('\n');
+      document.getElementById('card-pearls').value = (card.pearls || []).join('\n');
+      document.getElementById('editing-card-id').value = cardId;
+    } else {
+      document.getElementById('modal-title').textContent = 'Create My Card';
+      document.getElementById('card-title').value = '';
+      document.getElementById('card-supplies').value = '';
+      document.getElementById('card-steps').value = '';
+      document.getElementById('card-pearls').value = '';
+      document.getElementById('editing-card-id').value = '';
+      if (nameInput && !nameInput.value.trim()) {
+        const u = _user();
+        if (nameInput && !nameInput.value) nameInput.value = (u && u.email) ? u.email.split('@')[0] : '';
+        if (window.RadCallAuth && window.RadCallAuth.getProfile) {
+          window.RadCallAuth.getProfile().then(p => {
+            if (nameInput && !nameInput.value.trim()) nameInput.value = (p && p.display_name) || '';
+          }).catch(() => {});
+        }
+      }
+    }
+  }
+
+  function closeCardModal() { document.getElementById('card-modal').classList.remove('active'); }
+
+  async function saveCard() {
+    const user = _user(); const sb = _sb();
+    if (!user) { window.RadCallAuth && window.RadCallAuth.showAuthModal && window.RadCallAuth.showAuthModal(); return; }
+    if (!sb) { alert('Connection error — please reload and try again.'); return; }
+    const title = document.getElementById('card-title').value.trim();
+    if (!title) { alert('Please enter a card title.'); return; }
+    const supplies = document.getElementById('card-supplies').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const steps = document.getElementById('card-steps').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const pearls = document.getElementById('card-pearls').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const editId = document.getElementById('editing-card-id').value;
+    const authorInput = document.getElementById('card-author-name');
+    const displayName = (authorInput && authorInput.value.trim()) || (user.email ? user.email.split('@')[0] : 'Anonymous');
+    const saveBtn = document.getElementById('save-card-btn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving\u2026'; }
+    try {
+      if (editId) {
+        _cards = _cards.map(c => c.id === editId ? { ...c, title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() } : c);
+        renderCards(); closeCardModal();
+        const { error } = await sb.from('procedure_cards').update({ title, supplies, steps, pearls, display_name: displayName, updated_at: new Date().toISOString() }).eq('id', editId);
+        if (error) console.error('Card update error:', error);
+      } else {
+        const tmpId = 'tmp-' + Date.now();
+        const newCard = { id: tmpId, user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0, created_at: new Date().toISOString() };
+        _cards.unshift(newCard);
+        renderCards(); closeCardModal();
+        const { data, error } = await sb.from('procedure_cards')
+          .insert({ user_id: user.id, procedure_slug: PROCEDURE_SLUG, title, supplies, steps, pearls, display_name: displayName, net_votes: 0 })
+          .select().single();
+        if (error) {
+          console.error('Card insert error:', error);
+          _cards = _cards.filter(c => c.id !== tmpId);
+          renderCards();
+          alert('Could not save card: ' + (error.message || 'Unknown error. Check your connection and try again.'));
+        } else if (data) {
+          _cards = _cards.map(c => c.id === tmpId ? data : c);
+        }
+      }
+      try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    } catch(err) {
+      console.error('saveCard exception:', err);
+      alert('Something went wrong saving your card. Please try again.');
+    } finally {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Card'; }
+    }
+  }
+
+  function editCard(id) { openCardModal(id); }
+
+  async function deleteCard(id) {
+    if (!confirm('Delete this card?')) return;
+    _cards = _cards.filter(c => c.id !== id);
+    renderCards();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(_cards)); } catch(e) {}
+    const sb = _sb();
+    if (sb && !String(id).startsWith('tmp-')) { sb.from('procedure_cards').delete().eq('id', id).then(() => {}); }
+  }
+
+  // ── Helpers ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function timeAgo(iso) {
+    const d = new Date(iso); const now = new Date(); const diff = (now - d) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  // ── Export supply list ──
+  function exportSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Pelvic Congestion Syndrome \u2014 Ovarian Vein Embolization \u2014 Supply List\n' + '\u2550'.repeat(50) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showExportToast('Supply list copied to clipboard'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showExportToast('Supply list copied to clipboard');
+    }
+  }
+
+  function downloadSupplyList() {
+    const chips = document.querySelectorAll('.procedure-card .card-supplies .chip');
+    const supplies = Array.from(chips).map(c => c.textContent.trim());
+    const text = 'Pelvic Congestion Syndrome \u2014 Ovarian Vein Embolization \u2014 Supply List\n' + '\u2550'.repeat(50) + '\n' + supplies.map(s => '\u2610 ' + s).join('\n') + '\n';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'pelvic-congestion-supplies.txt'; a.click();
+    URL.revokeObjectURL(url);
+    showExportToast('Supply list downloaded');
+  }
+
+  function showExportToast(msg) {
+    let toast = document.getElementById('export-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'export-toast';
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#22c55e;color:#0d1117;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.92rem;z-index:2000;opacity:0;transition:all .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  // ── Init ──
+  if (window.RadCallAuth) {
+    window.RadCallAuth.onAuth(() => loadCards());
+    setTimeout(loadCards, 500);
+  }
+  </script>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+    function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('open'); }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>
